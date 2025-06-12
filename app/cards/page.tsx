@@ -38,7 +38,12 @@ const FlowyCard = ({
     animate={{ opacity: 1, y: 0 }}
     transition={{ delay, duration: 0.6 }}
   >
-    <BaseFlowyCard size={size} {...props}>
+    <BaseFlowyCard 
+      size={size} 
+      variant="glass" 
+      mercury={false} 
+      {...props}
+    >
       {children}
     </BaseFlowyCard>
   </motion.div>

@@ -47,6 +47,12 @@
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
+  
+  /* Flowy Design System Variables */
+  --flowy-glass: rgba(255, 255, 255, 0.4);
+  --flowy-glass-dark: rgba(24, 24, 24, 0.35);
+  --flowy-border: rgba(255, 255, 255, 0.25);
+  --flowy-border-dark: rgba(255, 255, 255, 0.1);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);

@@ -40,16 +40,19 @@ const config: Config = {
       
       boxShadow: {
         // Soft, weightless shadows like morning mist
+        'flowy': '0 4px 16px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04)',
         'flowy-xs': '0 2px 8px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02)',
         'flowy-sm': '0 4px 12px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.03)',
         'flowy-md': '0 8px 20px rgba(0, 0, 0, 0.06), 0 3px 6px rgba(0, 0, 0, 0.04)',
         'flowy-lg': '0 12px 28px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.05)',
         'flowy-xl': '0 16px 40px rgba(0, 0, 0, 0.10), 0 6px 12px rgba(0, 0, 0, 0.06)',
         'flowy-float': '0 20px 60px rgba(0, 0, 0, 0.12), 0 8px 16px rgba(0, 0, 0, 0.08)',
+        'flowy-dark': '0 4px 16px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.10)',
       },
       
       backdropBlur: {
         // Natural blur like looking through water
+        'flowy': '8px',
         'flowy-xs': '4px',
         'flowy-sm': '8px', 
         'flowy-md': '12px',
@@ -77,6 +80,17 @@ const config: Config = {
           '0%, 100%': { transform: 'scale(1)' },
           '50%': { transform: 'scale(1.02)' },
         },
+      },
+      
+      // Flowy design system variables
+      backgroundColor: {
+        'flowy-glass': 'var(--flowy-glass)',
+        'flowy-glass-dark': 'var(--flowy-glass-dark)',
+      },
+      
+      borderColor: {
+        'flowy-border': 'var(--flowy-border)',
+        'flowy-border-dark': 'var(--flowy-border-dark)',
       },
       
       // Flowy color palette - soft, natural tones
