@@ -4,7 +4,6 @@ import * as React from "react"
 import { motion } from "framer-motion"
 import { 
   User, 
-  Mail, 
   Bell, 
   ShoppingBag, 
   Calendar,
@@ -20,45 +19,28 @@ import {
   ArrowRight
 } from "lucide-react"
 import Link from "next/link"
+import { FlowyCard as BaseFlowyCard } from '@/components/ui/flowy-card'
 
-// Base Flowy Card component
+// Wrapper to add delay functionality
 const FlowyCard = ({ 
   children, 
-  className = "",
-  delay = 0,
-  size = "default"
+  delay = 0, 
+  size = "md",
+  ...props 
 }: { 
   children: React.ReactNode
-  className?: string
   delay?: number
-  size?: "compact" | "default" | "large"
+  size?: "xs" | "sm" | "md" | "lg" | "xl"
+  className?: string
 }) => (
   <motion.div
-    initial={{ opacity: 0, y: 40, scale: 0.9 }}
-    animate={{ opacity: 1, y: 0, scale: 1 }}
-    transition={{ 
-      duration: 1.2, 
-      delay,
-      ease: [0.25, 0.4, 0.25, 1]
-    }}
-    whileHover={{ 
-      y: -8,
-      scale: 1.02,
-      transition: { duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }
-    }}
-    className={`
-      bg-white/20 
-      backdrop-blur-xl 
-      border border-white/10
-      rounded-[2rem]
-      shadow-2xl shadow-black/5
-      hover:shadow-3xl hover:shadow-black/10
-      transition-all duration-700 ease-out
-      ${size === "compact" ? "p-6" : size === "large" ? "p-16" : "p-10"}
-      ${className}
-    `}
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ delay, duration: 0.6 }}
   >
-    {children}
+    <BaseFlowyCard size={size} {...props}>
+      {children}
+    </BaseFlowyCard>
   </motion.div>
 )
 
@@ -169,7 +151,7 @@ const ProductCard = ({ delay = 0 }) => (
 
 // Notification Card
 const NotificationCard = ({ delay = 0 }) => (
-  <FlowyCard delay={delay} size="compact" className="max-w-md">
+  <FlowyCard delay={delay} size="sm" className="max-w-md">
     <div className="flex items-start space-x-4">
       <div className="p-3 bg-blue-100/60 rounded-xl">
         <Bell className="w-6 h-6 text-blue-600" />
@@ -245,7 +227,7 @@ const EventCard = ({ delay = 0 }) => (
 
 // Music Card
 const MusicCard = ({ delay = 0 }) => (
-  <FlowyCard delay={delay} size="compact" className="max-w-md">
+  <FlowyCard delay={delay} size="sm" className="max-w-md">
     <div className="flex items-center space-x-4">
       <div className="w-16 h-16 bg-gradient-to-br from-green-100 to-teal-100 rounded-xl flex items-center justify-center">
         <Music className="w-8 h-8 text-green-600" />
@@ -313,7 +295,7 @@ const ArticleCard = ({ delay = 0 }) => (
 
 // Quote Card
 const QuoteCard = ({ delay = 0 }) => (
-  <FlowyCard delay={delay} size="large" className="max-w-2xl">
+  <FlowyCard delay={delay} size="xl" className="max-w-2xl">
     <div className="text-center space-y-8">
       <div className="p-6 bg-gradient-to-br from-indigo-100/60 to-purple-100/60 rounded-2xl">
         <Coffee className="w-12 h-12 text-indigo-600 mx-auto mb-6" />
