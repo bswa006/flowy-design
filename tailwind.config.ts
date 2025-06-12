@@ -65,6 +65,9 @@ const config: Config = {
         'flowy-float': 'flowyFloat 6s ease-in-out infinite',
         'flowy-drift': 'flowyDrift 8s ease-in-out infinite',
         'flowy-breathe': 'flowyBreathe 4s ease-in-out infinite',
+        // Mercury gentle animations
+        'pulse-gentle': 'pulseGentle 4s ease-in-out infinite',
+        'pulse-soft': 'pulseSoft 3s ease-in-out infinite',
       },
       
       keyframes: {
@@ -79,6 +82,15 @@ const config: Config = {
         flowyBreathe: {
           '0%, 100%': { transform: 'scale(1)' },
           '50%': { transform: 'scale(1.02)' },
+        },
+        // Mercury gentle keyframes
+        pulseGentle: {
+          '0%, 100%': { opacity: '1', transform: 'scale(1)' },
+          '50%': { opacity: '0.98', transform: 'scale(1.005)' },
+        },
+        pulseSoft: {
+          '0%, 100%': { opacity: '1', transform: 'scale(1)' },
+          '50%': { opacity: '0.96', transform: 'scale(1.01)' },
         },
       },
       

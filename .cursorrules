@@ -1,0 +1,71 @@
+# Mercury OS Design System - Cursor Rules
+# These rules ensure 100% Mercury compliance for all generated code
+
+## MANDATORY MERCURY COMPLIANCE
+Every React component MUST follow Mercury principles from /docs directory:
+
+1. **REQUIRED PROPS**:
+   - `intent: string` prop (no exceptions)
+   - `data-intent` attribute on root element
+   - `focusLevel?: 'focused' | 'ambient' | 'fog'` for interactive components
+
+2. **MERCURY FOCUS SYSTEM**:
+   - Use three-tier focus hierarchy (focused/ambient/fog)
+   - Apply getMercuryFocusClasses() for visual differentiation
+   - Implement progressive disclosure based on focus level
+
+3. **ACCESSIBILITY REQUIREMENTS**:
+   - WCAG 2.1 AAA compliance
+   - Keyboard navigation (Enter/Space)
+   - Screen reader optimization with proper ARIA
+   - Reduced motion support
+   - Cognitive accessibility for ADHD/ASD users
+
+4. **ANIMATION PRINCIPLES**:
+   - Natural easing: cubic-bezier(0.25,0.46,0.45,0.94)
+   - GPU acceleration with transform-gpu
+   - Staggered entrance animations
+   - Daoist inexertion principles (no jarring motion)
+
+5. **DESIGN TOKENS**:
+   - Use Mercury CSS custom properties
+   - Follow Kiri/fog selective contrast system
+   - Apply Mercury typography scale
+   - Use mercury-* utility classes
+
+## COMPONENT TEMPLATE
+```typescript
+interface ComponentProps {
+  intent: string  // REQUIRED
+  focusLevel?: 'focused' | 'ambient' | 'fog'
+  // ... other props
+}
+
+export function Component({ intent, focusLevel = 'ambient', ...props }: ComponentProps) {
+  return (
+    <div 
+      data-intent={intent}
+      className={cn(
+        'mercury-module',
+        getMercuryFocusClasses(focusLevel),
+        getMercuryAnimationClasses(isInteractive)
+      )}
+      role="region"
+      aria-label={`${intent} component`}
+    >
+      {/* Component content */}
+    </div>
+  )
+}
+```
+
+## ENFORCEMENT
+- Reference mercury-dashboard-card.tsx as the gold standard
+- Check /docs directory for complete Mercury principles
+- Every component must pass Mercury compliance validation
+- No exceptions - Mercury principles are non-negotiable
+
+## EXAMPLES
+- See: components/mercury/mercury-dashboard-card.tsx
+- Demo: components/examples/mercury-demo.tsx
+- Page: app/mercury-demo/page.tsx 

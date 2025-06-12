@@ -2,836 +2,494 @@
 
 import * as React from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { 
-  ArrowLeft,
-  ArrowRight,
-  User,
-  Briefcase,
-  Users,
-  Plus,
-  Info,
-  CheckCircle,
-  Star,
-  MapPin,
-  Calendar,
-  Clock,
-  Mail,
-  Phone,
-  Globe,
-  Zap,
-  Play,
-  Pause
-} from "lucide-react"
 import Link from "next/link"
+import { useState, useRef, useEffect } from "react"
 
-// Workflow step types
-type WorkflowStep = {
-  id: string
-  type: 'welcome' | 'profile' | 'project' | 'team' | 'custom' | 'completion'
-  title: string
-  description: string
-  completed: boolean
-  interactive?: boolean
-  showDetails?: boolean
-}
+// Import our clean Mercury card components
+import { ProductCard } from "@/components/mercury/product-card"
+import { MusicCard } from "@/components/mercury/music-card"
+import { MessageCard } from "@/components/mercury/message-card"
+import { LocationCard } from "@/components/mercury/location-card"
 
-// Base Flowy Card component for horizontal layout
-const HorizontalFlowyCard = ({ 
-  children, 
-  className = "",
-  delay = 0,
-  size = "default",
-  interactive = false,
-  completed = false,
-  active = false,
-  onClick
-}: { 
-  children: React.ReactNode
-  className?: string
-  delay?: number
-  size?: "compact" | "default" | "large"
-  interactive?: boolean
-  completed?: boolean
-  active?: boolean
-  onClick?: () => void
-}) => (
-  <motion.div
-    initial={{ opacity: 0, x: 100, scale: 0.8 }}
-    animate={{ 
-      opacity: 1, 
-      x: 0, 
-      scale: active ? 1.05 : completed ? 0.95 : 1,
-      filter: completed && !active ? "brightness(0.8)" : "brightness(1)"
-    }}
-    transition={{ 
-      duration: 1.2, 
-      delay,
-      ease: [0.25, 0.4, 0.25, 1]
-    }}
-    whileHover={interactive ? { 
-      y: -8,
-      scale: active ? 1.08 : 1.02,
-      transition: { duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }
-    } : {}}
-    onClick={onClick}
-    className={`
-      relative
-      bg-white/20 
-      backdrop-blur-xl 
-      border border-white/10
-      rounded-[1.5rem]
-      shadow-2xl shadow-black/5
-      hover:shadow-3xl hover:shadow-black/10
-      transition-all duration-700 ease-out
-      ${size === "compact" ? "p-4 w-72" : size === "large" ? "p-8 w-96" : "p-6 w-80"}
-      ${interactive ? "cursor-pointer" : ""}
-      ${active ? "ring-2 ring-blue-300/50 bg-white/30" : ""}
-      ${completed ? "bg-green-50/30 border-green-200/30" : ""}
-      min-h-[320px]
-      flex flex-col
-      ${className}
-    `}
-  >
-    {/* Completion indicator */}
-    {completed && (
-      <motion.div
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        className="absolute -top-2 -right-2 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center shadow-lg"
-      >
-        <CheckCircle className="w-5 h-5 text-white" />
-      </motion.div>
-    )}
-    
-    {/* Active indicator */}
-    {active && !completed && (
-      <motion.div
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        className="absolute -top-2 -right-2 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center shadow-lg"
-      >
-        <Play className="w-4 h-4 text-white ml-0.5" />
-      </motion.div>
-    )}
-    
-    {children}
-  </motion.div>
-)
-
-// Flowing text component
-const FlowingText = ({ 
-  children, 
-  size = "base",
-  className = "" 
-}: { 
-  children: React.ReactNode
-  size?: "xs" | "sm" | "base" | "lg" | "xl" | "2xl"
-  className?: string
-}) => {
-  const sizeClasses = {
-    xs: "text-xs leading-relaxed",
-    sm: "text-sm leading-relaxed",
-    base: "text-base leading-relaxed", 
-    lg: "text-lg leading-relaxed",
-    xl: "text-xl leading-relaxed font-light",
-    "2xl": "text-2xl leading-relaxed font-light"
-  }
+export default function WorkflowPage() {
+  // Workflow state management
+  const [currentStep, setCurrentStep] = useState(0)
+  const [visibleCards, setVisibleCards] = useState([0]) // Track which cards are visible
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
   
-  return (
-    <div className={`text-slate-700 ${sizeClasses[size]} ${className}`}>
-      {children}
-    </div>
-  )
-}
-
-// Dangling detail card for horizontal layout
-const HorizontalDanglingCard = ({ 
-  children, 
-  position = "right",
-  show = false,
-  onClose
-}: {
-  children: React.ReactNode
-  position?: "right" | "left" | "bottom"
-  show: boolean
-  onClose?: () => void
-}) => {
-  const positionClasses = {
-    right: "left-full ml-4 top-0",
-    left: "right-full mr-4 top-0",
-    bottom: "top-full mt-4 left-1/2 transform -translate-x-1/2"
-  }
-
-  return (
-    <AnimatePresence>
-      {show && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8, x: position === "right" ? -20 : position === "left" ? 20 : 0, y: position === "bottom" ? -20 : 0 }}
-          animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
-          exit={{ opacity: 0, scale: 0.8, x: position === "right" ? -20 : position === "left" ? 20 : 0, y: position === "bottom" ? -20 : 0 }}
-          transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
-          className={`absolute ${positionClasses[position]} z-20`}
-          style={{ 
-            maxWidth: '600px',
-            minWidth: '480px'
-          }}
-        >
-          <div className="bg-white/40 backdrop-blur-lg border border-white/30 rounded-xl p-4 shadow-xl">
-            {onClose && (
-              <button 
-                onClick={onClose}
-                className="absolute top-2 right-2 w-6 h-6 rounded-full bg-white/30 flex items-center justify-center text-slate-500 hover:text-slate-700 transition-colors"
-              >
-                ×
-              </button>
-            )}
-            {children}
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  )
-}
-
-// Welcome Step Card
-const WelcomeCard = ({ active, completed, onNext }: { active: boolean, completed: boolean, onNext: () => void }) => (
-  <HorizontalFlowyCard active={active} completed={completed} className="justify-center text-center">
-    <div className="space-y-6">
-      <motion.div
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 0.8, delay: 0.5, ease: [0.25, 0.4, 0.25, 1] }}
-        className="w-16 h-16 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full mx-auto flex items-center justify-center"
-      >
-        <Zap className="w-8 h-8 text-blue-600" />
-      </motion.div>
-      
-      <div className="space-y-3">
-        <FlowingText size="lg" className="text-slate-800 font-medium">
-          Welcome to Flowy Workflow
-        </FlowingText>
-        <FlowingText size="sm" className="text-slate-600">
-          Experience cards flowing together in horizontal harmony
-        </FlowingText>
-      </div>
-      
-      {active && !completed && (
-        <motion.button
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          onClick={onNext}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="px-6 py-2 bg-blue-500/20 backdrop-blur-sm border border-blue-300/30 rounded-lg text-blue-700 font-medium hover:bg-blue-500/30 transition-all duration-300"
-        >
-          Begin Journey
-        </motion.button>
-      )}
-    </div>
-  </HorizontalFlowyCard>
-)
-
-// Profile Setup Card
-const ProfileCard = ({ active, completed, onNext }: { active: boolean, completed: boolean, onNext: () => void }) => {
-  const [showDetails, setShowDetails] = React.useState(false)
-  
-  return (
-    <div className="relative">
-      <HorizontalFlowyCard 
-        active={active} 
-        completed={completed} 
-        interactive={active}
-        onClick={() => active && setShowDetails(!showDetails)}
-      >
-        <div className="space-y-4">
-          <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full flex items-center justify-center">
-              <User className="w-6 h-6 text-purple-600" />
-            </div>
-            <div className="flex-1">
-              <FlowingText size="base" className="text-slate-800 font-medium">
-                Setup Profile
-              </FlowingText>
-              <FlowingText size="xs" className="text-slate-500">
-                {active ? "Click for details" : completed ? "Completed" : "Coming up"}
-              </FlowingText>
-            </div>
-            {active && <Info className="w-4 h-4 text-slate-400" />}
-          </div>
-          
-          <FlowingText size="sm" className="text-slate-600">
-            Configure your workspace preferences and personal settings.
-          </FlowingText>
-          
-          {active && !completed && (
-            <motion.button
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              onClick={(e) => { e.stopPropagation(); onNext(); }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="w-full px-4 py-2 bg-purple-500/20 backdrop-blur-sm border border-purple-300/30 rounded-lg text-purple-700 font-medium hover:bg-purple-500/30 transition-all duration-300"
-            >
-              Complete Profile
-            </motion.button>
-          )}
-        </div>
-      </HorizontalFlowyCard>
-      
-      <HorizontalDanglingCard 
-        show={showDetails && active} 
-        position="right"
-        onClose={() => setShowDetails(false)}
-      >
-        <div className="space-y-2">
-          <FlowingText size="sm" className="text-slate-700 font-medium">Profile Settings</FlowingText>
-          <div className="space-y-1 text-xs text-slate-600">
-            <div className="flex items-center space-x-2">
-              <Mail className="w-3 h-3" />
-              <span>Email preferences</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Globe className="w-3 h-3" />
-              <span>Language settings</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Star className="w-3 h-3" />
-              <span>Theme customization</span>
-            </div>
-          </div>
-        </div>
-      </HorizontalDanglingCard>
-    </div>
-  )
-}
-
-// Project Selection Card  
-const ProjectCard = ({ active, completed, onNext }: { active: boolean, completed: boolean, onNext: () => void }) => {
-  const [selectedProject, setSelectedProject] = React.useState<string | null>(completed ? "design" : null)
-  const [showProjectDetails, setShowProjectDetails] = React.useState(false)
-  
-  const projects = [
-    { id: "design", name: "Design System", color: "blue" },
-    { id: "mobile", name: "Mobile App", color: "green" },
-    { id: "web", name: "Web Platform", color: "purple" }
+  // Sample data for each card type - 7 total steps
+  const workflowSteps = [
+    {
+      id: 'location-starbucks',
+      title: 'Find Location',
+      description: 'Discover nearby places and businesses',
+      component: LocationCard,
+      data: {
+        title: "Starbucks Reserve",
+        type: "Coffee Shop",
+        address: "1912 Pike Place, Seattle, WA 98101",
+        distance: "0.3 miles",
+        rating: 4.8,
+        status: "open" as const
+      },
+      intent: "starbucks-reserve-location",
+      size: "compact" as const,
+      width: "w-120"
+    },
+    {
+      id: 'message-danny',
+      title: 'Handle Communications',
+      description: 'Manage conversations and messages',
+      component: MessageCard,
+      data: {
+        contactName: "Danny Trinh",
+        contactHandle: "@dtrinh",
+        avatar: "https://i.pravatar.cc/40?u=danny",
+        lastMessage: "Let me get back to you on that. My schedule is kinda crazy right now with Mercury.",
+        timestamp: "Mon 11:26 PM",
+        platform: "Twitter Conversation",
+        status: "unread" as const,
+        messages: [
+          {
+            text: "Let me get back to you on that. My schedule is kinda crazy right now with Mercury.",
+            timestamp: "Mon 11:26 PM",
+            isOwn: false
+          },
+          {
+            text: "Haha. Oh man",
+            timestamp: "Mon 11:30 PM", 
+            isOwn: true
+          },
+          {
+            text: "I'm excited to see this beast",
+            timestamp: "Mon 11:50 PM",
+            isOwn: true
+          }
+        ]
+      },
+      intent: "danny-twitter-conversation",
+      size: "standard" as const,
+      width: "w-120"
+    },
+    {
+      id: 'music-taeyeon',
+      title: 'Control Media',
+      description: 'Manage music and entertainment',
+      component: MusicCard,
+      data: {
+        title: "Four Seasons",
+        artist: "Taeyeon",
+        album: "Daily Mix 1",
+        platform: "Music from Spotify",
+        duration: "3:42",
+        currentTime: "1:34",
+        progress: 40,
+        artwork: "https://i.scdn.co/image/ab67616d00001e02c8a11e48c91a982d086afc69",
+        status: "paused" as const,
+        playlist: "Daily Mix 1"
+      },
+      intent: "four-seasons-spotify",
+      size: "compact" as const,
+      width: "w-80"
+    },
+    {
+      id: 'product-balenciaga',
+      title: 'Browse Products',
+      description: 'Explore and purchase items',
+      component: ProductCard,
+      data: {
+        title: "Black Bonded Speed Sneakers",
+        brand: "Balenciaga",
+        price: "$795",
+        originalPrice: "$950",
+        image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400&h=300&fit=crop",
+        rating: 4,
+        reviewCount: 127,
+        status: "available" as const,
+        sizes: ["7", "8", "9", "10", "11"],
+        selectedSize: "8",
+        category: "Sneakers",
+        isWishlisted: false,
+        shipping: {
+          method: "Express Shipping",
+          time: "2-3 days",
+          cost: "Free"
+        }
+      },
+      intent: "balenciaga-speed-sneakers",
+      size: "expanded" as const,
+      width: "w-140"
+    },
+    {
+      id: 'location-blue-bottle',
+      title: 'Discover More Places',
+      description: 'Find additional nearby locations',
+      component: LocationCard,
+      data: {
+        title: "Blue Bottle Coffee",
+        type: "Cafe",
+        address: "300 Broadway, Oakland, CA",
+        distance: "1.2 miles",
+        rating: 4.6,
+        status: "open" as const
+      },
+      intent: "blue-bottle-cafe",
+      size: "compact" as const,
+      width: "w-80"
+    },
+    {
+      id: 'music-weeknd',
+      title: 'Expand Media Library',
+      description: 'Discover more entertainment options',
+      component: MusicCard,
+      data: {
+        title: "Blinding Lights",
+        artist: "The Weeknd",
+        album: "After Hours",
+        platform: "Apple Music",
+        duration: "3:20",
+        currentTime: "1:45",
+        progress: 52,
+        artwork: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&h=300&fit=crop",
+        status: "playing" as const,
+        playlist: "Weekend Vibes"
+      },
+      intent: "weekend-vibes-music",
+      size: "compact" as const,
+      width: "w-80"
+    },
+    {
+      id: 'message-team',
+      title: 'Team Collaboration',
+      description: 'Connect with your team members',
+      component: MessageCard,
+      data: {
+        contactName: "Sarah Chen",
+        contactHandle: "@sarahc",
+        avatar: "https://i.pravatar.cc/40?u=sarah",
+        lastMessage: "The new Mercury components look amazing! Great work on the workflow animations.",
+        timestamp: "Now",
+        platform: "Slack",
+        status: "unread" as const,
+        messages: [
+          {
+            text: "Hey! How's the workflow component coming along?",
+            timestamp: "2:15 PM",
+            isOwn: false
+          },
+          {
+            text: "Just finished implementing the horizontal scroll. It's looking great!",
+            timestamp: "2:18 PM",
+            isOwn: true
+          },
+          {
+            text: "The new Mercury components look amazing! Great work on the workflow animations.",
+            timestamp: "Now",
+            isOwn: false
+          }
+        ]
+      },
+      intent: "team-collaboration-slack",
+      size: "standard" as const,
+      width: "w-80"
+    }
   ]
-  
-  return (
-    <div className="relative">
-      <HorizontalFlowyCard active={active} completed={completed}>
-        <div className="space-y-4">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-green-100 to-teal-100 rounded-lg flex items-center justify-center">
-              <Briefcase className="w-5 h-5 text-green-600" />
-            </div>
-            <div className="flex-1">
-              <FlowingText size="base" className="text-slate-800 font-medium">
-                Choose Project
-              </FlowingText>
-              <FlowingText size="xs" className="text-slate-500">
-                {completed ? "Design System selected" : active ? "Select to continue" : "Coming up"}
-              </FlowingText>
-            </div>
-          </div>
-          
-          {active && (
-            <div className="space-y-2">
-              {projects.map((project) => (
-                <motion.div
-                  key={project.id}
-                  whileHover={{ x: 2 }}
-                  onClick={() => {
-                    setSelectedProject(project.id)
-                    setShowProjectDetails(true)
-                  }}
-                  className={`p-2 rounded-lg border cursor-pointer transition-all duration-300 ${
-                    selectedProject === project.id 
-                      ? 'border-blue-300 bg-blue-50/50' 
-                      : 'border-slate-200/50 hover:border-slate-300/50'
-                  }`}
-                >
-                  <FlowingText size="sm" className="text-slate-700">
-                    {project.name}
-                  </FlowingText>
-                </motion.div>
-              ))}
-            </div>
-          )}
-          
-          {selectedProject && active && !completed && (
-            <motion.button
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              onClick={onNext}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="w-full px-4 py-2 bg-green-500/20 backdrop-blur-sm border border-green-300/30 rounded-lg text-green-700 font-medium hover:bg-green-500/30 transition-all duration-300"
-            >
-              Continue with {projects.find(p => p.id === selectedProject)?.name}
-            </motion.button>
-          )}
-        </div>
-      </HorizontalFlowyCard>
+
+  // Navigation functions
+  const nextStep = () => {
+    if (currentStep < workflowSteps.length - 1) {
+      const newStep = currentStep + 1
+      setCurrentStep(newStep)
       
-      <HorizontalDanglingCard 
-        show={showProjectDetails && active} 
-        position="right"
-        onClose={() => setShowProjectDetails(false)}
-      >
-        <div className="space-y-2">
-          <FlowingText size="sm" className="text-slate-700 font-medium">
-            Project Details
-          </FlowingText>
-          <div className="space-y-1 text-xs text-slate-600">
-            <div className="flex items-center space-x-2">
-              <Calendar className="w-3 h-3" />
-              <span>Timeline: 8 weeks</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Users className="w-3 h-3" />
-              <span>Team size: 4-6 people</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Clock className="w-3 h-3" />
-              <span>Status: Planning phase</span>
-            </div>
-          </div>
-        </div>
-      </HorizontalDanglingCard>
-    </div>
-  )
-}
-
-// Team Invitation Card
-const TeamCard = ({ active, completed, onNext }: { active: boolean, completed: boolean, onNext: () => void }) => {
-  const [inviteSent, setInviteSent] = React.useState(completed)
-  
-  return (
-    <HorizontalFlowyCard active={active} completed={completed}>
-      <div className="space-y-4">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-pink-100 to-orange-100 rounded-lg flex items-center justify-center">
-            <Users className="w-5 h-5 text-pink-600" />
-          </div>
-          <div className="flex-1">
-            <FlowingText size="base" className="text-slate-800 font-medium">
-              Invite Team
-            </FlowingText>
-            <FlowingText size="xs" className="text-slate-500">
-              {completed ? "Invitations sent" : active ? "Add collaborators" : "Coming up"}
-            </FlowingText>
-          </div>
-        </div>
-        
-        {active && (
-          <div className="space-y-3">
-            <input 
-              type="email" 
-              placeholder="colleague@company.com"
-              className="w-full px-3 py-2 text-sm bg-white/50 backdrop-blur-sm border border-white/30 rounded-lg text-slate-700 placeholder-slate-500 focus:outline-none focus:border-pink-300/50 transition-all duration-300"
-            />
-            
-            <motion.button
-              onClick={() => setInviteSent(true)}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              disabled={inviteSent}
-              className={`w-full px-4 py-2 text-sm backdrop-blur-sm border rounded-lg font-medium transition-all duration-300 ${
-                inviteSent 
-                  ? 'bg-green-500/20 border-green-300/30 text-green-700'
-                  : 'bg-pink-500/20 border-pink-300/30 text-pink-700 hover:bg-pink-500/30'
-              }`}
-            >
-              {inviteSent ? '✓ Invitation Sent' : 'Send Invitation'}
-            </motion.button>
-          </div>
-        )}
-        
-        {inviteSent && active && !completed && (
-          <motion.button
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            onClick={onNext}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="w-full px-4 py-2 text-sm bg-slate-500/20 backdrop-blur-sm border border-slate-300/30 rounded-lg text-slate-700 font-medium hover:bg-slate-500/30 transition-all duration-300"
-          >
-            Continue Workflow
-          </motion.button>
-        )}
-      </div>
-    </HorizontalFlowyCard>
-  )
-}
-
-// Add Custom Step Card
-const CustomStepCard = ({ active, completed, onNext, onAddStep }: { active: boolean, completed: boolean, onNext: () => void, onAddStep: (step: string) => void }) => {
-  const [customStep, setCustomStep] = React.useState("")
-  const [steps, setSteps] = React.useState<string[]>(completed ? ["Design Review", "Testing Phase"] : [])
-  
-  const addStep = () => {
-    if (customStep.trim()) {
-      const newSteps = [...steps, customStep]
-      setSteps(newSteps)
-      onAddStep(customStep)
-      setCustomStep("")
+      // Add the new card to visible cards if not already visible
+      if (!visibleCards.includes(newStep)) {
+        setVisibleCards(prev => [...prev, newStep])
+      }
+      
+      // Scroll to show the new card
+      setTimeout(() => {
+        if (scrollContainerRef.current) {
+          const cardWidth = 320 + 32 // card width + gap
+          scrollContainerRef.current.scrollTo({
+            left: newStep * cardWidth,
+            behavior: 'smooth'
+          })
+        }
+      }, 100)
     }
   }
-  
-  return (
-    <HorizontalFlowyCard active={active} completed={completed}>
-      <div className="space-y-4">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-indigo-100 to-blue-100 rounded-lg flex items-center justify-center">
-            <Plus className="w-5 h-5 text-indigo-600" />
-          </div>
-          <div className="flex-1">
-            <FlowingText size="base" className="text-slate-800 font-medium">
-              Customize Workflow
-            </FlowingText>
-            <FlowingText size="xs" className="text-slate-500">
-              {completed ? "Steps customized" : active ? "Add custom steps" : "Coming up"}
-            </FlowingText>
-          </div>
-        </div>
-        
-        {active && (
-          <div className="space-y-3">
-            <div className="flex space-x-2">
-              <input 
-                type="text"
-                value={customStep}
-                onChange={(e) => setCustomStep(e.target.value)}
-                placeholder="Add workflow step..."
-                className="flex-1 px-3 py-2 text-sm bg-white/50 backdrop-blur-sm border border-white/30 rounded-lg text-slate-700 placeholder-slate-500 focus:outline-none focus:border-indigo-300/50 transition-all duration-300"
-                onKeyDown={(e) => e.key === 'Enter' && addStep()}
-              />
-              <motion.button
-                onClick={addStep}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-3 py-2 bg-indigo-500/20 backdrop-blur-sm border border-indigo-300/30 rounded-lg text-indigo-700 hover:bg-indigo-500/30 transition-all duration-300"
-              >
-                <Plus className="w-4 h-4" />
-              </motion.button>
-            </div>
-            
-            {steps.length > 0 && (
-              <div className="space-y-2 max-h-20 overflow-y-auto">
-                {steps.map((step, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    className="flex items-center space-x-2 p-2 bg-white/20 rounded text-xs"
-                  >
-                    <CheckCircle className="w-3 h-3 text-green-600" />
-                    <FlowingText size="xs" className="text-slate-700">{step}</FlowingText>
-                  </motion.div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-        
-        {active && !completed && (
-          <motion.button
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            onClick={onNext}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="w-full px-4 py-2 text-sm bg-indigo-500/20 backdrop-blur-sm border border-indigo-300/30 rounded-lg text-indigo-700 font-medium hover:bg-indigo-500/30 transition-all duration-300"
-          >
-            Complete Workflow
-          </motion.button>
-        )}
-      </div>
-    </HorizontalFlowyCard>
-  )
-}
 
-// Completion Card
-const CompletionCard = ({ active, completed, customSteps }: { active: boolean, completed: boolean, customSteps: string[] }) => (
-  <HorizontalFlowyCard active={active} completed={completed} className="justify-center text-center">
-    <div className="space-y-6">
-      <motion.div
-        initial={{ scale: 0, rotate: -180 }}
-        animate={{ scale: 1, rotate: 0 }}
-        transition={{ duration: 1, delay: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
-        className="w-16 h-16 bg-gradient-to-br from-green-100 to-emerald-100 rounded-full mx-auto flex items-center justify-center"
-      >
-        <CheckCircle className="w-8 h-8 text-green-600" />
-      </motion.div>
+  const prevStep = () => {
+    if (currentStep > 0) {
+      const newStep = currentStep - 1
+      setCurrentStep(newStep)
       
-      <div className="space-y-3">
-        <FlowingText size="lg" className="text-slate-800 font-medium">
-          Workflow Complete!
-        </FlowingText>
-        <FlowingText size="sm" className="text-slate-600">
-          All cards flowed together beautifully in horizontal harmony
-        </FlowingText>
-        
-        {active && customSteps.length > 0 && (
-          <div className="text-xs text-slate-600">
-            Custom steps: {customSteps.length}
-          </div>
-        )}
-      </div>
-      
-      {active && (
-        <div className="flex flex-col space-y-2">
-          <Link 
-            href="/cards"
-            className="px-4 py-2 text-xs bg-blue-500/20 backdrop-blur-sm border border-blue-300/30 rounded-lg text-blue-700 font-medium hover:bg-blue-500/30 transition-all duration-300"
-          >
-            View All Cards
-          </Link>
-          <Link 
-            href="/"
-            className="px-4 py-2 text-xs bg-slate-500/20 backdrop-blur-sm border border-slate-300/30 rounded-lg text-slate-700 font-medium hover:bg-slate-500/30 transition-all duration-300"
-          >
-            Back to Home
-          </Link>
-        </div>
-      )}
-    </div>
-  </HorizontalFlowyCard>
-)
+      // Scroll to show the previous card
+      setTimeout(() => {
+        if (scrollContainerRef.current) {
+          const cardWidth = 320 + 32 // card width + gap
+          scrollContainerRef.current.scrollTo({
+            left: newStep * cardWidth,
+            behavior: 'smooth'
+          })
+        }
+      }, 100)
+    }
+  }
 
-export default function HorizontalWorkflowShowcase() {
-  const [currentStep, setCurrentStep] = React.useState(0)
-  const [customSteps, setCustomSteps] = React.useState<string[]>([])
-  const [isPlaying, setIsPlaying] = React.useState(false)
-  const [mounted, setMounted] = React.useState(false)
-  const scrollContainerRef = React.useRef<HTMLDivElement>(null)
-  const cardRefs = React.useRef<(HTMLDivElement | null)[]>([])
-  
-  const nextStep = () => {
-    setCurrentStep(prev => Math.min(prev + 1, 5))
-  }
-  
-  const addCustomStep = (step: string) => {
-    setCustomSteps(prev => [...prev, step])
-  }
-  
-  // Ensure component is mounted before running client-side effects
-  React.useEffect(() => {
-    setMounted(true)
-  }, [])
-  
-  // Auto-scroll to active card - only after mount
-  React.useEffect(() => {
-    if (!mounted) return
+  const goToStep = (stepIndex: number) => {
+    setCurrentStep(stepIndex)
     
-    if (scrollContainerRef.current && cardRefs.current[currentStep]) {
-      const container = scrollContainerRef.current
-      const activeCard = cardRefs.current[currentStep]
-      
-      if (activeCard) {
-        const containerRect = container.getBoundingClientRect()
-        const cardRect = activeCard.getBoundingClientRect()
-        
-        // Calculate the scroll position to center the active card
-        const scrollLeft = activeCard.offsetLeft - (containerRect.width / 2) + (cardRect.width / 2)
-        
-        // Smooth scroll to the active card
-        container.scrollTo({
-          left: scrollLeft,
+    // Add all cards up to and including the target step
+    const newVisibleCards = Array.from({ length: stepIndex + 1 }, (_, i) => i)
+    setVisibleCards(newVisibleCards)
+    
+    // Scroll to the target card
+    setTimeout(() => {
+      if (scrollContainerRef.current) {
+        const cardWidth = 320 + 32 // card width + gap
+        scrollContainerRef.current.scrollTo({
+          left: stepIndex * cardWidth,
           behavior: 'smooth'
         })
       }
-    }
-  }, [currentStep, mounted])
-  
-  // Auto-play functionality - only after mount
-  React.useEffect(() => {
-    if (!mounted) return
-    
-    if (isPlaying && currentStep < 5) {
-      const timer = setTimeout(() => {
-        setCurrentStep(prev => prev + 1)
-      }, 3000)
-      return () => clearTimeout(timer)
-    }
-  }, [isPlaying, currentStep, mounted])
-  
+    }, 100)
+  }
+
+  // Mercury animation variants for cards sliding in
+  const cardVariants = {
+    hidden: {
+      x: 400,
+      opacity: 0,
+      scale: 0.9,
+      filter: "blur(8px)"
+    },
+    visible: (index: number) => ({
+      x: 0,
+      opacity: 1,
+      scale: 1,
+      filter: "blur(0px)",
+      transition: {
+        duration: 0.6,
+        delay: index * 0.1,
+        ease: [0.25, 0.46, 0.45, 0.94] // Mercury easing
+      }
+    })
+  }
+
+  const currentStepData = workflowSteps[currentStep]
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
-      {/* Navigation */}
-      <div className="pt-6 pb-4">
-        <div className="max-w-full mx-auto px-8">
-          <div className="flex items-center justify-between">
-            <Link 
-              href="/cards"
-              className="inline-flex items-center space-x-2 text-slate-600 hover:text-slate-800 transition-colors"
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
+      {/* Enhanced Header Section */}
+      {/* <div className="px-8 py-16">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="max-w-5xl"
+        >
+          <p className="text-xl text-slate-600 leading-relaxed max-w-3xl">
+            Experience a step-by-step workflow powered by Mercury design principles. 
+            Each module demonstrates focused interaction patterns with natural horizontal flow.
+          </p>
+        </motion.div>
+      </div> */}
+
+
+
+      {/* Main Workflow Area */}
+      <div className="px-8 pb-16">
+        <div className="mx-auto">
+          
+          {/* Horizontal Scrolling Card Container */}
+          <div className="mb-16">
+            <div 
+              ref={scrollContainerRef}
+              className="overflow-x-auto overflow-y-visible py-8 px-8 scrollbar-hide"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
-              <ArrowLeft className="w-4 h-4" />
-              <span className="text-sm">Back to Cards</span>
-            </Link>
-            
-            <div className="flex items-center space-x-4">
-              <motion.button
-                onClick={() => setIsPlaying(!isPlaying)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="flex items-center space-x-2 px-4 py-2 bg-white/30 backdrop-blur-lg border border-white/20 rounded-xl text-slate-700 hover:bg-white/40 transition-all duration-300"
-              >
-                {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-                <span className="text-sm">{isPlaying ? "Pause" : "Auto-play"}</span>
-              </motion.button>
-              
-              <FlowingText size="sm" className="text-slate-600">
-                Horizontal Flow • Step {currentStep + 1} of 6
-              </FlowingText>
+              <div className="flex space-x-8 w-max">
+                {visibleCards.map((cardIndex) => {
+                  const stepData = workflowSteps[cardIndex]
+                  const CardComponent = stepData.component as any
+                  
+                  return (
+                    <motion.div
+                      key={stepData.id}
+                      custom={cardIndex}
+                      variants={cardVariants}
+                      initial="hidden"
+                      animate="visible"
+                      className={`flex-shrink-0 ${stepData.width} h-auto`}
+                    >
+                      <div className={`
+                        relative transition-all duration-300 transform-gpu
+                        ${cardIndex === currentStep 
+                          ? 'scale-105 z-10' 
+                          : cardIndex < currentStep 
+                            ? 'scale-95 opacity-80' 
+                            : 'scale-100'
+                        }
+                      `}>
+                        <CardComponent
+                          intent={stepData.intent}
+                          focusLevel={cardIndex === currentStep ? "focused" : "ambient"}
+                          size={stepData.size}
+                          data={stepData.data}
+                          className={`
+                            h-full transition-shadow duration-500 transform-gpu
+                            ${cardIndex === currentStep 
+                              ? 'shadow-2xl ring-2 ring-slate-200' 
+                              : 'shadow-lg hover:shadow-xl'
+                            }
+                          `}
+                          isInteractive={true}
+                        />
+                        
+                        {/* Step Number Badge */}
+                        <div className={`
+                          absolute -top-3 -left-3 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold
+                          transition-all duration-300
+                          ${cardIndex === currentStep 
+                            ? 'bg-slate-900 text-white scale-110' 
+                            : cardIndex < currentStep 
+                              ? 'bg-emerald-500 text-white' 
+                              : 'bg-slate-200 text-slate-600'
+                          }
+                        `}>
+                          {cardIndex < currentStep ? '✓' : cardIndex + 1}
+                        </div>
+                      </div>
+                    </motion.div>
+                  )
+                })}
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Main Horizontal Workflow - Fixed Truncation */}
-      <div className="pt-16 pb-16">
-        <div className="w-full px-8">
-          {/* Horizontal scrolling container */}
-          <div ref={scrollContainerRef} className="overflow-x-auto overflow-y-visible">
-            <div className="flex space-x-8 pb-8 min-w-fit justify-center" style={{ minHeight: '500px', paddingTop: '2rem' }}>
-              <motion.div
-                ref={(el) => { cardRefs.current[0] = el }}
-                initial={{ opacity: 0.3 }}
-                animate={{ 
-                  opacity: 0 <= currentStep ? 1 : 0.4,
-                  scale: 0 === currentStep ? 1 : 0.95
-                }}
-                transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
-                className="flex-shrink-0"
-              >
-                <WelcomeCard 
-                  active={0 === currentStep}
-                  completed={0 < currentStep}
-                  onNext={nextStep}
-                />
-              </motion.div>
+          {/* Navigation Controls */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="flex items-center justify-center space-x-6"
+          >
+            <button
+              onClick={prevStep}
+              disabled={currentStep === 0}
+              className={`
+                flex items-center space-x-3 px-6 py-3 rounded-xl font-medium
+                transition-all duration-300 transform-gpu
+                ${currentStep === 0
+                  ? 'bg-slate-100 text-slate-400 cursor-not-allowed'
+                  : 'bg-white text-slate-700 hover:bg-slate-50 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0'
+                }
+                border border-slate-200 shadow-sm
+              `}
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              <span>Previous</span>
+            </button>
 
-              <motion.div
-                ref={(el) => { cardRefs.current[1] = el }}
-                initial={{ opacity: 0.3 }}
-                animate={{ 
-                  opacity: 1 <= currentStep ? 1 : 0.4,
-                  scale: 1 === currentStep ? 1 : 0.95
-                }}
-                transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
-                className="flex-shrink-0"
-              >
-                <ProfileCard 
-                  active={1 === currentStep}
-                  completed={1 < currentStep}
-                  onNext={nextStep}
-                />
-              </motion.div>
-
-              <motion.div
-                ref={(el) => { cardRefs.current[2] = el }}
-                initial={{ opacity: 0.3 }}
-                animate={{ 
-                  opacity: 2 <= currentStep ? 1 : 0.4,
-                  scale: 2 === currentStep ? 1 : 0.95
-                }}
-                transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
-                className="flex-shrink-0"
-              >
-                <ProjectCard 
-                  active={2 === currentStep}
-                  completed={2 < currentStep}
-                  onNext={nextStep}
-                />
-              </motion.div>
-
-              <motion.div
-                ref={(el) => { cardRefs.current[3] = el }}
-                initial={{ opacity: 0.3 }}
-                animate={{ 
-                  opacity: 3 <= currentStep ? 1 : 0.4,
-                  scale: 3 === currentStep ? 1 : 0.95
-                }}
-                transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
-                className="flex-shrink-0"
-              >
-                <TeamCard 
-                  active={3 === currentStep}
-                  completed={3 < currentStep}
-                  onNext={nextStep}
-                />
-              </motion.div>
-
-              <motion.div
-                ref={(el) => { cardRefs.current[4] = el }}
-                initial={{ opacity: 0.3 }}
-                animate={{ 
-                  opacity: 4 <= currentStep ? 1 : 0.4,
-                  scale: 4 === currentStep ? 1 : 0.95
-                }}
-                transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
-                className="flex-shrink-0"
-              >
-                <CustomStepCard 
-                  active={4 === currentStep}
-                  completed={4 < currentStep}
-                  onNext={nextStep}
-                  onAddStep={addCustomStep}
-                />
-              </motion.div>
-
-              <motion.div
-                ref={(el) => { cardRefs.current[5] = el }}
-                initial={{ opacity: 0.3 }}
-                animate={{ 
-                  opacity: 5 <= currentStep ? 1 : 0.4,
-                  scale: 5 === currentStep ? 1 : 0.95
-                }}
-                transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
-                className="flex-shrink-0"
-              >
-                <CompletionCard 
-                  active={5 === currentStep}
-                  completed={5 < currentStep}
-                  customSteps={customSteps}
-                />
-              </motion.div>
+            <div className="flex items-center space-x-2 px-4 py-2 bg-white/60 backdrop-blur-sm rounded-lg border border-white/40">
+              <span className="text-sm font-medium text-slate-600">
+                {currentStep + 1} / {workflowSteps.length}
+              </span>
             </div>
-          </div>
-        </div>
-      </div>
 
-      {/* Progress Flow Indicator - Fixed at Bottom */}
-      <div className="pb-8">
-        <div className="max-w-full mx-auto px-8">
-          <div className="flex items-center justify-center space-x-3">
-            {[0, 1, 2, 3, 4, 5].map((index) => (
-              <React.Fragment key={index}>
-                <motion.button
-                  onClick={() => setCurrentStep(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-500 cursor-pointer ${
-                    index <= currentStep ? 'bg-blue-500' : 'bg-slate-300'
-                  }`}
-                  animate={{ 
-                    scale: index === currentStep ? 1.5 : 1,
-                    backgroundColor: index === currentStep ? '#3B82F6' : index < currentStep ? '#10B981' : '#CBD5E1'
+            <button
+              onClick={nextStep}
+              disabled={currentStep === workflowSteps.length - 1}
+              className={`
+                flex items-center space-x-3 px-6 py-3 rounded-xl font-medium
+                transition-all duration-300 transform-gpu
+                ${currentStep === workflowSteps.length - 1
+                  ? 'bg-slate-100 text-slate-400 cursor-not-allowed'
+                  : 'bg-slate-900 text-white hover:bg-slate-800 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0'
+                }
+                shadow-sm
+              `}
+            >
+              <span>Next</span>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </motion.div>
+
+          {/* Workflow Completion */}
+          {currentStep === workflowSteps.length - 1 && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              className="mt-12 text-center"
+            >
+              <div className="bg-gradient-to-r from-emerald-50 to-green-50 border border-emerald-200 rounded-2xl p-8 max-w-md mx-auto">
+                <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-slate-900 mb-2">Workflow Complete!</h3>
+                <p className="text-slate-600 mb-4">
+                  You've experienced all {workflowSteps.length} Mercury workflow components.
+                </p>
+                <button
+                  onClick={() => {
+                    setCurrentStep(0)
+                    setVisibleCards([0])
+                    if (scrollContainerRef.current) {
+                      scrollContainerRef.current.scrollTo({ left: 0, behavior: 'smooth' })
+                    }
                   }}
-                  whileHover={{ scale: 1.3 }}
-                />
-                {index < 5 && (
-                  <motion.div 
-                    className="w-8 h-0.5 transition-all duration-500"
-                    animate={{ 
-                      backgroundColor: index < currentStep ? '#10B981' : '#CBD5E1'
-                    }}
-                  />
-                )}
-              </React.Fragment>
-            ))}
-          </div>
+                  className="inline-flex items-center space-x-2 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors duration-200"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                  <span>Restart Workflow</span>
+                </button>
+              </div>
+            </motion.div>
+          )}
         </div>
       </div>
+
+      {/* Enhanced Navigation */}
+      <div className="px-8 py-12 bg-gradient-to-r from-slate-50 to-white border-t border-slate-200/50">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
+          <Link 
+            href="/"
+            className="inline-flex items-center space-x-3 text-slate-600 hover:text-slate-900 transition-all duration-300 group"
+          >
+            <div className="p-3 rounded-full bg-white/60 group-hover:bg-white transition-all duration-300 shadow-sm group-hover:shadow-md">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+            </div>
+            <span className="font-medium text-lg">Back to Home</span>
+          </Link>
+        </motion.div>
+      </div>
+
+      {/* Hide scrollbar styles */}
+      <style jsx>{`
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
     </div>
   )
 } 

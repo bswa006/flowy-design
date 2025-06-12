@@ -338,22 +338,13 @@ export default function CardsShowcase() {
               <span className="text-sm">Back to Home</span>
             </Link>
             
-            <div className="flex items-center space-x-3">
-              <Link 
-                href="/mercury-design"
-                className="inline-flex items-center space-x-2 px-4 py-2 bg-gray-100/80 backdrop-blur-lg border border-gray-300/20 rounded-xl text-gray-700 hover:text-gray-900 hover:bg-gray-200/80 transition-all duration-500 ease-out hover:scale-105"
-              >
-                <span className="text-sm font-medium">Mercury Design</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link 
-                href="/workflow"
-                className="inline-flex items-center space-x-2 px-4 py-2 bg-white/30 backdrop-blur-lg border border-white/20 rounded-xl text-slate-700 hover:text-slate-800 hover:bg-white/40 transition-all duration-500 ease-out hover:scale-105"
-              >
-                <span className="text-sm font-medium">Try Interactive Workflow</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
+            <Link 
+              href="/workflow"
+              className="inline-flex items-center space-x-2 px-4 py-2 bg-white/30 backdrop-blur-lg border border-white/20 rounded-xl text-slate-700 hover:text-slate-800 hover:bg-white/40 transition-all duration-500 ease-out hover:scale-105"
+            >
+              <span className="text-sm font-medium">Try Interactive Workflow</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </div>
       </div>
