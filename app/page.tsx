@@ -95,18 +95,26 @@ export default function TrueFlowyShowcase() {
               Cards that float like clouds, flow like water, and breathe with generous space
             </FlowingText>
             
-            {/* Navigation to Cards Showcase */}
+            {/* Navigation to Design Systems */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.5, ease: [0.25, 0.4, 0.25, 1] }}
-              className="mt-12"
+              className="mt-12 flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6"
             >
               <Link 
                 href="/cards"
                 className="inline-flex items-center space-x-3 px-8 py-4 bg-white/30 backdrop-blur-lg border border-white/20 rounded-2xl text-slate-700 hover:text-slate-800 hover:bg-white/40 transition-all duration-500 ease-out hover:scale-105"
               >
-                <span className="text-lg font-medium">Explore Card Collection</span>
+                <span className="text-lg font-medium">Flowy Card Collection</span>
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+              
+              <Link 
+                href="/mercury-design"
+                className="inline-flex items-center space-x-3 px-8 py-4 bg-gray-100/60 backdrop-blur-lg border border-gray-300/30 rounded-2xl text-gray-700 hover:text-gray-900 hover:bg-gray-200/60 transition-all duration-500 ease-out hover:scale-105"
+              >
+                <span className="text-lg font-medium">Mercury Design System</span>
                 <ArrowRight className="w-5 h-5" />
               </Link>
             </motion.div>
