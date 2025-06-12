@@ -344,15 +344,7 @@ export function EnterpriseDashboardCard({
         }
       }}
     >
-      {/* Clean accent bar using Mercury tokens */}
-      <div className={cn(
-        'absolute top-0 left-0 right-0 rounded-t-2xl',
-        statusColors.accent,
-        getMercuryAccentBar(focusLevel, data.status || 'neutral').height,
-        getMercuryAccentBar(focusLevel, data.status || 'neutral').opacity
-      )} />
-      
-              {/* Header with status and actions */}
+        {/* Header with status and actions */}
         <div className="flex items-start justify-between mb-5">
           <div className="flex items-center space-x-3">
             <div className={cn(

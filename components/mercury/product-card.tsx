@@ -138,22 +138,7 @@ export function ProductCard({
       {...props}
     >
       
-      {/* Clean Mercury Status Accent Bar */}
-      <div className={cn(
-        'absolute top-0 left-0 right-0',
-        MERCURY_RADIUS.accentBar,
-        statusColors.accent,
-        getMercuryAccentBar(focusLevel, 
-          data.status === 'available' ? 'healthy' : 
-          data.status === 'limited' ? 'warning' : 
-          data.status === 'sold-out' ? 'critical' : 'neutral'
-        ).height,
-        getMercuryAccentBar(focusLevel, 
-          data.status === 'available' ? 'healthy' : 
-          data.status === 'limited' ? 'warning' : 
-          data.status === 'sold-out' ? 'critical' : 'neutral'
-        ).opacity
-      )} />
+
       
       {/* Component Content */}
       <div className="relative z-10 p-6">

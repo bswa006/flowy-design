@@ -138,21 +138,7 @@ export function MusicCard({
       {...props}
     >
       
-      {/* Mercury Status Accent Bar */}
-      <div className={cn(
-        'absolute top-0 left-0 right-0',
-        MERCURY_RADIUS.accentBar,
-        focusLevel === 'focused' && [
-          data.status === 'buffering' && 'h-2',
-          data.status !== 'buffering' && 'h-1.5'
-        ],
-        focusLevel === 'ambient' && 'h-1.5',
-        focusLevel === 'fog' && 'h-1',
-        statusColors.accent,
-        focusLevel === 'focused' && (data.status === 'buffering' ? 'opacity-90' : 'opacity-80'),
-        focusLevel === 'ambient' && 'opacity-70',
-        focusLevel === 'fog' && 'opacity-60'
-      )} />
+
       
       {/* Component Content */}
       <div className="relative z-10 p-6">
