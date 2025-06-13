@@ -5,10 +5,11 @@ import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 import { useState, useRef, useEffect } from "react"
 
-// Add global type definition for scroll animation
+// Mercury OS Spatial Computing - Remove old scroll animation globals
+// Add Mercury spatial state management
 declare global {
   interface Window {
-    scrollAnimationRAF?: number;
+    mercurySpaceDepth?: number;
   }
 }
 
@@ -19,11 +20,6 @@ import { MessageCard } from "@/components/mercury/message-card"
 import { LocationCard } from "@/components/mercury/location-card"
 
 export default function WorkflowPage() {
-  // Workflow state management
-  const [currentStep, setCurrentStep] = useState(0)
-  const [visibleCards, setVisibleCards] = useState([0]) // Track which cards are visible
-  const scrollContainerRef = useRef<HTMLDivElement>(null)
-  
   // Sample data for each card type - 7 total steps
   const workflowSteps = [
     {
@@ -41,7 +37,7 @@ export default function WorkflowPage() {
       },
       intent: "starbucks-reserve-location",
       size: "compact" as const,
-      width: "w-120"
+      width: "w-80"
     },
     {
       id: 'message-danny',
@@ -76,7 +72,7 @@ export default function WorkflowPage() {
       },
       intent: "danny-twitter-conversation",
       size: "standard" as const,
-      width: "w-120"
+      width: "w-96"
     },
     {
       id: 'music-taeyeon',
@@ -125,7 +121,7 @@ export default function WorkflowPage() {
       },
       intent: "balenciaga-speed-sneakers",
       size: "expanded" as const,
-      width: "w-140"
+      width: "w-[28rem]"
     },
     {
       id: 'location-blue-bottle',
@@ -198,453 +194,559 @@ export default function WorkflowPage() {
       },
       intent: "team-collaboration-slack",
       size: "standard" as const,
-      width: "w-80"
+      width: "w-96"
     }
   ]
 
-  // Shared smooth scroll function for perfect consistency
-  const smoothScrollTo = (targetElement: HTMLElement) => {
-    if (!scrollContainerRef.current) return;
-    
-    const container = scrollContainerRef.current;
-    
-    // First, make sure any in-progress animations are stopped
-    if (window.scrollAnimationRAF) {
-      window.cancelAnimationFrame(window.scrollAnimationRAF);
-      window.scrollAnimationRAF = undefined;
-    }
+  // Mercury OS State Management
+  const [currentStep, setCurrentStep] = useState(0)
+  const [visibleCards, setVisibleCards] = useState([0]) // Progressive reveal
+  const [manualPosition, setManualPosition] = useState(0) // Manual scroll position
+  const [isDragging, setIsDragging] = useState(false)
+  const [hasDragged, setHasDragged] = useState(false) // Track if user actually dragged
+  const [dragStart, setDragStart] = useState({ x: 0, position: 0 })
+  const containerRef = useRef<HTMLDivElement>(null)
 
-    const targetScrollLeft = targetElement.offsetLeft - 32; // 32px for padding
-    const startScrollLeft = container.scrollLeft;
-    const distance = targetScrollLeft - startScrollLeft;
+  // Wu Wei Daoist Easing - Natural deceleration curves
+  const wuWeiEasing = [0.25, 0.46, 0.45, 0.94] // Settles into stillness
+  const wuWeiSlowEasing = [0.15, 0.35, 0.25, 0.96] // Even more natural for major transitions
+
+  // Calculate Mercury Flow positioning - intelligent spatial arrangement
+  const calculateFlowPosition = () => {
+    if (typeof window === 'undefined') return manualPosition
     
-    // Skip animation for tiny movements (prevents jank on small adjustments)
-    if (Math.abs(distance) < 5) {
-      container.scrollLeft = targetScrollLeft;
-      return;
+    // If user is manually controlling, use manual position
+    if (isDragging || Math.abs(manualPosition) > 10) {
+      return manualPosition
     }
     
-    // Ultra-smooth scroll animation using RAF and precise timing
-    let startTime: number | null = null;
-    const duration = 700; // Consistent duration for all transitions
+    const viewportWidth = window.innerWidth
+    const cardSpacing = 32 // Space between cards
     
-    // Optimized easing function for silky smooth motion
-    // Combined cubic-bezier with normalized acceleration/deceleration
-    const easing = (t: number): number => {
-      // Enhanced easing curve that starts and ends with zero velocity
-      return t < 0.5
-        ? 4 * t * t * t
-        : 1 - Math.pow(-2 * t + 2, 3) / 2;
-    };
+    // Calculate total width of visible cards
+    let totalWidth = 0
+    visibleCards.forEach((cardIndex) => {
+      const cardWidth = getCardWidth(workflowSteps[cardIndex].width)
+      totalWidth += cardWidth + cardSpacing
+    })
+    totalWidth -= cardSpacing // Remove last spacing
     
-    function smoothScrollStep(timestamp: number) {
-      if (!startTime) startTime = timestamp;
-      
-      const elapsed = timestamp - startTime;
-      const rawProgress = Math.min(elapsed / duration, 1);
-      const easedProgress = easing(rawProgress);
-      
-      // Use precise calculation with sub-pixel accuracy
-      const preciseScrollLeft = startScrollLeft + distance * easedProgress;
-      container.scrollLeft = preciseScrollLeft;
-      
-      if (rawProgress < 1) {
-        window.scrollAnimationRAF = window.requestAnimationFrame(smoothScrollStep);
-      } else {
-        // Ensure we land exactly on target (no rounding errors)
-        container.scrollLeft = targetScrollLeft;
-        window.scrollAnimationRAF = undefined;
+    // If cards fit in viewport, center them
+    if (totalWidth <= viewportWidth - 128) { // 128px for padding
+      return (viewportWidth - totalWidth) / 2 - 64 // 64px base padding
+    }
+    
+    // Otherwise, position to show current card optimally
+    let currentCardPosition = 64 // Start padding
+    for (let i = 0; i < currentStep; i++) {
+      if (visibleCards.includes(i)) {
+        currentCardPosition += getCardWidth(workflowSteps[i].width) + cardSpacing
       }
     }
     
-    window.scrollAnimationRAF = window.requestAnimationFrame(smoothScrollStep);
-  };
+    // Position current card at 40% of viewport width
+    const targetPosition = viewportWidth * 0.4
+    return targetPosition - currentCardPosition
+  }
 
-  // Navigation functions
+  // Helper to get card width in pixels
+  const getCardWidth = (widthClass: string) => {
+    switch (widthClass) {
+      case 'w-80': return 320
+      case 'w-96': return 384
+      case 'w-[28rem]': return 448
+      default: return 320
+    }
+  }
+
+  // Mercury OS Kiri Fog System - Subtle depth and focus
+  const getKiriFogStyle = (cardIndex: number) => {
+    const distanceFromActive = Math.abs(cardIndex - currentStep)
+    const isActive = cardIndex === currentStep
+    
+    if (isActive) {
+      return {
+        opacity: 1,
+        filter: 'blur(0px) brightness(1)',
+        transform: 'scale(1) translateY(0px)',
+        zIndex: 10
+      }
+    }
+    
+    // Kiri fog - subtle mist effect for non-active cards
+    const fogOpacity = Math.max(0.4, 1 - (distanceFromActive * 0.2))
+    const fogBlur = Math.min(3, distanceFromActive * 1.5)
+    const fogBrightness = Math.max(0.7, 1 - (distanceFromActive * 0.1))
+    const fogScale = Math.max(0.92, 1 - (distanceFromActive * 0.04))
+    const fogY = distanceFromActive * 8
+    
+    return {
+      opacity: fogOpacity,
+      filter: `blur(${fogBlur}px) brightness(${fogBrightness})`,
+      transform: `scale(${fogScale}) translateY(${fogY}px)`,
+      zIndex: 10 - distanceFromActive
+    }
+  }
+
+  // Calculate which card should be active based on current position
+  const calculateActiveCard = (position: number) => {
+    if (typeof window === 'undefined') return 0
+    
+    const viewportCenter = window.innerWidth / 2
+    let cardPosition = 64 - position // Start position minus current offset
+    
+    for (let i = 0; i < visibleCards.length; i++) {
+      const cardIndex = visibleCards[i]
+      const cardWidth = getCardWidth(workflowSteps[cardIndex].width)
+      const cardCenter = cardPosition + cardWidth / 2
+      
+      // If this card's center is closest to viewport center
+      if (Math.abs(cardCenter - viewportCenter) < cardWidth / 2 + 32) {
+        return cardIndex
+      }
+      
+      cardPosition += cardWidth + 32 // Move to next card position
+    }
+    
+    return currentStep
+  }
+
+
+
+  // Handle drag start
+  const handleMouseDown = (e: React.MouseEvent) => {
+    // Don't start drag if clicking on a card
+    if ((e.target as HTMLElement).closest('[data-card-clickable]')) {
+      return
+    }
+    
+    setIsDragging(true)
+    setHasDragged(false) // Reset drag flag
+    setDragStart({
+      x: e.clientX,
+      position: manualPosition
+    })
+  }
+
+  // Handle drag move
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return
+    
+    const deltaX = e.clientX - dragStart.x
+    
+    // Only consider it a drag if moved more than 5 pixels
+    if (Math.abs(deltaX) > 5) {
+      setHasDragged(true)
+    }
+    
+    const newPosition = dragStart.position + deltaX
+    
+    // Constrain dragging bounds
+    const maxScroll = visibleCards.length * 400
+    const constrainedPosition = Math.max(-maxScroll, Math.min(200, newPosition))
+    
+    setManualPosition(constrainedPosition)
+    
+    // Update active card based on position
+    const newActiveCard = calculateActiveCard(constrainedPosition)
+    if (newActiveCard !== currentStep && visibleCards.includes(newActiveCard)) {
+      setCurrentStep(newActiveCard)
+    }
+  }
+
+  // Handle drag end
+  const handleMouseUp = () => {
+    setIsDragging(false)
+  }
+
+  // Add mouse move and up listeners to document when dragging
+  useEffect(() => {
+    if (isDragging) {
+      const handleDocumentMouseMove = (e: MouseEvent) => {
+        const deltaX = e.clientX - dragStart.x
+        
+        // Only consider it a drag if moved more than 5 pixels
+        if (Math.abs(deltaX) > 5) {
+          setHasDragged(true)
+        }
+        
+        const newPosition = dragStart.position + deltaX
+        
+        const maxScroll = visibleCards.length * 400
+        const constrainedPosition = Math.max(-maxScroll, Math.min(200, newPosition))
+        
+        setManualPosition(constrainedPosition)
+        
+        const newActiveCard = calculateActiveCard(constrainedPosition)
+        if (newActiveCard !== currentStep && visibleCards.includes(newActiveCard)) {
+          setCurrentStep(newActiveCard)
+        }
+      }
+      
+      const handleDocumentMouseUp = () => {
+        setIsDragging(false)
+      }
+      
+      document.addEventListener('mousemove', handleDocumentMouseMove)
+      document.addEventListener('mouseup', handleDocumentMouseUp)
+      
+      return () => {
+        document.removeEventListener('mousemove', handleDocumentMouseMove)
+        document.removeEventListener('mouseup', handleDocumentMouseUp)
+      }
+    }
+  }, [isDragging, dragStart, manualPosition, currentStep, visibleCards])
+
+  // Mercury OS Navigation - Progressive Module Spawning
   const nextStep = () => {
     if (currentStep < workflowSteps.length - 1) {
-      const newStep = currentStep + 1;
+      const newStep = currentStep + 1
       
-      // First update visible cards array to ensure the card is rendered
+      // Progressive reveal - spawn new module
       if (!visibleCards.includes(newStep)) {
-        setVisibleCards(prev => [...prev, newStep]);
+        setVisibleCards(prev => [...prev, newStep])
       }
       
-      // Use a short delay to ensure the DOM has updated with the new card
-      // before we attempt to scroll to it
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          // Only after DOM is guaranteed to be updated, we scroll and update currentStep
-          if (scrollContainerRef.current) {
-            const cardElements = scrollContainerRef.current.querySelectorAll('.flex-shrink-0');
-            if (cardElements[newStep]) {
-              const targetElement = cardElements[newStep] as HTMLElement;
-              
-              // First scroll, then update the step (visual before state)
-              smoothScrollTo(targetElement);
-              
-              // Update step after scroll animation has started
-              setCurrentStep(newStep);
-            }
-          }
-        });
-      });
+      setCurrentStep(newStep)
+      // Reset manual position when using buttons
+      setManualPosition(0)
     }
   }
 
   const prevStep = () => {
     if (currentStep > 0) {
-      const newStep = currentStep - 1;
-      
-      // First update the step to trigger UI updates immediately
-      setCurrentStep(newStep);
-      
-      // Use double requestAnimationFrame to ensure DOM updates have been processed
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          // Once DOM is updated, scroll smoothly to the target position
-          if (scrollContainerRef.current) {
-            const cardElements = scrollContainerRef.current.querySelectorAll('.flex-shrink-0');
-            if (cardElements[newStep]) {
-              const targetElement = cardElements[newStep] as HTMLElement;
-              smoothScrollTo(targetElement);
-            }
-          }
-        });
-      });
+      setCurrentStep(currentStep - 1)
+      // Reset manual position when using buttons
+      setManualPosition(0)
     }
   }
 
   const goToStep = (stepIndex: number) => {
-    // First ensure all cards up to the target step are visible in the DOM
-    const newVisibleCards = Array.from({ length: stepIndex + 1 }, (_, i) => i);
-    setVisibleCards(newVisibleCards);
-    
-    // Use triple requestAnimationFrame to ensure DOM fully updates
-    // (this handles the case where multiple cards need to be added at once)
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          // Ensure DOM is fully updated before scrolling and updating state
-          if (scrollContainerRef.current) {
-            const cardElements = scrollContainerRef.current.querySelectorAll('.flex-shrink-0');
-            
-            if (cardElements[stepIndex]) {
-              const targetElement = cardElements[stepIndex] as HTMLElement;
-              
-              // First scroll to the visual position
-              smoothScrollTo(targetElement);
-              
-              // Then update the step indicator state
-              setCurrentStep(stepIndex);
-            }
-          }
-        });
-      });
-    });
+    // Ensure all modules up to target are spawned
+    const newVisibleCards = Array.from({ length: stepIndex + 1 }, (_, i) => i)
+    setVisibleCards(newVisibleCards)
+    setCurrentStep(stepIndex)
+    // Reset manual position when using direct navigation
+    setManualPosition(0)
   }
 
-  // Mercury animation variants for ultra-smooth card sliding
-  const cardVariants = {
+  // Handle card click navigation
+  const handleCardClick = (cardIndex: number, e: React.MouseEvent) => {
+    console.log('Card clicked:', cardIndex, 'Visible cards:', visibleCards)
+    
+    // Always spawn next card when any visible card is clicked
+    const nextCardIndex = Math.max(...visibleCards) + 1
+    
+    if (nextCardIndex < workflowSteps.length && !visibleCards.includes(nextCardIndex)) {
+      console.log('Spawning next card:', nextCardIndex)
+      // Spawn the next card
+      setVisibleCards(prev => [...prev, nextCardIndex])
+      // Move to the newly spawned card
+      setCurrentStep(nextCardIndex)
+    } else if (visibleCards.includes(cardIndex)) {
+      // If no more cards to spawn, just navigate to clicked card
+      console.log('No more cards to spawn, navigating to:', cardIndex)
+      setCurrentStep(cardIndex)
+    }
+    
+    // Reset manual position for smooth auto-positioning
+    setManualPosition(0)
+  }
+
+  // Mercury Module Variants - Elegant spawning animation
+  const mercuryModuleVariants = {
     hidden: {
       x: 120,
+      y: 20,
       opacity: 0,
-      scale: 0.92,
-      filter: "blur(4px)",
-      rotateY: "-2deg"
+      scale: 0.85,
+      rotateY: 8,
+      filter: "blur(6px)"
     },
     visible: (index: number) => ({
       x: 0,
+      y: 0,
       opacity: 1,
       scale: 1,
+      rotateY: 0,
       filter: "blur(0px)",
-      rotateY: "0deg",
       transition: {
-        // Use orchestrated, synchronized timing for all properties
-        duration: 0.85,
-        ease: [0.2, 0.85, 0.4, 1], // Single masterfully tuned custom ease
+        duration: 1.0,
+        ease: wuWeiSlowEasing,
         
-        // Property-specific overrides for polished feel
+        // Staggered natural settling
         opacity: { 
-          duration: 0.75,
+          duration: 0.7,
+          delay: 0.1,
+          ease: wuWeiEasing
         },
         filter: {
-          duration: 0.6,
+          duration: 0.8,
+          delay: 0.2,
+          ease: wuWeiEasing
         },
-        
-        // Consistent delay pattern that feels natural
-        delay: index * 0.08
+        scale: {
+          duration: 0.9,
+          delay: 0.1,
+          ease: wuWeiEasing
+        },
+        rotateY: {
+          duration: 1.1,
+          delay: 0.05,
+          ease: wuWeiSlowEasing
+        }
       }
     })
   }
 
-  const currentStepData = workflowSteps[currentStep]
+  const flowPosition = calculateFlowPosition()
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
-      {/* Enhanced Header Section */}
-      {/* <div className="px-8 py-16">
+      {/* Mercury OS Header */}
+      <div className="px-8 py-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="max-w-5xl"
+          transition={{ duration: 0.8, ease: wuWeiEasing }}
+          className="max-w-4xl"
         >
-          <p className="text-xl text-slate-600 leading-relaxed max-w-3xl">
-            Experience a step-by-step workflow powered by Mercury design principles. 
-            Each module demonstrates focused interaction patterns with natural horizontal flow.
+          <h1 className="text-3xl font-bold text-slate-900 mb-3">Mercury Workflow</h1>
+          <p className="text-lg text-slate-600 leading-relaxed">
+            Experience progressive module spawning with Wu Wei motion principles. 
+            Each step reveals new capabilities in spatial harmony.
           </p>
         </motion.div>
-      </div> */}
-
-
-
-      {/* Main Workflow Area */}
-      <div className="px-8 pb-16">
-        <div className="mx-auto">
-          
-          {/* Horizontal Scrolling Card Container */}
-          <div className="mb-16">
-            <div 
-              ref={scrollContainerRef}
-              className="overflow-x-auto overflow-y-visible py-8 px-8 scrollbar-hide"
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-            >
-              <div className="flex space-x-8 w-max">
-                {visibleCards.map((cardIndex) => {
-                  const stepData = workflowSteps[cardIndex]
-                  const CardComponent = stepData.component as any
-                  
-                  return (
-                                    <motion.div
-                  key={stepData.id}
-                  custom={cardIndex}
-                  variants={cardVariants}
-                  initial="hidden"
-                  animate="visible"
-                  layout
-                  layoutId={`card-${stepData.id}`}
-                  className={`flex-shrink-0 ${stepData.width} h-auto`}
-                  style={{ 
-                    willChange: "transform, opacity, filter",
-                    perspective: "1000px"
-                  }}
-                >
-                  <motion.div 
-                    className="relative transform-gpu"
-                    style={{ transformStyle: "preserve-3d" }}
-                    animate={{
-                      scale: cardIndex === currentStep ? 1.05 : cardIndex < currentStep ? 0.96 : 1,
-                      opacity: cardIndex < currentStep ? 0.88 : 1,
-                      z: cardIndex === currentStep ? 10 : 0,
-                      rotateY: cardIndex === currentStep ? "0deg" : cardIndex < currentStep ? "-2deg" : "0deg",
-                      rotateX: cardIndex === currentStep ? "0deg" : cardIndex < currentStep ? "1deg" : "0deg",
-                      transition: {
-                        duration: 0.6,
-                        ease: [0.2, 0.9, 0.3, 1],
-                        scale: {
-                          duration: 0.75
-                        },
-                        rotateX: {
-                          duration: 0.7
-                        }
-                      }
-                    }}
-                  >
-                        <CardComponent
-                          intent={stepData.intent}
-                          focusLevel={cardIndex === currentStep ? "focused" : "ambient"}
-                          size={stepData.size}
-                          data={stepData.data}
-                          className={`
-                            h-full transition-shadow duration-500 transform-gpu
-                            ${cardIndex === currentStep 
-                              ? 'shadow-2xl ring-2 ring-slate-200' 
-                              : 'shadow-lg hover:shadow-xl'
-                            }
-                          `}
-                          isInteractive={true}
-                        />
-                        
-                        {/* Step Number Badge */}
-                        <motion.div 
-                          className={`
-                            absolute -top-3 -left-3 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold
-                            shadow-md
-                            ${cardIndex === currentStep 
-                              ? 'bg-slate-900 text-white' 
-                              : cardIndex < currentStep 
-                                ? 'bg-emerald-500 text-white' 
-                                : 'bg-slate-200 text-slate-600'
-                            }
-                          `}
-                          initial={false}
-                          animate={{ 
-                            scale: cardIndex === currentStep ? 1.2 : 1,
-                            rotate: cardIndex === currentStep ? [0, 8, -5, 0] : 0,
-                            boxShadow: cardIndex === currentStep 
-                              ? '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05)'
-                              : '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-                          }}
-                          transition={{
-                            duration: 0.55, 
-                            ease: [0.3, 0.95, 0.5, 1],
-                            scale: {
-                              duration: 0.65,
-                              ease: [0.34, 1.56, 0.64, 1]
-                            },
-                            rotate: {
-                              duration: 0.7,
-                              ease: [0.65, 0, 0.35, 1.3]
-                            }
-                          }}
-                                                    key={`badge-${stepData.id}-${currentStep}-${cardIndex}`}
-                        >
-                          {cardIndex < currentStep ? '✓' : cardIndex + 1}
-                        </motion.div>
-                      </motion.div>
-                    </motion.div>
-                  )
-                })}
-              </div>
-            </div>
-          </div>
-
-          {/* Navigation Controls with enhanced animations */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ 
-              duration: 0.7, 
-              delay: 0.3, 
-              ease: [0.22, 1, 0.36, 1] 
-            }}
-            className="flex items-center justify-center space-x-6"
-          >
-            <button
-              onClick={prevStep}
-              disabled={currentStep === 0}
-                              className={`
-                flex items-center space-x-3 px-6 py-3 rounded-xl font-medium
-                transition-all duration-400 transform-gpu
-                ${currentStep === 0
-                  ? 'bg-slate-100 text-slate-400 cursor-not-allowed'
-                  : 'bg-white text-slate-700 hover:bg-slate-50 hover:shadow-lg hover:-translate-y-1 hover:scale-105 active:translate-y-0 active:scale-100'
-                }
-                border border-slate-200 shadow-sm
-              `}
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-              <span>Previous</span>
-            </button>
-
-            <motion.div 
-              className="flex items-center space-x-2 px-4 py-2 bg-white/60 backdrop-blur-sm rounded-lg border border-white/40"
-              initial={{ scale: 0.9, opacity: 0.6 }}
-              animate={{ 
-                scale: [0.9, 1.1, 1],
-                opacity: 1 
-              }}
-              key={currentStep}
-              transition={{
-                duration: 0.6,
-                ease: [0.34, 1.56, 0.64, 1]
-              }}
-            >
-              <span className="text-sm font-medium text-slate-600">
-                {currentStep + 1} / {workflowSteps.length}
-              </span>
-            </motion.div>
-
-            <button
-              onClick={nextStep}
-              disabled={currentStep === workflowSteps.length - 1}
-                              className={`
-                flex items-center space-x-3 px-6 py-3 rounded-xl font-medium
-                transition-all duration-400 transform-gpu
-                ${currentStep === workflowSteps.length - 1
-                  ? 'bg-slate-100 text-slate-400 cursor-not-allowed'
-                  : 'bg-slate-900 text-white hover:bg-slate-800 hover:shadow-lg hover:-translate-y-1 hover:scale-105 active:translate-y-0 active:scale-100 hover:shadow-slate-500/20'
-                }
-                shadow-sm
-              `}
-            >
-              <span>Next</span>
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </motion.div>
-
-          {/* Workflow Completion */}
-          {currentStep === workflowSteps.length - 1 && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-              className="mt-12 text-center"
-            >
-              <div className="bg-gradient-to-r from-emerald-50 to-green-50 border border-emerald-200 rounded-2xl p-8 max-w-md mx-auto">
-                <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-2">Workflow Complete!</h3>
-                <p className="text-slate-600 mb-4">
-                  You've experienced all {workflowSteps.length} Mercury workflow components.
-                </p>
-                <button
-                  onClick={() => {
-                    // First reset visible cards
-                    setVisibleCards([0]);
-                    
-                    // Use RAF to ensure DOM is updated
-                    requestAnimationFrame(() => {
-                      // After DOM update, scroll to first position
-                      if (scrollContainerRef.current) {
-                        scrollContainerRef.current.scrollLeft = 0;
-                      }
-                      // Update step after starting the scroll
-                      setCurrentStep(0);
-                    });
-                  }}
-                  className="inline-flex items-center space-x-2 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors duration-200"
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                  </svg>
-                  <span>Restart Workflow</span>
-                </button>
-              </div>
-            </motion.div>
-          )}
-        </div>
       </div>
 
-      {/* Enhanced Navigation */}
-                <div className="px-8 py-12 bg-gradient-to-r from-slate-50 to-white border-t border-slate-200/50">
+             {/* Mercury Flow Container */}
+       <div 
+         className="relative overflow-hidden cursor-grab active:cursor-grabbing" 
+         style={{ perspective: '1200px' }}
+         onMouseDown={handleMouseDown}
+         onMouseMove={handleMouseMove}
+         onMouseUp={handleMouseUp}
+       >
+        <motion.div
+          ref={containerRef}
+          className="flex items-start py-12 select-none"
+          animate={{ x: flowPosition }}
+          transition={{ 
+            duration: isDragging ? 0 : 0.9, 
+            ease: wuWeiSlowEasing,
+            type: "tween"
+          }}
+          style={{ 
+            willChange: 'transform',
+            transformStyle: 'preserve-3d'
+          }}
+        >
+          {visibleCards.map((cardIndex) => {
+            const stepData = workflowSteps[cardIndex]
+            const CardComponent = stepData.component as any
+            const kiriFogStyle = getKiriFogStyle(cardIndex)
+            
+            return (
+              <motion.div
+                key={stepData.id}
+                custom={cardIndex}
+                variants={mercuryModuleVariants}
+                initial="hidden"
+                animate="visible"
+                data-card-clickable="true"
+                className={`flex-shrink-0 ${stepData.width} mr-8 relative cursor-pointer`}
+                style={{
+                  ...kiriFogStyle,
+                  transformStyle: 'preserve-3d',
+                  willChange: 'transform, opacity, filter'
+                }}
+                onClick={(e) => {
+                  e.stopPropagation() // Prevent container drag handlers
+                  handleCardClick(cardIndex, e)
+                }}
+              >
+                {/* Mercury Module Container */}
+                <motion.div 
+                  className="relative"
+                  animate={{
+                    // Subtle active card enhancement
+                    boxShadow: cardIndex === currentStep 
+                      ? '0 20px 40px -8px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.1)'
+                      : '0 8px 20px -4px rgba(0, 0, 0, 0.08)',
+                    y: cardIndex === currentStep ? -4 : 0
+                  }}
+                  transition={{
+                    duration: 0.8,
+                    ease: wuWeiEasing
+                  }}
+                >
+                  <CardComponent
+                    intent={stepData.intent}
+                    focusLevel={cardIndex === currentStep ? "focused" : "ambient"}
+                    size={stepData.size}
+                    data={stepData.data}
+                    className={`
+                      h-full transition-all duration-700 transform-gpu
+                      ${cardIndex === currentStep 
+                        ? 'ring-1 ring-slate-200/50' 
+                        : ''
+                      }
+                    `}
+                    isInteractive={cardIndex === currentStep}
+                  />
+                  
+                  {/* Click to Continue Indicator - Only show on active card if more cards available */}
+                  {cardIndex === currentStep && visibleCards.length < workflowSteps.length && (
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500/5 to-blue-500/10 rounded-xl border-2 border-blue-500/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300"
+                      initial={{ opacity: 0 }}
+                      whileHover={{ opacity: 1 }}
+                    >
+                      <div className="bg-white/90 backdrop-blur-sm rounded-lg px-4 py-2 shadow-lg border border-blue-200/50">
+                        <div className="flex items-center space-x-2 text-blue-700">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                          </svg>
+                          <span className="text-sm font-medium">Click to reveal next</span>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                  
+                  {/* Permanent subtle indicator for active card */}
+                  {cardIndex === currentStep && visibleCards.length < workflowSteps.length && (
+                    <motion.div
+                      className="absolute top-4 right-4 w-8 h-8 bg-blue-500/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-blue-500/30"
+                      animate={{
+                        scale: [1, 1.1, 1],
+                        opacity: [0.7, 1, 0.7]
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: wuWeiEasing
+                      }}
+                    >
+                      <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                      </svg>
+                    </motion.div>
+                  )}
+                  
+                  {/* Mercury Module Badge */}
+                  <motion.div 
+                    className={`
+                      absolute -top-3 -left-3 w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold
+                      backdrop-blur-sm border border-white/30 shadow-lg
+                      ${cardIndex === currentStep 
+                        ? 'bg-slate-900/90 text-white' 
+                        : cardIndex < currentStep 
+                          ? 'bg-emerald-500/90 text-white' 
+                          : 'bg-white/90 text-slate-600'
+                      }
+                    `}
+                    animate={{ 
+                      scale: cardIndex === currentStep ? 1.1 : 1,
+                      rotate: cardIndex === currentStep ? [0, 3, -2, 0] : 0,
+                    }}
+                    transition={{
+                      duration: 1.0,
+                      ease: wuWeiSlowEasing,
+                      rotate: {
+                        duration: 1.5,
+                        ease: wuWeiSlowEasing
+                      }
+                    }}
+                    key={`badge-${stepData.id}-${currentStep}`}
+                  >
+                    {cardIndex < currentStep ? '✓' : cardIndex + 1}
+                  </motion.div>
+                </motion.div>
+              </motion.div>
+            )
+          })}
+        </motion.div>
+      </div>
+
+      {/* Mercury OS Step Indicator */}
+      <motion.div
+        className="flex items-center justify-center px-8 py-16"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ 
+          duration: 0.8, 
+          delay: 0.3,
+          ease: wuWeiEasing
+        }}
+      >
+        <div className="flex items-center space-x-2 px-6 py-3 bg-white/80 backdrop-blur-lg rounded-2xl border border-slate-200/50 shadow-xl">
+          <span className="text-sm font-semibold text-slate-700">
+            {currentStep + 1} / {workflowSteps.length}
+          </span>
+          <span className="text-xs text-slate-500 ml-2">
+            Click cards to navigate • Drag to explore
+          </span>
+        </div>
+      </motion.div>
+
+      {/* Mercury OS Completion State */}
+      <AnimatePresence>
+        {currentStep === workflowSteps.length - 1 && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: wuWeiSlowEasing }}
+            className="px-8 pb-16"
+          >
+            <div className="max-w-md mx-auto bg-gradient-to-r from-emerald-50 to-green-50 border border-emerald-200/50 rounded-2xl p-8 text-center backdrop-blur-sm">
+              <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold text-slate-900 mb-2">Mercury Flow Complete</h3>
+              <p className="text-slate-600 mb-6">
+                All {workflowSteps.length} modules experienced in spatial harmony.
+              </p>
+              <button
+                onClick={() => {
+                  setVisibleCards([0])
+                  setCurrentStep(0)
+                }}
+                className="inline-flex items-center space-x-2 px-6 py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                <span>Return to Origin</span>
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Mercury OS Footer Navigation */}
+      <div className="px-8 py-12 bg-gradient-to-r from-slate-50 to-white border-t border-slate-200/50">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ 
-            duration: 0.7, 
-            delay: 0.4,
-            ease: [0.2, 0.65, 0.3, 0.9]
+            duration: 0.8, 
+            delay: 0.5,
+            ease: wuWeiEasing
           }}
         >
           <Link 
             href="/"
-            className="inline-flex items-center space-x-3 text-slate-600 hover:text-slate-900 transition-all duration-300 group"
+            className="inline-flex items-center space-x-3 text-slate-600 hover:text-slate-900 transition-all duration-400 group"
           >
             <motion.div 
-              className="p-3 rounded-full bg-white/60 group-hover:bg-white transition-all duration-300 shadow-sm group-hover:shadow-md"
+              className="p-3 rounded-full bg-white group-hover:bg-slate-50 transition-all duration-400 shadow-sm group-hover:shadow-md"
               whileHover={{ 
-                scale: 1.15, 
-                rotate: [0, -10, 0],
-                transition: { duration: 0.4 }
+                scale: 1.1, 
+                rotate: [0, -5, 0],
+                transition: { duration: 0.5, ease: wuWeiEasing }
               }}
               whileTap={{ scale: 0.95 }}
             >
@@ -652,21 +754,10 @@ export default function WorkflowPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
               </svg>
             </motion.div>
-            <span className="font-medium text-lg">Back to Home</span>
+            <span className="font-medium text-lg">Return to Timeline</span>
           </Link>
         </motion.div>
       </div>
-
-      {/* Hide scrollbar styles */}
-      <style jsx>{`
-        .scrollbar-hide {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
     </div>
   )
 } 
