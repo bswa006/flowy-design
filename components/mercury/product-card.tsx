@@ -2,12 +2,11 @@
 
 import React, { useState, useCallback } from 'react'
 import { cn } from "@/lib/utils"
-import { ShoppingBag, Heart, Star, Package, Truck, MoreHorizontal } from 'lucide-react'
+import { ShoppingBag, MoreHorizontal, Heart } from 'lucide-react'
 import { 
   getMercuryFocusClasses,
   getMercuryStatusColors,
   getMercuryTypography,
-  getMercuryAccentBar,
   validateMercuryProps,
   MERCURY_RADIUS,
   MERCURY_ANIMATIONS,
@@ -22,7 +21,7 @@ interface ProductData {
   image?: string
   rating?: number
   reviewCount?: number
-  status: 'available' | 'limited' | 'sold-out' | 'neutral'
+  status: 'available' | 'soldout' | 'limited' | 'neutral'
   sizes?: string[]
   selectedSize?: string
   category: string
@@ -36,9 +35,10 @@ interface ProductData {
 
 interface ProductCardProps extends MercuryComponentProps {
   data: ProductData
-  onAddToBag?: () => void
+  onAddToCart?: () => void
   onWishlist?: () => void
-  onSizeSelect?: (size: string) => void
+  showNextIndicator?: boolean
+  onRevealNext?: () => void
 }
 
 export function ProductCard({
@@ -49,9 +49,10 @@ export function ProductCard({
   className,
   style,
   isInteractive = true,
-  onAddToBag,
+  showNextIndicator = false,
+  onAddToCart,
   onWishlist,
-  onSizeSelect,
+  onRevealNext,
   ...props
 }: ProductCardProps) {
   
@@ -61,145 +62,88 @@ export function ProductCard({
     console.error('Mercury Validation Errors:', validationErrors)
   }
   
-  const [isHovered, setIsHovered] = useState(false)
+  const [showTooltip, setShowTooltip] = useState(false)
+  const [selectedSize, setSelectedSize] = useState(data.selectedSize || '')
   
-  const handleAddToBag = useCallback(() => {
-    console.log(`Mercury Action: add to bag from product: ${intent}`)
-    onAddToBag?.()
-  }, [intent, onAddToBag])
+  const handleAddToCart = useCallback(() => {
+    console.log(`Mercury Action: add to cart from product: ${intent}`)
+    onAddToCart?.()
+  }, [intent, onAddToCart])
   
-  const handleWishlist = useCallback(() => {
-    console.log(`Mercury Action: ${data.isWishlisted ? 'remove from' : 'add to'} wishlist: ${intent}`)
-    onWishlist?.()
-  }, [intent, data.isWishlisted, onWishlist])
-  
-  // Mercury configuration
-  const focusClasses = getMercuryFocusClasses(focusLevel)
-  const statusColors = getMercuryStatusColors(
-    data.status === 'available' ? 'healthy' : 
-    data.status === 'limited' ? 'warning' : 
-    data.status === 'sold-out' ? 'critical' : 'neutral'
-  )
-  const typography = getMercuryTypography(focusLevel, size)
-  
-  const discount = data.originalPrice && data.price !== data.originalPrice ? 
-    Math.round((1 - parseFloat(data.price.replace('$', '')) / parseFloat(data.originalPrice.replace('$', ''))) * 100) : null
+  const handleRevealNext = useCallback(() => {
+    console.log(`Mercury Action: reveal next from product: ${intent}`)
+    onRevealNext?.()
+  }, [intent, onRevealNext])
   
   return (
     <div
       data-intent={intent}
       className={cn(
         'mercury-module relative overflow-hidden group',
-        MERCURY_RADIUS.module,
+        // Subtle white card with minimal shadow - no thick borders
+        'bg-white rounded-2xl border border-gray-100',
+        'shadow-sm hover:shadow-md transition-shadow duration-300',
         
-        // Mercury focus level classes
-        focusClasses.scale,
-        focusClasses.opacity,
-        focusClasses.contrast,
-        focusClasses.brightness,
-        focusClasses.saturate,
-        focusClasses.background,
-        focusClasses.border,
-        focusClasses.shadow,
-        focusClasses.animation,
-        focusLevel === 'fog' && 'pointer-events-none',
+        // Mercury focus level adjustments
+        focusLevel === 'focused' && 'ring-1 ring-gray-200',
+        focusLevel === 'fog' && 'opacity-70 pointer-events-none',
         
-        // Clean status indication through accent colors only
-        data.status === 'limited' && focusLevel === 'focused' && statusColors.border,
-        data.status === 'sold-out' && focusLevel === 'focused' && statusColors.border,
-        
-        // Subtle status animations for focused cards only
-        data.status === 'limited' && focusLevel === 'focused' && 'animate-pulse-gentle',
-        data.status === 'sold-out' && focusLevel === 'focused' && 'animate-pulse-soft',
-        
-        // Interactive states
-        isInteractive && [
-          'cursor-pointer',
-          MERCURY_ANIMATIONS.hover,
-          MERCURY_ANIMATIONS.active,
-          MERCURY_ANIMATIONS.focus
-        ],
+        // Interactive states - minimal
+        isInteractive && 'cursor-pointer',
         
         className
       )}
       role="region"
       aria-label={`${intent} product component`}
-      aria-describedby={`${intent}-description`}
       tabIndex={isInteractive ? 0 : undefined}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onKeyDown={(e: React.KeyboardEvent) => {
-        if (isInteractive && (e.key === 'Enter' || e.key === ' ')) {
-          e.preventDefault()
-          handleAddToBag()
-        }
+      onMouseEnter={() => {
+        if (showNextIndicator) setShowTooltip(true)
       }}
+      onMouseLeave={() => {
+        setShowTooltip(false)
+      }}
+      onClick={handleRevealNext}
       style={style}
       {...props}
     >
-      
-
-      
-      {/* Component Content */}
-      <div className="relative z-10 p-6">
-        
-        {/* Header with Brand and Actions */}
-        <div className="flex items-start justify-between mb-4">
+      {/* Main Content */}
+      <div className="p-4">
+        {/* Product Header - Minimal */}
+        <div className="flex items-center justify-between mb-3">
           <div className="flex items-center space-x-2">
-            <ShoppingBag className={cn(
-              'h-4 w-4',
-              statusColors.icon,
-              focusLevel === 'fog' && 'opacity-80'
-            )} />
-            <span className={cn(
-              'text-xs font-medium',
-              statusColors.text,
-              focusLevel === 'fog' && 'opacity-80'
-            )}>
-              {data.brand}
-            </span>
+            <span className="text-xs font-medium text-gray-500">1</span>
+            <span className="text-sm font-medium text-gray-700">{data.title} • Item from {data.category}</span>
           </div>
           
-          <div className="flex items-center space-x-2">
-            {/* Discount badge */}
-            {discount && (
-              <div className="px-2 py-1 rounded-lg text-xs font-medium bg-red-100 text-red-800">
-                -{discount}%
-              </div>
-            )}
-            
-            {/* Status badge */}
-            <div className={cn(
-              'px-2 py-1 rounded-lg text-xs font-medium',
-              data.status === 'available' && 'bg-emerald-100 text-emerald-800',
-              data.status === 'limited' && 'bg-amber-100 text-amber-800',
-              data.status === 'sold-out' && 'bg-red-100 text-red-800',
-              data.status === 'neutral' && 'bg-slate-100 text-slate-700',
-              focusLevel === 'fog' && 'opacity-90'
-            )}>
-              {data.status === 'available' && 'In Stock'}
-              {data.status === 'limited' && 'Limited'}
-              {data.status === 'sold-out' && 'Sold Out'}
-              {data.status === 'neutral' && 'Coming Soon'}
-            </div>
-            
-            <button className={cn(
-              'p-1 rounded hover:bg-slate-100 transition-colors',
-              focusLevel === 'fog' && 'opacity-70'
-            )}>
-              <MoreHorizontal className="h-4 w-4 text-slate-500" />
-            </button>
-          </div>
+          {/* Status indicator - small dot */}
+          <div className={cn(
+            'w-2 h-2 rounded-full',
+            data.status === 'available' && 'bg-emerald-400',
+            data.status === 'soldout' && 'bg-red-400',
+            data.status === 'limited' && 'bg-amber-400',
+            data.status === 'neutral' && 'bg-gray-300'
+          )} />
         </div>
+
+        {/* Brand & Title - Compact */}
+        <h2 className="text-lg font-semibold text-gray-900 mb-1 leading-tight">
+          {data.brand}
+        </h2>
         
-        {/* Product Image */}
-        <div className={cn(
-          'relative w-full h-32 rounded-xl overflow-hidden mb-4',
-          'bg-gradient-to-br from-slate-100 to-slate-200',
-          focusLevel === 'focused' && 'shadow-md',
-          focusLevel === 'ambient' && 'shadow-sm',
-          focusLevel === 'fog' && 'opacity-90'
-        )}>
+        <h3 className="text-sm font-medium text-gray-700 mb-3">
+          {data.title}
+        </h3>
+
+        {/* Price - Smaller */}
+        <div className="mb-4">
+          <span className="text-lg font-semibold text-gray-900">{data.price}</span>
+          {data.originalPrice && (
+            <span className="text-sm text-gray-500 line-through ml-2">{data.originalPrice}</span>
+          )}
+        </div>
+
+        {/* Product Image - Much smaller */}
+        <div className="w-full h-32 rounded-lg overflow-hidden mb-3 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
           {data.image ? (
             <img 
               src={data.image} 
@@ -208,154 +152,91 @@ export function ProductCard({
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
-              <Package className="h-8 w-8 text-slate-400" />
+              {/* Default product illustration - smaller */}
+              <div className="w-20 h-16 bg-gray-800 rounded-md relative overflow-hidden">
+                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-2 bg-white rounded-t-sm"></div>
+                <div className="absolute bottom-2 right-1 text-white text-xs font-medium">
+                  LOGO
+                </div>
+              </div>
             </div>
           )}
-          
-          {/* Wishlist button overlay */}
-          <button
-            onClick={handleWishlist}
-            className={cn(
-              'absolute top-2 right-2 p-2 rounded-lg bg-white/80 backdrop-blur-sm',
-              'hover:bg-white transition-colors',
-              'focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2',
-              focusLevel === 'fog' && 'opacity-70'
-            )}
-          >
-            <Heart className={cn(
-              'h-4 w-4',
-              data.isWishlisted ? 'text-red-500 fill-current' : 'text-slate-600'
-            )} />
-          </button>
         </div>
-        
-        {/* Product Info */}
-        <div className="mb-4">
-          <h3 className={cn(
-            'font-semibold text-slate-800 leading-tight mb-2',
-            focusLevel === 'focused' && 'text-base',
-            focusLevel === 'ambient' && 'text-sm',
-            focusLevel === 'fog' && 'text-sm opacity-90'
-          )}>
-            {data.title}
-          </h3>
-          
-          {/* Price */}
-          <div className="flex items-center space-x-2 mb-2">
-            <span className={cn(
-              'font-bold',
-              statusColors.text,
-              data.status === 'limited' && 'text-amber-900',
-              data.status === 'sold-out' && 'text-red-900',
-              focusLevel === 'focused' && 'text-lg',
-              focusLevel === 'ambient' && 'text-base',
-              focusLevel === 'fog' && 'text-base opacity-90'
-            )}>
-              {data.price}
-            </span>
-            {data.originalPrice && data.originalPrice !== data.price && (
-              <span className={cn(
-                'text-sm text-slate-500 line-through',
-                focusLevel === 'fog' && 'opacity-80'
-              )}>
-                {data.originalPrice}
-              </span>
-            )}
+
+        {/* Size Selection - Minimal */}
+        <div className="mb-3">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs font-medium text-gray-600">Select a size</span>
+            <span className="text-xs font-semibold text-gray-900">{selectedSize || '8'}</span>
           </div>
           
-          {/* Rating */}
-          {data.rating && (
-            <div className="flex items-center space-x-2">
-              <div className="flex items-center space-x-1">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className={cn(
-                      'h-3 w-3',
-                      i < Math.floor(data.rating!) ? 'text-yellow-500 fill-current' : 'text-slate-300',
-                      focusLevel === 'fog' && 'opacity-80'
-                    )}
-                  />
-                ))}
-              </div>
-              {data.reviewCount && (
-                <span className={cn(
-                  'text-xs text-slate-500',
-                  focusLevel === 'fog' && 'opacity-80'
-                )}>
-                  ({data.reviewCount})
-                </span>
-              )}
-            </div>
-          )}
-        </div>
-        
-        {/* Size Selection (focused only) */}
-        {focusLevel === 'focused' && data.sizes && (
-          <div className="mb-4">
-            <p className="text-sm font-medium text-slate-700 mb-2">Size</p>
-            <div className="flex flex-wrap gap-2">
-              {data.sizes.map((sizeOption) => (
+          {data.sizes && (
+            <div className="flex flex-wrap gap-1">
+              {data.sizes.slice(0, 4).map((sizeOption) => (
                 <button
                   key={sizeOption}
-                  onClick={() => onSizeSelect?.(sizeOption)}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setSelectedSize(sizeOption)
+                  }}
                   className={cn(
-                    'px-3 py-1 rounded-lg text-sm font-medium border transition-colors',
-                    'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2',
-                    data.selectedSize === sizeOption
-                      ? 'bg-blue-600 text-white border-blue-600'
-                      : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-50'
+                    'px-2 py-1 rounded-md text-xs font-medium border transition-colors',
+                    selectedSize === sizeOption || (!selectedSize && sizeOption === '8')
+                      ? 'bg-gray-900 text-white border-gray-900'
+                      : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
                   )}
                 >
                   {sizeOption}
                 </button>
               ))}
             </div>
-          </div>
-        )}
-        
-        {/* Shipping Info (focused only) */}
-        {focusLevel === 'focused' && data.shipping && (
-          <div className="mb-4 p-3 bg-slate-50 rounded-lg">
-            <div className="flex items-center space-x-2 mb-1">
-              <Truck className="h-4 w-4 text-slate-600" />
-              <span className="text-sm font-medium text-slate-700">{data.shipping.method}</span>
-            </div>
-            <p className="text-xs text-slate-600">
-              {data.shipping.time} • {data.shipping.cost}
-            </p>
-          </div>
-        )}
-        
-        {/* Add to Bag Button (Only show in focused/ambient) */}
-        {focusLevel !== 'fog' && (
+          )}
+        </div>
+
+        {/* Action Buttons - Much smaller */}
+        <div className="space-y-2">
           <button
-            onClick={handleAddToBag}
-            disabled={data.status === 'sold-out'}
-            className={cn(
-              'w-full flex items-center justify-center space-x-2 px-4 py-3 rounded-lg text-sm font-medium',
-              'transition-colors',
-              'focus:outline-none focus:ring-2 focus:ring-offset-2',
-              data.status === 'sold-out' 
-                ? 'bg-slate-200 text-slate-500 cursor-not-allowed'
-                : 'bg-slate-900 text-white hover:bg-slate-800 focus:ring-slate-500',
-              focusLevel === 'ambient' && 'opacity-90'
-            )}
+            onClick={(e) => {
+              e.stopPropagation()
+              handleAddToCart()
+            }}
+            className="w-full bg-gray-900 text-white font-medium py-2 px-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center justify-center space-x-1 text-xs"
           >
-            <ShoppingBag className="h-4 w-4" />
-            <span>
-              {data.status === 'sold-out' ? 'Sold Out' : 'Add to Bag'}
-            </span>
+            <ShoppingBag className="h-3 w-3" />
+            <span>Add to bag</span>
           </button>
-        )}
-        
+          
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              onWishlist?.()
+            }}
+            className="w-full bg-gray-100 text-gray-800 font-medium py-2 px-3 rounded-lg hover:bg-gray-200 transition-colors flex items-center justify-center space-x-1 text-xs"
+          >
+            <Heart className={cn(
+              'h-3 w-3',
+              data.isWishlisted ? 'fill-current text-red-500' : ''
+            )} />
+            <span>Wishlist</span>
+          </button>
+        </div>
+
+        {/* More Actions - Much smaller */}
+        <button className="flex items-center space-x-1 text-xs text-gray-400 hover:text-gray-600 transition-colors mt-2">
+          <MoreHorizontal className="h-3 w-3" />
+          <span>More actions</span>
+        </button>
       </div>
-      
-      {/* Accessibility description */}
-      <div id={`${intent}-description`} className="sr-only">
-        {`Product: ${data.title} by ${data.brand}. Price: ${data.price}. Status: ${data.status}. ${data.rating ? `Rating: ${data.rating} stars.` : ''}`}
-      </div>
-      
+
+      {/* Click to Reveal Next Tooltip */}
+      {showNextIndicator && showTooltip && (
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
+          <div className="bg-white rounded-lg shadow-lg px-4 py-2 flex items-center space-x-2 border border-gray-200">
+            <ShoppingBag className="h-3 w-3 text-gray-600" />
+            <span className="text-xs font-medium text-gray-700 whitespace-nowrap">Click to reveal next</span>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

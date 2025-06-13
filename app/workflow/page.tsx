@@ -37,7 +37,7 @@ export default function WorkflowPage() {
       },
       intent: "starbucks-reserve-location",
       size: "compact" as const,
-      width: "w-80"
+      width: "w-96"
     },
     {
       id: 'message-danny',
@@ -93,7 +93,7 @@ export default function WorkflowPage() {
       },
       intent: "four-seasons-spotify",
       size: "compact" as const,
-      width: "w-80"
+      width: "w-96"
     },
     {
       id: 'product-balenciaga',
@@ -121,7 +121,7 @@ export default function WorkflowPage() {
       },
       intent: "balenciaga-speed-sneakers",
       size: "expanded" as const,
-      width: "w-[28rem]"
+      width: "w-96"
     },
     {
       id: 'location-blue-bottle',
@@ -138,7 +138,7 @@ export default function WorkflowPage() {
       },
       intent: "blue-bottle-cafe",
       size: "compact" as const,
-      width: "w-80"
+      width: "w-96"
     },
     {
       id: 'music-weeknd',
@@ -159,10 +159,10 @@ export default function WorkflowPage() {
       },
       intent: "weekend-vibes-music",
       size: "compact" as const,
-      width: "w-80"
+      width: "w-96"
     },
     {
-      id: 'message-team',
+      id: 'message-sarah-slack',
       title: 'Team Collaboration',
       description: 'Connect with your team members',
       component: MessageCard,
@@ -171,28 +171,28 @@ export default function WorkflowPage() {
         contactHandle: "@sarahc",
         avatar: "https://i.pravatar.cc/40?u=sarah",
         lastMessage: "The new Mercury components look amazing! Great work on the workflow animations.",
-        timestamp: "Now",
-        platform: "Slack",
-        status: "unread" as const,
+        timestamp: "Today 3:42 PM",
+        platform: "Slack Team Chat",
+        status: "read" as const,
         messages: [
           {
             text: "Hey! How's the workflow component coming along?",
-            timestamp: "2:15 PM",
+            timestamp: "Today 2:15 PM",
             isOwn: false
           },
           {
             text: "Just finished implementing the horizontal scroll. It's looking great!",
-            timestamp: "2:18 PM",
+            timestamp: "Today 2:18 PM",
             isOwn: true
           },
           {
             text: "The new Mercury components look amazing! Great work on the workflow animations.",
-            timestamp: "Now",
+            timestamp: "Today 3:42 PM",
             isOwn: false
           }
         ]
       },
-      intent: "team-collaboration-slack",
+      intent: "sarah-slack-team-chat",
       size: "standard" as const,
       width: "w-96"
     }
@@ -252,10 +252,8 @@ export default function WorkflowPage() {
   // Helper to get card width in pixels
   const getCardWidth = (widthClass: string) => {
     switch (widthClass) {
-      case 'w-80': return 320
       case 'w-96': return 384
-      case 'w-[28rem]': return 448
-      default: return 320
+      default: return 384
     }
   }
 
@@ -311,8 +309,6 @@ export default function WorkflowPage() {
     return currentStep
   }
 
-
-
   // Handle drag start
   const handleMouseDown = (e: React.MouseEvent) => {
     // Don't start drag if clicking on a card
@@ -359,6 +355,15 @@ export default function WorkflowPage() {
     setIsDragging(false)
   }
 
+  // Debug state changes
+  useEffect(() => {
+    console.log('State changed:', { visibleCards, currentStep, totalSteps: workflowSteps.length })
+    visibleCards.forEach((cardIndex, i) => {
+      const step = workflowSteps[cardIndex]
+      console.log(`  Card ${i}: Index ${cardIndex}, ID: ${step.id}, Title: ${step.title}`)
+    })
+  }, [visibleCards, currentStep])
+
   // Add mouse move and up listeners to document when dragging
   useEffect(() => {
     if (isDragging) {
@@ -397,50 +402,19 @@ export default function WorkflowPage() {
     }
   }, [isDragging, dragStart, manualPosition, currentStep, visibleCards])
 
-  // Mercury OS Navigation - Progressive Module Spawning
-  const nextStep = () => {
-    if (currentStep < workflowSteps.length - 1) {
-      const newStep = currentStep + 1
-      
-      // Progressive reveal - spawn new module
-      if (!visibleCards.includes(newStep)) {
-        setVisibleCards(prev => [...prev, newStep])
-      }
-      
-      setCurrentStep(newStep)
-      // Reset manual position when using buttons
-      setManualPosition(0)
-    }
-  }
-
-  const prevStep = () => {
-    if (currentStep > 0) {
-      setCurrentStep(currentStep - 1)
-      // Reset manual position when using buttons
-      setManualPosition(0)
-    }
-  }
-
-  const goToStep = (stepIndex: number) => {
-    // Ensure all modules up to target are spawned
-    const newVisibleCards = Array.from({ length: stepIndex + 1 }, (_, i) => i)
-    setVisibleCards(newVisibleCards)
-    setCurrentStep(stepIndex)
-    // Reset manual position when using direct navigation
-    setManualPosition(0)
-  }
-
   // Handle card click navigation
   const handleCardClick = (cardIndex: number, e: React.MouseEvent) => {
-    console.log('Card clicked:', cardIndex, 'Visible cards:', visibleCards)
+    console.log('Card clicked:', cardIndex, 'Visible cards:', visibleCards, 'Current step:', currentStep)
     
     // Always spawn next card when any visible card is clicked
     const nextCardIndex = Math.max(...visibleCards) + 1
     
     if (nextCardIndex < workflowSteps.length && !visibleCards.includes(nextCardIndex)) {
       console.log('Spawning next card:', nextCardIndex)
+      const newVisibleCards = [...visibleCards, nextCardIndex]
+      console.log('New visible cards will be:', newVisibleCards)
       // Spawn the next card
-      setVisibleCards(prev => [...prev, nextCardIndex])
+      setVisibleCards(newVisibleCards)
       // Move to the newly spawned card
       setCurrentStep(nextCardIndex)
     } else if (visibleCards.includes(cardIndex)) {
@@ -519,14 +493,14 @@ export default function WorkflowPage() {
         </motion.div>
       </div>
 
-             {/* Mercury Flow Container */}
-       <div 
-         className="relative overflow-hidden cursor-grab active:cursor-grabbing" 
-         style={{ perspective: '1200px' }}
-         onMouseDown={handleMouseDown}
-         onMouseMove={handleMouseMove}
-         onMouseUp={handleMouseUp}
-       >
+      {/* Mercury Flow Container */}
+      <div 
+        className="relative overflow-hidden cursor-grab active:cursor-grabbing" 
+        style={{ perspective: '1200px' }}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+      >
         <motion.div
           ref={containerRef}
           className="flex items-start py-12 select-none"
@@ -546,9 +520,17 @@ export default function WorkflowPage() {
             const CardComponent = stepData.component as any
             const kiriFogStyle = getKiriFogStyle(cardIndex)
             
+            // Debug logging
+            console.log(`Rendering card ${cardIndex}:`, {
+              id: stepData.id,
+              title: stepData.title,
+              contactName: stepData.data.contactName || stepData.data.title,
+              intent: stepData.intent
+            })
+            
             return (
               <motion.div
-                key={stepData.id}
+                key={`card-${cardIndex}-${stepData.id}`}
                 custom={cardIndex}
                 variants={mercuryModuleVariants}
                 initial="hidden"
@@ -585,53 +567,11 @@ export default function WorkflowPage() {
                     focusLevel={cardIndex === currentStep ? "focused" : "ambient"}
                     size={stepData.size}
                     data={stepData.data}
-                    className={`
-                      h-full transition-all duration-700 transform-gpu
-                      ${cardIndex === currentStep 
-                        ? 'ring-1 ring-slate-200/50' 
-                        : ''
-                      }
-                    `}
+                    showNextIndicator={cardIndex === currentStep && visibleCards.length < workflowSteps.length}
+                    onRevealNext={() => handleCardClick(cardIndex, {} as React.MouseEvent)}
+                    className="h-full transition-all duration-700 transform-gpu"
                     isInteractive={cardIndex === currentStep}
                   />
-                  
-                  {/* Click to Continue Indicator - Only show on active card if more cards available */}
-                  {cardIndex === currentStep && visibleCards.length < workflowSteps.length && (
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500/5 to-blue-500/10 rounded-xl border-2 border-blue-500/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300"
-                      initial={{ opacity: 0 }}
-                      whileHover={{ opacity: 1 }}
-                    >
-                      <div className="bg-white/90 backdrop-blur-sm rounded-lg px-4 py-2 shadow-lg border border-blue-200/50">
-                        <div className="flex items-center space-x-2 text-blue-700">
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                          </svg>
-                          <span className="text-sm font-medium">Click to reveal next</span>
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                  
-                  {/* Permanent subtle indicator for active card */}
-                  {cardIndex === currentStep && visibleCards.length < workflowSteps.length && (
-                    <motion.div
-                      className="absolute top-4 right-4 w-8 h-8 bg-blue-500/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-blue-500/30"
-                      animate={{
-                        scale: [1, 1.1, 1],
-                        opacity: [0.7, 1, 0.7]
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: wuWeiEasing
-                      }}
-                    >
-                      <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                      </svg>
-                    </motion.div>
-                  )}
                   
                   {/* Mercury Module Badge */}
                   <motion.div 
@@ -681,7 +621,7 @@ export default function WorkflowPage() {
       >
         <div className="flex items-center space-x-2 px-6 py-3 bg-white/80 backdrop-blur-lg rounded-2xl border border-slate-200/50 shadow-xl">
           <span className="text-sm font-semibold text-slate-700">
-            {currentStep + 1} / {workflowSteps.length}
+            {currentStep + 1} / {workflowSteps.length} (Visible: {visibleCards.length})
           </span>
           <span className="text-xs text-slate-500 ml-2">
             Click cards to navigate • Drag to explore
