@@ -445,7 +445,7 @@ export default function EnterpriseDemoPage() {
                  focusLevel={getFocusLevel('message')}
                  size="compact"
                  data={messageData}
-                 onReply={(message) => console.log('Reply:', message)}
+                 onReply={() => console.log('Reply clicked')}
                />
              </div>
              
@@ -471,9 +471,8 @@ export default function EnterpriseDemoPage() {
                  focusLevel={getFocusLevel('product')}
                  size="compact"
                  data={productData}
-                 onAddToBag={() => console.log('Add to bag')}
+                 onAddToCart={() => console.log('Add to cart')}
                  onWishlist={() => console.log('Toggle wishlist')}
-                 onSizeSelect={(size) => console.log('Select size:', size)}
                />
              </div>
             
