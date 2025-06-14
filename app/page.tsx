@@ -125,6 +125,30 @@ export default function TrueFlowyShowcase() {
                 <span className="text-lg font-medium">Enterprise Dashboard</span>
                 <ArrowRight className="w-5 h-5" />
               </Link>
+              
+              <Link 
+                href="/mercury-flow-demo"
+                className="inline-flex items-center space-x-3 px-8 py-4 bg-gradient-to-r from-slate-500/20 to-slate-600/20 backdrop-blur-lg border border-slate-300/30 rounded-2xl text-slate-700 hover:text-slate-800 hover:from-slate-500/30 hover:to-slate-600/30 transition-all duration-500 ease-out hover:scale-105"
+              >
+                <span className="text-lg font-medium">Mercury Flow Cards</span>
+                <Cloud className="w-5 h-5" />
+              </Link>
+              
+              <Link 
+                href="/workflow"
+                className="inline-flex items-center space-x-3 px-8 py-4 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 backdrop-blur-lg border border-emerald-300/30 rounded-2xl text-emerald-700 hover:text-emerald-800 hover:from-emerald-500/30 hover:to-teal-500/30 transition-all duration-500 ease-out hover:scale-105"
+              >
+                <span className="text-lg font-medium">Workflow Demo</span>
+                <Droplets className="w-5 h-5" />
+              </Link>
+              
+              <Link 
+                href="/mercury-contextual-demo"
+                className="inline-flex items-center space-x-3 px-8 py-4 bg-gradient-to-r from-orange-500/20 to-red-500/20 backdrop-blur-lg border border-orange-300/30 rounded-2xl text-orange-700 hover:text-orange-800 hover:from-orange-500/30 hover:to-red-500/30 transition-all duration-500 ease-out hover:scale-105"
+              >
+                <span className="text-lg font-medium">Contextual Actions Demo</span>
+                <ArrowRight className="w-5 h-5" />
+              </Link>
             </motion.div>
           </motion.div>
 
