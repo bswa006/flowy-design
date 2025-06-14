@@ -101,19 +101,24 @@ const findValidPosition = (desiredPosition: Point, cardWidth: number, cardHeight
   }
 }
 
-// Mercury Spatial Layout Management - Intelligent Viewport-Aware System
+// Mercury Spatial Layout Management - Viewport-Constrained System
 const calculateOptimalLayout = (
   cards: MercuryCard[], 
   newCard: MercuryCard, 
-  viewportWidth: number
+  viewportWidth: number,
+  canvasPadding: number = 40
 ): { repositionedCards: MercuryCard[]; finalNewCard: MercuryCard; chatRepositionNeeded?: { x: number; y: number } } => {
-  const cardSpacing = 32
-  const sideMargin = 40
-  const rowSpacing = 60
+  const cardSpacing = 16 // Reduced from 32 to 16 for better packing
+  const sideMargin = 16 // Much smaller margins for maximum card space
+  const rowSpacing = 50 // Slightly reduced row spacing
   const viewportHeight = typeof window !== 'undefined' ? window.innerHeight : 800
   
   const chatModuleWidth = 400
   const chatModuleHeight = 600
+  
+  // More efficient available width calculation
+  // Total usable width = viewport - chat - margins (no extra spacing deduction)
+  const availableCardWidth = viewportWidth - chatModuleWidth - (sideMargin * 2)
   
   // Get card dimensions
   const getCardDimensions = (card: MercuryCard) => ({
@@ -123,39 +128,33 @@ const calculateOptimalLayout = (
   
   const newCardDims = getCardDimensions(newCard)
   
-  console.log('🎯 MERCURY INTELLIGENT LAYOUT START:', {
-    existingCards: cards.length,
+  console.log('🎯 EFFICIENT LAYOUT CALCULATION:', {
     viewportWidth,
-    viewportHeight,
-    newCardDims
+    chatModuleWidth,
+    sideMargin,
+    availableCardWidth,
+    newCardDims,
+    '3ActionCards': '280+16+280+16+280=872px',
+    'available>=872': availableCardWidth >= 872
   })
   
-  // CASE 1: First action card - optimally position chat and action
+  // CASE 1: First action card - position chat and action within viewport
   if (cards.length === 0) {
-    // Calculate optimal chat position to leave maximum space for action cards
-    const totalActionSpaceNeeded = newCardDims.width + cardSpacing + 200 // Buffer for future cards
-    const optimalChatX = Math.max(
-      sideMargin,
-      Math.min(
-        sideMargin,
-        viewportWidth - chatModuleWidth - totalActionSpaceNeeded - sideMargin
-      )
-    )
-    
-    const chatY = Math.max(40, (viewportHeight - chatModuleHeight) / 2)
+    const optimalChatX = sideMargin
+    const chatY = Math.max(canvasPadding + 20, (viewportHeight - chatModuleHeight) / 2)
     
     const firstActionCard = {
       ...newCard,
       position: {
         x: optimalChatX + chatModuleWidth + cardSpacing,
-        y: chatY + 100
+        y: chatY + 80
       }
     }
     
-    console.log('🎯 FIRST CARD LAYOUT:', {
+    console.log('🎯 FIRST CARD EFFICIENT LAYOUT:', {
       chatPosition: { x: optimalChatX, y: chatY },
       actionPosition: firstActionCard.position,
-      strategy: 'OPTIMAL_CHAT_POSITIONING'
+      strategy: 'EFFICIENT_PACKING'
     })
     
     return { 
@@ -165,174 +164,119 @@ const calculateOptimalLayout = (
     }
   }
   
-  // CASE 2: Subsequent cards - intelligent flow with viewport boundaries
+  // CASE 2: Subsequent cards - efficient row-based packing
   
-  // Estimate current chat position based on leftmost card
-  const leftmostCard = cards.reduce((leftmost, card) => 
-    card.position.x < leftmost.position.x ? card : leftmost
-  )
-  
-  const estimatedChatPosition = {
-    x: leftmostCard.position.x - chatModuleWidth - cardSpacing,
-    y: Math.max(40, (viewportHeight - chatModuleHeight) / 2)
-  }
-  
-  // Calculate total width needed for all cards (existing + new)
-  const allCards = [...cards, newCard]
-  const totalCardsWidth = allCards.reduce((total, card) => {
-    const dims = getCardDimensions(card)
-    return total + dims.width + cardSpacing
-  }, 0) - cardSpacing // Remove last spacing
-  
-  const totalLayoutWidth = chatModuleWidth + cardSpacing + totalCardsWidth
-  const availableWidth = viewportWidth - (2 * sideMargin)
-  
-  console.log('🎯 LAYOUT ANALYSIS:', {
-    totalLayoutWidth,
-    availableWidth,
-    wouldFit: totalLayoutWidth <= availableWidth,
-    estimatedChatPosition
-  })
-  
-  // STRATEGY A: Everything fits in one row - optimize positioning
-  if (totalLayoutWidth <= availableWidth) {
-    // Check if we need to move chat left to prevent card truncation
-    const minChatX = sideMargin
-    const maxChatX = viewportWidth - totalLayoutWidth - sideMargin
-    const optimalChatX = Math.max(minChatX, Math.min(maxChatX, estimatedChatPosition.x))
-    
-    // Reposition all cards in optimal flow
-    let currentX = optimalChatX + chatModuleWidth + cardSpacing
-    const repositionedCards: MercuryCard[] = []
-    
-    cards.forEach(card => {
-      const dims = getCardDimensions(card)
-      repositionedCards.push({
-        ...card,
-        position: { 
-          x: currentX, 
-          y: estimatedChatPosition.y + 100
-        }
-      })
-      currentX += dims.width + cardSpacing
-    })
-    
-    // Position new card at the end
-    const finalNewCard = {
-      ...newCard,
-      position: { 
-        x: currentX, 
-        y: estimatedChatPosition.y + 100
-      }
-    }
-    
-    // Check if we need to reposition chat
-    const chatRepositionNeeded = optimalChatX !== estimatedChatPosition.x ? 
-      { x: optimalChatX, y: estimatedChatPosition.y } : undefined
-    
-    console.log('🎯 SINGLE ROW LAYOUT:', {
-      chatReposition: chatRepositionNeeded,
-      newCardPosition: finalNewCard.position,
-      strategy: 'OPTIMAL_SINGLE_ROW'
-    })
-    
-    return { repositionedCards, finalNewCard, chatRepositionNeeded }
-  }
-  
-  // STRATEGY B: Intelligent space-finding layout
+  // Fixed chat position at left edge with minimal margin
   const optimalChatX = sideMargin
-  const baseY = Math.max(40, (viewportHeight - chatModuleHeight) / 2)
+  const baseY = Math.max(canvasPadding + 20, (viewportHeight - chatModuleHeight) / 2)
   
-  // Use intelligent space finder for new card
-  const newCardDimensions = getCardDimensions(newCard)
-  
-  // Find the best available position for the new card
-  const findAvailablePosition = (cards: MercuryCard[], cardDims: { width: number; height: number }) => {
+  // Efficient space-finding with proper card packing
+  const findAvailablePositionEfficient = (cards: MercuryCard[], cardDims: { width: number; height: number }) => {
     const minX = optimalChatX + chatModuleWidth + cardSpacing
     const maxX = viewportWidth - sideMargin - cardDims.width
-    const startY = baseY + 100
+    const startY = baseY + 80
     
-    // Try different positions systematically
-    for (let row = 0; row < 3; row++) { // Max 3 rows
+    console.log('🎯 EFFICIENT SPACE SEARCH:', {
+      minX,
+      maxX,
+      cardWidth: cardDims.width,
+      availableWidth: maxX - minX,
+      canFit3Actions: (maxX - minX) >= (280 * 3 + cardSpacing * 2)
+    })
+    
+    // Try different rows with efficient packing
+    for (let row = 0; row < 10; row++) {
       const y = startY + (row * (Math.max(cardDims.height, 200) + rowSpacing))
       
-      // Build array of occupied x-ranges in this row
-      const occupiedRanges: Array<{start: number, end: number}> = []
+      // Collect all cards in this row and sort by x position
+      const cardsInRow: Array<{card: MercuryCard, dims: {width: number, height: number}}> = []
       
       cards.forEach(existingCard => {
         const existingDims = getCardDimensions(existingCard)
         
-        // Check if this existing card overlaps with our target row
-        const cardRowOverlap = !(existingCard.position.y + existingDims.height <= y ||
-                                existingCard.position.y >= y + cardDims.height)
+        // More precise row overlap detection
+        const rowOverlap = !(existingCard.position.y + existingDims.height + 10 <= y ||
+                            existingCard.position.y >= y + cardDims.height + 10)
         
-        if (cardRowOverlap) {
-          occupiedRanges.push({
-            start: existingCard.position.x - cardSpacing, // Include spacing
-            end: existingCard.position.x + existingDims.width + cardSpacing
-          })
+        if (rowOverlap) {
+          cardsInRow.push({ card: existingCard, dims: existingDims })
         }
       })
       
-      // Sort occupied ranges by start position
-      occupiedRanges.sort((a, b) => a.start - b.start)
+      // Sort cards in this row by x position
+      cardsInRow.sort((a, b) => a.card.position.x - b.card.position.x)
       
-      // Find gaps between occupied ranges
+      // Try to fit the new card in available spaces
       let currentX = minX
       
-      for (const range of occupiedRanges) {
-        // Check if there's enough space before this occupied range
-        if (currentX + cardDims.width <= range.start) {
+      // Check space before first card
+      if (cardsInRow.length === 0) {
+        // Empty row - place at start
+        const testPosition = { x: currentX, y }
+        console.log('🎯 FOUND EMPTY ROW:', { position: testPosition, row })
+        return testPosition
+      }
+      
+      // Check gaps between existing cards
+      for (let i = 0; i < cardsInRow.length; i++) {
+        const currentCard = cardsInRow[i]
+        const cardStart = currentCard.card.position.x
+        const cardEnd = currentCard.card.position.x + currentCard.dims.width
+        
+        // Check if new card fits before this existing card
+        if (currentX + cardDims.width + cardSpacing <= cardStart) {
           const testPosition = { x: currentX, y }
-          console.log('🎯 FOUND AVAILABLE SPACE (gap):', {
-            position: testPosition,
-            row,
-            gapBefore: range.start,
-            strategy: 'GAP_FINDING'
+          console.log('🎯 FOUND GAP BEFORE CARD:', { 
+            position: testPosition, 
+            row, 
+            gapSize: cardStart - currentX,
+            needed: cardDims.width + cardSpacing
           })
           return testPosition
         }
         
-        // Move past this occupied range
-        currentX = Math.max(currentX, range.end)
+        // Move to after this card
+        currentX = cardEnd + cardSpacing
       }
       
-      // Check if there's space after all occupied ranges
+      // Check space after last card in row
       if (currentX + cardDims.width <= maxX) {
         const testPosition = { x: currentX, y }
-        console.log('🎯 FOUND AVAILABLE SPACE (end):', {
-          position: testPosition,
+        console.log('🎯 FOUND SPACE AFTER LAST CARD:', { 
+          position: testPosition, 
           row,
-          afterLastCard: true,
-          strategy: 'END_POSITIONING'
+          remainingSpace: maxX - currentX,
+          needed: cardDims.width
         })
         return testPosition
       }
+      
+      console.log(`🎯 ROW ${row} FULL (${cardsInRow.length} cards), TRYING NEXT ROW`)
     }
     
-    // Fallback: place at the end of last row
-    const lastRowY = startY + (2 * (200 + rowSpacing))
-    const fallbackPosition = { x: minX, y: lastRowY }
-    console.log('🎯 FALLBACK POSITION:', fallbackPosition)
+    // Fallback: place at start of a new row
+    const fallbackRow = Math.max(5, cards.length)
+    const fallbackPosition = { x: minX, y: startY + (fallbackRow * (200 + rowSpacing)) }
+    console.log('🎯 FALLBACK TO NEW ROW:', fallbackPosition)
     return fallbackPosition
   }
   
-  // Keep existing cards in their current positions (only add new card)
-  const repositionedCards = [...cards] // Don't move existing cards
+  // Keep existing cards in their current positions
+  const repositionedCards = [...cards]
   
-  // Find optimal position for new card
-  const optimalNewPosition = findAvailablePosition(cards, newCardDimensions)
+  // Find optimal position for new card with efficient packing
+  const optimalNewPosition = findAvailablePositionEfficient(cards, newCardDims)
   
   const intelligentNewCard = {
     ...newCard,
     position: optimalNewPosition
   }
   
-  console.log('🎯 INTELLIGENT LAYOUT:', {
+  console.log('🎯 EFFICIENT LAYOUT RESULT:', {
     existingCardsKept: cards.length,
     newCardPosition: intelligentNewCard.position,
-    newCardDims: newCardDimensions,
-    strategy: 'SPACE_FINDING_ALGORITHM'
+    newCardDims: newCardDims,
+    strategy: 'EFFICIENT_HORIZONTAL_PACKING'
   })
   
   return { 
@@ -378,6 +322,47 @@ export function MercuryFlowCanvas({
   const handleDrop = useCallback((item: DragItem, position: Point) => {
     console.log('🎯 CANVAS RECEIVED DROP:', { item, position })
     console.log('🎯 ITEM TYPE:', item.type, 'DATA TYPE:', item.data.type)
+    
+    // Auto-scroll helper function (vertical only)
+    const autoScrollToCard = (cardPosition: Point, cardWidth: number, cardHeight: number) => {
+      setTimeout(() => {
+        const buffer = 100
+        const targetY = cardPosition.y - buffer
+        
+        // Calculate if the card is outside the vertical viewport
+        const viewportHeight = window.innerHeight
+        const scrollY = window.scrollY
+        
+        const cardBottom = cardPosition.y + cardHeight + buffer
+        
+        let shouldScrollY = false
+        let newScrollY = scrollY
+        
+        // Check if card is outside vertical viewport
+        if (cardBottom > scrollY + viewportHeight) {
+          shouldScrollY = true
+          newScrollY = cardBottom - viewportHeight + buffer
+        } else if (targetY < scrollY) {
+          shouldScrollY = true
+          newScrollY = targetY
+        }
+        
+        // Smooth scroll vertically to show the new card
+        if (shouldScrollY) {
+          console.log('🎯 AUTO-SCROLLING VERTICALLY TO SHOW NEW CARD:', {
+            cardPosition,
+            currentScrollY: scrollY,
+            newScrollY: newScrollY
+          })
+          
+          window.scrollTo({
+            left: 0, // Keep horizontal scroll at 0
+            top: newScrollY,
+            behavior: 'smooth'
+          })
+        }
+      }, 800) // Delay to allow card animation to start
+    }
     
     // Handle housing search action - create unified search results card
     if (item.type === 'action-card' && (item.data.type === 'housing-search' || item.data.type === 'housing')) {
@@ -452,7 +437,7 @@ export function MercuryFlowCanvas({
 
       // Calculate optimal layout with intelligent positioning
       const viewportWidth = window.innerWidth
-      const { repositionedCards, finalNewCard, chatRepositionNeeded } = calculateOptimalLayout(cards, newSearchCard, viewportWidth)
+      const { repositionedCards, finalNewCard, chatRepositionNeeded } = calculateOptimalLayout(cards, newSearchCard, viewportWidth, 40)
       
       console.log('🎯 MERCURY INTELLIGENT LAYOUT:')
       console.log('  Original drop position:', position)
@@ -481,6 +466,10 @@ export function MercuryFlowCanvas({
       })
       
       onCardCreated?.(finalNewCard)
+      
+      // Auto-scroll to show the new card
+      autoScrollToCard(finalNewCard.position, 425, 300)
+      
     } else if (item.type === 'action-card') {
       // Handle other action cards with intelligent layout
       const desiredPosition = {
@@ -498,8 +487,8 @@ export function MercuryFlowCanvas({
           metadata: { ...item.data }
         },
         connections: [],
-        focusLevel: 'focused',
-        intent: `${intent}-action-card`,
+        focusLevel: 'focused' as const,
+        intent: `${intent}-action-result`,
         metadata: {
           sourceType: item.type,
           sourceContext: item.sourceContext,
@@ -507,53 +496,56 @@ export function MercuryFlowCanvas({
         }
       }
 
-      // Apply intelligent layout system
+      // Calculate optimal layout
       const viewportWidth = window.innerWidth
-      const { repositionedCards, finalNewCard, chatRepositionNeeded } = calculateOptimalLayout(cards, newActionCard, viewportWidth)
+      const { repositionedCards, finalNewCard, chatRepositionNeeded } = calculateOptimalLayout(cards, newActionCard, viewportWidth, 40)
       
-      console.log('🎯 MERCURY INTELLIGENT LAYOUT (Action Card):')
-      console.log('  Layout strategy:', cards.length === 0 ? 'FLOW_FROM_CENTERED_CHAT' : 'VIEWPORT_AWARE_LAYOUT')
-      console.log('  Final position:', finalNewCard.position)
-      console.log('  Chat reposition needed:', chatRepositionNeeded)
+      console.log('🎯 ACTION CARD LAYOUT:', {
+        originalPosition: desiredPosition,
+        finalPosition: finalNewCard.position,
+        chatReposition: chatRepositionNeeded
+      })
 
-      // Reposition chat if needed for optimal layout
+      // Reposition chat if needed
       if (chatRepositionNeeded) {
-        console.log('🎯 REPOSITIONING CHAT MODULE TO:', chatRepositionNeeded)
         onChatRepositioned?.(chatRepositionNeeded)
       }
 
+      // Apply layout changes
       setCards(prev => {
         const updatedExisting = prev.map(existingCard => {
           const repositioned = repositionedCards.find(r => r.id === existingCard.id)
           return repositioned || existingCard
         })
+        
         return [...updatedExisting, finalNewCard]
       })
       
       onCardCreated?.(finalNewCard)
+      
+      // Auto-scroll to show the new card
+      autoScrollToCard(finalNewCard.position, 280, 200)
     } else {
       // Handle single item drops with intelligent layout
+      console.log('🎯 SINGLE ITEM DROP:', { item, position })
+      
       const desiredPosition = {
         x: position.x - 140, // Half of card width (280/2)
-        y: position.y - 100  // Half of card height (200/2)
+        y: position.y - 75   // Half of card height (150/2)
       }
       
-      const newSingleCard: MercuryCard = {
-        id: `card-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-        type: item.type === 'search-result' ? 'housing-listing' : 'action-result',
-        position: desiredPosition, // Temporary position for layout calculation
+      const newCard: MercuryCard = {
+        id: `single-item-${Date.now()}`,
+        type: 'content-block',
+        position: desiredPosition,
         content: {
-          title: item.data.name || item.data.title || 'Untitled',
-          description: item.data.bedrooms && item.data.bathrooms 
-            ? `${item.data.bedrooms}, ${item.data.bathrooms}` 
-            : item.data.description || '',
-          price: item.data.price || '',
-          imageUrl: item.data.image,
+          title: item.data?.title || 'Dropped Item',
+          description: item.data?.description || 'Item added to canvas',
           metadata: { ...item.data }
         },
         connections: [],
-        focusLevel: 'focused',
-        intent: `${intent}-spawned-card`,
+        focusLevel: 'focused' as const,
+        intent: `${intent}-single-item`,
         metadata: {
           sourceType: item.type,
           sourceContext: item.sourceContext,
@@ -561,30 +553,29 @@ export function MercuryFlowCanvas({
         }
       }
 
-      // Apply intelligent layout system
+      // Calculate optimal layout
       const viewportWidth = window.innerWidth
-      const { repositionedCards, finalNewCard, chatRepositionNeeded } = calculateOptimalLayout(cards, newSingleCard, viewportWidth)
-      
-      console.log('🎯 MERCURY INTELLIGENT LAYOUT (Single Card):')
-      console.log('  Layout strategy:', cards.length === 0 ? 'FLOW_FROM_CENTERED_CHAT' : 'VIEWPORT_AWARE_LAYOUT')
-      console.log('  Final position:', finalNewCard.position)
-      console.log('  Chat reposition needed:', chatRepositionNeeded)
+      const { repositionedCards, finalNewCard, chatRepositionNeeded } = calculateOptimalLayout(cards, newCard, viewportWidth, 40)
 
-      // Reposition chat if needed for optimal layout
+      // Reposition chat if needed
       if (chatRepositionNeeded) {
-        console.log('🎯 REPOSITIONING CHAT MODULE TO:', chatRepositionNeeded)
         onChatRepositioned?.(chatRepositionNeeded)
       }
 
+      // Apply layout changes
       setCards(prev => {
         const updatedExisting = prev.map(existingCard => {
           const repositioned = repositionedCards.find(r => r.id === existingCard.id)
           return repositioned || existingCard
         })
+        
         return [...updatedExisting, finalNewCard]
       })
       
       onCardCreated?.(finalNewCard)
+      
+      // Auto-scroll to show the new card
+      autoScrollToCard(finalNewCard.position, 280, 200)
     }
     
     // Clear drag preview
@@ -639,6 +630,34 @@ export function MercuryFlowCanvas({
 
   const canvasId = `${intent}-flow-canvas`
   
+  // Calculate dynamic canvas dimensions based on card positions
+  const calculateCanvasBounds = useCallback(() => {
+    const viewportWidth = typeof window !== 'undefined' ? window.innerWidth : 1200
+    
+    if (cards.length === 0) {
+      return {
+        minWidth: viewportWidth,
+        minHeight: typeof window !== 'undefined' ? Math.max(800, window.innerHeight) : 800
+      }
+    }
+
+    let maxY = 0
+
+    cards.forEach(card => {
+      const cardHeight = card.intent.includes('search-results') ? 300 : 200
+      maxY = Math.max(maxY, card.position.y + cardHeight)
+    })
+
+    // Add vertical padding and ensure minimum height, but constrain width to viewport
+    const padding = 200
+    return {
+      minWidth: viewportWidth, // Always match viewport width
+      minHeight: Math.max(800, maxY + padding)
+    }
+  }, [cards])
+
+  const canvasBounds = calculateCanvasBounds()
+  
   // Enhanced drop hook with validation feedback
   const handleDropWithValidation = useCallback((item: DragItem, position: Point) => {
     setDragPosition(null)
@@ -662,11 +681,15 @@ export function MercuryFlowCanvas({
       data-intent={intent}
       id={canvasId}
       className={cn(
-        'relative h-screen w-full overflow-hidden',
+        'relative w-full overflow-x-hidden',
         'bg-gradient-to-br from-slate-50/50 to-white/80 backdrop-blur-sm',
         className
       )}
-      style={dropZoneStyles}
+      style={{
+        ...dropZoneStyles,
+        minHeight: `${canvasBounds.minHeight}px`,
+        padding: '40px'
+      }}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{

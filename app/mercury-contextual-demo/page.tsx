@@ -15,7 +15,6 @@ export default function MercuryContextualDemoPage() {
   const [animationState, setAnimationState] = useState<'idle' | 'action-triggered' | 'complete'>('idle')
   const [actionFeedback, setActionFeedback] = useState<string | null>(null)
   const [cardsCreated, setCardsCreated] = useState(0)
-  const [dragInProgress, setDragInProgress] = useState(false)
   const [showHousingModule, setShowHousingModule] = useState(false)
   const [housingModulePosition, setHousingModulePosition] = useState({ x: 600, y: 200 })
   const [chatModulePosition, setChatModulePosition] = useState({ x: 32, y: 32 }) // Start with fallback
@@ -103,7 +102,7 @@ export default function MercuryContextualDemoPage() {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className="h-screen w-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 overflow-hidden">
+      <div className="min-h-screen w-full bg-gradient-to-br from-slate-50 via-white to-slate-100 relative overflow-x-hidden">
         {/* Mercury Action Feedback */}
         <AnimatePresence>
           {actionFeedback && (
@@ -132,7 +131,7 @@ export default function MercuryContextualDemoPage() {
           )}
         </AnimatePresence>
 
-        {/* Full Screen Mercury Spatial Computing Interface */}
+        {/* Viewport-Constrained Mercury Spatial Computing Interface */}
         <MercuryFlowCanvas
           intent="contextual-flow-canvas"
           onCardCreated={(card) => {
@@ -321,7 +320,7 @@ export default function MercuryContextualDemoPage() {
           </motion.div>
 
           {/* Instructions overlay */}
-          {!showHousingModule && (
+          {/* {!showHousingModule && (
             <motion.div
               className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30"
               initial={{ opacity: 0, y: 20 }}
@@ -336,7 +335,7 @@ export default function MercuryContextualDemoPage() {
                 </p>
               </div>
             </motion.div>
-          )}
+          )} */}
         </MercuryFlowCanvas>
       </div>
     </DndProvider>
