@@ -1,16 +1,12 @@
 "use client"
 
-import React, { useState, useCallback, useRef } from 'react'
+import React, { useState, useCallback, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from "@/lib/utils"
 import { getMercuryFocusClasses } from "@/lib/mercury-tokens"
 import { Mic, Plus, Send } from "lucide-react"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
 import { MercuryDraggableAction } from './mercury-draggable-action'
+import { createPortal } from 'react-dom'
 
 // Mercury OS Wu Wei Daoist Easing Functions
 const wuWeiEasing = [0.25, 0.46, 0.45, 0.94] as const // Natural settling
@@ -212,6 +208,116 @@ export function MercuryChatModule({
   const [usedActions, setUsedActions] = useState<Set<string>>(new Set())
   const [actionFeedback, setActionFeedback] = useState<string | null>(null)
   const messageRefs = useRef<Map<string, HTMLElement>>(new Map())
+  const chatModuleRef = useRef<HTMLDivElement>(null)
+  const [modalAbsolutePosition, setModalAbsolutePosition] = useState({ x: 0, y: 0 })
+
+  // Calculate absolute position for portal modal
+  useEffect(() => {
+    if (selectedText && showActionPopup && chatModuleRef.current) {
+      const updateModalPosition = () => {
+        const chatRect = chatModuleRef.current!.getBoundingClientRect()
+        
+        // Position modal at the RIGHT EDGE of chat module (not on selected text)
+        const chatModuleWidth = 400 // Chat module is 400px wide
+        const modalOffset = 20 // Small gap between chat and modal
+        const absoluteX = chatRect.left + chatModuleWidth + modalOffset
+        const absoluteY = chatRect.top + selectedText.position.y + 30 // Add 30px below selected text
+        
+        // Adjust Y position to prevent bottom cutoff and ensure visibility
+        const modalHeight = 320 // Estimated modal height
+        const modalWidth = 320 // w-80 = 320px
+        const viewportHeight = window.innerHeight
+        const viewportWidth = window.innerWidth
+        
+        const adjustedY = Math.min(absoluteY, viewportHeight - modalHeight - 20) // 20px margin from bottom
+        const finalY = Math.max(60, adjustedY) // Minimum 60px from top
+        
+        // Adjust X position to ensure modal stays within viewport
+        // Since modal uses translateX(-50%), we need to account for that
+        const modalCenterX = absoluteX
+        const modalLeftEdge = modalCenterX - modalWidth / 2
+        const modalRightEdge = modalCenterX + modalWidth / 2
+        
+        let finalX = modalCenterX
+        if (modalRightEdge > viewportWidth - 20) {
+          // Modal would go off right edge, move it left
+          finalX = viewportWidth - modalWidth / 2 - 20
+        } else if (modalLeftEdge < 20) {
+          // Modal would go off left edge, move it right
+          finalX = modalWidth / 2 + 20
+        }
+        
+        setModalAbsolutePosition({ x: finalX, y: finalY })
+        
+        console.log('🎯 MODAL POSITIONING (Right Edge):', {
+          selectedTextPos: selectedText.position,
+          chatRect: { left: chatRect.left, top: chatRect.top, width: chatModuleWidth },
+          calculated: { x: absoluteX, y: absoluteY },
+          adjusted: { x: finalX, y: finalY },
+          viewport: { width: viewportWidth, height: viewportHeight },
+          modalSize: { width: modalWidth, height: modalHeight },
+          strategy: 'RIGHT_EDGE_OF_CHAT'
+        })
+      }
+
+      // Initial calculation
+      updateModalPosition()
+
+      // Real-time position tracking with multiple methods
+      let rafId: number
+      let isTracking = true
+
+      // Method 1: MutationObserver for style changes
+      const mutationObserver = new MutationObserver(() => {
+        if (isTracking) updateModalPosition()
+      })
+
+      // Method 2: Continuous tracking during transitions
+      const trackPosition = () => {
+        if (isTracking) {
+          updateModalPosition()
+          rafId = requestAnimationFrame(trackPosition)
+        }
+      }
+
+      // Start tracking
+      if (chatModuleRef.current) {
+        // Watch for style changes on chat module
+        mutationObserver.observe(chatModuleRef.current, {
+          attributes: true,
+          attributeFilter: ['style', 'class']
+        })
+
+        // Watch for style changes on chat module's parent (canvas)
+        const parent = chatModuleRef.current.offsetParent
+        if (parent) {
+          mutationObserver.observe(parent, {
+            attributes: true,
+            attributeFilter: ['style', 'class']
+          })
+        }
+      }
+
+      // Start continuous position tracking
+      trackPosition()
+
+      // Standard event listeners
+      const handleUpdate = () => {
+        if (isTracking) updateModalPosition()
+      }
+      
+      window.addEventListener('scroll', handleUpdate, true)
+      window.addEventListener('resize', handleUpdate)
+
+      return () => {
+        isTracking = false
+        mutationObserver.disconnect()
+        if (rafId) cancelAnimationFrame(rafId)
+        window.removeEventListener('scroll', handleUpdate, true)
+        window.removeEventListener('resize', handleUpdate)
+      }
+    }
+  }, [selectedText, showActionPopup])
 
   const handleTextSelection = useCallback((event: React.MouseEvent, messageId: string) => {
     const selection = window.getSelection()
@@ -223,19 +329,39 @@ export function MercuryChatModule({
     const range = selection.getRangeAt(0)
     const rect = range.getBoundingClientRect()
     
+    // Get chat module element to calculate relative position
+    const chatModule = event.currentTarget.closest('.mercury-module')
+    const chatRect = chatModule?.getBoundingClientRect()
+    
     // Generate dynamic actions based on selected text
     const actions = analyzeSelectedText(selectedTextContent, `message-${messageId}`)
     
     console.log(`🎯 Dynamic text selected: "${selectedTextContent}"`)
     console.log(`🤖 Generated ${actions.length} actions:`, actions.map(a => a.title))
 
+    // Calculate relative position with bounds checking
+    let relativeX = chatRect ? rect.left + rect.width / 2 - chatRect.left : rect.left + rect.width / 2
+    let relativeY = chatRect ? rect.top - chatRect.top - 10 : rect.top - 10
+    
+    // Ensure popup stays within chat module bounds (with some padding)
+    if (chatRect) {
+      const popupWidth = 320 // w-80 = 320px
+      const padding = 16
+      
+      // Keep popup within horizontal bounds
+      relativeX = Math.max(padding + popupWidth / 2, Math.min(chatRect.width - padding - popupWidth / 2, relativeX))
+      
+      // Ensure popup doesn't go above the chat module
+      relativeY = Math.max(10, relativeY)
+    }
+
     setSelectedText({
       text: selectedTextContent,
       messageId,
       range,
       position: {
-        x: rect.left + rect.width / 2,
-        y: rect.top - 10
+        x: relativeX,
+        y: relativeY
       }
     })
     
@@ -372,6 +498,7 @@ export function MercuryChatModule({
         duration: 0.6,
         ease: wuWeiEasing
       }}
+      ref={chatModuleRef}
     >
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-slate-100">
@@ -406,124 +533,143 @@ export function MercuryChatModule({
         </div>
       </div>
 
-      {/* Dynamic Action Popup */}
-      {selectedText && (
-        <Popover open={showActionPopup} onOpenChange={setShowActionPopup}>
-          <PopoverTrigger asChild>
-            <div 
-              className="fixed pointer-events-none"
-              style={{
-                left: selectedText.position.x,
-                top: selectedText.position.y,
-                transform: 'translateX(-50%)'
-              }}
-            />
-          </PopoverTrigger>
-          <PopoverContent 
-            side="bottom" 
-            align="center"
-            sideOffset={10}
-            className="w-80 p-0 border-slate-200/50 shadow-lg rounded-2xl bg-white/98 backdrop-blur-sm"
+      {/* Portal Modal - Rendered outside chat to avoid clipping */}
+      {typeof window !== 'undefined' && selectedText && showActionPopup && createPortal(
+        <AnimatePresence>
+          <motion.div
+            className="fixed z-[9999] pointer-events-auto"
+            style={{
+              left: modalAbsolutePosition.x,
+              top: modalAbsolutePosition.y,
+              transform: 'translateX(-50%)'
+            }}
+            initial={{ opacity: 0, scale: 0.95, y: -10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: -10 }}
+            transition={{ duration: 0.2, ease: wuWeiEasing }}
           >
-            <div className="p-4">
-              {/* Header */}
-              <div className="flex items-center space-x-2 pb-3 border-b border-slate-100">
-                <div className="w-4 h-4 bg-blue-500 rounded-full"/>
-                <span className="font-medium text-slate-800 text-sm">
-                  "{selectedText.text}"
-                </span>
-              </div>
-              
-              {/* Dynamic Actions - Made scrollable with max height */}
-              <div className="space-y-1 pt-3 max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-slate-100">
-                <AnimatePresence mode="popLayout">
-                  {availableActions.map((action, index) => (
+            <motion.div
+              className="w-80 p-0 border border-slate-200/50 shadow-lg rounded-2xl bg-white/98 backdrop-blur-sm"
+              initial={{ y: 10 }}
+              animate={{ y: 0 }}
+              transition={{ duration: 0.3, delay: 0.1, ease: wuWeiEasing }}
+            >
+              <div className="p-4">
+                {/* Header */}
+                <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-4 h-4 bg-blue-500 rounded-full"/>
+                    <span className="font-medium text-slate-800 text-sm">
+                      "{selectedText.text}"
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setShowActionPopup(false)
+                      setSelectedText(null)
+                      window.getSelection()?.removeAllRanges()
+                    }}
+                    className="text-slate-400 hover:text-slate-600 transition-colors duration-200 p-1 rounded-lg hover:bg-slate-100"
+                  >
+                    <div className="w-4 h-4 flex items-center justify-center relative">
+                      <div className="w-3 h-0.5 bg-current rotate-45 absolute"></div>
+                      <div className="w-3 h-0.5 bg-current -rotate-45 absolute"></div>
+                    </div>
+                  </button>
+                </div>
+                
+                {/* Dynamic Actions - Made scrollable with max height */}
+                <div className="space-y-1 pt-3 max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-slate-100">
+                  <AnimatePresence mode="popLayout">
+                    {availableActions.map((action, index) => (
+                      <motion.div
+                        key={action.id}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ 
+                          opacity: 0, 
+                          scale: 0.95, 
+                          height: 0,
+                          transition: { 
+                            duration: 0.3, 
+                            ease: wuWeiEasing
+                          }
+                        }}
+                        transition={{ 
+                          duration: 0.4, 
+                          delay: index * 0.05,
+                          ease: wuWeiEasing 
+                        }}
+                      >
+                        <MercuryDraggableAction
+                          action={action}
+                          onActionUsed={handleDragSuccess}
+                          onClick={() => handleActionSelect(action)}
+                          className="w-full flex items-center space-x-3 p-3 hover:bg-slate-50/80 rounded-xl text-left transition-all duration-200 group border border-transparent hover:border-blue-100/50 hover:shadow-sm"
+                        >
+                          <div className={`w-6 h-6 rounded-full flex items-center justify-center transition-all duration-200 ${
+                            action.type === 'housing-search' ? 'bg-red-100 group-hover:bg-red-200/80' : 
+                            action.type === 'location' ? 'bg-blue-100 group-hover:bg-blue-200/80' :
+                            action.type === 'person' ? 'bg-green-100 group-hover:bg-green-200/80' :
+                            'bg-slate-100 group-hover:bg-slate-200/80'
+                          }`}>
+                            <div className={`rounded-full transition-all duration-200 ${
+                              action.type === 'housing-search' ? 'w-3 h-3 bg-red-500 group-hover:bg-red-600' : 
+                              action.type === 'location' ? 'w-3 h-3 bg-blue-500 group-hover:bg-blue-600' :
+                              action.type === 'person' ? 'w-3 h-3 bg-green-500 group-hover:bg-green-600' :
+                              'w-2 h-2 bg-slate-600 group-hover:bg-slate-700'
+                            }`}></div>
+                          </div>
+                          <div className="flex-1">
+                            <div className="font-medium text-slate-800 text-sm group-hover:text-slate-900 transition-colors duration-200">
+                              {action.title}
+                            </div>
+                            <div className="text-xs text-slate-500 mt-0.5 capitalize group-hover:text-slate-600 transition-colors duration-200">
+                              {action.type.replace('-', ' ')}
+                            </div>
+                          </div>
+                          <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <div className="w-1.5 h-1.5 bg-blue-400 rounded-full"></div>
+                          </div>
+                        </MercuryDraggableAction>
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
+
+                  {/* Empty state */}
+                  {availableActions.length === 0 && (
                     <motion.div
-                      key={action.id}
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      exit={{ 
-                        opacity: 0, 
-                        scale: 0.95, 
-                        height: 0,
-                        transition: { 
-                          duration: 0.3, 
-                          ease: wuWeiEasing
-                        }
-                      }}
-                      transition={{ 
-                        duration: 0.4, 
-                        delay: index * 0.05,
-                        ease: wuWeiEasing 
-                      }}
+                      transition={{ duration: 0.4, ease: wuWeiEasing }}
+                      className="text-center py-6"
                     >
-                      <MercuryDraggableAction
-                        action={action}
-                        onActionUsed={handleDragSuccess}
-                        onClick={() => handleActionSelect(action)}
-                        className="w-full flex items-center space-x-3 p-3 hover:bg-slate-50/80 rounded-xl text-left transition-all duration-200 group border border-transparent hover:border-blue-100/50 hover:shadow-sm"
-                      >
-                        <div className={`w-6 h-6 rounded-full flex items-center justify-center transition-all duration-200 ${
-                          action.type === 'housing-search' ? 'bg-red-100 group-hover:bg-red-200/80' : 
-                          action.type === 'location' ? 'bg-blue-100 group-hover:bg-blue-200/80' :
-                          action.type === 'person' ? 'bg-green-100 group-hover:bg-green-200/80' :
-                          'bg-slate-100 group-hover:bg-slate-200/80'
-                        }`}>
-                          <div className={`rounded-full transition-all duration-200 ${
-                            action.type === 'housing-search' ? 'w-3 h-3 bg-red-500 group-hover:bg-red-600' : 
-                            action.type === 'location' ? 'w-3 h-3 bg-blue-500 group-hover:bg-blue-600' :
-                            action.type === 'person' ? 'w-3 h-3 bg-green-500 group-hover:bg-green-600' :
-                            'w-2 h-2 bg-slate-600 group-hover:bg-slate-700'
-                          }`}></div>
-                        </div>
-                        <div className="flex-1">
-                          <div className="font-medium text-slate-800 text-sm group-hover:text-slate-900 transition-colors duration-200">
-                            {action.title}
-                          </div>
-                          <div className="text-xs text-slate-500 mt-0.5 capitalize group-hover:text-slate-600 transition-colors duration-200">
-                            {action.type.replace('-', ' ')}
-                          </div>
-                        </div>
-                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                          <div className="w-1.5 h-1.5 bg-blue-400 rounded-full"></div>
-                        </div>
-                      </MercuryDraggableAction>
+                      <p className="text-sm text-slate-600">No actions available for this text</p>
+                      <p className="text-xs text-slate-500 mt-1">Try selecting different text</p>
                     </motion.div>
-                  ))}
-                </AnimatePresence>
+                  )}
+                </div>
 
-                {/* Empty state */}
-                {availableActions.length === 0 && (
+                {/* Scroll indicator when content overflows */}
+                {availableActions.length > 4 && (
                   <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, ease: wuWeiEasing }}
-                    className="text-center py-6"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.5, duration: 0.3 }}
+                    className="flex items-center justify-center pt-2 border-t border-slate-100 mt-2"
                   >
-                    <p className="text-sm text-slate-600">No actions available for this text</p>
-                    <p className="text-xs text-slate-500 mt-1">Try selecting different text</p>
+                    <div className="flex items-center space-x-1 text-xs text-slate-400">
+                      <div className="w-1 h-1 bg-slate-400 rounded-full"></div>
+                      <span>Scroll for more actions</span>
+                      <div className="w-1 h-1 bg-slate-400 rounded-full"></div>
+                    </div>
                   </motion.div>
                 )}
               </div>
-
-              {/* Scroll indicator when content overflows */}
-              {availableActions.length > 4 && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.5, duration: 0.3 }}
-                  className="flex items-center justify-center pt-2 border-t border-slate-100 mt-2"
-                >
-                  <div className="flex items-center space-x-1 text-xs text-slate-400">
-                    <div className="w-1 h-1 bg-slate-400 rounded-full"></div>
-                    <span>Scroll for more actions</span>
-                    <div className="w-1 h-1 bg-slate-400 rounded-full"></div>
-                  </div>
-                </motion.div>
-              )}
-            </div>
-          </PopoverContent>
-        </Popover>
+            </motion.div>
+          </motion.div>
+        </AnimatePresence>,
+        document.body
       )}
 
       {/* Debug state display */}

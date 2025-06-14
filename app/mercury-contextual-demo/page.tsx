@@ -18,6 +18,28 @@ export default function MercuryContextualDemoPage() {
   const [dragInProgress, setDragInProgress] = useState(false)
   const [showHousingModule, setShowHousingModule] = useState(false)
   const [housingModulePosition, setHousingModulePosition] = useState({ x: 600, y: 200 })
+  const [chatModulePosition, setChatModulePosition] = useState({ x: 32, y: 32 }) // Start with fallback
+
+  // Effect to center chat module after component mounts
+  React.useEffect(() => {
+    const centerChatModule = () => {
+      const chatWidth = 400
+      const chatHeight = 600
+      const centeredPosition = {
+        x: (window.innerWidth - chatWidth) / 2 - 100, // Slightly left of center for card flow
+        y: (window.innerHeight - chatHeight) / 2
+      }
+      console.log('🎯 CENTERING CHAT MODULE ON MOUNT:', centeredPosition)
+      console.log('🎯 VIEWPORT:', { width: window.innerWidth, height: window.innerHeight })
+      setChatModulePosition(centeredPosition)
+    }
+
+    centerChatModule()
+    
+    // Also center on window resize
+    window.addEventListener('resize', centerChatModule)
+    return () => window.removeEventListener('resize', centerChatModule)
+  }, [])
 
   const handleActionDetected = useCallback((action: string, context: string) => {
     console.log(`Mercury Contextual Action: ${action} from ${context}`)
@@ -130,20 +152,33 @@ export default function MercuryContextualDemoPage() {
             setActionFeedback('Card removed from flow')
             setTimeout(() => setActionFeedback(null), 1500)
           }}
+          onChatRepositioned={(newPosition) => {
+            console.log('🎯 CHAT REPOSITIONING REQUESTED:', newPosition)
+            setChatModulePosition(newPosition)
+          }}
         >
           {/* Chat Module as Spatial Object */}
           <motion.div
-            className="absolute top-8 left-8 z-40"
-            initial={{ opacity: 0, scale: 0.9, y: -20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
+            className="absolute z-40"
+            initial={{ 
+              opacity: 0, 
+              scale: 0.9
+            }}
+            animate={{ 
+              opacity: 1, 
+              scale: 1
+            }}
             transition={{
               duration: 0.8,
               ease: wuWeiEasing,
               delay: 0.5
             }}
             style={{ 
+              left: chatModulePosition.x,
+              top: chatModulePosition.y,
               transformStyle: 'preserve-3d',
-              willChange: 'transform, opacity'
+              willChange: 'transform, opacity',
+              transition: 'left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), top 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
             }}
           >
             <MercuryChatModule
