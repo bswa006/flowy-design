@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Check, CircleCheck } from "lucide-react";
+import { CircleCheck, ArrowRight } from "lucide-react";
 
 // Mercury OS Spatial Computing - Remove old scroll animation globals
 // Add Mercury spatial state management
@@ -116,6 +116,7 @@ const contexts: Context[] = [
 ];
 
 export default function OldWorkflowPage() {
+  const [selectedIdx, setSelectedIdx] = React.useState<number | null>(null);
   return (
     <div className="h-full">
       <header className="h-16 bg-gray-300 px-6 flex items-center justify-between">
@@ -124,39 +125,87 @@ export default function OldWorkflowPage() {
       <div className="relative h-full overflow-y-auto">
         <div className="space-y-4 p-12 select-none">
           {contexts.map((context, idx) => (
-            <div className="relative group" key={context.id}>
-              {/* Number badge */}
-              <div className="absolute -top-4 -left-4 w-8 h-8 bg-gray-100 text-gray-600 rounded-full flex items-center justify-center font-semibold text-base border border-gray-200 shadow-sm">
-                {idx + 1}
+            <div className="relative group flex" key={context.id}>
+              {/* Main card and insights row */}
+              <div
+                className="relative"
+                onClick={() => setSelectedIdx(idx === selectedIdx ? null : idx)}
+                style={{ cursor: "pointer" }}
+              >
+                {/* Number badge */}
+                <div className="w-8 h-8 bg-gray-100 text-gray-600 rounded-full flex items-center justify-center font-semibold text-base border border-gray-200 shadow-sm">
+                  {idx + 1}
+                </div>
+                {/* Card content */}
+                <div className="max-w-lg mx-auto bg-white rounded-2xl shadow-md border border-gray-100 p-8 flex flex-col min-h-[220px]">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="text-xs text-gray-500 font-medium truncate">
+                      {context.upload.original_name}
+                    </div>
+                    <div className="text-xs text-gray-400 font-medium">
+                      {new Date(
+                        context.upload.recorded_on
+                      ).toLocaleDateString()}
+                    </div>
+                  </div>
+                  <div className="text-lg font-bold text-gray-900 mb-1 truncate">
+                    {context.upload.file_name}
+                  </div>
+                  <div className="text-base text-gray-700 mb-2 truncate">
+                    {context.upload.description}
+                  </div>
+                  <div className="text-gray-700 text-base leading-relaxed mb-4 line-clamp-4">
+                    {context.upload.summary}
+                  </div>
+                  {context.upload.is_checkpoint && (
+                    <div className="flex items-center gap-2 mt-2">
+                      <CircleCheck className="w-5 h-5 text-emerald-700" />
+                      <span className="text-emerald-700 font-semibold text-sm">
+                        Checkpoint
+                      </span>
+                    </div>
+                  )}
+                </div>
               </div>
-              {/* Card content */}
-              <div className="max-w-lg mx-auto bg-white rounded-2xl shadow-md border border-gray-100 p-8 flex flex-col min-h-[220px]">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="text-xs text-gray-500 font-medium truncate">
-                    {context.upload.original_name}
+              {/* Insights cards and arrows */}
+              {selectedIdx === idx && (
+                <div className="flex items-center ml-8 space-x-8 relative z-10">
+                  {/* Arrow to insights */}
+                  <ArrowRight className="w-8 h-8 text-gray-400" />
+                  {/* Insights: Key Pain Points */}
+                  <div className="max-w-xs bg-white rounded-2xl shadow-md border border-gray-100 p-6 flex flex-col min-h-[120px]">
+                    <div className="text-base font-bold text-gray-900 mb-2">
+                      Insights: Key Pain Points
+                    </div>
+                    <ul className="list-disc pl-5 text-gray-700 text-sm space-y-1">
+                      {Array.isArray(
+                        context.extracted_metadata?.key_pain_points
+                      ) &&
+                        context.extracted_metadata.key_pain_points.map(
+                          (point: string, i: number) => <li key={i}>{point}</li>
+                        )}
+                    </ul>
                   </div>
-                  <div className="text-xs text-gray-400 font-medium">
-                    {new Date(context.upload.recorded_on).toLocaleDateString()}
+                  {/* Arrow to insights */}
+                  <ArrowRight className="w-8 h-8 text-gray-400" />
+                  {/* Insights: Desired Features */}
+                  <div className="max-w-xs bg-white rounded-2xl shadow-md border border-gray-100 p-6 flex flex-col min-h-[120px]">
+                    <div className="text-base font-bold text-gray-900 mb-2">
+                      Insights: Desired Features
+                    </div>
+                    <ul className="list-disc pl-5 text-gray-700 text-sm space-y-1">
+                      {Array.isArray(
+                        context.extracted_metadata?.desired_features
+                      ) &&
+                        context.extracted_metadata.desired_features.map(
+                          (feature: string, i: number) => (
+                            <li key={i}>{feature}</li>
+                          )
+                        )}
+                    </ul>
                   </div>
                 </div>
-                <div className="text-lg font-bold text-gray-900 mb-1 truncate">
-                  {context.upload.file_name}
-                </div>
-                <div className="text-base text-gray-700 mb-2 truncate">
-                  {context.upload.description}
-                </div>
-                <div className="text-gray-700 text-base leading-relaxed mb-4 line-clamp-4">
-                  {context.upload.summary}
-                </div>
-                {context.upload.is_checkpoint && (
-                  <div className="flex items-center gap-2 mt-2">
-                    <CircleCheck className="w-5 h-5 text-emerald-700" />
-                    <span className="text-emerald-700 font-semibold text-sm">
-                      Checkpoint
-                    </span>
-                  </div>
-                )}
-              </div>
+              )}
             </div>
           ))}
         </div>
