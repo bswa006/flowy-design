@@ -53,7 +53,9 @@ export default function WorkflowLayout({ children }: WorkflowLayoutProps) {
           Mercury OS &copy; 2024
         </div>
       </aside>
-      <main className="flex-1 flex flex-col overflow-hidden">{children}</main>
+      <main className="flex-1 flex flex-col overflow-hidden h-screen">
+        {children}
+      </main>
     </div>
   );
 }
