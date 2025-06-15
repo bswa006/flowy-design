@@ -1,6 +1,15 @@
 import * as React from "react";
 import { motion } from "framer-motion";
-import { Save, X } from "lucide-react";
+import {
+  Save,
+  X,
+  Bold,
+  Italic,
+  Underline,
+  List,
+  ListOrdered,
+  RotateCcw,
+} from "lucide-react";
 import { Context } from "@/lib/contextMockData";
 
 interface EditableCardProps {
@@ -86,8 +95,75 @@ function WYSIWYGEditor({ value, onChange, placeholder }: WYSIWYGEditorProps) {
     const newContent = e.currentTarget.innerHTML;
     onChange(newContent);
   };
+  const execCommand = (command: string, value?: string) => {
+    document.execCommand(command, false, value);
+    editorRef.current?.focus();
+    handleInput({
+      currentTarget: editorRef.current,
+    } as React.FormEvent<HTMLDivElement>);
+  };
+  const ToolbarButton = ({
+    onClick,
+    icon: Icon,
+    title,
+    isActive = false,
+  }: {
+    onClick: () => void;
+    icon: React.ElementType;
+    title: string;
+    isActive?: boolean;
+  }) => (
+    <button
+      type="button"
+      onClick={onClick}
+      title={title}
+      className={`p-2 rounded-lg transition-all duration-200 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:scale-105 active:scale-95 ${isActive ? "bg-blue-500 text-white shadow-md" : "text-slate-600 hover:bg-slate-100/80 hover:text-slate-800"}`}
+    >
+      {" "}
+      <Icon className="w-3 h-3" />{" "}
+    </button>
+  );
   return (
     <div className="mercury-wysiwyg-editor bg-white/60 backdrop-blur-sm border border-slate-200/60 rounded-xl overflow-hidden">
+      <div className="flex items-center justify-between p-3 border-b border-slate-200/60 bg-gradient-to-r from-slate-50/50 to-transparent">
+        <div className="flex items-center space-x-1">
+          <div className="flex items-center space-x-1">
+            <ToolbarButton
+              onClick={() => execCommand("bold")}
+              icon={Bold}
+              title="Bold"
+            />
+            <ToolbarButton
+              onClick={() => execCommand("italic")}
+              icon={Italic}
+              title="Italic"
+            />
+            <ToolbarButton
+              onClick={() => execCommand("underline")}
+              icon={Underline}
+              title="Underline"
+            />
+          </div>
+          <div className="w-px h-4 bg-slate-300 mx-2" />
+          <div className="flex items-center space-x-1">
+            <ToolbarButton
+              onClick={() => execCommand("insertUnorderedList")}
+              icon={List}
+              title="Bullet List"
+            />
+            <ToolbarButton
+              onClick={() => execCommand("insertOrderedList")}
+              icon={ListOrdered}
+              title="Numbered List"
+            />
+          </div>
+        </div>
+        <ToolbarButton
+          onClick={() => execCommand("removeFormat")}
+          icon={RotateCcw}
+          title="Clear Formatting"
+        />
+      </div>
       <div
         ref={editorRef}
         contentEditable
@@ -105,10 +181,10 @@ function WYSIWYGEditor({ value, onChange, placeholder }: WYSIWYGEditorProps) {
 }
 
 export function EditableCard({
+  editedContext,
   onSave,
   onCancel,
   onFieldChange,
-  editedContext,
 }: EditableCardProps) {
   return (
     <motion.div
