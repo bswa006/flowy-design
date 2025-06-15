@@ -1,123 +1,35 @@
 "use client";
 
 import * as React from "react";
-import { Check, CircleCheck, Edit, X, Save, Bold, Italic, Underline, List, ListOrdered, Type, Heading1, Heading2, RotateCcw, ArrowRight } from "lucide-react";
+import {
+  CircleCheck,
+  Edit,
+  X,
+  Save,
+  Bold,
+  Italic,
+  Underline,
+  List,
+  ListOrdered,
+  RotateCcw,
+  ArrowRight,
+} from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Context, initialContexts } from "@/lib/contextMockData";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Badge } from "@/components/mercury/mercury-dashboard-card";
 
-// Mercury OS Spatial Computing - Remove old scroll animation globals
-// Add Mercury spatial state management
 declare global {
   interface Window {
     mercurySpaceDepth?: number;
   }
 }
 
-// Add explicit type for contexts
-interface ContextUpload {
-  id: string;
-  file_name: string;
-  original_name: string;
-  content_type: string;
-  upload_type: string;
-  description: string;
-  status: string;
-  priority: string;
-  is_checkpoint: boolean;
-  recorded_on: string;
-  summary: string;
-  participants?: string[];
-  number_of_participants?: number;
-}
-interface Context {
-  id: string;
-  processing_request_id: string;
-  upload: ContextUpload;
-  text_content: string;
-  summary: string;
-  priority_score: number;
-  is_checkpoint: boolean;
-  is_invalidated: boolean;
-  extracted_metadata?: Record<string, unknown>;
-  tags?: string[];
-  created_at: string;
-}
-
-const initialContexts: Context[] = [
-  {
-    id: "c1111111-1111-1111-1111-111111111111",
-    processing_request_id: "pr111111-1111-1111-1111-111111111111",
-    upload: {
-      id: "u1111111-1111-1111-1111-111111111111",
-      file_name: "user_research_sales_teams.mp4",
-      original_name:
-        "Sales Team User Research - Meeting Pain Points - 2024-01-10.mp4",
-      content_type: "video/mp4",
-      upload_type: "video",
-      description:
-        "User research session with 5 sales managers discussing meeting inefficiencies and note-taking challenges",
-      status: "completed",
-      priority: "high",
-      is_checkpoint: true,
-      recorded_on: "2024-01-10T14:00:00Z",
-      summary:
-        "Sales teams lose 40% of meeting value due to poor note-taking, missed action items, and lack of CRM updates. Key insight: they need an 'invisible assistant' that captures everything without disrupting flow.",
-      participants: [
-        "Tom Bradley",
-        "Lisa Chen",
-        "Marcus Johnson",
-        "Sarah Ahmed",
-        "David Kim",
-      ],
-      number_of_participants: 5,
-    },
-    text_content:
-      "Tom Bradley (Sales Director, TechCorp): I'll be brutally honest - I'm in 6-8 customer calls daily, and I retain maybe 30% of what's discussed. By the time I update Salesforce, half the nuances are gone.\n\nMarcus Johnson (Account Executive): Exactly! Yesterday I had a call where the client mentioned their Q2 budget constraints in passing. I was screen-sharing, couldn't take notes, and completely forgot to log it. Lost a $200K deal because I didn't follow up appropriately.\n\nLisa Chen (Researcher): What would the ideal solution look like?\n\nTom: Something that just... listens. Like having a brilliant intern who never misses anything. No buttons to push, no apps to switch between. It just captures everything and knows what's important.\n\nSarah Ahmed (Sales Manager): And it needs to understand context! When a client says 'we'll revisit this after the board meeting,' that should automatically create a follow-up task for the right date.\n\nDavid Kim (VP Sales): The CRM integration is critical. I spend 2 hours every evening updating Salesforce. If an AI could draft those updates and just let me review... game changer.\n\nMarcus: What about compliance? We discuss sensitive pricing.\n\nTom: Good point. It needs enterprise-grade security. SOC 2, HIPAA compliant. And the ability to redact sensitive information automatically.\n\nLisa: How do you handle action items currently?\n\nSarah: Poorly! (laughs) I try to write them down, but when you're presenting and negotiating, something always slips. Last week I promised a client three deliverables and only remembered two.\n\nDavid: The worst is when multiple people are on the call. Who said they'd do what? By when? It's chaos.\n\nTom: You know what would be incredible? If it could detect commitment language. When someone says 'I'll send that by Friday,' boom - task created, assigned, due date set.\n\nMarcus: And meeting summaries! My manager always asks 'how did the call go?' I want to forward a perfect summary in 30 seconds, not spend 15 minutes writing one.\n\nSarah: Integration with our existing tools is non-negotiable. Zoom, obviously. But also Slack for quick summaries, Jira for technical discussions, Google Calendar for scheduling follow-ups.\n\nDavid: Price point?\n\nTom: For something that saves 5-8 hours per week? $50-100 per user per month is a no-brainer. That's less than an hour of a salesperson's time.",
-    summary:
-      "Sales teams desperately need an 'invisible' AI meeting assistant that captures everything, understands context, and automatically updates CRM/task systems without disrupting meeting flow.",
-    priority_score: 100,
-    is_checkpoint: true,
-    is_invalidated: false,
-    extracted_metadata: {
-      key_pain_points: [
-        "Retain only 30% of meeting content",
-        "Miss critical action items while presenting",
-        "Spend 2+ hours daily on CRM updates",
-        "Lose deals due to forgotten follow-ups",
-        "No clarity on who owns what action items",
-      ],
-      desired_features: [
-        "Invisible/automatic operation",
-        "Context-aware action item detection",
-        "Automatic CRM updates",
-        "Commitment language recognition",
-        "Multi-party action item tracking",
-        "One-click meeting summaries",
-        "Enterprise security compliance",
-      ],
-      integrations_required: [
-        "Zoom",
-        "Salesforce",
-        "Slack",
-        "Jira",
-        "Google Calendar",
-      ],
-      pricing_expectation: "$50-100 per user/month",
-      expected_time_savings: "5-8 hours per week",
-    },
-    tags: [
-      "user-research",
-      "sales-teams",
-      "requirements",
-      "checkpoint",
-      "high-value",
-    ],
-    created_at: "2024-01-10T18:00:00Z",
-  },
-  // ... (repeat for all other context objects from your JSON) ...
-];
-
-// Mercury WYSIWYG Editor Component with Rich Text Formatting
 interface WYSIWYGEditorProps {
   value: string;
   onChange: (value: string) => void;
@@ -145,15 +57,15 @@ function WYSIWYGEditor({ value, onChange, placeholder }: WYSIWYGEditorProps) {
     handleInput({ currentTarget: editorRef.current } as any);
   };
 
-  const ToolbarButton = ({ 
-    onClick, 
-    icon: Icon, 
-    title, 
-    isActive = false 
-  }: { 
-    onClick: () => void; 
-    icon: any; 
-    title: string; 
+  const ToolbarButton = ({
+    onClick,
+    icon: Icon,
+    title,
+    isActive = false,
+  }: {
+    onClick: () => void;
+    icon: any;
+    title: string;
     isActive?: boolean;
   }) => (
     <button
@@ -161,9 +73,9 @@ function WYSIWYGEditor({ value, onChange, placeholder }: WYSIWYGEditorProps) {
       onClick={onClick}
       title={title}
       className={`p-2 rounded-lg transition-all duration-200 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:scale-105 active:scale-95 ${
-        isActive 
-          ? 'bg-blue-500 text-white shadow-md' 
-          : 'text-slate-600 hover:bg-slate-100/80 hover:text-slate-800'
+        isActive
+          ? "bg-blue-500 text-white shadow-md"
+          : "text-slate-600 hover:bg-slate-100/80 hover:text-slate-800"
       }`}
     >
       <Icon className="w-3 h-3" />
@@ -178,17 +90,17 @@ function WYSIWYGEditor({ value, onChange, placeholder }: WYSIWYGEditorProps) {
           {/* Text Formatting */}
           <div className="flex items-center space-x-1">
             <ToolbarButton
-              onClick={() => execCommand('bold')}
+              onClick={() => execCommand("bold")}
               icon={Bold}
               title="Bold"
             />
             <ToolbarButton
-              onClick={() => execCommand('italic')}
+              onClick={() => execCommand("italic")}
               icon={Italic}
               title="Italic"
             />
             <ToolbarButton
-              onClick={() => execCommand('underline')}
+              onClick={() => execCommand("underline")}
               icon={Underline}
               title="Underline"
             />
@@ -199,12 +111,12 @@ function WYSIWYGEditor({ value, onChange, placeholder }: WYSIWYGEditorProps) {
           {/* Lists */}
           <div className="flex items-center space-x-1">
             <ToolbarButton
-              onClick={() => execCommand('insertUnorderedList')}
+              onClick={() => execCommand("insertUnorderedList")}
               icon={List}
               title="Bullet List"
             />
             <ToolbarButton
-              onClick={() => execCommand('insertOrderedList')}
+              onClick={() => execCommand("insertOrderedList")}
               icon={ListOrdered}
               title="Numbered List"
             />
@@ -213,7 +125,7 @@ function WYSIWYGEditor({ value, onChange, placeholder }: WYSIWYGEditorProps) {
 
         {/* Clear Formatting */}
         <ToolbarButton
-          onClick={() => execCommand('removeFormat')}
+          onClick={() => execCommand("removeFormat")}
           icon={RotateCcw}
           title="Clear Formatting"
         />
@@ -224,15 +136,15 @@ function WYSIWYGEditor({ value, onChange, placeholder }: WYSIWYGEditorProps) {
         ref={editorRef}
         contentEditable
         className={`min-h-32 p-4 focus:outline-none text-slate-800 leading-relaxed ${
-          isFocused ? 'bg-white/90' : 'bg-white/60'
+          isFocused ? "bg-white/90" : "bg-white/60"
         } transition-all duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]`}
         onInput={handleInput}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         suppressContentEditableWarning={true}
-        style={{ 
-          fontSize: '14px',
-          lineHeight: '1.5'
+        style={{
+          fontSize: "14px",
+          lineHeight: "1.5",
         }}
         data-placeholder={placeholder}
         dangerouslySetInnerHTML={{ __html: value }}
@@ -246,16 +158,25 @@ interface EditableFieldProps {
   label: string;
   value: string;
   onChange: (value: string) => void;
-  type?: 'text' | 'textarea' | 'number';
+  type?: "text" | "textarea" | "number";
   rows?: number;
   placeholder?: string;
   min?: number;
   max?: number;
 }
 
-function EditableField({ label, value, onChange, type = 'text', rows = 3, placeholder, min, max }: EditableFieldProps) {
+function EditableField({
+  label,
+  value,
+  onChange,
+  type = "text",
+  rows = 3,
+  placeholder,
+  min,
+  max,
+}: EditableFieldProps) {
   return (
-    <motion.div 
+    <motion.div
       className="mercury-field-group"
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
@@ -264,7 +185,7 @@ function EditableField({ label, value, onChange, type = 'text', rows = 3, placeh
       <label className="block text-sm font-semibold text-slate-700 mb-2">
         {label}
       </label>
-      {type === 'textarea' ? (
+      {type === "textarea" ? (
         <textarea
           value={value}
           onChange={(e) => onChange(e.target.value)}
@@ -293,23 +214,36 @@ interface MercuryContextCardProps {
   index: number;
   isEditing: boolean;
   isExpanded: boolean;
-  focusLevel: 'focused' | 'ambient' | 'fog';
+  focusLevel: "focused" | "ambient" | "fog";
   onEdit: () => void;
   onSave: (updatedContext: Context) => void;
   onCancel: () => void;
   onToggleInsights: () => void;
 }
 
-function MercuryContextCard({ 
-  context, 
-  index, 
-  isEditing, 
+const INSIGHT_STYLES = {
+  keyPainPoint: {
+    label: "Key Pain Point",
+    pillClass: "bg-orange-400",
+    // borderClass: "border-emerald-100",
+  },
+  desiredFeature: {
+    label: "Desired Feature",
+    pillClass: "bg-emerald-800",
+    // borderClass: "border-blue-100",
+  },
+};
+
+function MercuryContextCard({
+  context,
+  index,
+  isEditing,
   isExpanded,
-  focusLevel, 
-  onEdit, 
-  onSave, 
+  focusLevel,
+  onEdit,
+  onSave,
   onCancel,
-  onToggleInsights 
+  onToggleInsights,
 }: MercuryContextCardProps) {
   const [editedContext, setEditedContext] = useState<Context>(context);
 
@@ -319,19 +253,19 @@ function MercuryContextCard({
   }, [context]);
 
   const updateField = (field: string, value: any, nested?: string) => {
-    setEditedContext(prev => {
+    setEditedContext((prev) => {
       if (nested) {
         return {
           ...prev,
           [nested]: {
-            ...prev[nested as keyof Context] as any,
-            [field]: value
-          }
+            ...(prev[nested as keyof Context] as any),
+            [field]: value,
+          },
         };
       }
       return {
         ...prev,
-        [field]: value
+        [field]: value,
       };
     });
   };
@@ -343,23 +277,23 @@ function MercuryContextCard({
   // Mercury focus classes
   const getFocusClasses = () => {
     switch (focusLevel) {
-      case 'focused':
-        return 'scale-[1.02] z-30 opacity-100 shadow-2xl shadow-blue-500/20 ring-1 ring-blue-300/40';
-      case 'ambient':
-        return 'scale-100 z-10 opacity-90';
-      case 'fog':
-        return 'scale-[0.98] z-0 opacity-40 pointer-events-none blur-[0.5px]';
+      case "focused":
+        return "scale-[1.02] z-30 opacity-100 shadow-2xl shadow-blue-500/20 ring-1 ring-blue-300/40";
+      case "ambient":
+        return "scale-100 z-10 opacity-90";
+      case "fog":
+        return "scale-[0.98] z-0 opacity-40 pointer-events-none blur-[0.5px]";
     }
   };
 
   return (
-    <motion.div 
+    <motion.div
       className="relative group flex"
       layout
       transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
     >
       {/* Main card */}
-      <motion.div 
+      <motion.div
         className="relative"
         layout
         transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -368,18 +302,18 @@ function MercuryContextCard({
         <div className="absolute -top-4 -left-4 w-8 h-8 bg-gray-100 text-gray-600 rounded-full flex items-center justify-center font-semibold text-base border border-gray-200 shadow-sm z-10">
           {index + 1}
         </div>
-        
+
         {/* Card content */}
-        <motion.div 
+        <motion.div
           className={`max-w-lg mx-auto bg-white rounded-2xl shadow-md border border-gray-100 relative transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${getFocusClasses()} ${
-            !isEditing ? 'cursor-pointer hover:shadow-lg' : ''
+            !isEditing ? "cursor-pointer hover:shadow-lg" : ""
           }`}
           layout
-          style={{ 
-            height: isEditing ? '80vh' : 'auto',
-            minHeight: isEditing ? 'auto' : '220px',
-            width: isEditing ? '600px' : '400px',
-            overflow: isEditing ? 'hidden' : 'visible'
+          style={{
+            height: isEditing ? "80vh" : "auto",
+            minHeight: isEditing ? "auto" : "220px",
+            width: isEditing ? "600px" : "400px",
+            overflow: isEditing ? "hidden" : "visible",
           }}
           animate={{
             width: isEditing ? 600 : 400,
@@ -388,7 +322,7 @@ function MercuryContextCard({
         >
           {/* Edit/Save buttons */}
           <AnimatePresence>
-            {!isEditing && focusLevel !== 'fog' && (
+            {!isEditing && focusLevel !== "fog" && (
               <motion.button
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -403,7 +337,7 @@ function MercuryContextCard({
                 <Edit className="w-4 h-4" />
               </motion.button>
             )}
-            
+
             {isEditing && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
@@ -429,7 +363,7 @@ function MercuryContextCard({
             )}
           </AnimatePresence>
 
-          <div className={`${isEditing ? 'h-full flex flex-col' : 'p-8'}`}>
+          <div className={`${isEditing ? "h-full flex flex-col" : "p-8"}`}>
             {!isEditing ? (
               /* Compact View */
               <div onClick={onToggleInsights}>
@@ -471,163 +405,227 @@ function MercuryContextCard({
                 </div>
 
                 {/* Scrollable Content */}
-                <motion.div 
+                <motion.div
                   className="flex-1 overflow-y-auto p-6 space-y-6 mercury-scroll"
                   style={{
-                    scrollbarWidth: 'thin',
-                    scrollbarColor: '#cbd5e1 #f1f5f9'
+                    scrollbarWidth: "thin",
+                    scrollbarColor: "#cbd5e1 #f1f5f9",
                   }}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.5, delay: 0.2 }}
                 >
-                <div className="grid grid-cols-2 gap-6">
-                  <EditableField
-                    label="File Name"
-                    value={editedContext.upload.file_name}
-                    onChange={(value) => updateField('file_name', value, 'upload')}
-                  />
-                  <EditableField
-                    label="Priority Score (0-100)"
-                    type="number"
-                    min={0}
-                    max={100}
-                    value={editedContext.priority_score.toString()}
-                    onChange={(value) => updateField('priority_score', parseInt(value) || 0)}
-                  />
-                </div>
-
-                <EditableField
-                  label="Original Name"
-                  value={editedContext.upload.original_name}
-                  onChange={(value) => updateField('original_name', value, 'upload')}
-                />
-
-                <EditableField
-                  label="Description"
-                  type="textarea"
-                  rows={2}
-                  value={editedContext.upload.description}
-                  onChange={(value) => updateField('description', value, 'upload')}
-                />
-
-                <EditableField
-                  label="Upload Summary"
-                  type="textarea"
-                  rows={3}
-                  value={editedContext.upload.summary}
-                  onChange={(value) => updateField('summary', value, 'upload')}
-                />
-
-                <EditableField
-                  label="Main Summary"
-                  type="textarea"
-                  rows={3}
-                  value={editedContext.summary}
-                  onChange={(value) => updateField('summary', value)}
-                />
-
-                <div className="mercury-field-group">
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">
-                    Full Text Content
-                  </label>
-                  <WYSIWYGEditor
-                    value={editedContext.text_content}
-                    onChange={(value) => updateField('text_content', value)}
-                    placeholder="Enter the main text content..."
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-6">
-                  <EditableField
-                    label="Tags (comma-separated)"
-                    value={editedContext.tags?.join(', ') || ''}
-                    onChange={(value) => updateField('tags', value.split(',').map(tag => tag.trim()).filter(Boolean))}
-                    placeholder="tag1, tag2, tag3"
-                  />
-                  <EditableField
-                    label="Participants (comma-separated)"
-                    value={editedContext.upload.participants?.join(', ') || ''}
-                    onChange={(value) => updateField('participants', value.split(',').map(p => p.trim()).filter(Boolean), 'upload')}
-                    placeholder="Person 1, Person 2, Person 3"
-                  />
-                </div>
-
-                <motion.div 
-                  className="flex items-center space-x-6 pt-4"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: 0.4 }}
-                >
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={editedContext.is_checkpoint}
-                      onChange={(e) => updateField('is_checkpoint', e.target.checked)}
-                      className="w-4 h-4 rounded border-2 border-slate-300 text-blue-600 focus:ring-2 focus:ring-blue-500/40"
+                  <div className="grid grid-cols-2 gap-6">
+                    <EditableField
+                      label="File Name"
+                      value={editedContext.upload.file_name}
+                      onChange={(value) =>
+                        updateField("file_name", value, "upload")
+                      }
                     />
-                    <span className="text-sm font-semibold text-slate-700">Is Checkpoint</span>
-                  </label>
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={editedContext.is_invalidated}
-                      onChange={(e) => updateField('is_invalidated', e.target.checked)}
-                      className="w-4 h-4 rounded border-2 border-slate-300 text-red-600 focus:ring-2 focus:ring-red-500/40"
+                    <EditableField
+                      label="Priority Score (0-100)"
+                      type="number"
+                      min={0}
+                      max={100}
+                      value={editedContext.priority_score.toString()}
+                      onChange={(value) =>
+                        updateField("priority_score", parseInt(value) || 0)
+                      }
                     />
-                    <span className="text-sm font-semibold text-slate-700">Is Invalidated</span>
-                  </label>
-                </motion.div>
+                  </div>
+
+                  <EditableField
+                    label="Original Name"
+                    value={editedContext.upload.original_name}
+                    onChange={(value) =>
+                      updateField("original_name", value, "upload")
+                    }
+                  />
+
+                  <EditableField
+                    label="Description"
+                    type="textarea"
+                    rows={2}
+                    value={editedContext.upload.description}
+                    onChange={(value) =>
+                      updateField("description", value, "upload")
+                    }
+                  />
+
+                  <EditableField
+                    label="Upload Summary"
+                    type="textarea"
+                    rows={3}
+                    value={editedContext.upload.summary}
+                    onChange={(value) =>
+                      updateField("summary", value, "upload")
+                    }
+                  />
+
+                  <EditableField
+                    label="Main Summary"
+                    type="textarea"
+                    rows={3}
+                    value={editedContext.summary}
+                    onChange={(value) => updateField("summary", value)}
+                  />
+
+                  <div className="mercury-field-group">
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">
+                      Full Text Content
+                    </label>
+                    <WYSIWYGEditor
+                      value={editedContext.text_content}
+                      onChange={(value) => updateField("text_content", value)}
+                      placeholder="Enter the main text content..."
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-6">
+                    <EditableField
+                      label="Tags (comma-separated)"
+                      value={editedContext.tags?.join(", ") || ""}
+                      onChange={(value) =>
+                        updateField(
+                          "tags",
+                          value
+                            .split(",")
+                            .map((tag) => tag.trim())
+                            .filter(Boolean)
+                        )
+                      }
+                      placeholder="tag1, tag2, tag3"
+                    />
+                    <EditableField
+                      label="Participants (comma-separated)"
+                      value={
+                        editedContext.upload.participants?.join(", ") || ""
+                      }
+                      onChange={(value) =>
+                        updateField(
+                          "participants",
+                          value
+                            .split(",")
+                            .map((p) => p.trim())
+                            .filter(Boolean),
+                          "upload"
+                        )
+                      }
+                      placeholder="Person 1, Person 2, Person 3"
+                    />
+                  </div>
+
+                  <motion.div
+                    className="flex items-center space-x-6 pt-4"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.4 }}
+                  >
+                    <label className="flex items-center space-x-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={editedContext.is_checkpoint}
+                        onChange={(e) =>
+                          updateField("is_checkpoint", e.target.checked)
+                        }
+                        className="w-4 h-4 rounded border-2 border-slate-300 text-blue-600 focus:ring-2 focus:ring-blue-500/40"
+                      />
+                      <span className="text-sm font-semibold text-slate-700">
+                        Is Checkpoint
+                      </span>
+                    </label>
+                    <label className="flex items-center space-x-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={editedContext.is_invalidated}
+                        onChange={(e) =>
+                          updateField("is_invalidated", e.target.checked)
+                        }
+                        className="w-4 h-4 rounded border-2 border-slate-300 text-red-600 focus:ring-2 focus:ring-red-500/40"
+                      />
+                      <span className="text-sm font-semibold text-slate-700">
+                        Is Invalidated
+                      </span>
+                    </label>
+                  </motion.div>
                 </motion.div>
               </>
             )}
           </div>
         </motion.div>
       </motion.div>
-      
+
       {/* Insights cards and arrows */}
       <AnimatePresence>
         {isExpanded && !isEditing && (
-          <motion.div 
-            className="flex items-center ml-8 space-x-8 relative z-10"
+          <motion.div
+            className="flex items-center ml-8 relative z-10"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
-            {/* Arrow to insights */}
-            <ArrowRight className="w-8 h-8 text-gray-400" />
-            {/* Insights: Key Pain Points */}
-            <div className="max-w-xs bg-white rounded-2xl shadow-md border border-gray-100 p-6 flex flex-col min-h-[120px]">
-              <div className="text-base font-bold text-gray-900 mb-2">
-                Insights: Key Pain Points
-              </div>
-              <ul className="list-disc pl-5 text-gray-700 text-sm space-y-1">
-                {Array.isArray(
-                  context.extracted_metadata?.key_pain_points
-                ) &&
-                  context.extracted_metadata.key_pain_points.map(
-                    (point: string, i: number) => <li key={i}>{point}</li>
-                  )}
-              </ul>
-            </div>
-            {/* Arrow to insights */}
-            <ArrowRight className="w-8 h-8 text-gray-400" />
-            {/* Insights: Desired Features */}
-            <div className="max-w-xs bg-white rounded-2xl shadow-md border border-gray-100 p-6 flex flex-col min-h-[120px]">
-              <div className="text-base font-bold text-gray-900 mb-2">
-                Insights: Desired Features
-              </div>
-              <ul className="list-disc pl-5 text-gray-700 text-sm space-y-1">
-                {Array.isArray(
-                  context.extracted_metadata?.desired_features
-                ) &&
-                  context.extracted_metadata.desired_features.map(
-                    (feature: string, i: number) => (
-                      <li key={i}>{feature}</li>
-                    )
-                  )}
-              </ul>
+            {/* Insights column */}
+            <div className="flex flex-col gap-y-4">
+              {/* Key Pain Points as individual cards */}
+              {Array.isArray(context.extracted_metadata?.key_pain_points) &&
+                context.extracted_metadata.key_pain_points.map(
+                  (point: string, i: number) => (
+                    <Tooltip key={"pain-" + i}>
+                      <TooltipTrigger
+                        asChild
+                        className="flex items-center cursor-pointer"
+                      >
+                        <div
+                          className={`relative max-w-xs bg-white rounded-lg shadow-md px-3 py-2 flex items-center gap-2`}
+                        >
+                          <span
+                            className={`w-fit h-fit p-1 text-xs ${INSIGHT_STYLES.keyPainPoint.pillClass} rounded-full`}
+                          />
+                          <div className="text-gray-900 text-xs font-medium">
+                            {point}
+                          </div>
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent
+                        side="bottom"
+                        sideOffset={0}
+                        className="bg-gray-800 text-white rounded-lg text-xs font-normal opacity-100"
+                      >
+                        key pain point
+                      </TooltipContent>
+                    </Tooltip>
+                  )
+                )}
+              {/* Desired Features as individual cards */}
+              {Array.isArray(context.extracted_metadata?.desired_features) &&
+                context.extracted_metadata.desired_features.map(
+                  (feature: string, i: number) => (
+                    <Tooltip key={"feature-" + i}>
+                      <TooltipTrigger asChild>
+                        <div
+                          id={`insight-feature-${index}-${i}`}
+                          className="relative max-w-xs bg-white rounded-lg shadow-md px-3 py-2 flex items-center gap-2 cursor-pointer"
+                        >
+                          <span
+                            className={`w-2 h-2 rounded-full ${INSIGHT_STYLES.desiredFeature.pillClass} inline-block`}
+                          />
+                          <span className="text-gray-900 text-xs font-medium">
+                            {feature}
+                          </span>
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent
+                        side="bottom"
+                        sideOffset={0}
+                        className="bg-gray-800 text-white rounded-lg text-xs font-normal opacity-100"
+                      >
+                        desired feature
+                      </TooltipContent>
+                    </Tooltip>
+                  )
+                )}
             </div>
           </motion.div>
         )}
@@ -647,10 +645,8 @@ export default function OldWorkflowPage() {
   };
 
   const handleSave = (updatedContext: Context) => {
-    setContexts(prev => 
-      prev.map(ctx => 
-        ctx.id === updatedContext.id ? updatedContext : ctx
-      )
+    setContexts((prev) =>
+      prev.map((ctx) => (ctx.id === updatedContext.id ? updatedContext : ctx))
     );
     setEditingId(null);
   };
@@ -664,10 +660,10 @@ export default function OldWorkflowPage() {
     setExpandedId(expandedId === contextId ? null : contextId);
   };
 
-  const getFocusLevel = (contextId: string): 'focused' | 'ambient' | 'fog' => {
-    if (editingId === contextId) return 'focused';
-    if (editingId && editingId !== contextId) return 'fog';
-    return 'ambient';
+  const getFocusLevel = (contextId: string): "focused" | "ambient" | "fog" => {
+    if (editingId === contextId) return "focused";
+    if (editingId && editingId !== contextId) return "fog";
+    return "ambient";
   };
 
   return (
