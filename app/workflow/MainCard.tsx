@@ -17,6 +17,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { MercuryButton } from "@/components/mercury/MercuryButton";
+import { DraggableTextCard } from "@/components/DraggableTextCard";
 
 interface MainCardProps {
   context: Context;
@@ -53,17 +54,18 @@ export function MainCard({
         <span className="text-xs text-gray-800 font-medium ml-2">
           Description
         </span>
-        <span className="text-gray-700 text-sm border border-gray-200 rounded-lg px-3 py-2 block">
-          {context.upload.description}
-        </span>
+        <DraggableTextCard
+          description={context.upload.description}
+          handleEdit={handleEdit}
+        />
       </div>
 
-      {/* Summary Section */}
       <div className="space-y-1">
         <span className="text-xs text-gray-800 font-medium ml-2">Summary</span>
-        <span className="text-gray-700 text-xs border border-gray-200 rounded-lg px-3 py-2 block">
-          {context.upload.summary}
-        </span>
+        <DraggableTextCard
+          description={context.upload.summary}
+          handleEdit={handleEdit}
+        />
       </div>
 
       {context.upload.is_checkpoint && (
