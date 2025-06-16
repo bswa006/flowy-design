@@ -89,7 +89,7 @@ function MercuryContextCard({
   const getFocusClasses = () => {
     switch (focusLevel) {
       case "focused":
-        return "scale-[1.02] z-30 opacity-100 shadow-2xl shadow-blue-500/20 ring-1 ring-blue-300/40";
+        return "scale-[1.02] z-30 opacity-100";
       case "ambient":
         return "scale-100 z-10 opacity-90";
       case "fog":

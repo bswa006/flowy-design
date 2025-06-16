@@ -11,6 +11,8 @@ import {
   RotateCcw,
 } from "lucide-react";
 import { Context } from "@/lib/contextMockData";
+import { MercuryButton } from "@/components/mercury/MercuryButton";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface EditableCardProps {
   editedContext: Context;
@@ -51,7 +53,7 @@ function EditableField({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
     >
-      <label className="block text-sm font-semibold text-slate-700 mb-2">
+      <label className="text-xs text-gray-800 font-medium ml-2 mb-2">
         {label}
       </label>
       {type === "textarea" ? (
@@ -60,7 +62,7 @@ function EditableField({
           onChange={(e) => onChange(e.target.value)}
           rows={rows}
           placeholder={placeholder}
-          className="w-full p-3 bg-white/60 backdrop-blur-sm border border-slate-200/60 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-400/60 transition-all duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:bg-white/80 text-slate-800 font-medium resize-none"
+          className="w-full px-3 py-1 bg-white/60 backdrop-blur-sm border border-slate-200/60 rounded-lg text-slate-800 text-xs resize-none"
         />
       ) : (
         <input
@@ -70,7 +72,7 @@ function EditableField({
           placeholder={placeholder}
           min={min}
           max={max}
-          className="w-full p-3 bg-white/60 backdrop-blur-sm border border-slate-200/60 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-400/60 transition-all duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:bg-white/80 text-slate-800 font-medium"
+          className="w-full px-3 py-1 bg-white/60 backdrop-blur-sm border border-slate-200/60 rounded-lg focus:outline-none text-slate-800 text-xs"
         />
       )}
     </motion.div>
@@ -117,7 +119,7 @@ function WYSIWYGEditor({ value, onChange, placeholder }: WYSIWYGEditorProps) {
       type="button"
       onClick={onClick}
       title={title}
-      className={`p-2 rounded-lg transition-all duration-200 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:scale-105 active:scale-95 ${isActive ? "bg-blue-500 text-white shadow-md" : "text-slate-600 hover:bg-slate-100/80 hover:text-slate-800"}`}
+      className={`p-2 rounded-lg transition-all  `}
     >
       {" "}
       <Icon className="w-3 h-3" />{" "}
@@ -167,12 +169,11 @@ function WYSIWYGEditor({ value, onChange, placeholder }: WYSIWYGEditorProps) {
       <div
         ref={editorRef}
         contentEditable
-        className={`min-h-32 p-4 focus:outline-none text-slate-800 leading-relaxed ${isFocused ? "bg-white/90" : "bg-white/60"} transition-all duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]`}
+        className={`min-h-32 p-4 focus:outline-none text-slate-800 leading-relaxed text-xs ${isFocused ? "bg-white/90" : "bg-white/60"} transition-all duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]`}
         onInput={handleInput}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         suppressContentEditableWarning={true}
-        style={{ fontSize: "14px", lineHeight: "1.5" }}
         data-placeholder={placeholder}
         dangerouslySetInnerHTML={{ __html: value }}
       />
@@ -188,37 +189,26 @@ export function EditableCard({
 }: EditableCardProps) {
   return (
     <motion.div
-      className="max-w-lg mx-auto bg-white rounded-2xl shadow-md border border-gray-100 relative transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] h-full flex flex-col"
-      layout
-      style={{ height: "80vh", width: "600px", overflow: "hidden" }}
+      className="p-6 pb-4 max-w-lg mx-auto bg-white rounded-2xl shadow-md border border-gray-100 relative transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] h-full flex flex-col space-y-6"
       animate={{ width: 600 }}
       transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
     >
-      <div className="absolute top-4 right-4 flex space-x-2 z-20">
-        <button
-          onClick={() => onSave(editedContext)}
-          className="w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-emerald-600 transition-colors"
-          title="Save"
-        >
-          <Save className="w-4 h-4" />
-        </button>
-        <button
+      <div className="flex items-center justify-between">
+        <h3 className="text-md font-medium text-gray-900 truncate flex items-center gap-2">
+          Edit Context
+        </h3>
+        <MercuryButton
           onClick={onCancel}
-          className="w-8 h-8 bg-slate-400 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-slate-500 transition-colors"
-          title="Cancel"
+          className="text-black"
+          intent="cancel-edit-context"
+          focusLevel="ambient"
+          type="button"
         >
           <X className="w-4 h-4" />
-        </button>
-      </div>
-      <div className="p-6 pb-4 border-b border-slate-200/60">
-        <h3 className="text-xl font-bold text-slate-800 flex items-center space-x-2">
-          <div className="w-2 h-6 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full"></div>
-          <span>Edit Context</span>
-        </h3>
+        </MercuryButton>
       </div>
       <motion.div
-        className="flex-1 overflow-y-auto p-6 space-y-6 mercury-scroll"
-        style={{ scrollbarWidth: "thin", scrollbarColor: "#cbd5e1 #f1f5f9" }}
+        className="flex-1 overflow-y-auto space-y-6 mercury-scroll pr-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
@@ -267,7 +257,7 @@ export function EditableCard({
           onChange={(value) => onFieldChange("summary", value)}
         />
         <div className="mercury-field-group">
-          <label className="block text-sm font-semibold text-slate-700 mb-2">
+          <label className="text-xs text-gray-800 font-medium ml-2 mb-2">
             Full Text Content
           </label>
           <WYSIWYGEditor
@@ -276,37 +266,35 @@ export function EditableCard({
             placeholder="Enter the main text content..."
           />
         </div>
-        <div className="grid grid-cols-2 gap-6">
-          <EditableField
-            label="Tags (comma-separated)"
-            value={editedContext.tags?.join(", ") || ""}
-            onChange={(value) =>
-              onFieldChange(
-                "tags",
-                value
-                  .split(",")
-                  .map((tag: string) => tag.trim())
-                  .filter(Boolean)
-              )
-            }
-            placeholder="tag1, tag2, tag3"
-          />
-          <EditableField
-            label="Participants (comma-separated)"
-            value={editedContext.upload.participants?.join(", ") || ""}
-            onChange={(value) =>
-              onFieldChange(
-                "participants",
-                value
-                  .split(",")
-                  .map((p: string) => p.trim())
-                  .filter(Boolean),
-                "upload"
-              )
-            }
-            placeholder="Person 1, Person 2, Person 3"
-          />
-        </div>
+        <EditableField
+          label="Tags"
+          value={editedContext.tags?.join(", ") || ""}
+          onChange={(value) =>
+            onFieldChange(
+              "tags",
+              value
+                .split(",")
+                .map((tag: string) => tag.trim())
+                .filter(Boolean)
+            )
+          }
+          placeholder="tag1, tag2, tag3"
+        />
+        <EditableField
+          label="Participants"
+          value={editedContext.upload.participants?.join(", ") || ""}
+          onChange={(value) =>
+            onFieldChange(
+              "participants",
+              value
+                .split(",")
+                .map((p: string) => p.trim())
+                .filter(Boolean),
+              "upload"
+            )
+          }
+          placeholder="Person 1, Person 2, Person 3"
+        />
         <motion.div
           className="flex items-center space-x-6 pt-4"
           initial={{ opacity: 0, y: 10 }}
@@ -314,30 +302,41 @@ export function EditableCard({
           transition={{ duration: 0.3, delay: 0.4 }}
         >
           <label className="flex items-center space-x-2 cursor-pointer">
-            <input
-              type="checkbox"
+            <Checkbox
               checked={editedContext.is_checkpoint}
-              onChange={(e) => onFieldChange("is_checkpoint", e.target.checked)}
-              className="w-4 h-4 rounded border-2 border-slate-300 text-blue-600 focus:ring-2 focus:ring-blue-500/40"
+              onCheckedChange={(checked) =>
+                onFieldChange("is_checkpoint", Boolean(checked))
+              }
+              className="border-slate-800 text-white data-[state=checked]:bg-gray-900 data-[state=checked]:border-gray-900 data-[state=checked]:text-white"
             />
-            <span className="text-sm font-semibold text-slate-700">
+            <span className="text-xs font-medium text-slate-800">
               Is Checkpoint
             </span>
           </label>
           <label className="flex items-center space-x-2 cursor-pointer">
-            <input
-              type="checkbox"
+            <Checkbox
               checked={editedContext.is_invalidated}
-              onChange={(e) =>
-                onFieldChange("is_invalidated", e.target.checked)
+              onCheckedChange={(checked) =>
+                onFieldChange("is_invalidated", Boolean(checked))
               }
-              className="w-4 h-4 rounded border-2 border-slate-300 text-red-600 focus:ring-2 focus:ring-red-500/40"
+              className="data-[state=checked]:bg-gray-900 data-[state=checked]:border-gray-900 data-[state=checked]:text-white"
             />
-            <span className="text-sm font-semibold text-slate-700">
+            <span className="text-xs font-medium text-slate-800">
               Is Invalidated
             </span>
           </label>
         </motion.div>
+        <MercuryButton
+          onClick={() => onSave(editedContext)}
+          className="w-full rounded-md flex items-center justify-center gap-2 px-3 py-1.5 text-sm shadow-lg bg-black text-white"
+          title="Save"
+          intent="save-context"
+          focusLevel="ambient"
+          type="button"
+        >
+          <Save className="w-4 h-4" />
+          Save
+        </MercuryButton>
       </motion.div>
     </motion.div>
   );
