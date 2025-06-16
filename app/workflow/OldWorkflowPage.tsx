@@ -109,11 +109,6 @@ function MercuryContextCard({
         layout
         transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
       >
-        {/* Number badge */}
-        <div className="absolute -top-4 -left-4 w-8 h-8 bg-gray-100 text-gray-600 rounded-full flex items-center justify-center font-semibold text-base border border-gray-200 shadow-sm z-10">
-          {index + 1}
-        </div>
-
         {/* Card content */}
         <motion.div
           className={`max-w-lg mx-auto bg-white rounded-2xl shadow-md border border-gray-100 relative transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${getFocusClasses()} ${
@@ -131,52 +126,14 @@ function MercuryContextCard({
           }}
           transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          {/* Edit/Save buttons */}
-          <AnimatePresence>
-            {!isEditing && focusLevel !== "fog" && (
-              <motion.button
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onEdit();
-                }}
-                className="absolute top-4 right-4 w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-blue-600 transition-colors opacity-0 group-hover:opacity-100 z-20"
-                title="Edit"
-              >
-                <Edit className="w-4 h-4" />
-              </motion.button>
-            )}
-
-            {isEditing && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="absolute top-4 right-4 flex space-x-2 z-20"
-              >
-                <button
-                  onClick={handleSave}
-                  className="w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-emerald-600 transition-colors"
-                  title="Save"
-                >
-                  <Save className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={onCancel}
-                  className="w-8 h-8 bg-slate-400 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-slate-500 transition-colors"
-                  title="Cancel"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
           <div className={`${isEditing ? "h-full flex flex-col" : "p-8"}`}>
             {!isEditing ? (
-              <MainCard context={context} onToggleInsights={onToggleInsights} />
+              <MainCard
+                context={context}
+                onToggleInsights={onToggleInsights}
+                contextNumber={index + 1}
+                handleEdit={onEdit}
+              />
             ) : (
               <EditableCard
                 editedContext={editedContext}
