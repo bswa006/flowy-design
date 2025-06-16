@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Edit, X, Save } from "lucide-react";
+// lucide-react icons imported in child components
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Context, initialContexts } from "@/lib/contextMockData";
@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/tooltip";
 import { MainCard } from "./MainCard";
 import { EditableCard } from "./EditableCard";
+import { MercuryUploadsTimeline } from "@/components/mercury/mercury-uploads-timeline";
+import { useTimelineData } from "@/hooks/useTimelineData";
 
 declare global {
   interface Window {
@@ -63,13 +65,14 @@ function MercuryContextCard({
     setEditedContext(context);
   }, [context]);
 
-  const updateField = (field: string, value: any, nested?: string) => {
+  const updateField = (field: string, value: string | number | boolean | string[], nested?: string) => {
     setEditedContext((prev) => {
       if (nested) {
+        const nestedObj = prev[nested as keyof Context] as Record<string, unknown>;
         return {
           ...prev,
           [nested]: {
-            ...(prev[nested as keyof Context] as any),
+            ...nestedObj,
             [field]: value,
           },
         };
@@ -228,6 +231,12 @@ export default function OldWorkflowPage() {
   const [contexts, setContexts] = useState<Context[]>(initialContexts);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  
+  // Timeline data hook
+  const { timelineUploads, totalUploads, checkpointCount } = useTimelineData({
+    contexts,
+    currentContextId: editingId || undefined,
+  });
 
   const handleEdit = (contextId: string) => {
     setEditingId(contextId);
@@ -257,11 +266,26 @@ export default function OldWorkflowPage() {
   };
 
   return (
-    <div className="h-full">
-      <header className="h-16 bg-gray-300 px-6 flex items-center justify-between">
+    <div className="h-screen flex flex-col">
+      {/* Header */}
+      <header className="h-16 bg-gray-300 px-6 flex items-center justify-between flex-shrink-0">
         <h1 className="text-xl font-semibold text-foreground">Context</h1>
       </header>
-      <div className="relative h-full overflow-y-auto">
+      
+      {/* Timeline Section */}
+      <div className="border-b border-gray-200 flex-shrink-0">
+        <MercuryUploadsTimeline 
+          intent="workflow-timeline"
+          uploads={timelineUploads}
+          totalUploads={totalUploads}
+          checkpointCount={checkpointCount}
+          focusLevel="ambient"
+          className="max-w-none"
+        />
+      </div>
+      
+      {/* Scrollable Content Area */}
+      <div className="flex-1 overflow-y-auto">
         <div className="space-y-8 p-12">
           <AnimatePresence>
             {contexts.map((context, idx) => (
