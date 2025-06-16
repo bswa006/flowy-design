@@ -212,7 +212,7 @@ export function MercuryUploadsTimeline({
         data-intent={intent}
         className={cn(
           "mercury-module relative",
-          "p-6",
+          "px-6 py-3",
           getMercuryFocusClasses(focusLevel),
           getMercuryAnimationClasses(true),
           className
@@ -227,9 +227,9 @@ export function MercuryUploadsTimeline({
         }}
       >
         
-        {/* Professional Header */}
+        {/* Ultra-Compact Header */}
         <motion.div
-          className="flex items-center justify-between mb-6"
+          className="flex items-center justify-between mb-2"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{
@@ -237,31 +237,31 @@ export function MercuryUploadsTimeline({
             ease: MERCURY_EASING,
           }}
         >
-          <div className="flex items-center gap-6">
-            <h2 className="text-lg font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
+          <div className="flex items-center gap-3">
+            <h2 className="text-sm font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
               All Uploads Timeline
             </h2>
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-100/80 rounded-full border border-slate-200/50">
-              <div className="w-1.5 h-1.5 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full animate-pulse" />
-              <span className="font-semibold text-slate-700 text-sm">
+            <div className="flex items-center gap-1 px-2 py-0.5 bg-slate-100/60 rounded-full">
+              <div className="w-1 h-1 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full animate-pulse" />
+              <span className="font-medium text-slate-700 text-xs">
                 {uploads.length} uploads
               </span>
             </div>
           </div>
           
-          <div className="text-sm font-medium text-slate-600">
+          <div className="text-xs font-medium text-slate-500">
             {checkpointCount} checkpoints out of {totalUploads} total uploads
             {currentPage && (
-              <span className="text-slate-500 ml-2">
+              <span className="text-slate-400 ml-1">
                 (showing {displayUploadsCount} on this page)
               </span>
             )}
           </div>
         </motion.div>
 
-        {/* Properly Spaced Date Range */}
+        {/* Inline Date Range */}
         <motion.div
-          className="flex items-center justify-between mb-8"
+          className="flex items-center justify-between mb-3"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{
@@ -270,7 +270,7 @@ export function MercuryUploadsTimeline({
             delay: 0.1,
           }}
         >
-          <div className="text-sm font-medium text-slate-600">
+          <div className="text-xs font-medium text-slate-500">
             {startDate?.toLocaleDateString('en-US', {
               month: 'short',  
               day: 'numeric',
@@ -278,7 +278,7 @@ export function MercuryUploadsTimeline({
             })}
           </div>
           
-          <div className="text-sm font-medium text-slate-600">
+          <div className="text-xs font-medium text-slate-500">
             {endDate?.toLocaleDateString('en-US', {
               month: 'short',
               day: 'numeric', 
@@ -287,9 +287,9 @@ export function MercuryUploadsTimeline({
           </div>
         </motion.div>
 
-        {/* Timeline with Proper Spacing */}
+        {/* Ultra-Compact Timeline */}
         <motion.div
-          className="relative mb-8 px-4"
+          className="relative mb-2 px-2"
           initial={{ scaleX: 0, opacity: 0 }}
           animate={{ scaleX: 1, opacity: 1 }}
           transition={{
@@ -299,9 +299,9 @@ export function MercuryUploadsTimeline({
           }}
           style={{ transformOrigin: 'left' }}
         >
-          {/* Enhanced Timeline Line */}
-          <div className="relative h-1 bg-gradient-to-r from-slate-200 via-slate-300 to-slate-200 rounded-full shadow-inner">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-400/25 via-slate-400/25 to-emerald-400/25 rounded-full" />
+          {/* Thin Timeline Line */}
+          <div className="relative h-0.5 bg-gradient-to-r from-slate-200 via-slate-300 to-slate-200 rounded-full">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 via-slate-400/20 to-emerald-400/20 rounded-full" />
           </div>
           
           {/* Timeline Markers */}
@@ -316,11 +316,11 @@ export function MercuryUploadsTimeline({
           ))}
         </motion.div>
 
-        {/* Professional Legend */}
+        {/* Minimal Legend */}
         <motion.div
           data-intent={`${intent}-legend`}
           className={cn(
-            "flex items-center justify-between pt-4 border-t border-slate-200/60",
+            "flex items-center justify-between pt-2 border-t border-slate-200/40",
             getMercuryFocusClasses(focusLevel)
           )}
           role="list"
@@ -333,30 +333,30 @@ export function MercuryUploadsTimeline({
             delay: 0.2,
           }}
         >
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-3">
             {legendItems.map((item) => (
               <motion.div 
                 key={item.status} 
-                className="flex items-center gap-2" 
+                className="flex items-center gap-1" 
                 role="listitem"
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: MERCURY_DURATIONS.fast }}
               >
                 <div
                   className={cn(
-                    "rounded-full shadow-sm",
+                    "rounded-full",
                     item.indicator
                   )}
                   aria-hidden="true"
                 />
-                <span className="text-sm font-medium text-slate-700 select-none">
+                <span className="text-xs font-medium text-slate-600 select-none">
                   {item.label}
                 </span>
               </motion.div>
             ))}
           </div>
-          <div className="text-sm text-slate-500 italic font-light">
-            Hover over markers for details
+          <div className="text-xs text-slate-400 italic font-light">
+            Hover for details
           </div>
         </motion.div>
       </motion.div>
