@@ -91,7 +91,7 @@ export function DraggableTextCard({
   return (
     <div
       ref={descriptionRef}
-      className="relative min-h-[60px] cursor-text select-text"
+      className="draggable-text-card relative min-h-[60px] cursor-text select-text"
       onDrop={handleDrop}
       onDragOver={(e) => {
         if (draggingCommand) {
@@ -116,7 +116,10 @@ export function DraggableTextCard({
             <div className="flex flex-col items-start bg-white border border-gray-200 rounded-lg shadow-lg px-3 py-2 gap-2 mercury-module">
               <button
                 type="button"
-                onClick={onCreateInsight}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onCreateInsight?.();
+                }}
                 className="w-full text-xs px-2 py-1 rounded hover:bg-gray-200 transition-colors flex items-center gap-1"
               >
                 <Lightbulb className="w-4 h-4" />
@@ -124,7 +127,10 @@ export function DraggableTextCard({
               </button>
               <button
                 type="button"
-                onClick={handleEdit}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleEdit?.();
+                }}
                 className="w-full text-xs px-2 py-1 rounded hover:bg-gray-200 transition-colors flex items-center gap-1"
               >
                 <EditIcon className="w-4 h-4" />

@@ -47,8 +47,16 @@ export function MainCard({
     onPriorityChange?.(value);
   }
 
+  const handleCardClick = (e: React.MouseEvent) => {
+    // Don't trigger insights if clicking on DraggableTextCard or its children
+    if ((e.target as HTMLElement).closest('.draggable-text-card, .mercury-module')) {
+      return;
+    }
+    onToggleInsights();
+  };
+
   return (
-    <div onClick={onToggleInsights} className="space-y-4">
+    <div onClick={handleCardClick} className="space-y-4">
       <div className="text-md font-medium text-gray-900 truncate flex items-center gap-2">
         {contextNumber}. {context.upload.file_name}
       </div>
@@ -58,6 +66,7 @@ export function MainCard({
         </span>
         <DraggableTextCard
           description={context.upload.description}
+          onCreateInsight={() => console.log('Create insight for description')}
           handleEdit={handleEdit}
         />
       </div>
@@ -66,6 +75,7 @@ export function MainCard({
         <span className="text-xs text-gray-800 font-medium ml-2">Summary</span>
         <DraggableTextCard
           description={context.upload.summary}
+          onCreateInsight={() => console.log('Create insight for summary')}
           handleEdit={handleEdit}
         />
       </div>

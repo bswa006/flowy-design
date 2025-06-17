@@ -16,7 +16,7 @@ import {
   MERCURY_DURATIONS,
   MERCURY_EASING,
   MercuryFocusLevel,
-  getMercuryAnimationClasses,
+  getMercuryFocusClasses,
 } from "@/lib/mercury-utils";
 import { cn } from "@/lib/utils";
 
@@ -116,7 +116,7 @@ export function MercuryContextCard({
 
   // Memoize focus classes for performance
   const focusClasses = React.useMemo(
-    () => getMercuryAnimationClasses(true),
+    () => getMercuryFocusClasses(focusLevel),
     [focusLevel]
   );
 
@@ -131,7 +131,7 @@ export function MercuryContextCard({
       data-intent={intent}
       className={cn(
         "mercury-module relative group flex",
-        getMercuryAnimationClasses(true)
+        getMercuryFocusClasses(focusLevel)
       )}
       role="region"
       aria-label={`${intent} context card ${index + 1}`}

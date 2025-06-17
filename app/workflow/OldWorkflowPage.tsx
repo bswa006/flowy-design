@@ -15,6 +15,7 @@ import { MainCard } from "./MainCard";
 import { EditableCard } from "./EditableCard";
 import { MercuryUploadsTimeline } from "@/components/mercury/mercury-uploads-timeline";
 import { useTimelineData } from "@/hooks/useTimelineData";
+import { InsightsPanel } from "./components/InsightsPanel";
 
 declare global {
   interface Window {
@@ -35,18 +36,6 @@ interface MercuryContextCardProps {
   onToggleInsights: () => void;
 }
 
-const INSIGHT_STYLES = {
-  keyPainPoint: {
-    label: "Key Pain Point",
-    pillClass: "bg-orange-400",
-    // borderClass: "border-emerald-100",
-  },
-  desiredFeature: {
-    label: "Desired Feature",
-    pillClass: "bg-emerald-800",
-    // borderClass: "border-blue-100",
-  },
-};
 
 function MercuryContextCard({
   context,
@@ -217,16 +206,19 @@ export default function OldWorkflowPage() {
       const containerElement = scrollContainerRef.current;
       
       if (cardElement) {
-        const cardRect = cardElement.getBoundingClientRect();
-        const containerRect = containerElement.getBoundingClientRect();
+        // Get the actual timeline element height dynamically
+        const timelineElement = document.querySelector('[data-timeline]');
+        const timelineHeight = timelineElement ? timelineElement.getBoundingClientRect().height : 140;
         
-        // Calculate offset needed to center the card in viewport
+        // Add optimal margin to ensure card has breathing room below timeline while hiding previous card
+        const marginBelow = 80; // Balanced space below timeline - enough breathing room but hides previous card
+        const totalOffset = timelineHeight + marginBelow;
+        
+        // Calculate offset needed to position card properly below timeline
         const cardTop = cardElement.offsetTop;
-        const cardHeight = cardRect.height;
-        const containerHeight = containerRect.height;
-        const centerOffset = (containerHeight - cardHeight) / 2;
         
-        const scrollTop = cardTop - centerOffset;
+        // Position the card so it's visible below the timeline with comfortable margin
+        const scrollTop = cardTop - totalOffset;
         
         containerElement.scrollTo({
           top: Math.max(0, scrollTop),
@@ -241,12 +233,10 @@ export default function OldWorkflowPage() {
     if (isPlaying) return;
     
     setIsPlaying(true);
-    setCurrentPlayIndex(0);
-    setExpandedIds(new Set()); // Start with no insights shown
     
-    // Start the demo sequence
-    playNextCardRef.current(0);
-  }, [isPlaying]);
+    // Start the demo sequence from current index
+    playNextCardRef.current(currentPlayIndex);
+  }, [isPlaying, currentPlayIndex]);
 
   const playNextCard = useCallback((index: number) => {
     if (index >= contexts.length) {
@@ -319,14 +309,25 @@ export default function OldWorkflowPage() {
         {/* Play Demo Controls */}
         <div className="flex items-center gap-2">
           {!isPlaying ? (
-            <button
-              onClick={startPlayDemo}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium text-sm transition-colors"
-              disabled={editingId !== null}
-            >
-              <Play className="w-4 h-4" />
-              Play Demo
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={startPlayDemo}
+                className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium text-sm transition-colors"
+                disabled={editingId !== null}
+              >
+                <Play className="w-4 h-4" />
+                {currentPlayIndex === 0 ? 'Play Demo' : 'Resume'}
+              </button>
+              {currentPlayIndex > 0 && (
+                <button
+                  onClick={stopPlayDemo}
+                  className="flex items-center gap-2 px-3 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg font-medium text-sm transition-colors"
+                >
+                  <Square className="w-4 h-4" />
+                  Reset
+                </button>
+              )}
+            </div>
           ) : (
             <div className="flex items-center gap-2">
               <button
@@ -352,7 +353,7 @@ export default function OldWorkflowPage() {
       </header>
       
       {/* Timeline Section */}
-      <div className="border-b border-gray-200 flex-shrink-0">
+      <div className="border-b border-gray-200 flex-shrink-0" data-timeline>
         <MercuryUploadsTimeline 
           intent="workflow-timeline"
           uploads={timelineUploads}
@@ -373,9 +374,7 @@ export default function OldWorkflowPage() {
                 ref={(el) => {
                   cardRefs.current[idx] = el;
                 }}
-                className={`relative mb-8 flex items-start justify-center ${
-                  isPlaying && currentPlayIndex === idx ? 'ring-2 ring-blue-400 rounded-xl' : ''
-                }`}
+                className="relative mb-8 flex items-start justify-center"
               >
                 {/* Main Context Card */}
                 <div className="relative">
@@ -396,154 +395,12 @@ export default function OldWorkflowPage() {
                 
 
                   
-                  {/* Insights Panel - positioned relative to outer container that creates the gap */}
-                  {expandedIds.has(context.id) && !editingId && (
-                    <motion.div
-                      className="p-4 z-40 pointer-events-auto"
-                      style={{
-                        // left: 'calc(50% + 220px)', // Center of container + half card width + margin  
-                        // top: '50%', // 50% 
-                        // transform: 'translateY(-50%)' // Center panel itself
-                      }}
-                      initial={{ opacity: 0, x: 20, scale: 0.95 }}
-                      animate={{ opacity: 1, x: 0, scale: 1 }}
-                      exit={{ opacity: 0, x: 20, scale: 0.95 }}
-                      transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-                    >
-
-                      {/* Insights Container */}
-                        <div className="flex flex-col gap-y-3">
-                  
-                          
-                          {/* Key Pain Points - Show 2 */}
-                          {Array.isArray(context.extracted_metadata?.key_pain_points) &&
-                          context.extracted_metadata.key_pain_points.slice(0, 2).map(
-                              (point: string, i: number) => (
-                                <Tooltip key={"pain-" + i}>
-                                  <TooltipTrigger
-                                    asChild
-                                    className="flex items-center cursor-pointer"
-                                  >
-                                    <div className="bg-orange-50 rounded-lg px-3 py-2 flex items-center gap-2 hover:bg-orange-100 transition-colors">
-                                      <span
-                                        className={`w-2 h-2 ${INSIGHT_STYLES.keyPainPoint.pillClass} rounded-full flex-shrink-0`}
-                                      />
-                                      <div className="text-gray-900 text-xs font-medium leading-relaxed">
-                                        {point}
-                                      </div>
-                                    </div>
-                                  </TooltipTrigger>
-                                  <TooltipContent
-                                    side="left"
-                                    sideOffset={8}
-                                    className="bg-gray-800 text-white rounded-lg text-xs font-normal"
-                                  >
-                                    key pain point
-                                  </TooltipContent>
-                                </Tooltip>
-                              )
-                            )}
-                          
-                        {/* Desired Features - Show 2 */}
-                          {Array.isArray(context.extracted_metadata?.desired_features) &&
-                          context.extracted_metadata.desired_features.slice(0, 2).map(
-                              (feature: string, i: number) => (
-                                <Tooltip key={"feature-" + i}>
-                                  <TooltipTrigger asChild>
-                                    <div className="bg-emerald-50 rounded-lg px-3 py-2 flex items-center gap-2 cursor-pointer hover:bg-emerald-100 transition-colors">
-                                      <span
-                                        className={`w-2 h-2 rounded-full ${INSIGHT_STYLES.desiredFeature.pillClass} flex-shrink-0`}
-                                      />
-                                      <span className="text-gray-900 text-xs font-medium leading-relaxed">
-                                        {feature}
-                                      </span>
-                                    </div>
-                                  </TooltipTrigger>
-                                  <TooltipContent
-                                    side="left"
-                                    sideOffset={8}
-                                    className="bg-gray-800 text-white rounded-lg text-xs font-normal"
-                                  >
-                                    desired feature
-                                  </TooltipContent>
-                                </Tooltip>
-                              )
-                            )}
-
-                        {/* Integrations Required - Show 2 */}
-                        {Array.isArray(context.extracted_metadata?.integrations_required) &&
-                          context.extracted_metadata.integrations_required.slice(0, 2).map(
-                            (integration: string, i: number) => (
-                              <Tooltip key={"integration-" + i}>
-                                <TooltipTrigger asChild>
-                                  <div className="bg-blue-50 rounded-lg px-3 py-2 flex items-center gap-2 cursor-pointer hover:bg-blue-100 transition-colors">
-                                    <span className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0" />
-                                    <span className="text-gray-900 text-xs font-medium leading-relaxed">
-                                      {integration}
-                                    </span>
-                                  </div>
-                                </TooltipTrigger>
-                                <TooltipContent
-                                  side="left"
-                                  sideOffset={8}
-                                  className="bg-gray-800 text-white rounded-lg text-xs font-normal"
-                                >
-                                  integration required
-                                </TooltipContent>
-                              </Tooltip>
-                            )
-                          )}
-
-                        {/* Market Gaps - Show 2 */}
-                        {Array.isArray(context.extracted_metadata?.market_gaps) &&
-                          context.extracted_metadata.market_gaps.slice(0, 2).map(
-                            (gap: string, i: number) => (
-                              <Tooltip key={"gap-" + i}>
-                                <TooltipTrigger asChild>
-                                  <div className="bg-red-50 rounded-lg px-3 py-2 flex items-center gap-2 cursor-pointer hover:bg-red-100 transition-colors">
-                                    <span className="w-2 h-2 bg-red-500 rounded-full flex-shrink-0" />
-                                    <span className="text-gray-900 text-xs font-medium leading-relaxed">
-                                      {gap}
-                                    </span>
-                                  </div>
-                                </TooltipTrigger>
-                                <TooltipContent
-                                  side="left"
-                                  sideOffset={8}
-                                  className="bg-gray-800 text-white rounded-lg text-xs font-normal"
-                                >
-                                  market gap
-                                </TooltipContent>
-                              </Tooltip>
-                            )
-                          )}
-
-                        {/* Key Differentiators - Show 2 */}
-                        {Array.isArray(context.extracted_metadata?.key_differentiators) &&
-                          context.extracted_metadata.key_differentiators.slice(0, 2).map(
-                            (diff: string, i: number) => (
-                              <Tooltip key={"diff-" + i}>
-                                <TooltipTrigger asChild>
-                                  <div className="bg-purple-50 rounded-lg px-3 py-2 flex items-center gap-2 cursor-pointer hover:bg-purple-100 transition-colors">
-                                    <span className="w-2 h-2 bg-purple-500 rounded-full flex-shrink-0" />
-                                    <span className="text-gray-900 text-xs font-medium leading-relaxed">
-                                      {diff}
-                                    </span>
-                                  </div>
-                                </TooltipTrigger>
-                                <TooltipContent
-                                  side="left"
-                                  sideOffset={8}
-                                  className="bg-gray-800 text-white rounded-lg text-xs font-normal"
-                                >
-                                  key differentiator
-                                </TooltipContent>
-                              </Tooltip>
-                            )
-                          )}
-                      </div>
-                    </motion.div>
-                  )}
+                  {/* Insights Panel - using dedicated component */}
+                  <InsightsPanel
+                    intent="insights-panel"
+                    context={context}
+                    isVisible={expandedIds.has(context.id) && !editingId}
+                  />
               </div>
             ))}
           </AnimatePresence>
