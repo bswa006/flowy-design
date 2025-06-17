@@ -330,7 +330,7 @@ export default function WorkflowPageWithTimeline() {
     <div className="h-screen flex flex-col">
       {/* Header */}
       <header className="h-16 bg-gray-300 px-6 flex items-center justify-between flex-shrink-0">
-      <h1 className="text-xl font-medium text-foreground">
+         <h1 className="text-xl font-medium text-foreground">
           The Get Shit Done &gt; Acme Company &gt; Context
         </h1>
         
@@ -383,7 +383,7 @@ export default function WorkflowPageWithTimeline() {
       {/* Timeline Content */}
       <div ref={scrollContainerRef} className="flex-1 overflow-y-auto">
         <AnimatePresence>
-          <TimelineWrapper data={timelineData} itemRefs={timelineItemRefs} />
+          <TimelineWrapper data={timelineData} itemRefs={timelineItemRefs} scrollContainer={scrollContainerRef} />
         </AnimatePresence>
       </div>
     </div>

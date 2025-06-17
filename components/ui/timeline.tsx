@@ -14,9 +14,10 @@ interface TimelineEntry {
 interface TimelineProps {
   data: TimelineEntry[];
   itemRefs?: React.MutableRefObject<(HTMLDivElement | null)[]>;
+  scrollContainer?: React.RefObject<HTMLDivElement | null>;
 }
 
-export const Timeline = ({ data, itemRefs }: TimelineProps) => {
+export const Timeline = ({ data, itemRefs, scrollContainer }: TimelineProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
@@ -24,20 +25,35 @@ export const Timeline = ({ data, itemRefs }: TimelineProps) => {
 
   useEffect(() => {
     setIsMounted(true);
-    if (ref.current) {
-      const rect = ref.current.getBoundingClientRect();
-      setHeight(rect.height);
-    }
-  }, [ref]);
+    const updateHeight = () => {
+      if (ref.current) {
+        const rect = ref.current.getBoundingClientRect();
+        setHeight(rect.height);
+      }
+    };
+    
+    updateHeight();
+    window.addEventListener('resize', updateHeight);
+    
+    return () => window.removeEventListener('resize', updateHeight);
+  }, [ref, data]);
 
   // Only use scroll hooks after component is mounted
-  const scrollHook = useScroll({
-    target: containerRef,
-    offset: ["start 10%", "end 50%"],
-  });
+  const scrollHook = useScroll(
+    scrollContainer 
+      ? {
+          container: scrollContainer,
+          target: ref,
+          offset: ["start start", "end end"],
+        }
+      : {
+          target: ref,
+          offset: ["start 90%", "end 20%"],
+        }
+  );
 
   const heightTransform = useTransform(scrollHook.scrollYProgress, [0, 1], [0, height]);
-  const opacityTransform = useTransform(scrollHook.scrollYProgress, [0, 0.1], [0, 1]);
+  const opacityTransform = useTransform(scrollHook.scrollYProgress, [0, 0.05], [0, 1]);
 
   // Don't render motion elements until mounted
   if (!isMounted) {
@@ -118,18 +134,52 @@ export const Timeline = ({ data, itemRefs }: TimelineProps) => {
             </div>
           </div>
         ))}
+        {/* Enhanced Vertical Line with Glow Effect */}
         <div
           style={{
             height: height + "px",
           }}
-          className="absolute md:left-5 left-5 top-0 overflow-hidden w-[2px] bg-[linear-gradient(to_bottom,var(--tw-gradient-stops))] from-transparent from-[0%] via-gray-300 dark:via-neutral-700 to-transparent to-[99%]  [mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)] "
+          className="absolute md:left-5 left-5 top-0 overflow-hidden w-[2px]"
         >
+          {/* Background Line with Subtle Glow */}
+          <div className="absolute inset-0 w-[2px] bg-gradient-to-b from-transparent via-gray-200 dark:via-neutral-800 to-transparent opacity-60" />
+          
+          {/* Animated Progress Line with Enhanced Glow */}
           <motion.div
             style={{
               height: heightTransform,
               opacity: opacityTransform,
             }}
-            className="absolute inset-x-0 top-0  w-[2px] bg-gradient-to-t from-purple-500 via-blue-500 to-transparent from-[0%] via-[10%] rounded-full"
+            className="absolute inset-x-0 top-0 w-[2px] bg-gradient-to-t from-blue-600 via-purple-500 to-cyan-400 rounded-full shadow-[0_0_10px_rgba(59,130,246,0.5)] dark:shadow-[0_0_15px_rgba(147,51,234,0.6)]"
+            transition={{
+              type: "spring",
+              stiffness: 400,
+              damping: 40,
+            }}
+          />
+          
+          {/* Pulsing Glow Effect */}
+          <motion.div
+            style={{
+              height: heightTransform,
+              opacity: opacityTransform,
+            }}
+            className="absolute inset-x-0 top-0 w-[4px] -left-[1px] bg-gradient-to-t from-blue-600/30 via-purple-500/30 to-cyan-400/30 rounded-full blur-sm"
+            animate={{
+              opacity: [0.3, 0.6, 0.3],
+            }}
+            transition={{
+              height: {
+                type: "spring",
+                stiffness: 400,
+                damping: 40,
+              },
+              opacity: {
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+              },
+            }}
           />
         </div>
       </div>

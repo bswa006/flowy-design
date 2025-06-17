@@ -27,9 +27,10 @@ interface TimelineEntry {
 interface TimelineWrapperProps {
   data: TimelineEntry[];
   itemRefs?: React.MutableRefObject<(HTMLDivElement | null)[]>;
+  scrollContainer?: React.RefObject<HTMLDivElement>;
 }
 
-export function TimelineWrapper({ data, itemRefs }: TimelineWrapperProps) {
+export function TimelineWrapper({ data, itemRefs, scrollContainer }: TimelineWrapperProps) {
   return (
     <Suspense fallback={
       <div className="w-full bg-white dark:bg-neutral-950 font-sans md:px-10">
@@ -43,7 +44,7 @@ export function TimelineWrapper({ data, itemRefs }: TimelineWrapperProps) {
         </div>
       </div>
     }>
-      <Timeline data={data} itemRefs={itemRefs} />
+      <Timeline data={data} itemRefs={itemRefs} scrollContainer={scrollContainer} />
     </Suspense>
   );
 }
