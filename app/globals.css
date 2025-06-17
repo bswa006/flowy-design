@@ -316,6 +316,29 @@ body[style*="--mercury-performance-mode"] .mercury-module {
   backface-visibility: hidden;
 }
 
+/* Force 2-column grid layout - NUCLEAR OPTION */
+.force-grid-2col {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 24px !important;
+  width: 100% !important;
+  grid-auto-flow: row !important;
+  /* DEBUG: Visual border to see if grid container exists */
+  border: 3px solid red !important;
+  background-color: rgba(255, 0, 0, 0.1) !important;
+  min-height: 200px !important;
+}
+
+.force-grid-2col > * {
+  grid-column: span 1 !important;
+  width: 100% !important;
+  max-width: none !important;
+  box-sizing: border-box !important;
+  /* DEBUG: Visual border to see grid items */
+  border: 2px solid blue !important;
+  background-color: rgba(0, 0, 255, 0.1) !important;
+}
+
 /* Smooth drag optimization */
 [data-framer-component] {
   will-change: transform;

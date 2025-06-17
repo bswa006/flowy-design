@@ -14,7 +14,7 @@ import {
 } from '@/lib/mercury-utils';
 
 interface InsightsPanelProps {
-  intent: 'insights-panel';
+  intent: 'insights-panel' | 'insights-panel-grid';
   context: Context;
   isVisible: boolean;
 }
@@ -189,7 +189,15 @@ export function InsightsPanel({ intent, context, isVisible }: InsightsPanelProps
   if (!metadata) return null;
 
   const [expandedCategories, setExpandedCategories] = React.useState<Set<string>>(new Set());
+  
+  // Check if this is a grid layout (multi-column view)
+  const isGridLayout = intent === 'insights-panel-grid';
+  
+  // Grid layout always uses summary view for compactness
   const [viewMode, setViewMode] = React.useState<'summary' | 'detailed'>('summary');
+  
+  // Override viewMode to always be 'summary' in grid layout
+  const effectiveViewMode = isGridLayout ? 'summary' : viewMode;
 
   // Use cumulative insights if available, otherwise fall back to old format
   const cumulativeInsights = metadata.cumulative_insights;
@@ -354,50 +362,66 @@ export function InsightsPanel({ intent, context, isVisible }: InsightsPanelProps
   return (
     <motion.div
       data-intent={intent}
-      className="mercury-module p-4 z-40 pointer-events-auto max-w-sm"
-      initial={{ opacity: 0, x: 20, scale: 0.95 }}
-      animate={{ opacity: 1, x: 0, scale: 1 }}
-      exit={{ opacity: 0, x: 20, scale: 0.95 }}
+      className={`mercury-module p-4 z-40 pointer-events-auto ${
+        isGridLayout ? 'w-auto min-w-0' : 'max-w-sm'
+      }`}
+      style={isGridLayout ? {
+        width: '100%',
+        maxWidth: 'none',
+        display: 'block',
+        boxSizing: 'border-box',
+        flex: 'none',
+        minWidth: '0'
+      } : {}}
+      initial={{ opacity: 0, x: isGridLayout ? 0 : 20, y: isGridLayout ? 20 : 0, scale: 0.95 }}
+      animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+      exit={{ opacity: 0, x: isGridLayout ? 0 : 20, y: isGridLayout ? -20 : 0, scale: 0.95 }}
       transition={{
         duration: MERCURY_DURATIONS.normal,
         ease: MERCURY_EASING,
       }}
     >
       <div className="flex flex-col gap-y-3">
-        {/* Insight Summary Header */}
-        <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
-          <div className="flex items-center justify-between mb-2">
-            <h3 className="text-sm font-semibold text-gray-800">Journey Insights</h3>
-            <div className="text-xs text-gray-600 bg-white px-2 py-1 rounded-full border">
-              {totalInsights} total
+        <div className={`bg-gray-50 rounded-lg border border-gray-200 ${
+          isGridLayout ? 'p-2' : 'p-3'
+        }`}>
+          {/* <div className="flex items-center justify-between mb-2">
+            <h3 className={`font-semibold text-gray-800 ${
+              isGridLayout ? 'text-xs' : 'text-sm'
+            }`}>Journey Insights</h3>
+            <div className={`text-gray-600 bg-white px-2 py-1 rounded-full border ${
+              isGridLayout ? 'text-[10px]' : 'text-xs'
+            }`}>
+              {totalInsights}
             </div>
-          </div>
+          </div> */}
           
-          {/* View Mode Tabs */}
-          <div className="flex gap-1 mt-2">
-            <button
-              onClick={() => setViewMode('summary')}
-              className={`px-2 py-1 text-[10px] rounded-full transition-colors ${
-                viewMode === 'summary' 
-                  ? 'bg-blue-100 text-blue-700 font-medium' 
-                  : 'text-gray-600 hover:bg-gray-100'
-              }`}
-            >
-              Summary
-            </button>
-            <button
-              onClick={() => setViewMode('detailed')}
-              className={`px-2 py-1 text-[10px] rounded-full transition-colors ${
-                viewMode === 'detailed' 
-                  ? 'bg-blue-100 text-blue-700 font-medium' 
-                  : 'text-gray-600 hover:bg-gray-100'
-              }`}
-            >
-              All Categories
-            </button>
-          </div>
+          {!isGridLayout && (
+            <div className="flex gap-1 mt-2">
+              <button
+                onClick={() => setViewMode('summary')}
+                className={`px-2 py-1 text-[10px] rounded-full transition-colors ${
+                  viewMode === 'summary' 
+                    ? 'bg-blue-100 text-blue-700 font-medium' 
+                    : 'text-gray-600 hover:bg-gray-100'
+                }`}
+              >
+                Summary
+              </button>
+              <button
+                onClick={() => setViewMode('detailed')}
+                className={`px-2 py-1 text-[10px] rounded-full transition-colors ${
+                  viewMode === 'detailed' 
+                    ? 'bg-blue-100 text-blue-700 font-medium' 
+                    : 'text-gray-600 hover:bg-gray-100'
+                }`}
+              >
+                All Categories
+              </button>
+            </div>
+          )}
           
-          {uniqueSources > 1 && (
+          {uniqueSources > 1 && !isGridLayout && (
             <div className="text-[10px] text-gray-500 mt-1">
               From {uniqueSources} product development phases
             </div>
@@ -405,7 +429,7 @@ export function InsightsPanel({ intent, context, isVisible }: InsightsPanelProps
         </div>
         
         {/* Content based on view mode */}
-        {viewMode === 'summary' ? (
+        {effectiveViewMode === 'summary' ? (
           /* Summary View - Compact */
           <div className="space-y-2">
             {getSummaryInsights().map((section, idx) => (
@@ -426,14 +450,46 @@ export function InsightsPanel({ intent, context, isVisible }: InsightsPanelProps
           </div>
         ) : (
           /* Detailed View - All Categories */
-          categories.map((category) => (
-            <InsightCategory
-              key={category.title}
-              category={category}
-              isExpanded={expandedCategories.has(category.title)}
-              onToggle={() => toggleCategory(category.title)}
-            />
-          ))
+          categories.length > 2 ? (
+            /* Grid Layout for 3+ categories */
+            <div className="grid grid-cols-2 gap-4">
+              {/* First Column */}
+              <div className="space-y-2">
+                {categories.slice(0, Math.ceil(categories.length / 2)).map((category) => (
+                  <InsightCategory
+                    key={category.title}
+                    category={category}
+                    isExpanded={expandedCategories.has(category.title)}
+                    onToggle={() => toggleCategory(category.title)}
+                  />
+                ))}
+              </div>
+              
+              {/* Second Column */}
+              <div className="space-y-2">
+                {categories.slice(Math.ceil(categories.length / 2)).map((category) => (
+                  <InsightCategory
+                    key={category.title}
+                    category={category}
+                    isExpanded={expandedCategories.has(category.title)}
+                    onToggle={() => toggleCategory(category.title)}
+                  />
+                ))}
+              </div>
+            </div>
+          ) : (
+            /* Single Column Layout for 1-2 categories */
+            <div className="space-y-2">
+              {categories.map((category) => (
+                <InsightCategory
+                  key={category.title}
+                  category={category}
+                  isExpanded={expandedCategories.has(category.title)}
+                  onToggle={() => toggleCategory(category.title)}
+                />
+              ))}
+            </div>
+          )
         )}
       </div>
     </motion.div>

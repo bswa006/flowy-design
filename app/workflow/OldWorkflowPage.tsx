@@ -1,21 +1,15 @@
 "use client";
 
-import * as React from "react";
 // lucide-react icons imported in child components
-import { useState, useEffect, useRef, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Play, Pause, Square } from "lucide-react";
-import { Context, initialContexts } from "@/lib/contextMockData";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { MainCard } from "./MainCard";
-import { EditableCard } from "./EditableCard";
 import { MercuryUploadsTimeline } from "@/components/mercury/mercury-uploads-timeline";
 import { useTimelineData } from "@/hooks/useTimelineData";
+import { Context, initialContexts } from "@/lib/contextMockData";
+import { AnimatePresence, motion } from "framer-motion";
+import { Pause, Play, Square } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { InsightsPanel } from "./components/InsightsPanel";
+import { EditableCard } from "./EditableCard";
+import { MainCard } from "./MainCard";
 
 declare global {
   interface Window {
@@ -189,6 +183,9 @@ export default function OldWorkflowPage() {
       } else {
         newSet.add(contextId);
       }
+      console.log('🚨 TOGGLE INSIGHTS: contextId =', contextId);
+      console.log('🚨 TOGGLE INSIGHTS: newSet size =', newSet.size);
+      console.log('🚨 TOGGLE INSIGHTS: newSet contents =', Array.from(newSet));
       return newSet;
     });
   };
@@ -378,24 +375,20 @@ export default function OldWorkflowPage() {
               >
                 {/* Main Context Card */}
                 <div className="relative">
-                    <MercuryContextCard
-                      context={context}
-                      index={idx}
-                      isEditing={editingId === context.id}
-                      isExpanded={expandedIds.has(context.id)}
-                      focusLevel={getFocusLevel(context.id)}
-                      onEdit={() => handleEdit(context.id)}
-                      onSave={handleSave}
-                      onCancel={handleCancel}
-                      onToggleInsights={() => handleToggleInsights(context.id)}
-                    />
-                  
-
-                  </div>
+                  <MercuryContextCard
+                    context={context}
+                    index={idx}
+                    isEditing={editingId === context.id}
+                    isExpanded={expandedIds.has(context.id)}
+                    focusLevel={getFocusLevel(context.id)}
+                    onEdit={() => handleEdit(context.id)}
+                    onSave={handleSave}
+                    onCancel={handleCancel}
+                    onToggleInsights={() => handleToggleInsights(context.id)}
+                  />
+                </div>
                 
-
-                  
-                  {/* Insights Panel - using dedicated component */}
+                {/* Single Insights Panel (when <= 2 expanded) */}
                   <InsightsPanel
                     intent="insights-panel"
                     context={context}
@@ -404,6 +397,73 @@ export default function OldWorkflowPage() {
               </div>
             ))}
           </AnimatePresence>
+          
+          {/* Multi-column Insights Layout (when > 2 expanded) */}
+          {(() => {
+            console.log('🔍 DEBUG: expandedIds.size =', expandedIds.size, 'editingId =', editingId);
+            console.log('🔍 DEBUG: expandedIds =', Array.from(expandedIds));
+            console.log('🔍 DEBUG: Should show grid?', expandedIds.size > 2 && !editingId);
+            return null;
+          })()}
+          {expandedIds.size > 2 && !editingId && (
+            <div className="mt-12 pt-8" style={{backgroundColor: 'red', border: '5px solid magenta', minHeight: '200px'}}>
+              <div className="mb-6" style={{backgroundColor: 'yellow', padding: '20px'}}>
+                <h3 className="text-lg font-semibold text-gray-800 mb-2">🚨 GRID LAYOUT ACTIVE 🚨 ({expandedIds.size} cards)</h3>
+                <p className="text-sm text-gray-600">
+                  This should be a 2-column grid with {expandedIds.size} insights panels
+                </p>
+              </div>
+              
+              <div 
+                className="force-grid-2col"
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: '1fr 1fr',
+                  gap: '24px',
+                  width: '100%',
+                  gridAutoFlow: 'row'
+                }}
+              >
+                <AnimatePresence>
+                  {contexts
+                    .filter(context => expandedIds.has(context.id))
+                    .map((context, idx) => (
+                      <motion.div
+                        key={context.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ delay: idx * 0.1 }}
+                        className="relative"
+                        style={{
+                          gridColumn: 'span 1',
+                          width: '100%',
+                          maxWidth: 'none'
+                        }}
+                      >
+                        {/* Card Header for Context */}
+                        <div className="mb-3 p-3 bg-white rounded-lg border border-gray-200 shadow-sm">
+                          <h4 className="text-sm font-medium text-gray-800 mb-1">
+                            {context.upload.file_name}
+                          </h4>
+                          <p className="text-xs text-gray-500">
+                            {context.upload.description}
+                          </p>
+                        </div>
+                        
+                        {/* Insights Panel */}
+                        <InsightsPanel
+                          intent="insights-panel-grid"
+                          context={context}
+                          isVisible={true}
+                        />
+                      </motion.div>
+                    ))
+                  }
+                </AnimatePresence>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
