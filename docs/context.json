@@ -29,29 +29,100 @@
     "is_checkpoint": true,
     "is_invalidated": false,
     "extracted_metadata": {
-      "key_pain_points": [
-        "Retain only 30% of meeting content",
-        "Miss critical action items while presenting",
-        "Spend 2+ hours daily on CRM updates",
-        "Lose deals due to forgotten follow-ups",
-        "No clarity on who owns what action items"
-      ],
-      "desired_features": [
-        "Invisible/automatic operation",
-        "Context-aware action item detection",
-        "Automatic CRM updates",
-        "Commitment language recognition",
-        "Multi-party action item tracking",
-        "One-click meeting summaries",
-        "Enterprise security compliance"
-      ],
-      "integrations_required": [
-        "Zoom",
-        "Salesforce",
-        "Slack",
-        "Jira",
-        "Google Calendar"
-      ],
+      "insight_sources": ["Card 1: Sales Team Research"],
+      "cumulative_insights": {
+        "key_pain_points": [
+          {
+            "text": "Retain only 30% of meeting content",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Miss critical action items while presenting",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Spend 2+ hours daily on CRM updates",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Lose deals due to forgotten follow-ups",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "No clarity on who owns what action items",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          }
+        ],
+        "desired_features": [
+          {
+            "text": "Invisible/automatic operation",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Context-aware action item detection",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Automatic CRM updates",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Commitment language recognition",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Multi-party action item tracking",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "One-click meeting summaries",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Enterprise security compliance",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          }
+        ],
+        "integrations_required": [
+          {
+            "text": "Zoom",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Salesforce",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Slack",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Jira",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Google Calendar",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          }
+        ]
+      },
       "pricing_expectation": "$50-100 per user/month",
       "expected_time_savings": "5-8 hours per week"
     },
@@ -86,15 +157,184 @@
     "is_checkpoint": false,
     "is_invalidated": false,
     "extracted_metadata": {
+      "insight_sources": ["Card 1: Sales Team Research", "Card 2: Competitive Analysis"],
+      "cumulative_insights": {
+        "key_pain_points": [
+          {
+            "text": "Retain only 30% of meeting content",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Miss critical action items while presenting",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Spend 2+ hours daily on CRM updates",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Lose deals due to forgotten follow-ups",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "No clarity on who owns what action items",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Manual setup required for all competitors",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "No context understanding across tools",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Limited integration capabilities",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Generic one-size-fits-all approach",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "High enterprise costs vs limited SMB options",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          }
+        ],
+        "desired_features": [
+          {
+            "text": "Invisible/automatic operation",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Context-aware action item detection",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Automatic CRM updates",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Commitment language recognition",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Multi-party action item tracking",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "One-click meeting summaries",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Enterprise security compliance",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Zero-touch operation",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "AI that learns team patterns",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Deep native integrations",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Context-aware processing",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          }
+        ],
+        "integrations_required": [
+          {
+            "text": "Zoom",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Salesforce",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Slack",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Jira",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Google Calendar",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "HubSpot",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Microsoft Teams",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          }
+        ],
+        "market_gaps": [
+          {
+            "text": "Zero-touch operation",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Context intelligence",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Commitment detection",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Deep integration",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Team-specific learning",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          }
+        ]
+      },
       "competitors_analyzed": 5,
       "price_range": "$7-30/user/month for SMB tools",
-      "market_gaps": [
-        "Zero-touch operation",
-        "Context intelligence",
-        "Commitment detection",
-        "Deep integration",
-        "Team-specific learning"
-      ],
       "positioning_opportunity": "Premium at $75/user/month",
       "key_differentiators": [
         "Truly invisible operation",
@@ -128,15 +368,274 @@
     "is_checkpoint": true,
     "is_invalidated": false,
     "extracted_metadata": {
-      "technical_achievements": [
-        "WebRTC Zoom integration working",
-        "97% transcription accuracy",
-        "2-second transcription delay",
-        "Intelligent action item extraction",
-        "Dependency detection between tasks",
-        "30-second meeting summaries",
-        "Slack integration complete"
-      ],
+      "insight_sources": ["Card 1: Sales Team Research", "Card 2: Competitive Analysis", "Card 3: Technical POC"],
+      "cumulative_insights": {
+        "key_pain_points": [
+          {
+            "text": "Retain only 30% of meeting content",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Miss critical action items while presenting",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Spend 2+ hours daily on CRM updates",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Lose deals due to forgotten follow-ups",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "No clarity on who owns what action items",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Manual setup required for all competitors",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "No context understanding across tools",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Limited integration capabilities",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Generic one-size-fits-all approach",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "High enterprise costs vs limited SMB options",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "WebRTC implementation complexity",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "Real-time processing latency challenges",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "Action item accuracy in technical discussions",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "Scaling concurrent meeting handling",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "Cost optimization for processing",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          }
+        ],
+        "desired_features": [
+          {
+            "text": "Invisible/automatic operation",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Context-aware action item detection",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Automatic CRM updates",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Commitment language recognition",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Multi-party action item tracking",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "One-click meeting summaries",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Enterprise security compliance",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Zero-touch operation",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "AI that learns team patterns",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Deep native integrations",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Context-aware processing",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Real-time transcription with 97% accuracy",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "Intelligent action item extraction with dependencies",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "Automatic meeting joining (WebRTC)",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "30-second post-meeting summaries",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          }
+        ],
+        "integrations_required": [
+          {
+            "text": "Zoom",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Salesforce",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Slack",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Jira",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Google Calendar",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "HubSpot",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Microsoft Teams",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Notion",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "Google Tasks",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          }
+        ],
+        "market_gaps": [
+          {
+            "text": "Zero-touch operation",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Context intelligence",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Commitment detection",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Deep integration",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Team-specific learning",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          }
+        ],
+        "technical_achievements": [
+          {
+            "text": "WebRTC Zoom integration working",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "97% transcription accuracy",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "2-second transcription delay",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "Intelligent action item extraction",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "Dependency detection between tasks",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "30-second meeting summaries",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "Slack integration complete",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          }
+        ]
+      },
       "performance_metrics": {
         "concurrent_meetings": 50,
         "transcription_delay": "2 seconds",
@@ -178,12 +677,336 @@
     "is_checkpoint": false,
     "is_invalidated": false,
     "extracted_metadata": {
-      "design_principles": [
-        "Invisible until needed",
-        "Zero cognitive load",
-        "Intelligence over features",
-        "Progressive disclosure"
-      ],
+      "insight_sources": ["Card 1: Sales Team Research", "Card 2: Competitive Analysis", "Card 3: Technical POC", "Card 4: Design Review"],
+      "cumulative_insights": {
+        "key_pain_points": [
+          {
+            "text": "Retain only 30% of meeting content",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Miss critical action items while presenting",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Spend 2+ hours daily on CRM updates",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Lose deals due to forgotten follow-ups",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "No clarity on who owns what action items",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Manual setup required for all competitors",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "No context understanding across tools",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Limited integration capabilities",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Generic one-size-fits-all approach",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "High enterprise costs vs limited SMB options",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "WebRTC implementation complexity",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "Real-time processing latency challenges",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "Action item accuracy in technical discussions",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "Scaling concurrent meeting handling",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "Cost optimization for processing",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "High cognitive load during meetings",
+            "source": "Card 4: Design Review",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          },
+          {
+            "text": "User interfaces that distract from meeting flow",
+            "source": "Card 4: Design Review",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          }
+        ],
+        "desired_features": [
+          {
+            "text": "Invisible/automatic operation",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Context-aware action item detection",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Automatic CRM updates",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Commitment language recognition",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Multi-party action item tracking",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "One-click meeting summaries",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Enterprise security compliance",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Zero-touch operation",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "AI that learns team patterns",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Deep native integrations",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Context-aware processing",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Real-time transcription with 97% accuracy",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "Intelligent action item extraction with dependencies",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "Automatic meeting joining (WebRTC)",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "30-second post-meeting summaries",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "Invisible until needed UI",
+            "source": "Card 4: Design Review",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          },
+          {
+            "text": "Zero cognitive load interface",
+            "source": "Card 4: Design Review",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          },
+          {
+            "text": "Progressive disclosure of capabilities",
+            "source": "Card 4: Design Review",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          },
+          {
+            "text": "Real-time action item animation",
+            "source": "Card 4: Design Review",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          },
+          {
+            "text": "Aha moment detection",
+            "source": "Card 4: Design Review",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          },
+          {
+            "text": "End-of-day commitment digest",
+            "source": "Card 4: Design Review",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          }
+        ],
+        "integrations_required": [
+          {
+            "text": "Zoom",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Salesforce",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Slack",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Jira",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Google Calendar",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "HubSpot",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Microsoft Teams",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Notion",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "Google Tasks",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          }
+        ],
+        "market_gaps": [
+          {
+            "text": "Zero-touch operation",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Context intelligence",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Commitment detection",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Deep integration",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Team-specific learning",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          }
+        ],
+        "technical_achievements": [
+          {
+            "text": "WebRTC Zoom integration working",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "97% transcription accuracy",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "2-second transcription delay",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "Intelligent action item extraction",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "Dependency detection between tasks",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "30-second meeting summaries",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "Slack integration complete",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          }
+        ],
+        "design_principles": [
+          {
+            "text": "Invisible until needed",
+            "source": "Card 4: Design Review",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          },
+          {
+            "text": "Zero cognitive load",
+            "source": "Card 4: Design Review",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          },
+          {
+            "text": "Intelligence over features",
+            "source": "Card 4: Design Review",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          },
+          {
+            "text": "Progressive disclosure",
+            "source": "Card 4: Design Review",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          }
+        ]
+      },
       "key_views": [
         "Dashboard - Today's meetings and metrics",
         "Live Meeting - Minimal floating widget",
@@ -227,6 +1050,438 @@
     "is_checkpoint": true,
     "is_invalidated": false,
     "extracted_metadata": {
+      "insight_sources": ["Card 1: Sales Team Research", "Card 2: Competitive Analysis", "Card 3: Technical POC", "Card 4: Design Review", "Card 5: Beta Feedback"],
+      "cumulative_insights": {
+        "key_pain_points": [
+          {
+            "text": "Retain only 30% of meeting content",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Miss critical action items while presenting",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Spend 2+ hours daily on CRM updates",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Lose deals due to forgotten follow-ups",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "No clarity on who owns what action items",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Manual setup required for all competitors",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "No context understanding across tools",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Limited integration capabilities",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Generic one-size-fits-all approach",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "High enterprise costs vs limited SMB options",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "WebRTC implementation complexity",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "Real-time processing latency challenges",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "Action item accuracy in technical discussions",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "Scaling concurrent meeting handling",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "Cost optimization for processing",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "High cognitive load during meetings",
+            "source": "Card 4: Design Review",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          },
+          {
+            "text": "User interfaces that distract from meeting flow",
+            "source": "Card 4: Design Review",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          },
+          {
+            "text": "Technical vocabulary handling needs improvement",
+            "source": "Card 5: Beta Feedback",
+            "source_id": "c5555555-5555-5555-5555-555555555555"
+          },
+          {
+            "text": "Visual meeting components not captured",
+            "source": "Card 5: Beta Feedback",
+            "source_id": "c5555555-5555-5555-5555-555555555555"
+          },
+          {
+            "text": "Cross-talk situations cause missed context",
+            "source": "Card 5: Beta Feedback",
+            "source_id": "c5555555-5555-5555-5555-555555555555"
+          },
+          {
+            "text": "Zoom connection stability issues",
+            "source": "Card 5: Beta Feedback",
+            "source_id": "c5555555-5555-5555-5555-555555555555"
+          },
+          {
+            "text": "Duplicate action items when mentioned multiple times",
+            "source": "Card 5: Beta Feedback",
+            "source_id": "c5555555-5555-5555-5555-555555555555"
+          }
+        ],
+        "desired_features": [
+          {
+            "text": "Invisible/automatic operation",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Context-aware action item detection",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Automatic CRM updates",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Commitment language recognition",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Multi-party action item tracking",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "One-click meeting summaries",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Enterprise security compliance",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Zero-touch operation",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "AI that learns team patterns",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Deep native integrations",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Context-aware processing",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Real-time transcription with 97% accuracy",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "Intelligent action item extraction with dependencies",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "Automatic meeting joining (WebRTC)",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "30-second post-meeting summaries",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "Invisible until needed UI",
+            "source": "Card 4: Design Review",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          },
+          {
+            "text": "Zero cognitive load interface",
+            "source": "Card 4: Design Review",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          },
+          {
+            "text": "Progressive disclosure of capabilities",
+            "source": "Card 4: Design Review",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          },
+          {
+            "text": "Real-time action item animation",
+            "source": "Card 4: Design Review",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          },
+          {
+            "text": "Aha moment detection",
+            "source": "Card 4: Design Review",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          },
+          {
+            "text": "End-of-day commitment digest",
+            "source": "Card 4: Design Review",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          },
+          {
+            "text": "Custom vocabulary training",
+            "source": "Card 5: Beta Feedback",
+            "source_id": "c5555555-5555-5555-5555-555555555555"
+          },
+          {
+            "text": "Mobile app",
+            "source": "Card 5: Beta Feedback",
+            "source_id": "c5555555-5555-5555-5555-555555555555"
+          },
+          {
+            "text": "Whiteboard/visual capture",
+            "source": "Card 5: Beta Feedback",
+            "source_id": "c5555555-5555-5555-5555-555555555555"
+          },
+          {
+            "text": "Meeting templates for common types",
+            "source": "Card 5: Beta Feedback",
+            "source_id": "c5555555-5555-5555-5555-555555555555"
+          },
+          {
+            "text": "Team analytics dashboard",
+            "source": "Card 5: Beta Feedback",
+            "source_id": "c5555555-5555-5555-5555-555555555555"
+          },
+          {
+            "text": "Voice commands during meeting",
+            "source": "Card 5: Beta Feedback",
+            "source_id": "c5555555-5555-5555-5555-555555555555"
+          }
+        ],
+        "integrations_required": [
+          {
+            "text": "Zoom",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Salesforce",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Slack",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Jira",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "Google Calendar",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "HubSpot",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Microsoft Teams",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Notion",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "Google Tasks",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "Zendesk",
+            "source": "Card 5: Beta Feedback",
+            "source_id": "c5555555-5555-5555-5555-555555555555"
+          },
+          {
+            "text": "Linear",
+            "source": "Card 5: Beta Feedback",
+            "source_id": "c5555555-5555-5555-5555-555555555555"
+          },
+          {
+            "text": "Miro",
+            "source": "Card 5: Beta Feedback",
+            "source_id": "c5555555-5555-5555-5555-555555555555"
+          },
+          {
+            "text": "Figma",
+            "source": "Card 5: Beta Feedback",
+            "source_id": "c5555555-5555-5555-5555-555555555555"
+          }
+        ],
+        "market_gaps": [
+          {
+            "text": "Zero-touch operation",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Context intelligence",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Commitment detection",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Deep integration",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Team-specific learning",
+            "source": "Card 2: Competitive Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          }
+        ],
+        "technical_achievements": [
+          {
+            "text": "WebRTC Zoom integration working",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "97% transcription accuracy",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "2-second transcription delay",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "Intelligent action item extraction",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "Dependency detection between tasks",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "30-second meeting summaries",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          },
+          {
+            "text": "Slack integration complete",
+            "source": "Card 3: Technical POC",
+            "source_id": "c3333333-3333-3333-3333-333333333333"
+          }
+        ],
+        "design_principles": [
+          {
+            "text": "Invisible until needed",
+            "source": "Card 4: Design Review",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          },
+          {
+            "text": "Zero cognitive load",
+            "source": "Card 4: Design Review",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          },
+          {
+            "text": "Intelligence over features",
+            "source": "Card 4: Design Review",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          },
+          {
+            "text": "Progressive disclosure",
+            "source": "Card 4: Design Review",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          }
+        ],
+        "beta_metrics": [
+          {
+            "text": "4.8/5 average rating",
+            "source": "Card 5: Beta Feedback",
+            "source_id": "c5555555-5555-5555-5555-555555555555"
+          },
+          {
+            "text": "90% daily active use",
+            "source": "Card 5: Beta Feedback",
+            "source_id": "c5555555-5555-5555-5555-555555555555"
+          },
+          {
+            "text": "6.5 hours saved weekly average",
+            "source": "Card 5: Beta Feedback",
+            "source_id": "c5555555-5555-5555-5555-555555555555"
+          },
+          {
+            "text": "100% would recommend",
+            "source": "Card 5: Beta Feedback",
+            "source_id": "c5555555-5555-5555-5555-555555555555"
+          },
+          {
+            "text": "$85/month average willingness to pay",
+            "source": "Card 5: Beta Feedback",
+            "source_id": "c5555555-5555-5555-5555-555555555555"
+          }
+        ]
+      },
       "beta_metrics": {
         "average_rating": 4.8,
         "daily_active_use": "90%",
