@@ -311,7 +311,9 @@ export default function OldWorkflowPage() {
     <div className="h-screen flex flex-col">
       {/* Header */}
       <header className="h-16 bg-gray-200 px-6 flex items-center justify-between flex-shrink-0">
-        <h1 className="text-xl font-medium text-foreground">The Get Shit Done > Acme Company > Context</h1>
+        <h1 className="text-xl font-medium text-foreground">
+          The Get Shit Done &gt; Acme Company &gt; Context
+        </h1>
 
         {/* Play Demo Controls */}
         <div className="flex items-center gap-2">
