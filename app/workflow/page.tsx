@@ -1,7 +1,7 @@
 "use client";
 
-import OldWorkflowPage from './OldWorkflowPage';
+import WorkflowPageWithTimeline from './WorkflowPageWithTimeline';
 
 export default function WorkflowPage() {
-  return <OldWorkflowPage />;
+  return <WorkflowPageWithTimeline />;
 }
