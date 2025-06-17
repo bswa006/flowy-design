@@ -166,13 +166,11 @@ export default function WorkflowPageWithTimeline() {
       const containerElement = scrollContainerRef.current;
       
       if (itemElement) {
-        // Get the position to scroll to (center the item in view)
+        // Scroll directly to the target card - this positions it at the top and hides previous cards
         const itemTop = itemElement.offsetTop;
-        const containerHeight = containerElement.clientHeight;
-        const itemHeight = itemElement.clientHeight;
         
-        // Calculate scroll position to center the item
-        const scrollTop = itemTop - (containerHeight / 2) + (itemHeight / 2);
+        // No offset - scroll directly to the target position to hide previous cards
+        const scrollTop = itemTop;
         
         containerElement.scrollTo({
           top: Math.max(0, scrollTop),
