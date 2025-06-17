@@ -1,14 +1,6 @@
 import * as React from "react";
 
-import {
-  Calendar,
-  CircleCheck,
-  Clock,
-  Edit,
-  FileText,
-  Mic,
-  User,
-} from "lucide-react";
+import { Calendar, CircleCheck, Edit, FileText, Mic, User } from "lucide-react";
 
 import { DraggableTextCard } from "@/components/DraggableTextCard";
 import { MercuryButton } from "@/components/mercury/MercuryButton";
