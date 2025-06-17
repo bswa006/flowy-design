@@ -328,56 +328,128 @@ export default function WorkflowPageWithTimeline() {
 
   return (
     <div className="h-screen flex flex-col">
-      {/* Header */}
-      <header className="h-16 bg-gray-300 px-6 flex items-center justify-between flex-shrink-0">
-         <h1 className="text-xl font-medium text-foreground">
-          The Get Shit Done &gt; Acme Company &gt; Context
-        </h1>
+      {/* Beautiful Mercury Header */}
+      <header 
+        data-intent="workflow-header"
+        className="relative h-20 bg-gradient-to-r from-slate-50 via-white to-slate-50 border-b border-slate-200/60 px-8 flex items-center justify-between flex-shrink-0 shadow-sm"
+      >
+        {/* Subtle Background Pattern */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.03),transparent_70%)]" />
         
-        {/* Play Demo Controls */}
-        <div className="flex items-center gap-2">
+        {/* Left Side - Breadcrumb Navigation */}
+        <div className="relative z-10 flex items-center space-x-1">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="flex items-center space-x-2"
+          >
+            {/* Breadcrumb with elegant styling */}
+            <div className="flex items-center space-x-2 text-slate-600">
+              <span className="font-semibold text-slate-800 hover:text-blue-600 transition-colors cursor-pointer">
+                The Get Shit Done
+              </span>
+              <div className="w-1 h-1 bg-slate-300 rounded-full" />
+              <span className="font-medium hover:text-blue-600 transition-colors cursor-pointer">
+                Acme Company
+              </span>
+              <div className="w-1 h-1 bg-slate-300 rounded-full" />
+              <span className="font-medium text-blue-600">
+                Context
+              </span>
+            </div>
+          </motion.div>
+          
+          {/* Subtle Badge */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.4, delay: 0.2 }}
+            className="ml-4 px-3 py-1 bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-100 rounded-full"
+          >
+            <span className="text-xs font-medium text-blue-700">
+              {contexts.length} Contexts
+            </span>
+          </motion.div>
+        </div>
+        
+        {/* Right Side - Enhanced Play Demo Controls */}
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="relative z-10 flex items-center gap-3"
+        >
           {!isPlaying ? (
-            <div className="flex items-center gap-2">
-              <button
+            <div className="flex items-center gap-3">
+              <motion.button
                 onClick={startPlayDemo}
-                className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium text-sm transition-colors"
                 disabled={editingId !== null}
+                className="group flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 text-white rounded-xl font-semibold text-sm transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02] disabled:scale-100 disabled:cursor-not-allowed"
+                whileHover={{ scale: editingId ? 1 : 1.02 }}
+                whileTap={{ scale: editingId ? 1 : 0.98 }}
+                transition={{ duration: 0.2 }}
               >
-                <Play className="w-4 h-4" />
-                {currentPlayIndex === 0 ? 'Play Demo' : 'Resume'}
-              </button>
+                <Play className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
+                <span>{currentPlayIndex === 0 ? 'Play Demo' : 'Resume'}</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
+              </motion.button>
+              
               {currentPlayIndex > 0 && (
-                <button
+                <motion.button
                   onClick={stopPlayDemo}
-                  className="flex items-center gap-2 px-3 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg font-medium text-sm transition-colors"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="flex items-center gap-2 px-4 py-2.5 bg-slate-600 hover:bg-slate-700 text-white rounded-xl font-medium text-sm transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-[1.02]"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                 >
                   <Square className="w-4 h-4" />
-                  Reset
-                </button>
+                  <span>Reset</span>
+                </motion.button>
               )}
             </div>
           ) : (
-            <div className="flex items-center gap-2">
-              <button
+            <div className="flex items-center gap-3">
+              <motion.button
                 onClick={pausePlayDemo}
-                className="flex items-center gap-2 px-3 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg font-medium text-sm transition-colors"
+                className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-xl font-medium text-sm transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
                 <Pause className="w-4 h-4" />
-                Pause
-              </button>
-              <button
+                <span>Pause</span>
+              </motion.button>
+              
+              <motion.button
                 onClick={stopPlayDemo}
-                className="flex items-center gap-2 px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium text-sm transition-colors"
+                className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white rounded-xl font-medium text-sm transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
                 <Square className="w-4 h-4" />
-                Stop
-              </button>
-              <div className="text-sm text-gray-700 ml-2">
-                Card {currentPlayIndex + 1} of {contexts.length}
-              </div>
+                <span>Stop</span>
+              </motion.button>
+              
+              {/* Enhanced Progress Indicator */}
+              <motion.div
+                initial={{ opacity: 0, x: 10 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="flex items-center ml-3 px-4 py-2 bg-white/80 backdrop-blur-sm border border-slate-200 rounded-xl shadow-sm"
+              >
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
+                  <span className="text-sm font-medium text-slate-700">
+                    Card {currentPlayIndex + 1} of {contexts.length}
+                  </span>
+                </div>
+              </motion.div>
             </div>
           )}
-        </div>
+        </motion.div>
+        
+        {/* Subtle Bottom Glow */}
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent" />
       </header>
       
       {/* Timeline Content */}

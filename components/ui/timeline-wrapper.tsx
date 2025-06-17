@@ -27,7 +27,7 @@ interface TimelineEntry {
 interface TimelineWrapperProps {
   data: TimelineEntry[];
   itemRefs?: React.MutableRefObject<(HTMLDivElement | null)[]>;
-  scrollContainer?: React.RefObject<HTMLDivElement>;
+  scrollContainer?: React.RefObject<HTMLDivElement | null>;
 }
 
 export function TimelineWrapper({ data, itemRefs, scrollContainer }: TimelineWrapperProps) {
