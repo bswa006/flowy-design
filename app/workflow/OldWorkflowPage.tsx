@@ -2,8 +2,9 @@
 
 import * as React from "react";
 // lucide-react icons imported in child components
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Play, Pause, Square } from "lucide-react";
 import { Context, initialContexts } from "@/lib/contextMockData";
 import {
   Tooltip,
@@ -159,6 +160,15 @@ export default function OldWorkflowPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
   
+  // Play demo state
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentPlayIndex, setCurrentPlayIndex] = useState(0);
+  const [playTimeoutId, setPlayTimeoutId] = useState<NodeJS.Timeout | null>(null);
+  
+  // Refs for scrolling
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  
   // Timeline data hook
   const { timelineUploads, totalUploads, checkpointCount } = useTimelineData({
     contexts,
@@ -200,11 +210,145 @@ export default function OldWorkflowPage() {
     return "ambient";
   };
 
+  // Auto-scroll to card function
+  const scrollToCard = useCallback((index: number) => {
+    if (cardRefs.current[index] && scrollContainerRef.current) {
+      const cardElement = cardRefs.current[index];
+      const containerElement = scrollContainerRef.current;
+      
+      if (cardElement) {
+        const cardRect = cardElement.getBoundingClientRect();
+        const containerRect = containerElement.getBoundingClientRect();
+        
+        // Calculate offset needed to center the card in viewport
+        const cardTop = cardElement.offsetTop;
+        const cardHeight = cardRect.height;
+        const containerHeight = containerRect.height;
+        const centerOffset = (containerHeight - cardHeight) / 2;
+        
+        const scrollTop = cardTop - centerOffset;
+        
+        containerElement.scrollTo({
+          top: Math.max(0, scrollTop),
+          behavior: 'smooth'
+        });
+      }
+    }
+  }, []);
+
+  // Play demo functionality
+  const startPlayDemo = useCallback(() => {
+    if (isPlaying) return;
+    
+    setIsPlaying(true);
+    setCurrentPlayIndex(0);
+    setExpandedIds(new Set()); // Start with no insights shown
+    
+    // Start the demo sequence
+    playNextCardRef.current(0);
+  }, [isPlaying]);
+
+  const playNextCard = useCallback((index: number) => {
+    if (index >= contexts.length) {
+      // Demo finished
+      setIsPlaying(false);
+      setCurrentPlayIndex(0);
+      return;
+    }
+    
+    setCurrentPlayIndex(index);
+    
+    // Scroll to the current card
+    scrollToCard(index);
+    
+    // Wait a moment for scroll, then show insights
+    setTimeout(() => {
+      const contextId = contexts[index].id;
+      setExpandedIds(prev => {
+        const newSet = new Set(prev);
+        newSet.add(contextId);
+        return newSet;
+      });
+      
+      // Schedule next card
+      const timeoutId = setTimeout(() => {
+        playNextCard(index + 1);
+      }, 3000); // 3 seconds to view each card's insights
+      
+      setPlayTimeoutId(timeoutId);
+    }, 800); // 800ms for scroll animation
+  }, [contexts, scrollToCard]);
+
+  // Fix circular dependency by creating a ref for playNextCard
+  const playNextCardRef = useRef(playNextCard);
+  playNextCardRef.current = playNextCard;
+
+  const pausePlayDemo = useCallback(() => {
+    setIsPlaying(false);
+    if (playTimeoutId) {
+      clearTimeout(playTimeoutId);
+      setPlayTimeoutId(null);
+    }
+  }, [playTimeoutId]);
+
+  const stopPlayDemo = useCallback(() => {
+    setIsPlaying(false);
+    setCurrentPlayIndex(0);
+    setExpandedIds(new Set()); // Close all insights
+    if (playTimeoutId) {
+      clearTimeout(playTimeoutId);
+      setPlayTimeoutId(null);
+    }
+  }, [playTimeoutId]);
+
+  // Cleanup timeouts on unmount
+  useEffect(() => {
+    return () => {
+      if (playTimeoutId) {
+        clearTimeout(playTimeoutId);
+      }
+    };
+  }, [playTimeoutId]);
+
   return (
     <div className="h-screen flex flex-col">
       {/* Header */}
       <header className="h-16 bg-gray-300 px-6 flex items-center justify-between flex-shrink-0">
         <h1 className="text-xl font-semibold text-foreground">Context</h1>
+        
+        {/* Play Demo Controls */}
+        <div className="flex items-center gap-2">
+          {!isPlaying ? (
+            <button
+              onClick={startPlayDemo}
+              className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium text-sm transition-colors"
+              disabled={editingId !== null}
+            >
+              <Play className="w-4 h-4" />
+              Play Demo
+            </button>
+          ) : (
+            <div className="flex items-center gap-2">
+              <button
+                onClick={pausePlayDemo}
+                className="flex items-center gap-2 px-3 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg font-medium text-sm transition-colors"
+              >
+                <Pause className="w-4 h-4" />
+                Pause
+              </button>
+              <button
+                onClick={stopPlayDemo}
+                className="flex items-center gap-2 px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium text-sm transition-colors"
+              >
+                <Square className="w-4 h-4" />
+                Stop
+              </button>
+              <div className="text-sm text-gray-700 ml-2">
+                Card {currentPlayIndex + 1} of {contexts.length}
+              </div>
+            </div>
+          )}
+        </div>
       </header>
       
       {/* Timeline Section */}
@@ -220,11 +364,19 @@ export default function OldWorkflowPage() {
       </div>
       
       {/* Scrollable Content Area */}
-      <div className="flex-1 overflow-y-auto">
+      <div ref={scrollContainerRef} className="flex-1 overflow-y-auto">
         <div className="p-12">
           <AnimatePresence>
             {contexts.map((context, idx) => (
-              <div key={context.id} className="relative mb-8 flex items-start justify-center">
+              <div 
+                key={context.id} 
+                ref={(el) => {
+                  cardRefs.current[idx] = el;
+                }}
+                className={`relative mb-8 flex items-start justify-center ${
+                  isPlaying && currentPlayIndex === idx ? 'ring-2 ring-blue-400 rounded-xl' : ''
+                }`}
+              >
                 {/* Main Context Card */}
                 <div className="relative">
                     <MercuryContextCard
