@@ -30,12 +30,10 @@ interface MercuryContextCardProps {
   onToggleInsights: () => void;
 }
 
-
 function MercuryContextCard({
   context,
   index,
   isEditing,
-  isExpanded,
   focusLevel,
   onEdit,
   onSave,
@@ -49,10 +47,17 @@ function MercuryContextCard({
     setEditedContext(context);
   }, [context]);
 
-  const updateField = (field: string, value: string | number | boolean | string[], nested?: string) => {
+  const updateField = (
+    field: string,
+    value: string | number | boolean | string[],
+    nested?: string
+  ) => {
     setEditedContext((prev) => {
       if (nested) {
-        const nestedObj = prev[nested as keyof Context] as Record<string, unknown>;
+        const nestedObj = prev[nested as keyof Context] as Record<
+          string,
+          unknown
+        >;
         return {
           ...prev,
           [nested]: {
@@ -132,8 +137,6 @@ function MercuryContextCard({
           </div>
         </motion.div>
       </motion.div>
-
-
     </motion.div>
   );
 }
@@ -142,16 +145,18 @@ export default function OldWorkflowPage() {
   const [contexts, setContexts] = useState<Context[]>(initialContexts);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
-  
+
   // Play demo state
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentPlayIndex, setCurrentPlayIndex] = useState(0);
-  const [playTimeoutId, setPlayTimeoutId] = useState<NodeJS.Timeout | null>(null);
-  
+  const [playTimeoutId, setPlayTimeoutId] = useState<NodeJS.Timeout | null>(
+    null
+  );
+
   // Refs for scrolling
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  
+
   // Timeline data hook
   const { timelineUploads, totalUploads, checkpointCount } = useTimelineData({
     contexts,
@@ -176,16 +181,16 @@ export default function OldWorkflowPage() {
 
   const handleToggleInsights = (contextId: string) => {
     if (editingId) return; // Don't toggle insights while editing
-    setExpandedIds(prev => {
+    setExpandedIds((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(contextId)) {
         newSet.delete(contextId);
       } else {
         newSet.add(contextId);
       }
-      console.log('🚨 TOGGLE INSIGHTS: contextId =', contextId);
-      console.log('🚨 TOGGLE INSIGHTS: newSet size =', newSet.size);
-      console.log('🚨 TOGGLE INSIGHTS: newSet contents =', Array.from(newSet));
+      console.log("🚨 TOGGLE INSIGHTS: contextId =", contextId);
+      console.log("🚨 TOGGLE INSIGHTS: newSet size =", newSet.size);
+      console.log("🚨 TOGGLE INSIGHTS: newSet contents =", Array.from(newSet));
       return newSet;
     });
   };
@@ -201,25 +206,27 @@ export default function OldWorkflowPage() {
     if (cardRefs.current[index] && scrollContainerRef.current) {
       const cardElement = cardRefs.current[index];
       const containerElement = scrollContainerRef.current;
-      
+
       if (cardElement) {
         // Get the actual timeline element height dynamically
-        const timelineElement = document.querySelector('[data-timeline]');
-        const timelineHeight = timelineElement ? timelineElement.getBoundingClientRect().height : 140;
-        
+        const timelineElement = document.querySelector("[data-timeline]");
+        const timelineHeight = timelineElement
+          ? timelineElement.getBoundingClientRect().height
+          : 140;
+
         // Add optimal margin to ensure card has breathing room below timeline while hiding previous card
         const marginBelow = 80; // Balanced space below timeline - enough breathing room but hides previous card
         const totalOffset = timelineHeight + marginBelow;
-        
+
         // Calculate offset needed to position card properly below timeline
         const cardTop = cardElement.offsetTop;
-        
+
         // Position the card so it's visible below the timeline with comfortable margin
         const scrollTop = cardTop - totalOffset;
-        
+
         containerElement.scrollTo({
           top: Math.max(0, scrollTop),
-          behavior: 'smooth'
+          behavior: "smooth",
         });
       }
     }
@@ -228,43 +235,46 @@ export default function OldWorkflowPage() {
   // Play demo functionality
   const startPlayDemo = useCallback(() => {
     if (isPlaying) return;
-    
+
     setIsPlaying(true);
-    
+
     // Start the demo sequence from current index
     playNextCardRef.current(currentPlayIndex);
   }, [isPlaying, currentPlayIndex]);
 
-  const playNextCard = useCallback((index: number) => {
-    if (index >= contexts.length) {
-      // Demo finished
-      setIsPlaying(false);
-      setCurrentPlayIndex(0);
-      return;
-    }
-    
-    setCurrentPlayIndex(index);
-    
-    // Scroll to the current card
-    scrollToCard(index);
-    
-    // Wait a moment for scroll, then show insights
-    setTimeout(() => {
-      const contextId = contexts[index].id;
-      setExpandedIds(prev => {
-        const newSet = new Set(prev);
-        newSet.add(contextId);
-        return newSet;
-      });
-      
-      // Schedule next card
-      const timeoutId = setTimeout(() => {
-        playNextCard(index + 1);
-      }, 3000); // 3 seconds to view each card's insights
-      
-      setPlayTimeoutId(timeoutId);
-    }, 800); // 800ms for scroll animation
-  }, [contexts, scrollToCard]);
+  const playNextCard = useCallback(
+    (index: number) => {
+      if (index >= contexts.length) {
+        // Demo finished
+        setIsPlaying(false);
+        setCurrentPlayIndex(0);
+        return;
+      }
+
+      setCurrentPlayIndex(index);
+
+      // Scroll to the current card
+      scrollToCard(index);
+
+      // Wait a moment for scroll, then show insights
+      setTimeout(() => {
+        const contextId = contexts[index].id;
+        setExpandedIds((prev) => {
+          const newSet = new Set(prev);
+          newSet.add(contextId);
+          return newSet;
+        });
+
+        // Schedule next card
+        const timeoutId = setTimeout(() => {
+          playNextCard(index + 1);
+        }, 3000); // 3 seconds to view each card's insights
+
+        setPlayTimeoutId(timeoutId);
+      }, 800); // 800ms for scroll animation
+    },
+    [contexts, scrollToCard]
+  );
 
   // Fix circular dependency by creating a ref for playNextCard
   const playNextCardRef = useRef(playNextCard);
@@ -300,9 +310,11 @@ export default function OldWorkflowPage() {
   return (
     <div className="h-screen flex flex-col">
       {/* Header */}
-      <header className="h-16 bg-gray-300 px-6 flex items-center justify-between flex-shrink-0">
-        <h1 className="text-xl font-semibold text-foreground">Context</h1>
-        
+      <header className="h-16 bg-gray-200 px-6 flex items-center justify-between flex-shrink-0">
+        <h1 className="text-xl font-medium text-foreground">
+          The Get Shit Done &gt; Acme Company &gt; Context
+        </h1>
+
         {/* Play Demo Controls */}
         <div className="flex items-center gap-2">
           {!isPlaying ? (
@@ -313,7 +325,7 @@ export default function OldWorkflowPage() {
                 disabled={editingId !== null}
               >
                 <Play className="w-4 h-4" />
-                {currentPlayIndex === 0 ? 'Play Demo' : 'Resume'}
+                {currentPlayIndex === 0 ? "Play Demo" : "Resume"}
               </button>
               {currentPlayIndex > 0 && (
                 <button
@@ -348,10 +360,10 @@ export default function OldWorkflowPage() {
           )}
         </div>
       </header>
-      
+
       {/* Timeline Section */}
       <div className="border-b border-gray-200 flex-shrink-0" data-timeline>
-        <MercuryUploadsTimeline 
+        <MercuryUploadsTimeline
           intent="workflow-timeline"
           uploads={timelineUploads}
           totalUploads={totalUploads}
@@ -360,14 +372,14 @@ export default function OldWorkflowPage() {
           className="max-w-none"
         />
       </div>
-      
+
       {/* Scrollable Content Area */}
       <div ref={scrollContainerRef} className="flex-1 overflow-y-auto">
         <div className="p-12">
           <AnimatePresence>
             {contexts.map((context, idx) => (
-              <div 
-                key={context.id} 
+              <div
+                key={context.id}
                 ref={(el) => {
                   cardRefs.current[idx] = el;
                 }}
@@ -387,13 +399,13 @@ export default function OldWorkflowPage() {
                     onToggleInsights={() => handleToggleInsights(context.id)}
                   />
                 </div>
-                
+
                 {/* Single Insights Panel (when <= 2 expanded) */}
-                  <InsightsPanel
-                    intent="insights-panel"
-                    context={context}
-                    isVisible={expandedIds.has(context.id) && !editingId}
-                  />
+                <InsightsPanel
+                  intent="insights-panel"
+                  context={context}
+                  isVisible={expandedIds.has(context.id) && !editingId}
+                />
               </div>
             ))}
           </AnimatePresence>

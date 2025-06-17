@@ -1,14 +1,6 @@
 import * as React from "react";
 
-import {
-  Calendar,
-  CircleCheck,
-  Clock,
-  Edit,
-  FileText,
-  Mic,
-  User,
-} from "lucide-react";
+import { Calendar, CircleCheck, Edit, FileText, Mic, User } from "lucide-react";
 
 import { DraggableTextCard } from "@/components/DraggableTextCard";
 import { MercuryButton } from "@/components/mercury/MercuryButton";
@@ -49,7 +41,9 @@ export function MainCard({
 
   const handleCardClick = (e: React.MouseEvent) => {
     // Don't trigger insights if clicking on DraggableTextCard or its children
-    if ((e.target as HTMLElement).closest('.draggable-text-card, .mercury-module')) {
+    if (
+      (e.target as HTMLElement).closest(".draggable-text-card, .mercury-module")
+    ) {
       return;
     }
     onToggleInsights();
@@ -66,7 +60,7 @@ export function MainCard({
         </span>
         <DraggableTextCard
           description={context.upload.description}
-          onCreateInsight={() => console.log('Create insight for description')}
+          onCreateInsight={() => console.log("Create insight for description")}
           handleEdit={handleEdit}
         />
       </div>
@@ -75,7 +69,7 @@ export function MainCard({
         <span className="text-xs text-gray-800 font-medium ml-2">Summary</span>
         <DraggableTextCard
           description={context.upload.summary}
-          onCreateInsight={() => console.log('Create insight for summary')}
+          onCreateInsight={() => console.log("Create insight for summary")}
           handleEdit={handleEdit}
         />
       </div>
@@ -117,8 +111,7 @@ export function MainCard({
             {context.upload.participants?.[0] || "afsheenamroliwala@gmail.com"}
           </span>
         </div>
-        <div className="flex items-center gap-1 w-fit bg-gray-50 border border-gray-100 rounded-full px-2 py-1">
-          {/* <DollarSign className="w-4 h-4" /> */}
+        {/* <div className="flex items-center gap-1 w-fit bg-gray-50 border border-gray-100 rounded-full px-2 py-1">
           <span className="font-medium truncate max-w-[140px]">
             {String(context?.extracted_metadata?.pricing_expectation ?? "")}
           </span>
@@ -128,7 +121,7 @@ export function MainCard({
           <span className="truncate max-w-[140px]">
             {String(context?.extracted_metadata?.expected_time_savings ?? "")}
           </span>
-        </div>
+        </div> */}
       </div>
 
       <div className="flex items-center gap-4">

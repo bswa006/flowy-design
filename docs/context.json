@@ -4,7 +4,7 @@
     "processing_request_id": "pr111111-1111-1111-1111-111111111111",
     "upload": {
       "id": "u1111111-1111-1111-1111-111111111111",
-      "file_name": "user_research_sales_teams.mp4",
+      "file_name": "User Research Sales Teams",
       "original_name": "Sales Team User Research - Meeting Pain Points - 2024-01-10.mp4",
       "content_type": "video/mp4",
       "upload_type": "video",
@@ -44,11 +44,6 @@
           },
           {
             "text": "Spend 2+ hours daily on CRM updates",
-            "source": "Card 1: Sales Team Research",
-            "source_id": "c1111111-1111-1111-1111-111111111111"
-          },
-          {
-            "text": "Lose deals due to forgotten follow-ups",
             "source": "Card 1: Sales Team Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
@@ -140,7 +135,7 @@
     "processing_request_id": "pr222222-2222-2222-2222-222222222222",
     "upload": {
       "id": "u2222222-2222-2222-2222-222222222222",
-      "file_name": "competitor_analysis_meeting_tools.pdf",
+      "file_name": "Competitor Analysis Meeting Tools",
       "original_name": "AI Meeting Assistant Competitive Landscape Analysis 2024.pdf",
       "content_type": "application/pdf",
       "upload_type": "document",
@@ -157,7 +152,10 @@
     "is_checkpoint": false,
     "is_invalidated": false,
     "extracted_metadata": {
-      "insight_sources": ["Card 1: Sales Team Research", "Card 2: Competitive Analysis"],
+      "insight_sources": [
+        "Card 1: Sales Team Research",
+        "Card 2: Competitive Analysis"
+      ],
       "cumulative_insights": {
         "key_pain_points": [
           {
@@ -175,11 +173,7 @@
             "source": "Card 1: Sales Team Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
-          {
-            "text": "Lose deals due to forgotten follow-ups",
-            "source": "Card 1: Sales Team Research",
-            "source_id": "c1111111-1111-1111-1111-111111111111"
-          },
+
           {
             "text": "No clarity on who owns what action items",
             "source": "Card 1: Sales Team Research",
@@ -351,7 +345,7 @@
     "processing_request_id": "pr333333-3333-3333-3333-333333333333",
     "upload": {
       "id": "u3333333-3333-3333-3333-333333333333",
-      "file_name": "technical_poc_demo.mov",
+      "file_name": "Technical POC Demo",
       "original_name": "AI Meeting Assistant Technical POC Demo - 2024-01-15.mov",
       "content_type": "video/quicktime",
       "upload_type": "video",
@@ -368,7 +362,11 @@
     "is_checkpoint": true,
     "is_invalidated": false,
     "extracted_metadata": {
-      "insight_sources": ["Card 1: Sales Team Research", "Card 2: Competitive Analysis", "Card 3: Technical POC"],
+      "insight_sources": [
+        "Card 1: Sales Team Research",
+        "Card 2: Competitive Analysis",
+        "Card 3: Technical POC"
+      ],
       "cumulative_insights": {
         "key_pain_points": [
           {
@@ -386,11 +384,7 @@
             "source": "Card 1: Sales Team Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
-          {
-            "text": "Lose deals due to forgotten follow-ups",
-            "source": "Card 1: Sales Team Research",
-            "source_id": "c1111111-1111-1111-1111-111111111111"
-          },
+
           {
             "text": "No clarity on who owns what action items",
             "source": "Card 1: Sales Team Research",
@@ -660,7 +654,7 @@
     "processing_request_id": "pr444444-4444-4444-4444-444444444444",
     "upload": {
       "id": "u4444444-4444-4444-4444-444444444444",
-      "file_name": "design_review_mockups.pdf",
+      "file_name": "Design Review Mockups",
       "original_name": "AI Meeting Assistant - UX Design Review v2.pdf",
       "content_type": "application/pdf",
       "upload_type": "document",
@@ -677,7 +671,12 @@
     "is_checkpoint": false,
     "is_invalidated": false,
     "extracted_metadata": {
-      "insight_sources": ["Card 1: Sales Team Research", "Card 2: Competitive Analysis", "Card 3: Technical POC", "Card 4: Design Review"],
+      "insight_sources": [
+        "Card 1: Sales Team Research",
+        "Card 2: Competitive Analysis",
+        "Card 3: Technical POC",
+        "Card 4: Design Review"
+      ],
       "cumulative_insights": {
         "key_pain_points": [
           {
@@ -695,11 +694,7 @@
             "source": "Card 1: Sales Team Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
-          {
-            "text": "Lose deals due to forgotten follow-ups",
-            "source": "Card 1: Sales Team Research",
-            "source_id": "c1111111-1111-1111-1111-111111111111"
-          },
+
           {
             "text": "No clarity on who owns what action items",
             "source": "Card 1: Sales Team Research",
@@ -1033,7 +1028,7 @@
     "processing_request_id": "pr555555-5555-5555-5555-555555555555",
     "upload": {
       "id": "u5555555-5555-5555-5555-555555555555",
-      "file_name": "beta_user_feedback_week1.xlsx",
+      "file_name": "Beta User Feedback Week 1",
       "original_name": "AI Meeting Assistant - Beta User Feedback Week 1.xlsx",
       "content_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
       "upload_type": "spreadsheet",
@@ -1050,7 +1045,13 @@
     "is_checkpoint": true,
     "is_invalidated": false,
     "extracted_metadata": {
-      "insight_sources": ["Card 1: Sales Team Research", "Card 2: Competitive Analysis", "Card 3: Technical POC", "Card 4: Design Review", "Card 5: Beta Feedback"],
+      "insight_sources": [
+        "Card 1: Sales Team Research",
+        "Card 2: Competitive Analysis",
+        "Card 3: Technical POC",
+        "Card 4: Design Review",
+        "Card 5: Beta Feedback"
+      ],
       "cumulative_insights": {
         "key_pain_points": [
           {
@@ -1068,11 +1069,7 @@
             "source": "Card 1: Sales Team Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
-          {
-            "text": "Lose deals due to forgotten follow-ups",
-            "source": "Card 1: Sales Team Research",
-            "source_id": "c1111111-1111-1111-1111-111111111111"
-          },
+
           {
             "text": "No clarity on who owns what action items",
             "source": "Card 1: Sales Team Research",
