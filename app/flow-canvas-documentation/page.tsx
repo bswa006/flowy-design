@@ -1,21 +1,40 @@
-"use client"
+"use client";
 
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Code, ChevronDown, ChevronRight, BookOpen, Zap, Layout, Palette, Settings, Play, Eye, MousePointer, Layers, Sparkles } from 'lucide-react'
+import React, { useState } from "react";
+
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  BookOpen,
+  ChevronRight,
+  Code,
+  Eye,
+  Layers,
+  Layout,
+  MousePointer,
+  Palette,
+  Play,
+  Settings,
+  Sparkles,
+  Zap,
+} from "lucide-react";
 
 // Mercury Wu Wei Easing - Natural movement without effort
-const wuWeiEasing = [0.25, 0.46, 0.45, 0.94] as const
+const wuWeiEasing = [0.25, 0.46, 0.45, 0.94] as const;
 
 interface SectionProps {
-  title: string
-  icon: React.ReactNode
-  children: React.ReactNode
-  defaultOpen?: boolean
+  title: string;
+  icon: React.ReactNode;
+  children: React.ReactNode;
+  defaultOpen?: boolean;
 }
 
-function DocumentationSection({ title, icon, children, defaultOpen = false }: SectionProps) {
-  const [isOpen, setIsOpen] = useState(defaultOpen)
+function DocumentationSection({
+  title,
+  icon,
+  children,
+  defaultOpen = false,
+}: SectionProps) {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
 
   return (
     <motion.div
@@ -31,9 +50,7 @@ function DocumentationSection({ title, icon, children, defaultOpen = false }: Se
         whileTap={{ scale: 0.995 }}
       >
         <div className="flex items-center space-x-4">
-          <div className="p-2 bg-blue-100 rounded-xl text-blue-600">
-            {icon}
-          </div>
+          <div className="p-2 bg-blue-100 rounded-xl text-blue-600">{icon}</div>
           <h2 className="text-2xl font-bold text-slate-800">{title}</h2>
         </div>
         <motion.div
@@ -43,7 +60,7 @@ function DocumentationSection({ title, icon, children, defaultOpen = false }: Se
           <ChevronRight className="w-6 h-6 text-slate-600" />
         </motion.div>
       </motion.button>
-      
+
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -60,10 +77,16 @@ function DocumentationSection({ title, icon, children, defaultOpen = false }: Se
         )}
       </AnimatePresence>
     </motion.div>
-  )
+  );
 }
 
-function CodeBlock({ children, language = "typescript" }: { children: string; language?: string }) {
+function CodeBlock({
+  children,
+  language = "typescript",
+}: {
+  children: string;
+  language?: string;
+}) {
   return (
     <div className="relative bg-slate-900 rounded-xl overflow-hidden my-4">
       <div className="flex items-center justify-between px-4 py-2 bg-slate-800 border-b border-slate-700">
@@ -78,36 +101,45 @@ function CodeBlock({ children, language = "typescript" }: { children: string; la
         <code>{children}</code>
       </pre>
     </div>
-  )
+  );
 }
 
-function FeatureCard({ title, description, icon, highlight = false }: {
-  title: string
-  description: string
-  icon: React.ReactNode
-  highlight?: boolean
+function FeatureCard({
+  title,
+  description,
+  icon,
+  highlight = false,
+}: {
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  highlight?: boolean;
 }) {
   return (
     <motion.div
       className={`p-6 rounded-xl border-2 transition-all duration-500 ${
-        highlight 
-          ? 'bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200 shadow-lg' 
-          : 'bg-white border-slate-200 hover:border-blue-200 hover:shadow-md'
+        highlight
+          ? "bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200 shadow-lg"
+          : "bg-white border-slate-200 hover:border-blue-200 hover:shadow-md"
       }`}
       whileHover={{ scale: 1.02, y: -2 }}
       transition={{ duration: 0.3, ease: wuWeiEasing }}
     >
       <div className="flex items-start space-x-4">
-        <div className={`p-3 rounded-lg ${highlight ? 'bg-blue-100 text-blue-600' : 'bg-slate-100 text-slate-600'}`}>
+        <div
+          className={`p-3 rounded-lg ${highlight ? "bg-blue-100 text-blue-600" : "bg-slate-100 text-slate-600"}`}
+        >
           {icon}
         </div>
         <div>
           <h3 className="font-semibold text-slate-800 mb-2">{title}</h3>
-          <p className="text-slate-600 text-sm leading-relaxed">{description}</p>
+          <p className="text-slate-600 text-sm leading-relaxed">
+            {description}
+          </p>
         </div>
       </div>
     </motion.div>
-  )
+  );
 }
 
 export default function FlowCanvasDocumentationPage() {
@@ -132,8 +164,9 @@ export default function FlowCanvasDocumentationPage() {
               Mercury Contextual Demo
             </h1>
             <p className="text-xl text-slate-600 mb-8 max-w-3xl mx-auto leading-relaxed">
-              A comprehensive spatial computing interface built with the Mercury OS Design System. 
-              This component demonstrates contextual actions, dynamic module spawning, and fluid spatial interactions.
+              A comprehensive spatial computing interface built with the Mercury
+              OS Design System. This component demonstrates contextual actions,
+              dynamic module spawning, and fluid spatial interactions.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <div className="px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold">
@@ -154,7 +187,6 @@ export default function FlowCanvasDocumentationPage() {
       </div>
 
       <div className="max-w-6xl mx-auto px-8 py-12 space-y-8">
-        
         {/* Component Overview */}
         <DocumentationSection
           title="Component Overview"
@@ -163,11 +195,16 @@ export default function FlowCanvasDocumentationPage() {
         >
           <div className="space-y-6">
             <p className="text-slate-700 leading-relaxed text-lg">
-              The <code className="bg-slate-100 px-2 py-1 rounded text-sm">MercuryContextualDemoPage</code> is a sophisticated 
-              spatial computing interface that showcases the Mercury OS design system's contextual action capabilities. 
-              It creates a dynamic workspace where users can interact with intelligent modules that respond to context and intent.
+              The{" "}
+              <code className="bg-slate-100 px-2 py-1 rounded text-sm">
+                MercuryContextualDemoPage
+              </code>{" "}
+              is a sophisticated spatial computing interface that showcases the
+              Mercury OS design system's contextual action capabilities. It
+              creates a dynamic workspace where users can interact with
+              intelligent modules that respond to context and intent.
             </p>
-            
+
             <div className="grid md:grid-cols-2 gap-6">
               <FeatureCard
                 title="Contextual Actions"
@@ -200,10 +237,14 @@ export default function FlowCanvasDocumentationPage() {
           icon={<Palette className="w-6 h-6" />}
         >
           <div className="space-y-6">
-            <h3 className="text-xl font-bold text-slate-800 mb-4">Mercury OS Design System</h3>
+            <h3 className="text-xl font-bold text-slate-800 mb-4">
+              Mercury OS Design System
+            </h3>
             <p className="text-slate-700 leading-relaxed">
-              Built entirely on the Mercury OS Design System, this component demonstrates the system's core principles: 
-              <strong>Fluid, Focused, and Familiar</strong> interactions with intelligent focus management.
+              Built entirely on the Mercury OS Design System, this component
+              demonstrates the system's core principles:
+              <strong>Fluid, Focused, and Familiar</strong> interactions with
+              intelligent focus management.
             </p>
 
             <div className="bg-slate-50 rounded-xl p-6">
@@ -211,25 +252,36 @@ export default function FlowCanvasDocumentationPage() {
               <div className="space-y-3">
                 <div className="flex items-center space-x-3">
                   <div className="w-4 h-4 bg-blue-500 rounded-full"></div>
-                  <span><strong>Focused:</strong> Primary attention, maximum clarity and interaction</span>
+                  <span>
+                    <strong>Focused:</strong> Primary attention, maximum clarity
+                    and interaction
+                  </span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <div className="w-4 h-4 bg-blue-300 rounded-full opacity-70"></div>
-                  <span><strong>Ambient:</strong> Secondary context, reduced but readable</span>
+                  <span>
+                    <strong>Ambient:</strong> Secondary context, reduced but
+                    readable
+                  </span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <div className="w-4 h-4 bg-blue-200 rounded-full opacity-40"></div>
-                  <span><strong>Fog:</strong> Background context, gentle de-emphasis</span>
+                  <span>
+                    <strong>Fog:</strong> Background context, gentle de-emphasis
+                  </span>
                 </div>
               </div>
             </div>
 
-            <h4 className="font-semibold text-slate-800 mb-3">Wu Wei Daoist Easing</h4>
+            <h4 className="font-semibold text-slate-800 mb-3">
+              Wu Wei Daoist Easing
+            </h4>
             <p className="text-slate-700 mb-3">
-              All animations use the Wu Wei easing function for natural, effortless movement:
+              All animations use the Wu Wei easing function for natural,
+              effortless movement:
             </p>
             <CodeBlock language="typescript">
-{`// Mercury OS Wu Wei Daoist Easing Functions
+              {`// Mercury OS Wu Wei Daoist Easing Functions
 const wuWeiEasing = [0.25, 0.46, 0.45, 0.94] as const
 
 // Applied to all animations for natural movement
@@ -247,13 +299,16 @@ transition={{
           icon={<Settings className="w-6 h-6" />}
         >
           <div className="space-y-6">
-            <h3 className="text-xl font-bold text-slate-800 mb-4">State Architecture</h3>
+            <h3 className="text-xl font-bold text-slate-800 mb-4">
+              State Architecture
+            </h3>
             <p className="text-slate-700 leading-relaxed mb-4">
-              The component uses a sophisticated state management system to handle complex interactions:
+              The component uses a sophisticated state management system to
+              handle complex interactions:
             </p>
 
             <CodeBlock language="typescript">
-{`// Core state management
+              {`// Core state management
 const [animationState, setAnimationState] = useState<'idle' | 'action-triggered' | 'complete'>('idle')
 const [actionFeedback, setActionFeedback] = useState<string | null>(null)
 const [cardsCreated, setCardsCreated] = useState(0)
@@ -264,15 +319,26 @@ const [chatModulePosition, setChatModulePosition] = useState({ x: 32, y: 32 })`}
 
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-blue-50 p-4 rounded-lg">
-                <h4 className="font-semibold text-blue-800 mb-2">Animation States</h4>
+                <h4 className="font-semibold text-blue-800 mb-2">
+                  Animation States
+                </h4>
                 <ul className="text-sm text-blue-700 space-y-1">
-                  <li>• <strong>idle:</strong> Waiting for user interaction</li>
-                  <li>• <strong>action-triggered:</strong> Processing detected action</li>
-                  <li>• <strong>complete:</strong> Action processed successfully</li>
+                  <li>
+                    • <strong>idle:</strong> Waiting for user interaction
+                  </li>
+                  <li>
+                    • <strong>action-triggered:</strong> Processing detected
+                    action
+                  </li>
+                  <li>
+                    • <strong>complete:</strong> Action processed successfully
+                  </li>
                 </ul>
               </div>
               <div className="bg-green-50 p-4 rounded-lg">
-                <h4 className="font-semibold text-green-800 mb-2">Positioning System</h4>
+                <h4 className="font-semibold text-green-800 mb-2">
+                  Positioning System
+                </h4>
                 <ul className="text-sm text-green-700 space-y-1">
                   <li>• Dynamic centering on mount</li>
                   <li>• Responsive positioning</li>
@@ -290,15 +356,17 @@ const [chatModulePosition, setChatModulePosition] = useState({ x: 32, y: 32 })`}
           icon={<Play className="w-6 h-6" />}
         >
           <div className="space-y-8">
-            
             {/* Contextual Action Detection */}
             <div>
-              <h3 className="text-xl font-bold text-slate-800 mb-4">1. Contextual Action Detection</h3>
+              <h3 className="text-xl font-bold text-slate-800 mb-4">
+                1. Contextual Action Detection
+              </h3>
               <p className="text-slate-700 mb-4">
-                The system intelligently analyzes chat interactions to detect user intent and suggest contextual actions.
+                The system intelligently analyzes chat interactions to detect
+                user intent and suggest contextual actions.
               </p>
               <CodeBlock language="typescript">
-{`const handleActionDetected = useCallback((action: string, context: string) => {
+                {`const handleActionDetected = useCallback((action: string, context: string) => {
   console.log(\`Mercury Contextual Action: \${action} from \${context}\`)
   
   setAnimationState('action-triggered')
@@ -318,12 +386,15 @@ const [chatModulePosition, setChatModulePosition] = useState({ x: 32, y: 32 })`}
 
             {/* Dynamic Module Spawning */}
             <div>
-              <h3 className="text-xl font-bold text-slate-800 mb-4">2. Dynamic Module Spawning</h3>
+              <h3 className="text-xl font-bold text-slate-800 mb-4">
+                2. Dynamic Module Spawning
+              </h3>
               <p className="text-slate-700 mb-4">
-                Modules appear contextually with sophisticated entrance animations and positioning logic.
+                Modules appear contextually with sophisticated entrance
+                animations and positioning logic.
               </p>
               <CodeBlock language="typescript">
-{`<AnimatePresence>
+                {`<AnimatePresence>
   {showHousingModule && (
     <motion.div
       className="absolute z-30"
@@ -359,12 +430,15 @@ const [chatModulePosition, setChatModulePosition] = useState({ x: 32, y: 32 })`}
 
             {/* Spatial Positioning */}
             <div>
-              <h3 className="text-xl font-bold text-slate-800 mb-4">3. Intelligent Spatial Positioning</h3>
+              <h3 className="text-xl font-bold text-slate-800 mb-4">
+                3. Intelligent Spatial Positioning
+              </h3>
               <p className="text-slate-700 mb-4">
-                Advanced positioning system with responsive centering and drag-and-drop capabilities.
+                Advanced positioning system with responsive centering and
+                drag-and-drop capabilities.
               </p>
               <CodeBlock language="typescript">
-{`// Intelligent centering on component mount
+                {`// Intelligent centering on component mount
 React.useEffect(() => {
   const centerChatModule = () => {
     const chatWidth = 400
@@ -385,12 +459,15 @@ React.useEffect(() => {
 
             {/* Feedback System */}
             <div>
-              <h3 className="text-xl font-bold text-slate-800 mb-4">4. Real-time Feedback System</h3>
+              <h3 className="text-xl font-bold text-slate-800 mb-4">
+                4. Real-time Feedback System
+              </h3>
               <p className="text-slate-700 mb-4">
-                Sophisticated feedback system with animated notifications and status indicators.
+                Sophisticated feedback system with animated notifications and
+                status indicators.
               </p>
               <CodeBlock language="typescript">
-{`const feedbackVariants = {
+                {`const feedbackVariants = {
   hidden: { 
     opacity: 0, 
     y: -20,
@@ -426,34 +503,56 @@ React.useEffect(() => {
           icon={<Code className="w-6 h-6" />}
         >
           <div className="space-y-6">
-            <h3 className="text-xl font-bold text-slate-800 mb-4">Required Dependencies</h3>
-            
+            <h3 className="text-xl font-bold text-slate-800 mb-4">
+              Required Dependencies
+            </h3>
+
             <div className="grid md:grid-cols-2 gap-6">
               <div className="bg-slate-50 p-6 rounded-xl">
                 <h4 className="font-semibold mb-3">Core Dependencies</h4>
                 <ul className="space-y-2 text-sm">
-                  <li>• <strong>React 19:</strong> Latest React with concurrent features</li>
-                  <li>• <strong>Framer Motion:</strong> Advanced animation library</li>
-                  <li>• <strong>React DnD:</strong> Drag and drop functionality</li>
-                  <li>• <strong>HTML5Backend:</strong> DnD backend for web</li>
+                  <li>
+                    • <strong>React 19:</strong> Latest React with concurrent
+                    features
+                  </li>
+                  <li>
+                    • <strong>Framer Motion:</strong> Advanced animation library
+                  </li>
+                  <li>
+                    • <strong>React DnD:</strong> Drag and drop functionality
+                  </li>
+                  <li>
+                    • <strong>HTML5Backend:</strong> DnD backend for web
+                  </li>
                 </ul>
               </div>
               <div className="bg-blue-50 p-6 rounded-xl">
                 <h4 className="font-semibold mb-3">Mercury Components</h4>
                 <ul className="space-y-2 text-sm">
-                  <li>• <strong>MercuryChatModule:</strong> Contextual chat interface</li>
-                  <li>• <strong>MercuryFlowCanvas:</strong> Spatial workspace container</li>
-                  <li>• <strong>MercuryHousingModule:</strong> Dynamic housing search</li>
+                  <li>
+                    • <strong>MercuryChatModule:</strong> Contextual chat
+                    interface
+                  </li>
+                  <li>
+                    • <strong>MercuryFlowCanvas:</strong> Spatial workspace
+                    container
+                  </li>
+                  <li>
+                    • <strong>MercuryHousingModule:</strong> Dynamic housing
+                    search
+                  </li>
                 </ul>
               </div>
             </div>
 
-            <h4 className="font-semibold text-slate-800 mb-3">Import Structure</h4>
+            <h4 className="font-semibold text-slate-800 mb-3">
+              Import Structure
+            </h4>
             <CodeBlock language="typescript">
-{`"use client"
+              {`"use client"
 
 import React, { useState, useCallback } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence } from 'framer-motion'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { MercuryChatModule } from '@/components/mercury/mercury-chat-module'
@@ -469,13 +568,16 @@ import { MercuryHousingModule } from '@/components/mercury/mercury-housing-modul
           icon={<Eye className="w-6 h-6" />}
         >
           <div className="space-y-6">
-            <h3 className="text-xl font-bold text-slate-800 mb-4">Basic Implementation</h3>
+            <h3 className="text-xl font-bold text-slate-800 mb-4">
+              Basic Implementation
+            </h3>
             <p className="text-slate-700 mb-4">
-              Here's how to implement the Mercury Contextual Demo in your application:
+              Here's how to implement the Mercury Contextual Demo in your
+              application:
             </p>
 
             <CodeBlock language="typescript">
-{`export default function MercuryContextualDemoPage() {
+              {`export default function MercuryContextualDemoPage() {
   const [animationState, setAnimationState] = useState<'idle' | 'action-triggered' | 'complete'>('idle')
   const [showHousingModule, setShowHousingModule] = useState(false)
   
@@ -508,10 +610,16 @@ import { MercuryHousingModule } from '@/components/mercury/mercury-housing-modul
             <div className="bg-amber-50 border-l-4 border-amber-400 p-6 rounded-r-lg">
               <h4 className="font-semibold text-amber-800 mb-2">💡 Pro Tips</h4>
               <ul className="text-amber-700 space-y-1 text-sm">
-                <li>• Always wrap in DndProvider for drag-and-drop functionality</li>
+                <li>
+                  • Always wrap in DndProvider for drag-and-drop functionality
+                </li>
                 <li>• Use Mercury-compliant intent props for all components</li>
-                <li>• Implement proper focus level management for visual hierarchy</li>
-                <li>• Handle responsive positioning for different screen sizes</li>
+                <li>
+                  • Implement proper focus level management for visual hierarchy
+                </li>
+                <li>
+                  • Handle responsive positioning for different screen sizes
+                </li>
               </ul>
             </div>
           </div>
@@ -525,31 +633,62 @@ import { MercuryHousingModule } from '@/components/mercury/mercury-housing-modul
           <div className="space-y-6">
             <div className="grid md:grid-cols-2 gap-6">
               <div>
-                <h4 className="font-semibold text-slate-800 mb-3">Performance Optimizations</h4>
+                <h4 className="font-semibold text-slate-800 mb-3">
+                  Performance Optimizations
+                </h4>
                 <ul className="space-y-2 text-sm text-slate-700">
-                  <li>• <strong>GPU Acceleration:</strong> All animations use transform-gpu</li>
-                  <li>• <strong>Memoized Callbacks:</strong> useCallback for event handlers</li>
-                  <li>• <strong>Smooth Animations:</strong> 60fps with Wu Wei easing</li>
-                  <li>• <strong>Efficient Rendering:</strong> AnimatePresence for mount/unmount</li>
+                  <li>
+                    • <strong>GPU Acceleration:</strong> All animations use
+                    transform-gpu
+                  </li>
+                  <li>
+                    • <strong>Memoized Callbacks:</strong> useCallback for event
+                    handlers
+                  </li>
+                  <li>
+                    • <strong>Smooth Animations:</strong> 60fps with Wu Wei
+                    easing
+                  </li>
+                  <li>
+                    • <strong>Efficient Rendering:</strong> AnimatePresence for
+                    mount/unmount
+                  </li>
                 </ul>
               </div>
               <div>
-                <h4 className="font-semibold text-slate-800 mb-3">Accessibility Features</h4>
+                <h4 className="font-semibold text-slate-800 mb-3">
+                  Accessibility Features
+                </h4>
                 <ul className="space-y-2 text-sm text-slate-700">
-                  <li>• <strong>WCAG 2.1 AAA:</strong> Full compliance with accessibility standards</li>
-                  <li>• <strong>Keyboard Navigation:</strong> Full keyboard support</li>
-                  <li>• <strong>Screen Readers:</strong> Proper ARIA labels and roles</li>
-                  <li>• <strong>Reduced Motion:</strong> Respects user motion preferences</li>
+                  <li>
+                    • <strong>WCAG 2.1 AAA:</strong> Full compliance with
+                    accessibility standards
+                  </li>
+                  <li>
+                    • <strong>Keyboard Navigation:</strong> Full keyboard
+                    support
+                  </li>
+                  <li>
+                    • <strong>Screen Readers:</strong> Proper ARIA labels and
+                    roles
+                  </li>
+                  <li>
+                    • <strong>Reduced Motion:</strong> Respects user motion
+                    preferences
+                  </li>
                 </ul>
               </div>
             </div>
 
             <div className="bg-green-50 p-6 rounded-xl">
-              <h4 className="font-semibold text-green-800 mb-3">🌟 Mercury Compliance</h4>
+              <h4 className="font-semibold text-green-800 mb-3">
+                🌟 Mercury Compliance
+              </h4>
               <p className="text-green-700 text-sm">
-                This component is 100% Mercury Design System compliant, following all principles for 
-                enterprise-grade applications including focus management, natural animations, and 
-                cognitive accessibility for ADHD/ASD users.
+                This component is 100% Mercury Design System compliant,
+                following all principles for enterprise-grade applications
+                including focus management, natural animations, and cognitive
+                accessibility for ADHD/ASD users.
               </p>
             </div>
           </div>
@@ -567,8 +706,9 @@ import { MercuryHousingModule } from '@/components/mercury/mercury-housing-modul
               Ready to Build with Mercury?
             </h3>
             <p className="text-slate-600 mb-6 max-w-2xl mx-auto">
-              This comprehensive documentation provides everything you need to understand and implement 
-              the Mercury Contextual Demo component in your own applications.
+              This comprehensive documentation provides everything you need to
+              understand and implement the Mercury Contextual Demo component in
+              your own applications.
             </p>
             <div className="flex justify-center space-x-4">
               <button className="px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-colors">
@@ -582,5 +722,5 @@ import { MercuryHousingModule } from '@/components/mercury/mercury-housing-modul
         </motion.div>
       </div>
     </div>
-  )
-} 
+  );
+}

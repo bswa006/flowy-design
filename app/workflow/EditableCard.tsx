@@ -1,18 +1,20 @@
 import * as React from "react";
+
 import { motion } from "framer-motion";
 import {
-  Save,
-  X,
   Bold,
   Italic,
-  Underline,
   List,
   ListOrdered,
   RotateCcw,
+  Save,
+  Underline,
+  X,
 } from "lucide-react";
-import { Context } from "@/lib/contextMockData";
+
 import { MercuryButton } from "@/components/mercury/MercuryButton";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Context } from "@/lib/contextMockData";
 
 interface EditableCardProps {
   editedContext: Context;
@@ -225,9 +227,9 @@ export function EditableCard({
             min={0}
             max={100}
             value={editedContext.priority_score.toString()}
-            onChange={(value) =>
-              onFieldChange("priority_score", parseInt(value) || 0)
-            }
+            onChange={(value) => {
+              onFieldChange("priority_score", parseInt(value) || 0);
+            }}
           />
         </div>
         <EditableField
@@ -269,21 +271,21 @@ export function EditableCard({
         <EditableField
           label="Tags"
           value={editedContext.tags?.join(", ") || ""}
-          onChange={(value) =>
+          onChange={(value) => {
             onFieldChange(
               "tags",
               value
                 .split(",")
                 .map((tag: string) => tag.trim())
                 .filter(Boolean)
-            )
-          }
+            );
+          }}
           placeholder="tag1, tag2, tag3"
         />
         <EditableField
           label="Participants"
           value={editedContext.upload.participants?.join(", ") || ""}
-          onChange={(value) =>
+          onChange={(value) => {
             onFieldChange(
               "participants",
               value
@@ -291,8 +293,8 @@ export function EditableCard({
                 .map((p: string) => p.trim())
                 .filter(Boolean),
               "upload"
-            )
-          }
+            );
+          }}
           placeholder="Person 1, Person 2, Person 3"
         />
         <motion.div

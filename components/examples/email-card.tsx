@@ -1,31 +1,41 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { motion } from "framer-motion"
-import { Mail, Star, Archive, MoreHorizontal, Reply, Forward, Mic, Trash2 } from "lucide-react"
+import * as React from "react";
+
+import { motion } from "framer-motion";
+import { Forward, Mail, Mic, MoreHorizontal, Reply, Trash2 } from "lucide-react";
+
 import {
   FlowyCard,
-  FlowyCardHeader,
-  FlowyCardTitle,
-  FlowyCardSubtitle,
   FlowyCardContent,
   FlowyCardFooter,
-} from "@/components/ui/flowy-card"
-import { cn } from "@/lib/utils"
+  FlowyCardHeader,
+  FlowyCardSubtitle,
+  FlowyCardTitle,
+} from "@/components/ui/flowy-card";
+import { cn } from "@/lib/utils";
 
 interface EmailCardProps {
-  sender: string
-  subject: string
-  preview: string
-  timestamp: string
-  content: string
-  variant?: "mercury" | "mercury-elevated" | "mercury-float" | "mercury-glass" | "default" | "elevated" | "transparent" | "glass"
-  className?: string
-  expanded?: boolean
-  onExpand?: () => void
-  onReply?: () => void
-  onForward?: () => void
-  onDelete?: () => void
+  sender: string;
+  subject: string;
+  preview: string;
+  timestamp: string;
+  content: string;
+  variant?:
+    | "mercury"
+    | "mercury-elevated"
+    | "mercury-float"
+    | "mercury-glass"
+    | "default"
+    | "elevated"
+    | "transparent"
+    | "glass";
+  className?: string;
+  expanded?: boolean;
+  onExpand?: () => void;
+  onReply?: () => void;
+  onForward?: () => void;
+  onDelete?: () => void;
 }
 
 export function EmailCard({
@@ -42,12 +52,15 @@ export function EmailCard({
   onForward,
   onDelete,
 }: EmailCardProps) {
-  const handleAction = (action: (() => void) | undefined, event: React.MouseEvent) => {
-    event.stopPropagation()
+  const handleAction = (
+    action: (() => void) | undefined,
+    event: React.MouseEvent
+  ) => {
+    event.stopPropagation();
     if (action) {
-      action()
+      action();
     }
-  }
+  };
 
   return (
     <FlowyCard
@@ -88,14 +101,14 @@ export function EmailCard({
               {subject}
             </div>
           </div>
-          
+
           <div className="text-gray-700 dark:text-gray-200 leading-relaxed">
             {content}
           </div>
-          
+
           <div className="text-right">
             <div className="font-medium text-gray-900 dark:text-gray-100">
-              {sender.split(' ')[0]}
+              {sender.split(" ")[0]}
             </div>
           </div>
         </div>
@@ -112,7 +125,7 @@ export function EmailCard({
             <Reply className="h-4 w-4 mr-2 inline" />
             Reply
           </motion.button>
-          
+
           <motion.button
             className="flex-1 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 bg-white/50 dark:bg-gray-800/50 rounded-lg border border-white/20 hover:bg-white/70 dark:hover:bg-gray-700/50 transition-colors"
             whileHover={{ scale: 1.02 }}
@@ -122,7 +135,7 @@ export function EmailCard({
             <Forward className="h-4 w-4 mr-2 inline" />
             Forward
           </motion.button>
-          
+
           <motion.button
             className="flex-1 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 bg-white/50 dark:bg-gray-800/50 rounded-lg border border-white/20 hover:bg-white/70 dark:hover:bg-gray-700/50 transition-colors"
             whileHover={{ scale: 1.02 }}
@@ -133,7 +146,7 @@ export function EmailCard({
             Delete
           </motion.button>
         </div>
-        
+
         <div className="mt-3 flex items-center justify-center">
           <motion.button
             className="flex items-center text-xs text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
@@ -146,5 +159,5 @@ export function EmailCard({
         </div>
       </FlowyCardFooter>
     </FlowyCard>
-  )
-} 
+  );
+}

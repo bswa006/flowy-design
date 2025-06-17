@@ -157,7 +157,7 @@ function MercuryContextCard({
 export default function OldWorkflowPage() {
   const [contexts, setContexts] = useState<Context[]>(initialContexts);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
   
   // Timeline data hook
   const { timelineUploads, totalUploads, checkpointCount } = useTimelineData({
@@ -167,7 +167,7 @@ export default function OldWorkflowPage() {
 
   const handleEdit = (contextId: string) => {
     setEditingId(contextId);
-    setExpandedId(null); // Close insights when editing
+    setExpandedIds(new Set()); // Close all insights when editing
   };
 
   const handleSave = (updatedContext: Context) => {
@@ -183,7 +183,15 @@ export default function OldWorkflowPage() {
 
   const handleToggleInsights = (contextId: string) => {
     if (editingId) return; // Don't toggle insights while editing
-    setExpandedId(expandedId === contextId ? null : contextId);
+    setExpandedIds(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(contextId)) {
+        newSet.delete(contextId);
+      } else {
+        newSet.add(contextId);
+      }
+      return newSet;
+    });
   };
 
   const getFocusLevel = (contextId: string): "focused" | "ambient" | "fog" => {
@@ -219,28 +227,28 @@ export default function OldWorkflowPage() {
               <div key={context.id} className="relative mb-8 flex items-start justify-center">
                 {/* Main Context Card */}
                 <div className="relative">
-                  <MercuryContextCard
-                    context={context}
-                    index={idx}
-                    isEditing={editingId === context.id}
-                    isExpanded={expandedId === context.id}
-                    focusLevel={getFocusLevel(context.id)}
-                    onEdit={() => handleEdit(context.id)}
-                    onSave={handleSave}
-                    onCancel={handleCancel}
-                    onToggleInsights={() => handleToggleInsights(context.id)}
-                  />
+                    <MercuryContextCard
+                      context={context}
+                      index={idx}
+                      isEditing={editingId === context.id}
+                      isExpanded={expandedIds.has(context.id)}
+                      focusLevel={getFocusLevel(context.id)}
+                      onEdit={() => handleEdit(context.id)}
+                      onSave={handleSave}
+                      onCancel={handleCancel}
+                      onToggleInsights={() => handleToggleInsights(context.id)}
+                    />
                   
 
-                </div>
+                  </div>
                 
 
                   
                   {/* Insights Panel - positioned relative to outer container that creates the gap */}
-                  {expandedId === context.id && !editingId && (
+                  {expandedIds.has(context.id) && !editingId && (
                     <motion.div
                       className="p-4 z-40 pointer-events-auto"
-                      style={{ 
+                      style={{
                         // left: 'calc(50% + 220px)', // Center of container + half card width + margin  
                         // top: '50%', // 50% 
                         // transform: 'translateY(-50%)' // Center panel itself
@@ -255,47 +263,71 @@ export default function OldWorkflowPage() {
                         <div className="flex flex-col gap-y-3">
                   
                           
-                          {/* Key Pain Points */}
-                        {Array.isArray(context.extracted_metadata?.key_pain_points) &&
-                          context.extracted_metadata.key_pain_points.map(
-                            (point: string, i: number) => (
-                              <Tooltip key={"pain-" + i}>
-                                <TooltipTrigger
-                                  asChild
-                                  className="flex items-center cursor-pointer"
-                                >
-                                  <div className="bg-orange-50 rounded-lg px-3 py-2 flex items-center gap-2 hover:bg-orange-100 transition-colors">
-                                    <span
-                                      className={`w-2 h-2 ${INSIGHT_STYLES.keyPainPoint.pillClass} rounded-full flex-shrink-0`}
-                                    />
-                                    <div className="text-gray-900 text-xs font-medium leading-relaxed">
-                                      {point}
+                          {/* Key Pain Points - Show 2 */}
+                          {Array.isArray(context.extracted_metadata?.key_pain_points) &&
+                          context.extracted_metadata.key_pain_points.slice(0, 2).map(
+                              (point: string, i: number) => (
+                                <Tooltip key={"pain-" + i}>
+                                  <TooltipTrigger
+                                    asChild
+                                    className="flex items-center cursor-pointer"
+                                  >
+                                    <div className="bg-orange-50 rounded-lg px-3 py-2 flex items-center gap-2 hover:bg-orange-100 transition-colors">
+                                      <span
+                                        className={`w-2 h-2 ${INSIGHT_STYLES.keyPainPoint.pillClass} rounded-full flex-shrink-0`}
+                                      />
+                                      <div className="text-gray-900 text-xs font-medium leading-relaxed">
+                                        {point}
+                                      </div>
                                     </div>
-                                  </div>
-                                </TooltipTrigger>
-                                <TooltipContent
-                                  side="left"
-                                  sideOffset={8}
-                                  className="bg-gray-800 text-white rounded-lg text-xs font-normal"
-                                >
-                                  key pain point
-                                </TooltipContent>
-                              </Tooltip>
-                            )
-                          )}
-                        
-                        {/* Desired Features */}
-                        {Array.isArray(context.extracted_metadata?.desired_features) &&
-                          context.extracted_metadata.desired_features.map(
-                            (feature: string, i: number) => (
-                              <Tooltip key={"feature-" + i}>
+                                  </TooltipTrigger>
+                                  <TooltipContent
+                                    side="left"
+                                    sideOffset={8}
+                                    className="bg-gray-800 text-white rounded-lg text-xs font-normal"
+                                  >
+                                    key pain point
+                                  </TooltipContent>
+                                </Tooltip>
+                              )
+                            )}
+                          
+                        {/* Desired Features - Show 2 */}
+                          {Array.isArray(context.extracted_metadata?.desired_features) &&
+                          context.extracted_metadata.desired_features.slice(0, 2).map(
+                              (feature: string, i: number) => (
+                                <Tooltip key={"feature-" + i}>
+                                  <TooltipTrigger asChild>
+                                    <div className="bg-emerald-50 rounded-lg px-3 py-2 flex items-center gap-2 cursor-pointer hover:bg-emerald-100 transition-colors">
+                                      <span
+                                        className={`w-2 h-2 rounded-full ${INSIGHT_STYLES.desiredFeature.pillClass} flex-shrink-0`}
+                                      />
+                                      <span className="text-gray-900 text-xs font-medium leading-relaxed">
+                                        {feature}
+                                      </span>
+                                    </div>
+                                  </TooltipTrigger>
+                                  <TooltipContent
+                                    side="left"
+                                    sideOffset={8}
+                                    className="bg-gray-800 text-white rounded-lg text-xs font-normal"
+                                  >
+                                    desired feature
+                                  </TooltipContent>
+                                </Tooltip>
+                              )
+                            )}
+
+                        {/* Integrations Required - Show 2 */}
+                        {Array.isArray(context.extracted_metadata?.integrations_required) &&
+                          context.extracted_metadata.integrations_required.slice(0, 2).map(
+                            (integration: string, i: number) => (
+                              <Tooltip key={"integration-" + i}>
                                 <TooltipTrigger asChild>
-                                  <div className="bg-emerald-50 rounded-lg px-3 py-2 flex items-center gap-2 cursor-pointer hover:bg-emerald-100 transition-colors">
-                                    <span
-                                      className={`w-2 h-2 rounded-full ${INSIGHT_STYLES.desiredFeature.pillClass} flex-shrink-0`}
-                                    />
+                                  <div className="bg-blue-50 rounded-lg px-3 py-2 flex items-center gap-2 cursor-pointer hover:bg-blue-100 transition-colors">
+                                    <span className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0" />
                                     <span className="text-gray-900 text-xs font-medium leading-relaxed">
-                                      {feature}
+                                      {integration}
                                     </span>
                                   </div>
                                 </TooltipTrigger>
@@ -304,19 +336,67 @@ export default function OldWorkflowPage() {
                                   sideOffset={8}
                                   className="bg-gray-800 text-white rounded-lg text-xs font-normal"
                                 >
-                                  desired feature
+                                  integration required
                                 </TooltipContent>
                               </Tooltip>
-                                                          )
-                            )}
-                        </div>
+                            )
+                          )}
+
+                        {/* Market Gaps - Show 2 */}
+                        {Array.isArray(context.extracted_metadata?.market_gaps) &&
+                          context.extracted_metadata.market_gaps.slice(0, 2).map(
+                            (gap: string, i: number) => (
+                              <Tooltip key={"gap-" + i}>
+                                <TooltipTrigger asChild>
+                                  <div className="bg-red-50 rounded-lg px-3 py-2 flex items-center gap-2 cursor-pointer hover:bg-red-100 transition-colors">
+                                    <span className="w-2 h-2 bg-red-500 rounded-full flex-shrink-0" />
+                                    <span className="text-gray-900 text-xs font-medium leading-relaxed">
+                                      {gap}
+                                    </span>
+                                  </div>
+                                </TooltipTrigger>
+                                <TooltipContent
+                                  side="left"
+                                  sideOffset={8}
+                                  className="bg-gray-800 text-white rounded-lg text-xs font-normal"
+                                >
+                                  market gap
+                                </TooltipContent>
+                              </Tooltip>
+                            )
+                          )}
+
+                        {/* Key Differentiators - Show 2 */}
+                        {Array.isArray(context.extracted_metadata?.key_differentiators) &&
+                          context.extracted_metadata.key_differentiators.slice(0, 2).map(
+                            (diff: string, i: number) => (
+                              <Tooltip key={"diff-" + i}>
+                                <TooltipTrigger asChild>
+                                  <div className="bg-purple-50 rounded-lg px-3 py-2 flex items-center gap-2 cursor-pointer hover:bg-purple-100 transition-colors">
+                                    <span className="w-2 h-2 bg-purple-500 rounded-full flex-shrink-0" />
+                                    <span className="text-gray-900 text-xs font-medium leading-relaxed">
+                                      {diff}
+                                    </span>
+                                  </div>
+                                </TooltipTrigger>
+                                <TooltipContent
+                                  side="left"
+                                  sideOffset={8}
+                                  className="bg-gray-800 text-white rounded-lg text-xs font-normal"
+                                >
+                                  key differentiator
+                                </TooltipContent>
+                              </Tooltip>
+                            )
+                          )}
+                      </div>
                     </motion.div>
                   )}
-                </div>
-              ))}
-            </AnimatePresence>
-          </div>
+              </div>
+            ))}
+          </AnimatePresence>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
+}

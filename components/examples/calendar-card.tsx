@@ -1,39 +1,41 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { motion } from "framer-motion"
-import { Calendar, Clock, MapPin, Mic, MoreHorizontal } from "lucide-react"
+import * as React from "react";
+
+import { motion } from "framer-motion";
+import { Calendar, MapPin, Mic, MoreHorizontal } from "lucide-react";
+
 import {
   FlowyCard,
-  FlowyCardHeader,
-  FlowyCardTitle,
-  FlowyCardSubtitle,
   FlowyCardContent,
   FlowyCardFooter,
-} from "@/components/ui/flowy-card"
-import { cn } from "@/lib/utils"
+  FlowyCardHeader,
+  FlowyCardSubtitle,
+  FlowyCardTitle,
+} from "@/components/ui/flowy-card";
+import { cn } from "@/lib/utils";
 
 interface CalendarEvent {
-  id: string
-  title: string
-  time: string
-  location?: string
-  color: "blue" | "gray"
+  id: string;
+  title: string;
+  time: string;
+  location?: string;
+  color: "blue" | "gray";
 }
 
 interface CalendarCardProps {
-  title: string
-  subtitle: string
-  availableUntil: string
-  events: CalendarEvent[]
-  expanded?: boolean
-  onExpand?: () => void
-  onCreateEvent?: () => void
-  onEditEvent?: () => void
-  onViewCalendar?: () => void
-  onDismiss?: () => void
-  variant?: string
-  className?: string
+  title: string;
+  subtitle: string;
+  availableUntil: string;
+  events: CalendarEvent[];
+  expanded?: boolean;
+  onExpand?: () => void;
+  onCreateEvent?: () => void;
+  onEditEvent?: () => void;
+  onViewCalendar?: () => void;
+  onDismiss?: () => void;
+  variant?: string;
+  className?: string;
 }
 
 export function CalendarCard({
@@ -50,22 +52,25 @@ export function CalendarCard({
   variant,
   className,
 }: CalendarCardProps) {
-  const handleAction = (action: (() => void) | undefined, event: React.MouseEvent) => {
-    event.stopPropagation()
+  const handleAction = (
+    action: (() => void) | undefined,
+    event: React.MouseEvent
+  ) => {
+    event.stopPropagation();
     if (action) {
-      action()
+      action();
     }
-  }
+  };
 
   const getEventColorClasses = (color: "blue" | "gray") => {
-    return color === "blue" 
+    return color === "blue"
       ? "bg-blue-500/20 text-blue-700 dark:text-blue-300 border-blue-200/50"
-      : "bg-gray-500/20 text-gray-700 dark:text-gray-300 border-gray-200/50"
-  }
+      : "bg-gray-500/20 text-gray-700 dark:text-gray-300 border-gray-200/50";
+  };
 
   return (
     <FlowyCard
-      variant={variant as any || "glass"}
+      variant={(variant as any) || "glass"}
       size="md"
       expandable
       expanded={expanded}
@@ -120,9 +125,7 @@ export function CalendarCard({
                       </div>
                     )}
                   </div>
-                  <div className="text-xs font-medium ml-3">
-                    {event.time}
-                  </div>
+                  <div className="text-xs font-medium ml-3">{event.time}</div>
                 </div>
               </motion.div>
             ))}
@@ -151,7 +154,7 @@ export function CalendarCard({
           >
             Create Event
           </motion.button>
-          
+
           <motion.button
             className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 bg-white/50 dark:bg-gray-800/50 rounded-lg border border-white/20 hover:bg-white/70 dark:hover:bg-gray-700/50 transition-colors"
             whileHover={{ scale: 1.02 }}
@@ -171,7 +174,7 @@ export function CalendarCard({
           >
             Full Calendar
           </motion.button>
-          
+
           <motion.button
             className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 bg-white/50 dark:bg-gray-800/50 rounded-lg border border-white/20 hover:bg-white/70 dark:hover:bg-gray-700/50 transition-colors"
             whileHover={{ scale: 1.02 }}
@@ -181,7 +184,7 @@ export function CalendarCard({
             Dismiss
           </motion.button>
         </div>
-        
+
         <div className="mt-3 flex items-center justify-center">
           <motion.button
             className="flex items-center text-xs text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
@@ -194,5 +197,5 @@ export function CalendarCard({
         </div>
       </FlowyCardFooter>
     </FlowyCard>
-  )
-} 
+  );
+}

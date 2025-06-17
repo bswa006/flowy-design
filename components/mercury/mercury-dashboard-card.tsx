@@ -1,14 +1,11 @@
 "use client";
 
 import React, { useState, useCallback } from "react";
-import { cn } from "@/lib/utils";
+
 import { ChevronRight, MoreHorizontal, TrendingUp } from "lucide-react";
-import {
-  getMercuryFocusClasses as getMercuryFocusClassesFromTokens,
-  getMercuryStatusColors,
-  getMercuryTypography,
-  MERCURY_COMPONENT_PADDING,
-} from "@/lib/mercury-tokens";
+
+import { getMercuryFocusClasses } from "@/lib/mercury-tokens";
+import { cn } from "@/lib/utils";
 
 // Temporary shadcn/ui components - replace with actual imports when available
 const Card = ({ children, className, ...props }: any) => (
@@ -107,8 +104,8 @@ interface MercuryDashboardCardProps {
 }
 
 // Clean Mercury focus styling using tokens
-const getMercuryFocusClasses = (focusLevel: "focused" | "ambient" | "fog") => {
-  const focusConfig = getMercuryFocusClassesFromTokens(focusLevel);
+const getFocusClasses = (focusLevel: "focused" | "ambient" | "fog") => {
+  const focusConfig = getMercuryFocusClasses(focusLevel);
 
   return cn(
     focusConfig.scale,
@@ -218,7 +215,7 @@ export function MercuryDashboardCard({
         "mercury-module relative overflow-hidden rounded-2xl",
 
         // Focus level styling from tokens
-        getMercuryFocusClasses(focusLevel),
+        getFocusClasses(focusLevel),
 
         // Clean animation classes
         getMercuryAnimationClasses(isInteractive),
@@ -273,8 +270,7 @@ export function MercuryDashboardCard({
           {/* Main value with clean Mercury typography */}
           <div
             className={cn(
-              getMercuryTypography(focusLevel, "compact"),
-              "text-slate-700 mb-2 tabular-nums"
+              "text-2xl font-bold text-slate-900 mb-2 tabular-nums"
             )}
           >
             {data.value}

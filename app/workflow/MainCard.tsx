@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import {
   Calendar,
   CircleCheck,
@@ -8,16 +9,17 @@ import {
   Mic,
   User,
 } from "lucide-react";
-import { Context } from "@/lib/contextMockData";
+
+import { DraggableTextCard } from "@/components/DraggableTextCard";
+import { MercuryButton } from "@/components/mercury/MercuryButton";
 import {
   Select,
-  SelectTrigger,
-  SelectValue,
   SelectContent,
   SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
-import { MercuryButton } from "@/components/mercury/MercuryButton";
-import { DraggableTextCard } from "@/components/DraggableTextCard";
+import { Context } from "@/lib/contextMockData";
 
 interface MainCardProps {
   context: Context;

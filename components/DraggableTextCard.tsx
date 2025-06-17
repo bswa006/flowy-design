@@ -1,6 +1,7 @@
-import React, { useRef, useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Lightbulb, Edit as EditIcon } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
+
+import { AnimatePresence, motion } from "framer-motion";
+import { Edit as EditIcon, Lightbulb } from "lucide-react";
 
 interface DraggableTextCardProps {
   description: string;

@@ -1,16 +1,32 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as React from "react";
+
+import { cn } from "@/lib/utils";
 
 export interface TypographyProps extends React.HTMLAttributes<HTMLElement> {
-  variant?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "lead" | "large" | "small" | "muted" | "code"
-  mercury?: boolean
-  as?: React.ElementType
+  variant?:
+    | "h1"
+    | "h2"
+    | "h3"
+    | "h4"
+    | "h5"
+    | "h6"
+    | "p"
+    | "lead"
+    | "large"
+    | "small"
+    | "muted"
+    | "code";
+  mercury?: boolean;
+  as?: React.ElementType;
 }
 
 export const Typography = React.forwardRef<HTMLElement, TypographyProps>(
-  ({ className, variant = "p", mercury = true, as, children, ...props }, ref) => {
+  (
+    { className, variant = "p", mercury = true, as, children, ...props },
+    ref
+  ) => {
     // Mercury-level typography variants
     const mercuryVariants = {
       h1: "text-mercury-3xl font-bold tracking-tight text-gray-900 dark:text-gray-50",
@@ -24,8 +40,8 @@ export const Typography = React.forwardRef<HTMLElement, TypographyProps>(
       large: "text-mercury-lg font-medium text-gray-900 dark:text-gray-100",
       small: "text-mercury-sm text-gray-600 dark:text-gray-400",
       muted: "text-mercury-sm text-gray-500 dark:text-gray-500",
-      code: "text-mercury-sm font-mono bg-mercury-glass-200 dark:bg-mercury-glass-dark-200 px-1.5 py-0.5 rounded-mercury-xs"
-    }
+      code: "text-mercury-sm font-mono bg-mercury-glass-200 dark:bg-mercury-glass-dark-200 px-1.5 py-0.5 rounded-mercury-xs",
+    };
 
     // Legacy typography variants
     const legacyVariants = {
@@ -40,16 +56,21 @@ export const Typography = React.forwardRef<HTMLElement, TypographyProps>(
       large: "text-lg font-semibold",
       small: "text-sm font-medium leading-none",
       muted: "text-sm text-muted-foreground",
-      code: "relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold"
-    }
+      code: "relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold",
+    };
 
-    const variants = mercury ? mercuryVariants : legacyVariants
+    const variants = mercury ? mercuryVariants : legacyVariants;
 
     // Determine the HTML element
-    const Component = as || 
-      (variant.startsWith('h') ? variant : 
-       variant === 'p' || variant === 'lead' ? 'p' :
-       variant === 'code' ? 'code' : 'span')
+    const Component =
+      as ||
+      (variant.startsWith("h")
+        ? variant
+        : variant === "p" || variant === "lead"
+          ? "p"
+          : variant === "code"
+            ? "code"
+            : "span");
 
     return React.createElement(
       Component,
@@ -60,14 +81,14 @@ export const Typography = React.forwardRef<HTMLElement, TypographyProps>(
           mercury && "transition-colors duration-200",
           className
         ),
-        ...props
+        ...props,
       },
       children
-    )
+    );
   }
-)
+);
 
-Typography.displayName = "Typography"
+Typography.displayName = "Typography";
 
 // Mercury-enhanced card typography components
 export const CardTitle = React.forwardRef<
@@ -77,19 +98,19 @@ export const CardTitle = React.forwardRef<
   <h3
     ref={ref}
     className={cn(
-      mercury ? [
-        "font-semibold leading-tight text-gray-900 dark:text-gray-50",
-        "text-mercury-lg tracking-tight",
-        "transition-colors duration-200"
-      ] : [
-        "text-lg font-semibold text-gray-900 dark:text-gray-100"
-      ],
+      mercury
+        ? [
+            "font-semibold leading-tight text-gray-900 dark:text-gray-50",
+            "text-mercury-lg tracking-tight",
+            "transition-colors duration-200",
+          ]
+        : ["text-lg font-semibold text-gray-900 dark:text-gray-100"],
       className
     )}
     {...props}
   />
-))
-CardTitle.displayName = "CardTitle"
+));
+CardTitle.displayName = "CardTitle";
 
 export const CardDescription = React.forwardRef<
   HTMLParagraphElement,
@@ -98,18 +119,18 @@ export const CardDescription = React.forwardRef<
   <p
     ref={ref}
     className={cn(
-      mercury ? [
-        "text-mercury-sm text-gray-600 dark:text-gray-400 leading-relaxed",
-        "transition-colors duration-200"
-      ] : [
-        "text-sm text-gray-600 dark:text-gray-400"
-      ],
+      mercury
+        ? [
+            "text-mercury-sm text-gray-600 dark:text-gray-400 leading-relaxed",
+            "transition-colors duration-200",
+          ]
+        : ["text-sm text-gray-600 dark:text-gray-400"],
       className
     )}
     {...props}
   />
-))
-CardDescription.displayName = "CardDescription"
+));
+CardDescription.displayName = "CardDescription";
 
 export const CardCaption = React.forwardRef<
   HTMLSpanElement,
@@ -118,18 +139,20 @@ export const CardCaption = React.forwardRef<
   <span
     ref={ref}
     className={cn(
-      mercury ? [
-        "text-mercury-xs font-medium text-gray-500 dark:text-gray-500 uppercase tracking-wide",
-        "transition-colors duration-200"
-      ] : [
-        "text-xs font-medium text-gray-500 dark:text-gray-500 uppercase tracking-wide"
-      ],
+      mercury
+        ? [
+            "text-mercury-xs font-medium text-gray-500 dark:text-gray-500 uppercase tracking-wide",
+            "transition-colors duration-200",
+          ]
+        : [
+            "text-xs font-medium text-gray-500 dark:text-gray-500 uppercase tracking-wide",
+          ],
       className
     )}
     {...props}
   />
-))
-CardCaption.displayName = "CardCaption"
+));
+CardCaption.displayName = "CardCaption";
 
 export const CardLabel = React.forwardRef<
   HTMLLabelElement,
@@ -138,18 +161,18 @@ export const CardLabel = React.forwardRef<
   <label
     ref={ref}
     className={cn(
-      mercury ? [
-        "text-mercury-sm font-medium text-gray-700 dark:text-gray-300",
-        "transition-colors duration-200"
-      ] : [
-        "text-sm font-medium text-gray-700 dark:text-gray-300"
-      ],
+      mercury
+        ? [
+            "text-mercury-sm font-medium text-gray-700 dark:text-gray-300",
+            "transition-colors duration-200",
+          ]
+        : ["text-sm font-medium text-gray-700 dark:text-gray-300"],
       className
     )}
     {...props}
   />
-))
-CardLabel.displayName = "CardLabel"
+));
+CardLabel.displayName = "CardLabel";
 
 export const CardMeta = React.forwardRef<
   HTMLDivElement,
@@ -158,18 +181,18 @@ export const CardMeta = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      mercury ? [
-        "text-mercury-xs text-gray-500 dark:text-gray-500",
-        "transition-colors duration-200"
-      ] : [
-        "text-xs text-gray-500 dark:text-gray-500"
-      ],
+      mercury
+        ? [
+            "text-mercury-xs text-gray-500 dark:text-gray-500",
+            "transition-colors duration-200",
+          ]
+        : ["text-xs text-gray-500 dark:text-gray-500"],
       className
     )}
     {...props}
   />
-))
-CardMeta.displayName = "CardMeta"
+));
+CardMeta.displayName = "CardMeta";
 
 // Add missing CardSubtitle component
 export const CardSubtitle = React.forwardRef<
@@ -179,18 +202,18 @@ export const CardSubtitle = React.forwardRef<
   <p
     ref={ref}
     className={cn(
-      mercury ? [
-        "text-mercury-sm font-medium text-gray-600 dark:text-gray-400",
-        "transition-colors duration-200"
-      ] : [
-        "text-sm font-medium text-gray-600 dark:text-gray-300"
-      ],
+      mercury
+        ? [
+            "text-mercury-sm font-medium text-gray-600 dark:text-gray-400",
+            "transition-colors duration-200",
+          ]
+        : ["text-sm font-medium text-gray-600 dark:text-gray-300"],
       className
     )}
     {...props}
   />
-))
-CardSubtitle.displayName = "CardSubtitle"
+));
+CardSubtitle.displayName = "CardSubtitle";
 
 // Add missing ErrorText component
 export const ErrorText = React.forwardRef<
@@ -200,41 +223,52 @@ export const ErrorText = React.forwardRef<
   <span
     ref={ref}
     className={cn(
-      mercury ? [
-        "text-mercury-sm font-medium text-red-600 dark:text-red-400",
-        "transition-colors duration-200"
-      ] : [
-        "text-sm font-medium text-red-600 dark:text-red-400"
-      ],
+      mercury
+        ? [
+            "text-mercury-sm font-medium text-red-600 dark:text-red-400",
+            "transition-colors duration-200",
+          ]
+        : ["text-sm font-medium text-red-600 dark:text-red-400"],
       className
     )}
     {...props}
   />
-))
-ErrorText.displayName = "ErrorText"
+));
+ErrorText.displayName = "ErrorText";
 
 // Advanced typography utilities
 export const TextGradient = React.forwardRef<
   HTMLSpanElement,
-  React.HTMLAttributes<HTMLSpanElement> & { 
-    from?: string
-    to?: string
-    mercury?: boolean
+  React.HTMLAttributes<HTMLSpanElement> & {
+    from?: string;
+    to?: string;
+    mercury?: boolean;
   }
->(({ className, from = "from-mercury-blue-600", to = "to-purple-600", mercury = true, ...props }, ref) => (
-  <span
-    ref={ref}
-    className={cn(
-      "bg-gradient-to-r bg-clip-text text-transparent",
-      from,
-      to,
-      mercury && "transition-all duration-200",
-      className
-    )}
-    {...props}
-  />
-))
-TextGradient.displayName = "TextGradient"
+>(
+  (
+    {
+      className,
+      from = "from-mercury-blue-600",
+      to = "to-purple-600",
+      mercury = true,
+      ...props
+    },
+    ref
+  ) => (
+    <span
+      ref={ref}
+      className={cn(
+        "bg-gradient-to-r bg-clip-text text-transparent",
+        from,
+        to,
+        mercury && "transition-all duration-200",
+        className
+      )}
+      {...props}
+    />
+  )
+);
+TextGradient.displayName = "TextGradient";
 
 export const TextHighlight = React.forwardRef<
   HTMLSpanElement,
@@ -243,17 +277,19 @@ export const TextHighlight = React.forwardRef<
   <span
     ref={ref}
     className={cn(
-      mercury ? [
-        "bg-mercury-blue-100 dark:bg-mercury-blue-900 text-mercury-blue-900 dark:text-mercury-blue-100",
-        "px-1.5 py-0.5 rounded-mercury-xs font-medium",
-        "transition-colors duration-200"
-      ] : [
-        "bg-yellow-100 dark:bg-yellow-900 text-yellow-900 dark:text-yellow-100",
-        "px-1 py-0.5 rounded font-medium"
-      ],
+      mercury
+        ? [
+            "bg-mercury-blue-100 dark:bg-mercury-blue-900 text-mercury-blue-900 dark:text-mercury-blue-100",
+            "px-1.5 py-0.5 rounded-mercury-xs font-medium",
+            "transition-colors duration-200",
+          ]
+        : [
+            "bg-yellow-100 dark:bg-yellow-900 text-yellow-900 dark:text-yellow-100",
+            "px-1 py-0.5 rounded font-medium",
+          ],
       className
     )}
     {...props}
   />
-))
-TextHighlight.displayName = "TextHighlight" 
+));
+TextHighlight.displayName = "TextHighlight";

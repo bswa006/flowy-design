@@ -3,7 +3,7 @@
  * Provides standard focus classes and animation utilities
  */
 
-export type MercuryFocusLevel = 'focused' | 'ambient' | 'fog';
+export type MercuryFocusLevel = "focused" | "ambient" | "fog";
 
 /**
  * Gets Mercury-compliant focus classes based on focus level
@@ -22,7 +22,9 @@ export function getMercuryFocusClasses(focusLevel: MercuryFocusLevel): string {
 /**
  * Gets Mercury-compliant animation classes for interactive elements
  */
-export function getMercuryAnimationClasses(isInteractive: boolean = true): string {
+export function getMercuryAnimationClasses(
+  isInteractive: boolean = true
+): string {
   if (!isInteractive) return "";
   return "transition-all duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]";
 }
@@ -40,4 +42,4 @@ export const MERCURY_DURATIONS = {
   normal: 0.3,
   slow: 0.5,
   slowest: 0.7,
-} as const; 
+} as const;

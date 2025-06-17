@@ -1,93 +1,114 @@
-"use client"
+"use client";
 
-import React, { useState, useCallback } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
-import { MercuryChatModule } from '@/components/mercury/mercury-chat-module'
-import { MercuryFlowCanvas } from '@/components/mercury/mercury-flow-canvas'
-import { MercuryHousingModule } from '@/components/mercury/mercury-housing-module'
+import React, { useState, useCallback } from "react";
+
+import { AnimatePresence, motion } from "framer-motion";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+
+import { MercuryChatModule } from "@/components/mercury/mercury-chat-module";
+import { MercuryFlowCanvas } from "@/components/mercury/mercury-flow-canvas";
+import { MercuryHousingModule } from "@/components/mercury/mercury-housing-module";
 
 // Mercury OS Wu Wei Daoist Easing Functions
-const wuWeiEasing = [0.25, 0.46, 0.45, 0.94] as const
+const wuWeiEasing = [0.25, 0.46, 0.45, 0.94] as const;
 
 export default function MercuryContextualDemoPage() {
-  const [animationState, setAnimationState] = useState<'idle' | 'action-triggered' | 'complete'>('idle')
-  const [actionFeedback, setActionFeedback] = useState<string | null>(null)
-  const [cardsCreated, setCardsCreated] = useState(0)
-  const [showHousingModule, setShowHousingModule] = useState(false)
-  const [housingModulePosition, setHousingModulePosition] = useState({ x: 600, y: 200 })
-  const [chatModulePosition, setChatModulePosition] = useState({ x: 32, y: 32 }) // Start with fallback
+  const [animationState, setAnimationState] = useState<
+    "idle" | "action-triggered" | "complete"
+  >("idle");
+  const [actionFeedback, setActionFeedback] = useState<string | null>(null);
+  const [cardsCreated, setCardsCreated] = useState(0);
+  const [showHousingModule, setShowHousingModule] = useState(false);
+  const [housingModulePosition, setHousingModulePosition] = useState({
+    x: 600,
+    y: 200,
+  });
+  const [chatModulePosition, setChatModulePosition] = useState({
+    x: 32,
+    y: 32,
+  }); // Start with fallback
 
   // Effect to center chat module after component mounts
   React.useEffect(() => {
     const centerChatModule = () => {
-      const chatWidth = 400
-      const chatHeight = 600
+      const chatWidth = 400;
+      const chatHeight = 600;
       const centeredPosition = {
         x: (window.innerWidth - chatWidth) / 2 - 100, // Slightly left of center for card flow
-        y: (window.innerHeight - chatHeight) / 2
-      }
-      console.log('🎯 CENTERING CHAT MODULE ON MOUNT:', centeredPosition)
-      console.log('🎯 VIEWPORT:', { width: window.innerWidth, height: window.innerHeight })
-      setChatModulePosition(centeredPosition)
-    }
+        y: (window.innerHeight - chatHeight) / 2,
+      };
+      console.log("🎯 CENTERING CHAT MODULE ON MOUNT:", centeredPosition);
+      console.log("🎯 VIEWPORT:", {
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+      setChatModulePosition(centeredPosition);
+    };
 
-    centerChatModule()
-    
+    centerChatModule();
+
     // Also center on window resize
-    window.addEventListener('resize', centerChatModule)
-    return () => window.removeEventListener('resize', centerChatModule)
-  }, [])
+    window.addEventListener("resize", centerChatModule);
+    return () => window.removeEventListener("resize", centerChatModule);
+  }, []);
 
-  const handleActionDetected = useCallback((action: string, context: string) => {
-    console.log(`Mercury Contextual Action: ${action} from ${context}`)
-    
-    setAnimationState('action-triggered')
-    setActionFeedback(`Contextual action detected: ${action}`)
-    
-    // Check if this is a housing search action
-    if (action.toLowerCase().includes('find homes') || action.toLowerCase().includes('housing')) {
-      console.log('🏠 Housing search action detected - showing housing module!')
-      
-      setTimeout(() => {
-        setShowHousingModule(true)
-        setActionFeedback('Housing search module activated!')
-        setAnimationState('complete')
-        
-        setTimeout(() => setActionFeedback(null), 3000)
-      }, 1000)
-    } else {
-      setTimeout(() => {
-        setAnimationState('complete')
-        setActionFeedback('Ready to drag actions to canvas')
-        
-        setTimeout(() => setActionFeedback(null), 2000)
-      }, 800)
-    }
-  }, [])
+  const handleActionDetected = useCallback(
+    (action: string, context: string) => {
+      console.log(`Mercury Contextual Action: ${action} from ${context}`);
+
+      setAnimationState("action-triggered");
+      setActionFeedback(`Contextual action detected: ${action}`);
+
+      // Check if this is a housing search action
+      if (
+        action.toLowerCase().includes("find homes") ||
+        action.toLowerCase().includes("housing")
+      ) {
+        console.log(
+          "🏠 Housing search action detected - showing housing module!"
+        );
+
+        setTimeout(() => {
+          setShowHousingModule(true);
+          setActionFeedback("Housing search module activated!");
+          setAnimationState("complete");
+
+          setTimeout(() => setActionFeedback(null), 3000);
+        }, 1000);
+      } else {
+        setTimeout(() => {
+          setAnimationState("complete");
+          setActionFeedback("Ready to drag actions to canvas");
+
+          setTimeout(() => setActionFeedback(null), 2000);
+        }, 800);
+      }
+    },
+    []
+  );
 
   const handleHousingModuleClose = useCallback(() => {
-    setShowHousingModule(false)
-    setActionFeedback('Housing module closed')
-    setTimeout(() => setActionFeedback(null), 1500)
-  }, [])
+    setShowHousingModule(false);
+    setActionFeedback("Housing module closed");
+    setTimeout(() => setActionFeedback(null), 1500);
+  }, []);
 
   // Action Feedback Animation
   const feedbackVariants = {
-    hidden: { 
-      opacity: 0, 
+    hidden: {
+      opacity: 0,
       y: -20,
-      scale: 0.9
+      scale: 0.9,
     },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       scale: 1,
       transition: {
         duration: 0.5,
-        ease: wuWeiEasing
-      }
+        ease: wuWeiEasing,
+      },
     },
     exit: {
       opacity: 0,
@@ -95,10 +116,10 @@ export default function MercuryContextualDemoPage() {
       scale: 0.95,
       transition: {
         duration: 0.3,
-        ease: wuWeiEasing
-      }
-    }
-  }
+        ease: wuWeiEasing,
+      },
+    },
+  };
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -117,10 +138,10 @@ export default function MercuryContextualDemoPage() {
                 <div className="flex items-center space-x-3">
                   <motion.div
                     animate={{ rotate: 360 }}
-                    transition={{ 
+                    transition={{
                       duration: 1,
                       repeat: Infinity,
-                      ease: "linear"
+                      ease: "linear",
                     }}
                     className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full"
                   />
@@ -135,49 +156,52 @@ export default function MercuryContextualDemoPage() {
         <MercuryFlowCanvas
           intent="contextual-flow-canvas"
           onCardCreated={(card) => {
-            console.log('New Mercury card created:', card)
-            setCardsCreated(prev => prev + 1)
-            
-            if (card.intent.includes('housing-card')) {
-              setActionFeedback(`🏠 Created housing card: ${card.content.title}`)
+            console.log("New Mercury card created:", card);
+            setCardsCreated((prev) => prev + 1);
+
+            if (card.intent.includes("housing-card")) {
+              setActionFeedback(
+                `🏠 Created housing card: ${card.content.title}`
+              );
             } else {
-              setActionFeedback(`Created card: ${card.content.title}`)
+              setActionFeedback(`Created card: ${card.content.title}`);
             }
-            setTimeout(() => setActionFeedback(null), 2000)
+            setTimeout(() => setActionFeedback(null), 2000);
           }}
           onCardRemoved={(cardId) => {
-            console.log('Mercury card removed:', cardId)
-            setCardsCreated(prev => Math.max(0, prev - 1))
-            setActionFeedback('Card removed from flow')
-            setTimeout(() => setActionFeedback(null), 1500)
+            console.log("Mercury card removed:", cardId);
+            setCardsCreated((prev) => Math.max(0, prev - 1));
+            setActionFeedback("Card removed from flow");
+            setTimeout(() => setActionFeedback(null), 1500);
           }}
           onChatRepositioned={(newPosition) => {
-            console.log('🎯 CHAT REPOSITIONING REQUESTED:', newPosition)
-            setChatModulePosition(newPosition)
+            console.log("🎯 CHAT REPOSITIONING REQUESTED:", newPosition);
+            setChatModulePosition(newPosition);
           }}
         >
           {/* Chat Module as Spatial Object */}
           <motion.div
             className="absolute z-40"
-            initial={{ 
-              opacity: 0, 
-              scale: 0.9
+            initial={{
+              opacity: 0,
+              scale: 0.9,
             }}
-            animate={{ 
-              opacity: 1, 
-              scale: 1
+            animate={{
+              opacity: 1,
+              scale: 1,
             }}
             transition={{
               duration: 0.8,
               ease: wuWeiEasing,
-              delay: 0.5
+              delay: 0.5,
             }}
-            style={{ 
+            style={{
               left: chatModulePosition.x,
               top: chatModulePosition.y,
-              transformStyle: 'preserve-3d',
-              willChange: 'transform, opacity',
-              transition: 'left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), top 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+              transformStyle: "preserve-3d",
+              willChange: "transform, opacity",
+              transition:
+                "left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), top 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
             }}
           >
             <MercuryChatModule
@@ -185,9 +209,9 @@ export default function MercuryContextualDemoPage() {
               focusLevel="focused"
               onActionDetected={handleActionDetected}
               onActionUsed={(actionId) => {
-                console.log(`Parent: Action ${actionId} was used`)
-                setActionFeedback(`Action "${actionId}" completed!`)
-                setTimeout(() => setActionFeedback(null), 2000)
+                console.log(`Parent: Action ${actionId} was used`);
+                setActionFeedback(`Action "${actionId}" completed!`);
+                setTimeout(() => setActionFeedback(null), 2000);
               }}
             />
           </motion.div>
@@ -199,45 +223,45 @@ export default function MercuryContextualDemoPage() {
                 className="absolute z-30"
                 style={{
                   left: housingModulePosition.x,
-                  top: housingModulePosition.y
+                  top: housingModulePosition.y,
                 }}
-                initial={{ 
-                  opacity: 0, 
-                  scale: 0.8, 
+                initial={{
+                  opacity: 0,
+                  scale: 0.8,
                   y: 50,
-                  rotateY: -15 
+                  rotateY: -15,
                 }}
-                animate={{ 
-                  opacity: 1, 
-                  scale: 1, 
+                animate={{
+                  opacity: 1,
+                  scale: 1,
                   y: 0,
-                  rotateY: 0 
+                  rotateY: 0,
                 }}
-                exit={{ 
-                  opacity: 0, 
-                  scale: 0.9, 
+                exit={{
+                  opacity: 0,
+                  scale: 0.9,
                   y: 30,
-                  rotateY: 10 
+                  rotateY: 10,
                 }}
                 transition={{
                   duration: 1.2,
                   ease: wuWeiEasing,
                   type: "spring",
                   stiffness: 100,
-                  damping: 15
+                  damping: 15,
                 }}
                 drag
                 dragMomentum={false}
-                onDragEnd={(event, info) => {
-                  setHousingModulePosition(prev => ({
+                onDragEnd={(_event, info) => {
+                  setHousingModulePosition((prev) => ({
                     x: prev.x + info.offset.x,
-                    y: prev.y + info.offset.y
-                  }))
+                    y: prev.y + info.offset.y,
+                  }));
                 }}
-                whileHover={{ 
+                whileHover={{
                   scale: 1.02,
                   y: -8,
-                  transition: { duration: 0.3, ease: wuWeiEasing }
+                  transition: { duration: 0.3, ease: wuWeiEasing },
                 }}
               >
                 <div className="relative">
@@ -249,7 +273,11 @@ export default function MercuryContextualDemoPage() {
                     whileTap={{ scale: 0.9 }}
                     initial={{ opacity: 0, scale: 0 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.5, duration: 0.3, ease: wuWeiEasing }}
+                    transition={{
+                      delay: 0.5,
+                      duration: 0.3,
+                      ease: wuWeiEasing,
+                    }}
                   >
                     ×
                   </motion.button>
@@ -259,7 +287,11 @@ export default function MercuryContextualDemoPage() {
                     className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white text-xs px-3 py-1 rounded-full font-medium shadow-lg whitespace-nowrap"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.8, duration: 0.4, ease: wuWeiEasing }}
+                    transition={{
+                      delay: 0.8,
+                      duration: 0.4,
+                      ease: wuWeiEasing,
+                    }}
                   >
                     🏠 Drag to reposition
                   </motion.div>
@@ -268,8 +300,8 @@ export default function MercuryContextualDemoPage() {
                     intent="contextual-housing-search"
                     focusLevel="focused"
                     onAddAllToFlow={() => {
-                      setActionFeedback('All listings added to flow!')
-                      setTimeout(() => setActionFeedback(null), 2000)
+                      setActionFeedback("All listings added to flow!");
+                      setTimeout(() => setActionFeedback(null), 2000);
                     }}
                   />
                 </div>
@@ -282,30 +314,32 @@ export default function MercuryContextualDemoPage() {
             className="absolute top-8 right-8 z-40"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ 
-              duration: 0.6, 
+            transition={{
+              duration: 0.6,
               delay: 1.2,
-              ease: wuWeiEasing
+              ease: wuWeiEasing,
             }}
           >
             <div className="flex items-center space-x-3 px-4 py-2 bg-white/90 backdrop-blur-lg rounded-xl border border-slate-200/50 shadow-lg">
               <motion.div
                 className={`w-3 h-3 rounded-full ${
-                  animationState === 'idle' ? 'bg-slate-400' :
-                  animationState === 'action-triggered' ? 'bg-yellow-400' :
-                  'bg-emerald-400'
+                  animationState === "idle"
+                    ? "bg-slate-400"
+                    : animationState === "action-triggered"
+                      ? "bg-yellow-400"
+                      : "bg-emerald-400"
                 }`}
-                animate={{ 
-                  scale: animationState !== 'idle' ? [1, 1.2, 1] : 1
+                animate={{
+                  scale: animationState !== "idle" ? [1, 1.2, 1] : 1,
                 }}
-                transition={{ 
+                transition={{
                   duration: 0.8,
-                  repeat: animationState === 'action-triggered' ? Infinity : 0,
-                  ease: wuWeiEasing
+                  repeat: animationState === "action-triggered" ? Infinity : 0,
+                  ease: wuWeiEasing,
                 }}
               />
               <span className="text-xs font-medium text-slate-700 capitalize">
-                {animationState.replace('-', ' ')}
+                {animationState.replace("-", " ")}
               </span>
               {showHousingModule && (
                 <motion.div
@@ -339,5 +373,5 @@ export default function MercuryContextualDemoPage() {
         </MercuryFlowCanvas>
       </div>
     </DndProvider>
-  )
-} 
+  );
+}

@@ -1,9 +1,14 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import { getMercuryAnimationClasses, MERCURY_EASING } from "@/lib/mercury-utils";
+import { useId, useCallback } from "react";
+
 import { motion } from "framer-motion";
-import { useCallback, useId } from "react";
+
+import {
+  MERCURY_EASING,
+  getMercuryAnimationClasses,
+} from "@/lib/mercury-utils";
+import { cn } from "@/lib/utils";
 
 interface MercuryEditableFieldProps {
   intent: string; // Required Mercury prop
@@ -15,7 +20,7 @@ interface MercuryEditableFieldProps {
   placeholder?: string;
   min?: number;
   max?: number;
-  focusLevel?: 'focused' | 'ambient' | 'fog';
+  focusLevel?: "focused" | "ambient" | "fog";
   required?: boolean;
   disabled?: boolean;
 }
@@ -30,7 +35,7 @@ export function MercuryEditableField({
   placeholder,
   min,
   max,
-  focusLevel = 'ambient',
+  focusLevel = "ambient",
   required = false,
   disabled = false,
 }: MercuryEditableFieldProps) {
@@ -38,9 +43,12 @@ export function MercuryEditableField({
   const labelId = `${fieldId}-label`;
   const helperId = `${fieldId}-helper`;
 
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    onChange(e.target.value);
-  }, [onChange]);
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      onChange(e.target.value);
+    },
+    [onChange]
+  );
 
   const baseInputClasses = cn(
     "w-full p-3 bg-white/60 backdrop-blur-sm border border-slate-200/60 rounded-lg",
@@ -65,7 +73,7 @@ export function MercuryEditableField({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, ease: MERCURY_EASING }}
     >
-      <label 
+      <label
         id={labelId}
         htmlFor={fieldId}
         className="block text-sm font-semibold text-slate-700 mb-2"
@@ -77,7 +85,7 @@ export function MercuryEditableField({
           </span>
         )}
       </label>
-      
+
       {type === "textarea" ? (
         <textarea
           id={fieldId}
@@ -107,7 +115,7 @@ export function MercuryEditableField({
           className={baseInputClasses}
         />
       )}
-      
+
       {placeholder && (
         <div id={helperId} className="sr-only">
           {placeholder}
@@ -115,4 +123,4 @@ export function MercuryEditableField({
       )}
     </motion.div>
   );
-} 
+}

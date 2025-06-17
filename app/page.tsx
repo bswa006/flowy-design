@@ -1,32 +1,34 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { motion } from "framer-motion"
-import { Heart, Sparkles, Cloud, Droplets, ArrowRight } from "lucide-react"
-import Link from "next/link"
+import * as React from "react";
+
+import Link from "next/link";
+
+import { motion } from "framer-motion";
+import { ArrowRight, Cloud, Droplets, Heart, Sparkles } from "lucide-react";
 
 // True Flowy Card - feels like floating on water
-const FlowyCard = ({ 
-  children, 
+const FlowyCard = ({
+  children,
   className = "",
-  delay = 0 
-}: { 
-  children: React.ReactNode
-  className?: string
-  delay?: number
+  delay = 0,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  delay?: number;
 }) => (
   <motion.div
     initial={{ opacity: 0, y: 40, scale: 0.9 }}
     animate={{ opacity: 1, y: 0, scale: 1 }}
-    transition={{ 
-      duration: 1.2, 
+    transition={{
+      duration: 1.2,
       delay,
-      ease: [0.25, 0.4, 0.25, 1] // Natural easing like water
+      ease: [0.25, 0.4, 0.25, 1], // Natural easing like water
     }}
-    whileHover={{ 
+    whileHover={{
       y: -8,
       scale: 1.02,
-      transition: { duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }
+      transition: { duration: 0.6, ease: [0.25, 0.4, 0.25, 1] },
     }}
     className={`
       bg-white/20 
@@ -42,36 +44,38 @@ const FlowyCard = ({
   >
     {children}
   </motion.div>
-)
+);
 
 // Flowing text that breathes
-const FlowingText = ({ 
-  children, 
+const FlowingText = ({
+  children,
   size = "base",
-  className = "" 
-}: { 
-  children: React.ReactNode
-  size?: "sm" | "base" | "lg" | "xl" | "2xl"
-  className?: string
+  className = "",
+}: {
+  children: React.ReactNode;
+  size?: "sm" | "base" | "lg" | "xl" | "2xl";
+  className?: string;
 }) => {
   const sizeClasses = {
     sm: "text-sm leading-relaxed",
-    base: "text-base leading-loose", 
+    base: "text-base leading-loose",
     lg: "text-lg leading-loose",
     xl: "text-2xl leading-loose font-light",
-    "2xl": "text-4xl leading-loose font-light"
-  }
-  
+    "2xl": "text-4xl leading-loose font-light",
+  };
+
   return (
-    <div className={`
+    <div
+      className={`
       text-slate-700 
       ${sizeClasses[size]}
       ${className}
-    `}>
+    `}
+    >
       {children}
     </div>
-  )
-}
+  );
+};
 
 // Main page with true flowy layout
 export default function TrueFlowyShowcase() {
@@ -79,10 +83,9 @@ export default function TrueFlowyShowcase() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
       {/* Generous breathing space at top */}
       <div className="pt-24 pb-32">
-        
         {/* Hero section with natural flow */}
         <div className="max-w-6xl mx-auto px-8">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 60 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.5, ease: [0.25, 0.4, 0.25, 1] }}
@@ -92,61 +95,72 @@ export default function TrueFlowyShowcase() {
               True Flowy Design
             </h1>
             <FlowingText size="xl" className="text-slate-600 max-w-3xl mx-auto">
-              Cards that float like clouds, flow like water, and breathe with generous space
+              Cards that float like clouds, flow like water, and breathe with
+              generous space
             </FlowingText>
-            
+
             {/* Navigation to Cards Showcase */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.5, ease: [0.25, 0.4, 0.25, 1] }}
+              transition={{
+                duration: 1,
+                delay: 0.5,
+                ease: [0.25, 0.4, 0.25, 1],
+              }}
               className="mt-12 flex flex-col sm:flex-row gap-4 justify-center items-center"
             >
-              <Link 
+              <Link
                 href="/cards"
                 className="inline-flex items-center space-x-3 px-8 py-4 bg-white/30 backdrop-blur-lg border border-white/20 rounded-2xl text-slate-700 hover:text-slate-800 hover:bg-white/40 transition-all duration-500 ease-out hover:scale-105"
               >
-                <span className="text-lg font-medium">Explore Card Collection</span>
+                <span className="text-lg font-medium">
+                  Explore Card Collection
+                </span>
                 <ArrowRight className="w-5 h-5" />
               </Link>
-              
-              <Link 
+
+              <Link
                 href="/mercury-demo"
                 className="inline-flex items-center space-x-3 px-8 py-4 bg-blue-500/20 backdrop-blur-lg border border-blue-300/30 rounded-2xl text-blue-700 hover:text-blue-800 hover:bg-blue-500/30 transition-all duration-500 ease-out hover:scale-105"
               >
                 <span className="text-lg font-medium">Mercury OS Demo</span>
                 <Sparkles className="w-5 h-5" />
               </Link>
-              
-              <Link 
+
+              <Link
                 href="/enterprise-demo"
                 className="inline-flex items-center space-x-3 px-8 py-4 bg-gradient-to-r from-purple-500/20 to-indigo-500/20 backdrop-blur-lg border border-purple-300/30 rounded-2xl text-purple-700 hover:text-purple-800 hover:from-purple-500/30 hover:to-indigo-500/30 transition-all duration-500 ease-out hover:scale-105"
               >
-                <span className="text-lg font-medium">Enterprise Dashboard</span>
+                <span className="text-lg font-medium">
+                  Enterprise Dashboard
+                </span>
                 <ArrowRight className="w-5 h-5" />
               </Link>
-              
-              <Link 
+
+              <Link
                 href="/mercury-flow-demo"
                 className="inline-flex items-center space-x-3 px-8 py-4 bg-gradient-to-r from-slate-500/20 to-slate-600/20 backdrop-blur-lg border border-slate-300/30 rounded-2xl text-slate-700 hover:text-slate-800 hover:from-slate-500/30 hover:to-slate-600/30 transition-all duration-500 ease-out hover:scale-105"
               >
                 <span className="text-lg font-medium">Mercury Flow Cards</span>
                 <Cloud className="w-5 h-5" />
               </Link>
-              
-              <Link 
+
+              <Link
                 href="/workflow"
                 className="inline-flex items-center space-x-3 px-8 py-4 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 backdrop-blur-lg border border-emerald-300/30 rounded-2xl text-emerald-700 hover:text-emerald-800 hover:from-emerald-500/30 hover:to-teal-500/30 transition-all duration-500 ease-out hover:scale-105"
               >
                 <span className="text-lg font-medium">Workflow Demo</span>
                 <Droplets className="w-5 h-5" />
               </Link>
-              
-              <Link 
+
+              <Link
                 href="/mercury-contextual-demo"
                 className="inline-flex items-center space-x-3 px-8 py-4 bg-gradient-to-r from-orange-500/20 to-red-500/20 backdrop-blur-lg border border-orange-300/30 rounded-2xl text-orange-700 hover:text-orange-800 hover:from-orange-500/30 hover:to-red-500/30 transition-all duration-500 ease-out hover:scale-105"
               >
-                <span className="text-lg font-medium">Contextual Actions Demo</span>
+                <span className="text-lg font-medium">
+                  Contextual Actions Demo
+                </span>
                 <ArrowRight className="w-5 h-5" />
               </Link>
             </motion.div>
@@ -154,7 +168,6 @@ export default function TrueFlowyShowcase() {
 
           {/* Organic card layout - like stones in a stream */}
           <div className="space-y-16">
-            
             {/* First flowing card */}
             <FlowyCard delay={0.2} className="max-w-4xl mx-auto">
               <div className="flex items-start space-x-8">
@@ -166,9 +179,10 @@ export default function TrueFlowyShowcase() {
                     Generous Whitespace
                   </FlowingText>
                   <FlowingText className="text-slate-600">
-                    Every element has room to breathe, like islands floating peacefully in a calm sea. 
-                    No cramped layouts, no fighting for space - just natural, comfortable distance 
-                    that lets your eyes rest and your mind focus.
+                    Every element has room to breathe, like islands floating
+                    peacefully in a calm sea. No cramped layouts, no fighting
+                    for space - just natural, comfortable distance that lets
+                    your eyes rest and your mind focus.
                   </FlowingText>
                 </div>
               </div>
@@ -186,9 +200,10 @@ export default function TrueFlowyShowcase() {
                       Natural Flow
                     </FlowingText>
                     <FlowingText className="text-slate-600">
-                      Content moves like water around stones - organically, effortlessly. Your eye 
-                      follows a natural path from element to element, never forced or jarring, 
-                      always smooth and predictable like a gentle stream.
+                      Content moves like water around stones - organically,
+                      effortlessly. Your eye follows a natural path from element
+                      to element, never forced or jarring, always smooth and
+                      predictable like a gentle stream.
                     </FlowingText>
                   </div>
                 </div>
@@ -206,9 +221,10 @@ export default function TrueFlowyShowcase() {
                     Graceful Curves
                   </FlowingText>
                   <FlowingText className="text-slate-600">
-                    Soft, rounded edges everywhere - like smooth river stones worn by countless years 
-                    of flowing water. No harsh rectangles or rigid angles, just gentle curves that 
-                    feel warm and welcoming to the human eye.
+                    Soft, rounded edges everywhere - like smooth river stones
+                    worn by countless years of flowing water. No harsh
+                    rectangles or rigid angles, just gentle curves that feel
+                    warm and welcoming to the human eye.
                   </FlowingText>
                 </div>
               </div>
@@ -226,26 +242,26 @@ export default function TrueFlowyShowcase() {
                       Weightless Feeling
                     </FlowingText>
                     <FlowingText className="text-slate-600">
-                      Cards hover like morning mist, never heavy or oppressive. They lift gently 
-                      when you approach, settle softly when you interact, creating a sense of 
-                      lightness that makes the whole experience feel effortless and joyful.
+                      Cards hover like morning mist, never heavy or oppressive.
+                      They lift gently when you approach, settle softly when you
+                      interact, creating a sense of lightness that makes the
+                      whole experience feel effortless and joyful.
                     </FlowingText>
                   </div>
                 </div>
               </FlowyCard>
             </div>
-
           </div>
 
           {/* Breathing space at bottom */}
           <div className="mt-32 text-center">
             <FlowingText className="text-slate-500 italic">
-              This is what "flowy" truly means - generous, natural, graceful, weightless
+              This is what "flowy" truly means - generous, natural, graceful,
+              weightless
             </FlowingText>
           </div>
-
         </div>
       </div>
     </div>
-  )
+  );
 }

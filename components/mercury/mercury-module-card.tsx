@@ -1,27 +1,52 @@
-"use client"
+"use client";
 
-import React, { useCallback, useEffect, useRef } from 'react'
-import { motion, useAnimation } from 'framer-motion'
-import { cn } from "@/lib/utils"
-import { getMercuryFocusClasses } from "@/lib/mercury-tokens"
+import React, { useEffect, useRef } from "react";
+
+import { motion, useAnimation } from "framer-motion";
+
+import { getMercuryAnimationClasses } from "@/lib/mercury-utils";
+import { cn } from "@/lib/utils";
 
 // Re-introducing temporary shadcn/ui components
 const Card = ({ children, className, ...props }: any) => (
-  <div className={cn("mercury-card bg-transparent border-0 shadow-none", className)} {...props}>{children}</div>
-)
+  <div
+    className={cn(
+      "mercury-card bg-transparent border-0 shadow-none",
+      className
+    )}
+    {...props}
+  >
+    {children}
+  </div>
+);
 const CardHeader = ({ children, className, ...props }: any) => (
-  <div className={cn("p-4 pb-2", className)} {...props}>{children}</div>
-)
+  <div className={cn("p-4 pb-2", className)} {...props}>
+    {children}
+  </div>
+);
 const CardTitle = ({ children, className, ...props }: any) => (
-  <h3 className={cn("text-lg font-semibold text-slate-800 dark:text-slate-200", className)} {...props}>{children}</h3>
-)
+  <h3
+    className={cn(
+      "text-lg font-semibold text-slate-800 dark:text-slate-200",
+      className
+    )}
+    {...props}
+  >
+    {children}
+  </h3>
+);
 const CardContent = ({ children, className, ...props }: any) => (
-  <div className={cn("p-4 pt-2 text-slate-600 dark:text-slate-400", className)} {...props}>{children}</div>
-)
+  <div
+    className={cn("p-4 pt-2 text-slate-600 dark:text-slate-400", className)}
+    {...props}
+  >
+    {children}
+  </div>
+);
 
 interface MercuryModuleCardProps {
   intent: string;
-  focusLevel?: 'focused' | 'ambient' | 'fog';
+  focusLevel?: "focused" | "ambient" | "fog";
   title: string;
   children: React.ReactNode;
   isInteractive?: boolean;
@@ -32,16 +57,16 @@ interface MercuryModuleCardProps {
   onAnimationComplete?: () => void;
 }
 
-export function MercuryModuleCard({ 
+export function MercuryModuleCard({
   intent,
-  focusLevel = 'ambient', 
-  title, 
-  children, 
+  focusLevel = "ambient",
+  title,
+  children,
   isInteractive = false,
   onClick,
   className,
   isNew = false,
-  onAnimationComplete
+  onAnimationComplete,
 }: MercuryModuleCardProps) {
   const controls = useAnimation();
 
@@ -53,17 +78,32 @@ export function MercuryModuleCard({
         await controls.start({
           opacity: 1,
           x: 0,
-          transition: { type: 'spring', stiffness: 200, damping: 20, duration: 0.5 }
+          transition: {
+            type: "spring",
+            stiffness: 200,
+            damping: 20,
+            duration: 0.5,
+          },
         });
 
         // 2. Post-Insert Settling: Overshoot and return
         await controls.start({
           x: -5, // Overshoot
-          transition: { type: 'spring', stiffness: 200, damping: 20, duration: 0.15 }
+          transition: {
+            type: "spring",
+            stiffness: 200,
+            damping: 20,
+            duration: 0.15,
+          },
         });
         await controls.start({
           x: 0, // Settle back
-          transition: { type: 'spring', stiffness: 200, damping: 20, duration: 0.15 }
+          transition: {
+            type: "spring",
+            stiffness: 200,
+            damping: 20,
+            duration: 0.15,
+          },
         });
 
         // Notify parent that the full sequence is complete
@@ -77,12 +117,12 @@ export function MercuryModuleCard({
     <motion.div
       data-intent={intent}
       className={cn(
-        'mercury-module',
-        getMercuryFocusClasses(focusLevel),
-        'relative overflow-hidden rounded-2xl w-80 flex-shrink-0',
-        'bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800',
-        'shadow-lg shadow-slate-200/40 dark:shadow-slate-900/40',
-        isInteractive && 'cursor-pointer hover:shadow-xl',
+        "mercury-module",
+        getMercuryAnimationClasses(isInteractive), // Focus level styling
+        "relative overflow-hidden rounded-2xl w-80 flex-shrink-0",
+        "bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800",
+        "shadow-lg shadow-slate-200/40 dark:shadow-slate-900/40",
+        isInteractive && "cursor-pointer hover:shadow-xl",
         className
       )}
       onClick={onClick}
@@ -98,5 +138,5 @@ export function MercuryModuleCard({
         <CardContent>{children}</CardContent>
       </Card>
     </motion.div>
-  )
-} 
+  );
+}

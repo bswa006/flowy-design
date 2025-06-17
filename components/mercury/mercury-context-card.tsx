@@ -1,22 +1,25 @@
 "use client";
 
+import * as React from "react";
+import { useMemo, useState } from "react";
+
+import { AnimatePresence, motion } from "framer-motion";
+import { CircleCheck, Edit, Save, X } from "lucide-react";
+
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Context } from "@/lib/contextMockData";
-import { cn } from "@/lib/utils";
-import { getMercuryFocusClasses, getMercuryAnimationClasses, MERCURY_EASING, MERCURY_DURATIONS, MercuryFocusLevel } from "@/lib/mercury-utils";
-import { AnimatePresence, motion } from "framer-motion";
 import {
-  CircleCheck,
-  Edit,
-  Save,
-  X
-} from "lucide-react";
-import * as React from "react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+  MERCURY_DURATIONS,
+  MERCURY_EASING,
+  MercuryFocusLevel,
+  getMercuryAnimationClasses,
+} from "@/lib/mercury-utils";
+import { cn } from "@/lib/utils";
+
 import { MercuryEditableField } from "./mercury-editable-field";
 import { MercuryWYSIWYGEditor } from "./mercury-wysiwyg-editor";
 
@@ -33,7 +36,7 @@ interface MercuryContextCardProps {
   onToggleInsights: () => void;
 }
 
-const INSIGHT_STYLES = {
+const _INSIGHT_STYLES = {
   keyPainPoint: {
     label: "Key Pain Point",
     pillClass: "bg-orange-400",
@@ -59,59 +62,69 @@ export function MercuryContextCard({
   const [editedContext, setEditedContext] = useState<Context>(context);
 
   // Update local state when context changes
-  useEffect(() => {
+  React.useEffect(() => {
     setEditedContext(context);
   }, [context]);
 
-  const updateField = useCallback((field: string, value: any, nested?: string) => {
-    setEditedContext((prev) => {
-      if (nested) {
+  const updateField = React.useCallback(
+    (field: string, value: any, nested?: string) => {
+      setEditedContext((prev) => {
+        if (nested) {
+          return {
+            ...prev,
+            [nested]: {
+              ...(prev[nested as keyof Context] as any),
+              [field]: value,
+            },
+          };
+        }
         return {
           ...prev,
-          [nested]: {
-            ...(prev[nested as keyof Context] as any),
-            [field]: value,
-          },
+          [field]: value,
         };
-      }
-      return {
-        ...prev,
-        [field]: value,
-      };
-    });
-  }, []);
+      });
+    },
+    []
+  );
 
-  const handleSave = useCallback(() => {
+  const handleSave = React.useCallback(() => {
     onSave(editedContext);
   }, [editedContext, onSave]);
 
-  const handleEditClick = useCallback((e: React.MouseEvent) => {
-    e.stopPropagation();
-    onEdit();
-  }, [onEdit]);
-
-  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      if (!isEditing) {
-        onToggleInsights();
-      }
-    }
-    if (e.key === 'Escape' && isEditing) {
-      onCancel();
-    }
-  }, [isEditing, onToggleInsights, onCancel]);
-
-  // Memoize focus classes for performance
-  const focusClasses = useMemo(() => getMercuryFocusClasses(focusLevel), [focusLevel]);
-
-  // Memoize formatted date
-  const formattedDate = useMemo(() => 
-    new Date(context.upload.recorded_on).toLocaleDateString(), 
-    [context.upload.recorded_on]
+  const handleEditClick = React.useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      onEdit();
+    },
+    [onEdit]
   );
 
+  const handleKeyDown = React.useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        if (!isEditing) {
+          onToggleInsights();
+        }
+      }
+      if (e.key === "Escape" && isEditing) {
+        onCancel();
+      }
+    },
+    [isEditing, onToggleInsights, onCancel]
+  );
 
+  // Memoize focus classes for performance
+  const focusClasses = React.useMemo(
+    () => getMercuryAnimationClasses(true),
+    [focusLevel]
+  );
+
+  // Memoize formatted date
+  const formattedDate = React.useMemo(
+    () => new Date(context.upload.recorded_on).toLocaleDateString(),
+    [context.upload.recorded_on]
+  );
 
   return (
     <motion.div
@@ -129,10 +142,13 @@ export function MercuryContextCard({
       <motion.div
         className="relative"
         layout
-        transition={{ duration: MERCURY_DURATIONS.slowest, ease: MERCURY_EASING }}
+        transition={{
+          duration: MERCURY_DURATIONS.slowest,
+          ease: MERCURY_EASING,
+        }}
       >
         {/* Number badge */}
-        <div 
+        <div
           className="absolute -top-4 -left-4 w-8 h-8 bg-gray-100 text-gray-600 rounded-full flex items-center justify-center font-semibold text-base border border-gray-200 shadow-sm z-10"
           aria-label={`Context ${index + 1}`}
         >
@@ -156,16 +172,23 @@ export function MercuryContextCard({
           animate={{
             width: isEditing ? 600 : 400,
           }}
-          transition={{ duration: MERCURY_DURATIONS.slowest, ease: MERCURY_EASING }}
-          onClick={!isEditing ? (e) => {
-            e.stopPropagation();
-            onToggleInsights();
-          } : undefined}
+          transition={{
+            duration: MERCURY_DURATIONS.slowest,
+            ease: MERCURY_EASING,
+          }}
+          onClick={
+            !isEditing
+              ? (e) => {
+                  e.stopPropagation();
+                  onToggleInsights();
+                }
+              : undefined
+          }
           onKeyDown={handleKeyDown}
           tabIndex={focusLevel !== "fog" ? 0 : -1}
           role="button"
           aria-expanded={isExpanded}
-          aria-label={`Context: ${context.upload.file_name}. ${isExpanded ? 'Collapse' : 'Expand'} insights`}
+          aria-label={`Context: ${context.upload.file_name}. ${isExpanded ? "Collapse" : "Expand"} insights`}
         >
           {/* Edit/Save buttons */}
           <AnimatePresence>
@@ -269,7 +292,9 @@ export function MercuryContextCard({
                       intent={`${intent}-file-name`}
                       label="File Name"
                       value={editedContext.upload.file_name}
-                      onChange={(value) => updateField("file_name", value, "upload")}
+                      onChange={(value) =>
+                        updateField("file_name", value, "upload")
+                      }
                     />
                     <MercuryEditableField
                       intent={`${intent}-priority`}
@@ -278,7 +303,9 @@ export function MercuryContextCard({
                       min={0}
                       max={100}
                       value={editedContext.priority_score.toString()}
-                      onChange={(value) => updateField("priority_score", parseInt(value) || 0)}
+                      onChange={(value) =>
+                        updateField("priority_score", parseInt(value) || 0)
+                      }
                     />
                   </div>
 
@@ -286,7 +313,9 @@ export function MercuryContextCard({
                     intent={`${intent}-original-name`}
                     label="Original Name"
                     value={editedContext.upload.original_name}
-                    onChange={(value) => updateField("original_name", value, "upload")}
+                    onChange={(value) =>
+                      updateField("original_name", value, "upload")
+                    }
                   />
 
                   <MercuryEditableField
@@ -295,7 +324,9 @@ export function MercuryContextCard({
                     type="textarea"
                     rows={2}
                     value={editedContext.upload.description}
-                    onChange={(value) => updateField("description", value, "upload")}
+                    onChange={(value) =>
+                      updateField("description", value, "upload")
+                    }
                   />
 
                   <MercuryEditableField
@@ -304,7 +335,9 @@ export function MercuryContextCard({
                     type="textarea"
                     rows={3}
                     value={editedContext.upload.summary}
-                    onChange={(value) => updateField("summary", value, "upload")}
+                    onChange={(value) =>
+                      updateField("summary", value, "upload")
+                    }
                   />
 
                   <MercuryEditableField
@@ -347,7 +380,9 @@ export function MercuryContextCard({
                     <MercuryEditableField
                       intent={`${intent}-participants`}
                       label="Participants (comma-separated)"
-                      value={editedContext.upload.participants?.join(", ") || ""}
+                      value={
+                        editedContext.upload.participants?.join(", ") || ""
+                      }
                       onChange={(value) =>
                         updateField(
                           "participants",
@@ -366,13 +401,18 @@ export function MercuryContextCard({
                     className="flex items-center space-x-6 pt-4"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: MERCURY_DURATIONS.normal, delay: 0.4 }}
+                    transition={{
+                      duration: MERCURY_DURATIONS.normal,
+                      delay: 0.4,
+                    }}
                   >
                     <label className="flex items-center space-x-2 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={editedContext.is_checkpoint}
-                        onChange={(e) => updateField("is_checkpoint", e.target.checked)}
+                        onChange={(e) =>
+                          updateField("is_checkpoint", e.target.checked)
+                        }
                         className="w-4 h-4 rounded border-2 border-slate-300 text-blue-600 focus:ring-2 focus:ring-blue-500/40"
                         aria-describedby="checkpoint-help"
                       />
@@ -387,7 +427,9 @@ export function MercuryContextCard({
                       <input
                         type="checkbox"
                         checked={editedContext.is_invalidated}
-                        onChange={(e) => updateField("is_invalidated", e.target.checked)}
+                        onChange={(e) =>
+                          updateField("is_invalidated", e.target.checked)
+                        }
                         className="w-4 h-4 rounded border-2 border-slate-300 text-red-600 focus:ring-2 focus:ring-red-500/40"
                         aria-describedby="invalidated-help"
                       />
@@ -407,4 +449,4 @@ export function MercuryContextCard({
       </motion.div>
     </motion.div>
   );
-} 
+}

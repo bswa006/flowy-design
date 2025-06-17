@@ -1,26 +1,27 @@
 "use client";
 
 import * as React from "react";
+
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
-import {
-  getMercuryFocusClasses,
-  getMercuryAnimationClasses,
-  MERCURY_EASING,
-  MERCURY_DURATIONS,
-  MercuryFocusLevel,
-} from "@/lib/mercury-utils";
+
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  MERCURY_DURATIONS,
+  MERCURY_EASING,
+  MercuryFocusLevel,
+  getMercuryAnimationClasses,
+} from "@/lib/mercury-utils";
+import { cn } from "@/lib/utils";
 
 export interface TimelineUpload {
   id: string;
   date: Date;
-  status: 'upload' | 'checkpoint' | 'failed' | 'current';
+  status: "upload" | "checkpoint" | "failed" | "current";
   title?: string;
   description?: string;
 }
@@ -43,41 +44,49 @@ interface TimelineMarkerProps {
   focusLevel: MercuryFocusLevel;
 }
 
-function TimelineMarker({ intent, upload, position, focusLevel }: TimelineMarkerProps) {
+function TimelineMarker({
+  intent,
+  upload,
+  position,
+  focusLevel,
+}: TimelineMarkerProps) {
   const getMarkerConfig = () => {
     switch (upload.status) {
-      case 'failed':
+      case "failed":
         return {
-          size: 'w-3 h-3',
-          gradient: 'bg-gradient-to-br from-red-400 via-red-500 to-red-600',
-          ring: 'ring-2 ring-red-200/60',
-          shadow: 'shadow-lg shadow-red-500/25',
-          pulse: 'animate-pulse',
+          size: "w-3 h-3",
+          gradient: "bg-gradient-to-br from-red-400 via-red-500 to-red-600",
+          ring: "ring-2 ring-red-200/60",
+          shadow: "shadow-lg shadow-red-500/25",
+          pulse: "animate-pulse",
         };
-      case 'current':
+      case "current":
         return {
-          size: 'w-4 h-4',
-          gradient: 'bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900',
-          ring: 'ring-3 ring-slate-300/80',
-          shadow: 'shadow-xl shadow-slate-600/30',
-          pulse: '',
+          size: "w-4 h-4",
+          gradient:
+            "bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900",
+          ring: "ring-3 ring-slate-300/80",
+          shadow: "shadow-xl shadow-slate-600/30",
+          pulse: "",
         };
-      case 'checkpoint':
+      case "checkpoint":
         return {
-          size: 'w-3.5 h-3.5',
-          gradient: 'bg-gradient-to-br from-emerald-400 via-emerald-500 to-emerald-600',
-          ring: 'ring-2 ring-emerald-200/70',
-          shadow: 'shadow-lg shadow-emerald-500/25',
-          pulse: '',
+          size: "w-3.5 h-3.5",
+          gradient:
+            "bg-gradient-to-br from-emerald-400 via-emerald-500 to-emerald-600",
+          ring: "ring-2 ring-emerald-200/70",
+          shadow: "shadow-lg shadow-emerald-500/25",
+          pulse: "",
         };
-      case 'upload':
+      case "upload":
       default:
         return {
-          size: 'w-2.5 h-2.5',
-          gradient: 'bg-gradient-to-br from-slate-300 via-slate-400 to-slate-500',
-          ring: 'ring-1 ring-slate-200/60',
-          shadow: 'shadow-md shadow-slate-400/20',
-          pulse: '',
+          size: "w-2.5 h-2.5",
+          gradient:
+            "bg-gradient-to-br from-slate-300 via-slate-400 to-slate-500",
+          ring: "ring-1 ring-slate-200/60",
+          shadow: "shadow-md shadow-slate-400/20",
+          pulse: "",
         };
     }
   };
@@ -93,7 +102,7 @@ function TimelineMarker({ intent, upload, position, focusLevel }: TimelineMarker
             "absolute top-1/2 -translate-y-1/2 -translate-x-1/2 group",
             "hover:scale-110 focus:scale-110 focus:outline-none focus:ring-2 focus:ring-blue-400/50 rounded-full",
             getMercuryAnimationClasses(true),
-            getMercuryFocusClasses(focusLevel)
+            // Focus level styling handled by getMercuryAnimationClasses
           )}
           style={{ left: `${position}%` }}
           aria-label={`${upload.status} on ${upload.date.toLocaleDateString()}`}
@@ -106,10 +115,10 @@ function TimelineMarker({ intent, upload, position, focusLevel }: TimelineMarker
           }}
           whileHover={{
             scale: 1.15,
-            transition: { duration: MERCURY_DURATIONS.fast }
+            transition: { duration: MERCURY_DURATIONS.fast },
           }}
           onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
+            if (e.key === "Enter" || e.key === " ") {
               e.preventDefault();
             }
           }}
@@ -137,10 +146,10 @@ function TimelineMarker({ intent, upload, position, focusLevel }: TimelineMarker
             {upload.status}
           </div>
           <div className="text-xs text-slate-300 font-medium">
-            {upload.date.toLocaleDateString('en-US', {
-              month: 'short',
-              day: 'numeric',
-              year: 'numeric'
+            {upload.date.toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
             })}
           </div>
           {upload.title && (
@@ -154,11 +163,9 @@ function TimelineMarker({ intent, upload, position, focusLevel }: TimelineMarker
   );
 }
 
-
-
 export function MercuryUploadsTimeline({
   intent,
-  focusLevel = 'ambient',
+  focusLevel = "ambient",
   uploads,
   totalUploads,
   checkpointCount,
@@ -167,10 +174,12 @@ export function MercuryUploadsTimeline({
   className,
 }: MercuryUploadsTimelineProps) {
   // Calculate date range
-  const sortedUploads = [...uploads].sort((a, b) => a.date.getTime() - b.date.getTime());
+  const sortedUploads = [...uploads].sort(
+    (a, b) => a.date.getTime() - b.date.getTime()
+  );
   const startDate = sortedUploads[0]?.date;
   const endDate = sortedUploads[sortedUploads.length - 1]?.date;
-  
+
   // Calculate positions for markers
   const getMarkerPosition = (date: Date) => {
     if (!startDate || !endDate || startDate.getTime() === endDate.getTime()) {
@@ -184,25 +193,29 @@ export function MercuryUploadsTimeline({
   const displayUploadsCount = uploadsOnPage || uploads.length;
 
   const legendItems = [
-    { 
-      status: 'upload', 
-      label: 'Upload', 
-      indicator: 'w-2.5 h-2.5 bg-gradient-to-br from-slate-300 to-slate-500 ring-1 ring-slate-200/60' 
+    {
+      status: "upload",
+      label: "Upload",
+      indicator:
+        "w-2.5 h-2.5 bg-gradient-to-br from-slate-300 to-slate-500 ring-1 ring-slate-200/60",
     },
-    { 
-      status: 'current', 
-      label: 'Current View', 
-      indicator: 'w-3 h-3 bg-gradient-to-br from-slate-700 to-slate-900 ring-2 ring-slate-300/60' 
+    {
+      status: "current",
+      label: "Current View",
+      indicator:
+        "w-3 h-3 bg-gradient-to-br from-slate-700 to-slate-900 ring-2 ring-slate-300/60",
     },
-    { 
-      status: 'checkpoint', 
-      label: 'Checkpoint', 
-      indicator: 'w-3 h-3 bg-gradient-to-br from-emerald-400 to-emerald-600 ring-2 ring-emerald-200/60' 
+    {
+      status: "checkpoint",
+      label: "Checkpoint",
+      indicator:
+        "w-3 h-3 bg-gradient-to-br from-emerald-400 to-emerald-600 ring-2 ring-emerald-200/60",
     },
-    { 
-      status: 'failed', 
-      label: 'Failed', 
-      indicator: 'w-2.5 h-2.5 bg-gradient-to-br from-red-400 to-red-600 ring-2 ring-red-200/60' 
+    {
+      status: "failed",
+      label: "Failed",
+      indicator:
+        "w-2.5 h-2.5 bg-gradient-to-br from-red-400 to-red-600 ring-2 ring-red-200/60",
     },
   ];
 
@@ -213,7 +226,7 @@ export function MercuryUploadsTimeline({
         className={cn(
           "mercury-module relative",
           "px-6 py-3",
-          getMercuryFocusClasses(focusLevel),
+          // Focus level classes applied via getMercuryAnimationClasses
           getMercuryAnimationClasses(true),
           className
         )}
@@ -226,7 +239,6 @@ export function MercuryUploadsTimeline({
           ease: MERCURY_EASING,
         }}
       >
-        
         {/* Ultra-Compact Header */}
         <motion.div
           className="flex items-center justify-between mb-2"
@@ -248,7 +260,7 @@ export function MercuryUploadsTimeline({
               </span>
             </div>
           </div>
-          
+
           <div className="text-xs font-medium text-slate-500">
             {checkpointCount} checkpoints out of {totalUploads} total uploads
             {currentPage && (
@@ -271,18 +283,18 @@ export function MercuryUploadsTimeline({
           }}
         >
           <div className="text-xs font-medium text-slate-500">
-            {startDate?.toLocaleDateString('en-US', {
-              month: 'short',  
-              day: 'numeric',
-              year: 'numeric'
+            {startDate?.toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
             })}
           </div>
-          
+
           <div className="text-xs font-medium text-slate-500">
-            {endDate?.toLocaleDateString('en-US', {
-              month: 'short',
-              day: 'numeric', 
-              year: 'numeric'
+            {endDate?.toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
             })}
           </div>
         </motion.div>
@@ -297,13 +309,13 @@ export function MercuryUploadsTimeline({
             ease: MERCURY_EASING,
             delay: 0.15,
           }}
-          style={{ transformOrigin: 'left' }}
+          style={{ transformOrigin: "left" }}
         >
           {/* Thin Timeline Line */}
           <div className="relative h-0.5 bg-gradient-to-r from-slate-200 via-slate-300 to-slate-200 rounded-full">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 via-slate-400/20 to-emerald-400/20 rounded-full" />
           </div>
-          
+
           {/* Timeline Markers */}
           {uploads.map((upload) => (
             <TimelineMarker
@@ -321,7 +333,7 @@ export function MercuryUploadsTimeline({
           data-intent={`${intent}-legend`}
           className={cn(
             "flex items-center justify-between pt-2 border-t border-slate-200/40",
-            getMercuryFocusClasses(focusLevel)
+            // Focus level styling handled by parent component
           )}
           role="list"
           aria-label="Timeline legend"
@@ -335,18 +347,15 @@ export function MercuryUploadsTimeline({
         >
           <div className="flex items-center gap-3">
             {legendItems.map((item) => (
-              <motion.div 
-                key={item.status} 
-                className="flex items-center gap-1" 
+              <motion.div
+                key={item.status}
+                className="flex items-center gap-1"
                 role="listitem"
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: MERCURY_DURATIONS.fast }}
               >
                 <div
-                  className={cn(
-                    "rounded-full",
-                    item.indicator
-                  )}
+                  className={cn("rounded-full", item.indicator)}
                   aria-hidden="true"
                 />
                 <span className="text-xs font-medium text-slate-600 select-none">
@@ -362,4 +371,4 @@ export function MercuryUploadsTimeline({
       </motion.div>
     </TooltipProvider>
   );
-} 
+}

@@ -1,28 +1,37 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { motion } from "framer-motion"
-import { cn } from "@/lib/utils"
-import { FlowyCard, FlowyCardContent, FlowyCardFooter, FlowyCardHeader } from "./flowy-card"
+import * as React from "react";
+
+import { motion } from "framer-motion";
+
+import { cn } from "@/lib/utils";
+
+import {
+  FlowyCard,
+  FlowyCardContent,
+  FlowyCardFooter,
+  FlowyCardHeader,
+} from "./flowy-card";
 
 interface SkeletonProps {
-  className?: string
-  variant?: "default" | "rounded" | "circular"
-  animation?: "pulse" | "wave" | "none"
+  className?: string;
+  variant?: "default" | "rounded" | "circular";
+  animation?: "pulse" | "wave" | "none";
 }
 
-export function Skeleton({ 
-  className, 
+export function Skeleton({
+  className,
   variant = "default",
-  animation = "pulse"
+  animation = "pulse",
 }: SkeletonProps) {
-  const baseClasses = "bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700"
-  
+  const baseClasses =
+    "bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700";
+
   const variantClasses = {
     default: "rounded-md",
-    rounded: "rounded-lg", 
-    circular: "rounded-full"
-  }
+    rounded: "rounded-lg",
+    circular: "rounded-full",
+  };
 
   const animationVariants = {
     pulse: {
@@ -30,56 +39,59 @@ export function Skeleton({
       transition: {
         duration: 1.5,
         repeat: Infinity,
-        ease: "easeInOut"
-      }
+        ease: "easeInOut",
+      },
     },
     wave: {
       backgroundPosition: ["-200px 0", "calc(200px + 100%) 0", "-200px 0"],
       transition: {
         duration: 2,
         repeat: Infinity,
-        ease: "linear"
-      }
+        ease: "linear",
+      },
     },
-    none: {}
-  }
+    none: {},
+  };
 
   return (
     <motion.div
       className={cn(
         baseClasses,
         variantClasses[variant],
-        animation === "wave" && "bg-gradient-to-r from-gray-200 via-gray-50 to-gray-200 dark:from-gray-700 dark:via-gray-800 dark:to-gray-700",
+        animation === "wave" &&
+          "bg-gradient-to-r from-gray-200 via-gray-50 to-gray-200 dark:from-gray-700 dark:via-gray-800 dark:to-gray-700",
         className
       )}
       animate={animation !== "none" ? animationVariants[animation] : undefined}
-      style={animation === "wave" ? { backgroundSize: "200px 100%" } : undefined}
+      style={
+        animation === "wave" ? { backgroundSize: "200px 100%" } : undefined
+      }
     />
-  )
+  );
 }
 
 // Specialized skeleton components
-export function FlowyCardSkeleton({ 
-  variant = "default", 
+export function FlowyCardSkeleton({
+  variant = "default",
   showFooter = true,
-  className 
-}: { 
-  variant?: "email" | "calendar" | "conversation" | "default"
-  showFooter?: boolean
-  className?: string 
+  className,
+}: {
+  variant?: "email" | "calendar" | "conversation" | "default";
+  showFooter?: boolean;
+  className?: string;
 }) {
   const skeletonVariants = {
     email: <EmailCardSkeleton />,
     calendar: <CalendarCardSkeleton />,
     conversation: <ConversationCardSkeleton />,
-    default: <DefaultCardSkeleton showFooter={showFooter} />
-  }
+    default: <DefaultCardSkeleton showFooter={showFooter} />,
+  };
 
   return (
     <FlowyCard variant="default" className={cn("animate-pulse", className)}>
       {skeletonVariants[variant]}
     </FlowyCard>
-  )
+  );
 }
 
 function DefaultCardSkeleton({ showFooter }: { showFooter: boolean }) {
@@ -119,7 +131,7 @@ function DefaultCardSkeleton({ showFooter }: { showFooter: boolean }) {
         </FlowyCardFooter>
       )}
     </>
-  )
+  );
 }
 
 function EmailCardSkeleton() {
@@ -166,7 +178,7 @@ function EmailCardSkeleton() {
         </div>
       </FlowyCardFooter>
     </>
-  )
+  );
 }
 
 function CalendarCardSkeleton() {
@@ -189,7 +201,7 @@ function CalendarCardSkeleton() {
         <div className="space-y-4">
           <Skeleton className="h-6 w-36" />
           <Skeleton className="h-4 w-full" />
-          
+
           <div className="space-y-2">
             <Skeleton className="h-12 w-full rounded-lg" />
             <Skeleton className="h-12 w-full rounded-lg" />
@@ -216,7 +228,7 @@ function CalendarCardSkeleton() {
         </div>
       </FlowyCardFooter>
     </>
-  )
+  );
 }
 
 function ConversationCardSkeleton() {
@@ -276,33 +288,33 @@ function ConversationCardSkeleton() {
         </div>
       </FlowyCardFooter>
     </>
-  )
+  );
 }
 
 // Hook for managing loading states
 export function useLoadingState(initialState = false) {
-  const [isLoading, setIsLoading] = React.useState(initialState)
-  const [error, setError] = React.useState<Error | null>(null)
+  const [isLoading, setIsLoading] = React.useState(initialState);
+  const [error, setError] = React.useState<Error | null>(null);
 
   const startLoading = React.useCallback(() => {
-    setIsLoading(true)
-    setError(null)
-  }, [])
+    setIsLoading(true);
+    setError(null);
+  }, []);
 
   const stopLoading = React.useCallback(() => {
-    setIsLoading(false)
-  }, [])
+    setIsLoading(false);
+  }, []);
 
   const setLoadingError = React.useCallback((error: Error) => {
-    setError(error)
-    setIsLoading(false)
-  }, [])
+    setError(error);
+    setIsLoading(false);
+  }, []);
 
   return {
     isLoading,
     error,
     startLoading,
     stopLoading,
-    setError: setLoadingError
-  }
-} 
+    setError: setLoadingError,
+  };
+}
