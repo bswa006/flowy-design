@@ -155,11 +155,11 @@ export default function TrueFlowyShowcase() {
               </Link>
 
               <Link
-                href="/mercury-contextual-demo"
+                href="/canvas-workflow"
                 className="inline-flex items-center space-x-3 px-8 py-4 bg-gradient-to-r from-orange-500/20 to-red-500/20 backdrop-blur-lg border border-orange-300/30 rounded-2xl text-orange-700 hover:text-orange-800 hover:from-orange-500/30 hover:to-red-500/30 transition-all duration-500 ease-out hover:scale-105"
               >
                 <span className="text-lg font-medium">
-                  Contextual Actions Demo
+                  Playbook Demo
                 </span>
                 <ArrowRight className="w-5 h-5" />
               </Link>
