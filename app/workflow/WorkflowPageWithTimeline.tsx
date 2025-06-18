@@ -356,20 +356,20 @@ export default function WorkflowPageWithTimeline() {
           >
             {/* Breadcrumb with elegant styling */}
             <div className="flex items-center space-x-2 text-slate-600">
-              <span className="font-semibold text-slate-800 hover:text-blue-600 transition-colors cursor-pointer">
+              <span className="font-medium transition-colors cursor-pointer">
                 The Get Shit Done
               </span>
               <div className="w-1 h-1 bg-slate-300 rounded-full" />
-              <span className="font-medium hover:text-blue-600 transition-colors cursor-pointer">
+              <span className="font-medium transition-colors cursor-pointer">
                 Acme Company
               </span>
               <div className="w-1 h-1 bg-slate-300 rounded-full" />
-              <span className="font-medium text-blue-600">Context</span>
+              <span className="font-medium text-slate-800">Context</span>
             </div>
           </motion.div>
 
           {/* Subtle Badge */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4, delay: 0.2 }}
@@ -378,7 +378,7 @@ export default function WorkflowPageWithTimeline() {
             <span className="text-xs font-medium text-blue-700">
               {contexts.length} Contexts
             </span>
-          </motion.div>
+          </motion.div> */}
         </div>
 
         {/* Right Side - Enhanced Play Demo Controls */}
@@ -459,12 +459,8 @@ export default function WorkflowPageWithTimeline() {
             </div>
           )}
         </motion.div>
-
-        {/* Subtle Bottom Glow */}
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent" />
       </header>
 
-      {/* Timeline Content */}
       <div ref={scrollContainerRef} className="flex-1 overflow-y-auto">
         <AnimatePresence>
           <TimelineWrapper
