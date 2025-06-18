@@ -108,7 +108,7 @@ export const Timeline = ({
 
   return (
     <div
-      className="w-full bg-white dark:bg-neutral-950 font-sans md:px-10"
+      className="w-full dark:bg-neutral-950 font-sans md:px-10"
       ref={containerRef}
     >
       <div ref={ref} className="relative max-w-7xl mx-auto pb-20">
@@ -126,7 +126,7 @@ export const Timeline = ({
               {/* <div className="h-6 absolute left-2 md:left-2 w-6 flex items-center justify-center">
                 <div className="h-3 w-3 rounded-full bg-gray-400" />
               </div> */}
-              <h3 className="hidden md:block text-2xl md:pl-12 font-semibold text-gray-300">
+              <h3 className="hidden md:block text-2xl md:pl-12 font-semibold text-neutral-300">
                 {item.title}
               </h3>
             </div>
