@@ -46,10 +46,17 @@ function MercuryTimelineCard({
     setEditedContext(context);
   }, [context]);
 
-  const updateField = (field: string, value: string | number | boolean | string[], nested?: string) => {
+  const updateField = (
+    field: string,
+    value: string | number | boolean | string[],
+    nested?: string
+  ) => {
     setEditedContext((prev) => {
       if (nested) {
-        const nestedObj = prev[nested as keyof Context] as Record<string, unknown>;
+        const nestedObj = prev[nested as keyof Context] as Record<
+          string,
+          unknown
+        >;
         return {
           ...prev,
           [nested]: {
@@ -149,12 +156,14 @@ export default function WorkflowPageWithTimeline() {
   const [contexts, setContexts] = useState<Context[]>(initialContexts);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
-  
+
   // Play demo state
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentPlayIndex, setCurrentPlayIndex] = useState(0);
-  const [playTimeoutId, setPlayTimeoutId] = useState<NodeJS.Timeout | null>(null);
-  
+  const [playTimeoutId, setPlayTimeoutId] = useState<NodeJS.Timeout | null>(
+    null
+  );
+
   // Refs for scrolling to timeline items
   const timelineItemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -164,17 +173,17 @@ export default function WorkflowPageWithTimeline() {
     if (timelineItemRefs.current[index] && scrollContainerRef.current) {
       const itemElement = timelineItemRefs.current[index];
       const containerElement = scrollContainerRef.current;
-      
+
       if (itemElement) {
         // Scroll directly to the target card - this positions it at the top and hides previous cards
         const itemTop = itemElement.offsetTop;
-        
+
         // No offset - scroll directly to the target position to hide previous cards
         const scrollTop = itemTop;
-        
+
         containerElement.scrollTo({
           top: Math.max(0, scrollTop),
-          behavior: 'smooth'
+          behavior: "smooth",
         });
       }
     }
@@ -198,7 +207,7 @@ export default function WorkflowPageWithTimeline() {
 
   const handleToggleInsights = (contextId: string) => {
     if (editingId) return; // Don't toggle insights while editing
-    setExpandedIds(prev => {
+    setExpandedIds((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(contextId)) {
         newSet.delete(contextId);
@@ -212,7 +221,7 @@ export default function WorkflowPageWithTimeline() {
   const getFocusLevel = (contextId: string): "focused" | "ambient" | "fog" => {
     if (editingId === contextId) return "focused";
     if (editingId && editingId !== contextId) return "fog";
-    
+
     // Highlight current card during demo playback
     if (isPlaying) {
       const currentContext = contexts[currentPlayIndex];
@@ -222,48 +231,51 @@ export default function WorkflowPageWithTimeline() {
         return "fog";
       }
     }
-    
+
     return "ambient";
   };
 
   // Play demo functionality
   const startPlayDemo = useCallback(() => {
     if (isPlaying) return;
-    
+
     setIsPlaying(true);
     playNextCardRef.current(currentPlayIndex);
   }, [isPlaying, currentPlayIndex]);
 
-  const playNextCard = useCallback((index: number) => {
-    if (index >= contexts.length) {
-      // Demo finished
-      setIsPlaying(false);
-      setCurrentPlayIndex(0);
-      return;
-    }
-    
-    setCurrentPlayIndex(index);
-    
-    // Scroll to the current timeline item
-    scrollToTimelineItem(index);
-    
-    // Wait a moment for scroll, then show insights
-    setTimeout(() => {
-      const contextId = contexts[index].id;
-      setExpandedIds(prev => {
-        const newSet = new Set(prev);
-        newSet.add(contextId);
-        return newSet;
-      });
-      
-      // Schedule next card
-      const timeoutId = setTimeout(() => {
-        playNextCard(index + 1);
-      }, 3000); // 3 seconds to view each card's insights
-      
-      setPlayTimeoutId(timeoutId);
-    }, 800); // 800ms for scroll animation
-  }, [contexts, scrollToTimelineItem]);
+  const playNextCard = useCallback(
+    (index: number) => {
+      if (index >= contexts.length) {
+        // Demo finished
+        setIsPlaying(false);
+        setCurrentPlayIndex(0);
+        return;
+      }
+
+      setCurrentPlayIndex(index);
+
+      // Scroll to the current timeline item
+      scrollToTimelineItem(index);
+
+      // Wait a moment for scroll, then show insights
+      setTimeout(() => {
+        const contextId = contexts[index].id;
+        setExpandedIds((prev) => {
+          const newSet = new Set(prev);
+          newSet.add(contextId);
+          return newSet;
+        });
+
+        // Schedule next card
+        const timeoutId = setTimeout(() => {
+          playNextCard(index + 1);
+        }, 3000); // 3 seconds to view each card's insights
+
+        setPlayTimeoutId(timeoutId);
+      }, 800); // 800ms for scroll animation
+    },
+    [contexts, scrollToTimelineItem]
+  );
 
   // Fix circular dependency by creating a ref for playNextCard
   const playNextCardRef = useRef(playNextCard);
@@ -300,12 +312,12 @@ export default function WorkflowPageWithTimeline() {
   const timelineData = contexts.map((context, index) => {
     // Format the date from recorded_on
     const recordedDate = new Date(context.upload.recorded_on);
-    const formattedDate = recordedDate.toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric'
+    const formattedDate = recordedDate.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
     });
-    
+
     return {
       title: formattedDate,
       content: (
@@ -327,13 +339,13 @@ export default function WorkflowPageWithTimeline() {
   return (
     <div className="h-screen flex flex-col">
       {/* Beautiful Mercury Header */}
-      <header 
+      <header
         data-intent="workflow-header"
         className="relative h-20 bg-gradient-to-r from-slate-50 via-white to-slate-50 border-b border-slate-200/60 px-8 flex items-center justify-between flex-shrink-0 shadow-sm"
       >
         {/* Subtle Background Pattern */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.03),transparent_70%)]" />
-        
+
         {/* Left Side - Breadcrumb Navigation */}
         <div className="relative z-10 flex items-center space-x-1">
           <motion.div
@@ -352,12 +364,10 @@ export default function WorkflowPageWithTimeline() {
                 Acme Company
               </span>
               <div className="w-1 h-1 bg-slate-300 rounded-full" />
-              <span className="font-medium text-blue-600">
-                Context
-              </span>
+              <span className="font-medium text-blue-600">Context</span>
             </div>
           </motion.div>
-          
+
           {/* Subtle Badge */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
@@ -370,12 +380,16 @@ export default function WorkflowPageWithTimeline() {
             </span>
           </motion.div>
         </div>
-        
+
         {/* Right Side - Enhanced Play Demo Controls */}
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{
+            duration: 0.6,
+            delay: 0.1,
+            ease: [0.25, 0.46, 0.45, 0.94],
+          }}
           className="relative z-10 flex items-center gap-3"
         >
           {!isPlaying ? (
@@ -389,10 +403,10 @@ export default function WorkflowPageWithTimeline() {
                 transition={{ duration: 0.2 }}
               >
                 <Play className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
-                <span>{currentPlayIndex === 0 ? 'Play Demo' : 'Resume'}</span>
+                <span>{currentPlayIndex === 0 ? "Play Demo" : "Resume"}</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
               </motion.button>
-              
+
               {currentPlayIndex > 0 && (
                 <motion.button
                   onClick={stopPlayDemo}
@@ -418,7 +432,7 @@ export default function WorkflowPageWithTimeline() {
                 <Pause className="w-4 h-4" />
                 <span>Pause</span>
               </motion.button>
-              
+
               <motion.button
                 onClick={stopPlayDemo}
                 className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white rounded-xl font-medium text-sm transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
@@ -428,12 +442,12 @@ export default function WorkflowPageWithTimeline() {
                 <Square className="w-4 h-4" />
                 <span>Stop</span>
               </motion.button>
-              
+
               {/* Enhanced Progress Indicator */}
               <motion.div
                 initial={{ opacity: 0, x: 10 }}
                 animate={{ opacity: 1, x: 0 }}
-                className="flex items-center ml-3 px-4 py-2 bg-white/80 backdrop-blur-sm border border-slate-200 rounded-xl shadow-sm"
+                className="flex items-center ml-3 px-4 py-2 backdrop-blur-sm border border-slate-200 rounded-xl shadow-sm"
               >
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
@@ -445,18 +459,21 @@ export default function WorkflowPageWithTimeline() {
             </div>
           )}
         </motion.div>
-        
+
         {/* Subtle Bottom Glow */}
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent" />
       </header>
-      
+
       {/* Timeline Content */}
       <div ref={scrollContainerRef} className="flex-1 overflow-y-auto">
         <AnimatePresence>
-          <TimelineWrapper data={timelineData} itemRefs={timelineItemRefs} scrollContainer={scrollContainerRef} />
+          <TimelineWrapper
+            data={timelineData}
+            itemRefs={timelineItemRefs}
+            scrollContainer={scrollContainerRef}
+          />
         </AnimatePresence>
       </div>
     </div>
   );
 }
-
