@@ -589,26 +589,19 @@ export default function CanvasWorkflowPage() {
 
     setCurrentPlayIndex(index);
     
-    // Scroll to ensure both card and insight panel will be visible
+    // Simple scroll to position card with margin from left
     if (canvasRef.current) {
       const cardWidth = 400;
-      const insightWidth = 400;
       const gap = 24;
       const padding = 24;
       
-      // Calculate where insight panel will end
+      // Calculate card position
       const cardPosition = padding + index * (cardWidth + gap);
-      const insightEndPosition = cardPosition + cardWidth + gap + insightWidth;
       
-      // Get viewport width
-      const viewportWidth = canvasRef.current.clientWidth;
-      
-      // Position the card on the left side with room for insight panel
-      // Don't try to be clever - just position card nicely and let insight flow naturally
-      const targetScroll = Math.max(0, cardPosition - 150); // Show card 150px from left edge
-      
+      // Simple positioning - just show the card with fixed margin
+      // Let the right padding (600px+) handle insight panel visibility
       canvasRef.current.scrollTo({
-        left: targetScroll,
+        left: Math.max(0, cardPosition - 100), // Fixed 100px margin from left
         behavior: 'smooth'
       });
     }
