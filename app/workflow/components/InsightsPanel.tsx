@@ -139,10 +139,7 @@ export function InsightsPanel({
   context,
   isVisible,
 }: InsightsPanelProps) {
-  // Move hooks to the top
-  const [expandedCategories, setExpandedCategories] = React.useState<
-    Set<string>
-  >(new Set());
+  // Move hooks to the top - simplified for focused insights only
 
   if (!isVisible) return null;
   const metadata = context.extracted_metadata;
@@ -151,157 +148,57 @@ export function InsightsPanel({
   // Check if this is a grid layout (multi-column view)
   const isGridLayout = intent === "insights-panel-grid";
 
-  // Use cumulative insights if available, otherwise fall back to old format
-  const cumulativeInsights = metadata.cumulative_insights;
-
-  const getPainPoints = () => {
-    if (cumulativeInsights?.key_pain_points) {
-      return cumulativeInsights.key_pain_points;
-    }
-    return Array.isArray(metadata.key_pain_points)
-      ? metadata.key_pain_points.map((point: string) => ({
-          text: point,
-          source: "Current Card",
-          source_id: context.id,
-        }))
-      : [];
-  };
-
-  const getDesiredFeatures = () => {
-    if (cumulativeInsights?.desired_features) {
-      return cumulativeInsights.desired_features;
-    }
-    return Array.isArray(metadata.desired_features)
-      ? metadata.desired_features.map((feature: string) => ({
-          text: feature,
-          source: "Current Card",
-          source_id: context.id,
-        }))
-      : [];
-  };
-
-  const getIntegrations = () => {
-    if (cumulativeInsights?.integrations_required) {
-      return cumulativeInsights.integrations_required;
-    }
-    return Array.isArray(metadata.integrations_required)
-      ? metadata.integrations_required.map((integration: string) => ({
-          text: integration,
-          source: "Current Card",
-          source_id: context.id,
-        }))
-      : [];
-  };
-
-  const getMarketGaps = () => {
-    if (cumulativeInsights?.market_gaps) {
-      return cumulativeInsights.market_gaps;
-    }
-    return Array.isArray(metadata.market_gaps)
-      ? metadata.market_gaps.map((gap: string) => ({
-          text: gap,
-          source: "Current Card",
-          source_id: context.id,
-        }))
-      : [];
-  };
-
-  const getTechnicalAchievements = () => {
-    if (cumulativeInsights?.technical_achievements) {
-      return cumulativeInsights.technical_achievements;
-    }
-    return Array.isArray(metadata.technical_achievements)
-      ? metadata.technical_achievements.map((achievement: string) => ({
-          text: achievement,
-          source: "Current Card",
-          source_id: context.id,
-        }))
-      : [];
-  };
-
-  const getDesignPrinciples = () => {
-    if (cumulativeInsights?.design_principles) {
-      return cumulativeInsights.design_principles;
-    }
-    return [];
-  };
-
-  const getBetaMetrics = () => {
-    if (cumulativeInsights?.beta_metrics) {
-      return cumulativeInsights.beta_metrics;
-    }
-    return [];
-  };
-
-  // Organize insights into categories
-  const categories: CategoryData[] = [
-    {
-      title: "Pain Points",
-      insights: getPainPoints(),
-      style: INSIGHT_STYLES.keyPainPoint,
-      maxVisible: 3,
-    },
-    {
-      title: "Desired Features",
-      insights: getDesiredFeatures(),
-      style: INSIGHT_STYLES.desiredFeature,
-      maxVisible: 3,
-    },
-    {
-      title: "Integrations",
-      insights: getIntegrations(),
-      style: INSIGHT_STYLES.integration,
-      maxVisible: 4,
-    },
-    {
-      title: "Market Opportunities",
-      insights: getMarketGaps(),
-      style: INSIGHT_STYLES.marketGap,
-      maxVisible: 2,
-    },
-    {
-      title: "Technical Progress",
-      insights: getTechnicalAchievements(),
-      style: INSIGHT_STYLES.differentiator,
-      maxVisible: 3,
-    },
-    {
-      title: "Design Principles",
-      insights: getDesignPrinciples(),
-      style: {
-        ...INSIGHT_STYLES.differentiator,
-        pillClass: "bg-indigo-500",
-        containerClass: "bg-indigo-50 hover:bg-indigo-100",
-      },
-      maxVisible: 2,
-    },
-    {
-      title: "Beta Insights",
-      insights: getBetaMetrics(),
-      style: {
-        ...INSIGHT_STYLES.differentiator,
-        pillClass: "bg-green-500",
-        containerClass: "bg-green-50 hover:bg-green-100",
-      },
-      maxVisible: 3,
-    },
-  ].filter((category) => category.insights.length > 0);
-
-  const toggleCategory = (categoryTitle: string) => {
-    setExpandedCategories((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(categoryTitle)) {
-        newSet.delete(categoryTitle);
-      } else {
-        newSet.add(categoryTitle);
+  // Get focused insights (new field) - prioritize these over cumulative data
+  const focusedInsights = metadata.insights || [];
+  
+  // Create progressive insights with source tracking
+  const createProgressiveInsights = (insights: string[]) => {
+    const sources = metadata.insight_sources || [];
+    const progressiveInsights: Array<{text: string, source: string, contextNumber: number}> = [];
+    
+    // Map each insight to its originating context based on our balanced distribution
+    // Card 1: insights 0-1, Card 2: insight 2, Card 3: insights 3-4, Card 4: insight 5, Card 5: insight 6
+    const insightToContextMap: {[key: number]: {contextNumber: number, source: string}} = {};
+    
+    let currentIndex = 0;
+    sources.forEach((source, sourceIndex) => {
+      const contextNumber = sourceIndex + 1;
+      let newInsightsForThisContext: number;
+      
+      // Define how many NEW insights each context adds
+      switch(contextNumber) {
+        case 1: newInsightsForThisContext = 2; break;
+        case 2: newInsightsForThisContext = 1; break;
+        case 3: newInsightsForThisContext = 2; break;
+        case 4: newInsightsForThisContext = 1; break;
+        case 5: newInsightsForThisContext = 1; break;
+        default: newInsightsForThisContext = 1; break;
       }
-      return newSet;
+      
+      // Map the new insights for this context
+      for (let i = 0; i < newInsightsForThisContext && currentIndex + i < insights.length; i++) {
+        const insightIndex = currentIndex + i;
+        insightToContextMap[insightIndex] = { contextNumber, source };
+      }
+      currentIndex += newInsightsForThisContext;
     });
+    
+    // Create the progressive insights array with proper context attribution
+    insights.forEach((insight, index) => {
+      const contextInfo = insightToContextMap[index];
+      if (contextInfo) {
+        progressiveInsights.push({
+          text: insight,
+          source: contextInfo.source,
+          contextNumber: contextInfo.contextNumber
+        });
+      }
+    });
+    
+    return progressiveInsights;
   };
-
-  const uniqueSources = new Set(
-    categories.flatMap((cat) => cat.insights.map((insight) => insight.source))
-  ).size;
+  
+  const progressiveInsights = createProgressiveInsights(focusedInsights);
 
   return (
     <motion.div
@@ -340,66 +237,89 @@ export function InsightsPanel({
       }}
     >
       <div className="flex flex-col gap-y-3">
-        <div
-          className={`bg-white rounded-lg border border-gray-200 p-2 flex items-center gap-1`}
-        >
-          <Lightbulb className={`w-4 h-4 ${uniqueSources > 1 ? "mb-4" : ""}`} />
-          <div>
-            Insights
-            {uniqueSources > 1 && !isGridLayout && (
-              <div className="text-[10px] text-gray-500 mt-1">
-                From {uniqueSources} product development phases
-              </div>
-            )}
+        {/* Clean Header with Summary */}
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-2">
+            <Lightbulb className="w-4 h-4 text-gray-600" />
+            <div>
+              <h3 className="text-sm font-semibold text-gray-900">Key Insights</h3>
+              <p className="text-xs text-gray-500">Progressive knowledge</p>
+            </div>
           </div>
-          {/* Remove tab buttons and summary view */}
+          <div className="flex items-center gap-3 text-xs">
+            <span className="text-gray-600 font-medium">{progressiveInsights.length} total</span>
+            <span className="text-gray-700 font-medium">
+              {progressiveInsights.filter(p => p.contextNumber === Math.max(...progressiveInsights.map(p => p.contextNumber))).length} new
+            </span>
+          </div>
         </div>
 
-        {/* Always show All Categories content */}
-        {categories.length > 2 ? (
-          /* Grid Layout for 3+ categories */
-          <div className="grid grid-cols-2 gap-4">
-            {/* First Column */}
-            <div className="space-y-2">
-              {categories
-                .slice(0, Math.ceil(categories.length / 2))
-                .map((category) => (
-                  <InsightCategory
-                    key={category.title}
-                    category={category}
-                    isExpanded={expandedCategories.has(category.title)}
-                    onToggle={() => toggleCategory(category.title)}
-                  />
-                ))}
-            </div>
+        {/* Elegant Progressive Insights */}
+        <div className="bg-white border border-gray-200 rounded-lg max-h-96 overflow-y-auto shadow-sm">
+          <div className="divide-y divide-gray-100">
+            {Array.from(new Set(progressiveInsights.map(p => p.contextNumber))).map(contextNum => {
+              const contextInsights = progressiveInsights.filter(p => p.contextNumber === contextNum);
+              const contextSource = contextInsights[0]?.source || `Context ${contextNum}`;
+              const isCurrentContext = contextNum === Math.max(...progressiveInsights.map(p => p.contextNumber));
+              
+              return (
+                <div key={contextNum} className={`transition-all duration-200 ${
+                  isCurrentContext 
+                    ? 'bg-gray-50 border-l-2 border-gray-800' 
+                    : 'hover:bg-gray-25'
+                }`}>
+                  
+                  {/* Elegant Context Header */}
+                  <div className="px-4 py-3">
+                    <div className="flex items-center gap-3">
+                      <div className={`flex items-center justify-center w-5 h-5 rounded border ${
+                        isCurrentContext 
+                          ? 'bg-gray-800 text-white border-gray-800' 
+                          : 'bg-white text-gray-600 border-gray-300'
+                      }`}>
+                        <span className="text-xs font-medium">{contextNum}</span>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <span className={`text-xs font-medium ${
+                          isCurrentContext ? 'text-gray-900' : 'text-gray-700'
+                        }`}>
+                          {contextSource.replace(`Card ${contextNum}: `, '')}
+                        </span>
+                      </div>
+                      {isCurrentContext && (
+                        <span className="text-xs text-gray-600 font-medium px-2 py-1 bg-gray-200 rounded-full">
+                          Active
+                        </span>
+                      )}
+                    </div>
+                  </div>
 
-            {/* Second Column */}
-            <div className="space-y-2">
-              {categories
-                .slice(Math.ceil(categories.length / 2))
-                .map((category) => (
-                  <InsightCategory
-                    key={category.title}
-                    category={category}
-                    isExpanded={expandedCategories.has(category.title)}
-                    onToggle={() => toggleCategory(category.title)}
-                  />
-                ))}
-            </div>
+                  {/* Elegant Insights List */}
+                  <div className="px-4 pb-4">
+                    <div className="space-y-3">
+                      {contextInsights.map((insight, index) => (
+                        <div key={index} className="flex items-start gap-3 group">
+                          <div className={`flex items-center justify-center w-4 h-4 rounded-full flex-shrink-0 text-xs font-medium border ${
+                            isCurrentContext 
+                              ? 'bg-gray-700 text-white border-gray-700' 
+                              : 'bg-gray-100 text-gray-600 border-gray-300'
+                          }`}>
+                            {index + 1}
+                          </div>
+                          <p className={`text-xs leading-relaxed transition-colors group-hover:text-gray-900 ${
+                            isCurrentContext ? 'text-gray-800' : 'text-gray-600'
+                          }`}>
+                            {insight.text}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
-        ) : (
-          /* Single Column Layout for 1-2 categories */
-          <div className="space-y-2">
-            {categories.map((category) => (
-              <InsightCategory
-                key={category.title}
-                category={category}
-                isExpanded={expandedCategories.has(category.title)}
-                onToggle={() => toggleCategory(category.title)}
-              />
-            ))}
-          </div>
-        )}
+        </div>
       </div>
     </motion.div>
   );

@@ -30,6 +30,10 @@
     "is_invalidated": false,
     "extracted_metadata": {
       "insight_sources": ["Card 1: Sales Team Research"],
+      "insights": [
+        "Sales teams lose 40% of meeting value due to poor note-taking and missed action items",
+        "Need an 'invisible assistant' that captures everything without disrupting meeting flow"
+      ],
       "cumulative_insights": {
         "key_pain_points": [
           {
@@ -116,6 +120,13 @@
             "source": "Card 1: Sales Team Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           }
+        ],
+        "beta_insights": [
+          {
+            "text": "Invisible/automatic operation",
+            "source": "Card 1: Sales Team Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          }
         ]
       },
       "pricing_expectation": "$50-100 per user/month",
@@ -155,6 +166,11 @@
       "insight_sources": [
         "Card 1: Sales Team Research",
         "Card 2: Competitive Analysis"
+      ],
+      "insights": [
+        "Sales teams lose 40% of meeting value due to poor note-taking and missed action items",
+        "Need an 'invisible assistant' that captures everything without disrupting meeting flow",
+        "Market gap identified for zero-touch operation - no existing tool provides truly invisible assistance"
       ],
       "cumulative_insights": {
         "key_pain_points": [
@@ -366,6 +382,13 @@
         "Card 1: Sales Team Research",
         "Card 2: Competitive Analysis",
         "Card 3: Technical POC"
+      ],
+      "insights": [
+        "Sales teams lose 40% of meeting value due to poor note-taking and missed action items",
+        "Need an 'invisible assistant' that captures everything without disrupting meeting flow",
+        "Market gap identified for zero-touch operation - no existing tool provides truly invisible assistance",
+        "Technical feasibility proven with 97% transcription accuracy and reliable action item extraction",
+        "WebRTC integration successful, enabling seamless meeting participation without user setup"
       ],
       "cumulative_insights": {
         "key_pain_points": [
@@ -676,6 +699,14 @@
         "Card 2: Competitive Analysis",
         "Card 3: Technical POC",
         "Card 4: Design Review"
+      ],
+      "insights": [
+        "Sales teams lose 40% of meeting value due to poor note-taking and missed action items",
+        "Need an 'invisible assistant' that captures everything without disrupting meeting flow",
+        "Market gap identified for zero-touch operation - no existing tool provides truly invisible assistance",
+        "Technical feasibility proven with 97% transcription accuracy and reliable action item extraction",
+        "WebRTC integration successful, enabling seamless meeting participation without user setup",
+        "Zero cognitive load principle validated through progressive disclosure and invisible-until-needed design"
       ],
       "cumulative_insights": {
         "key_pain_points": [
@@ -1051,6 +1082,15 @@
         "Card 3: Technical POC",
         "Card 4: Design Review",
         "Card 5: Beta Feedback"
+      ],
+      "insights": [
+        "Sales teams lose 40% of meeting value due to poor note-taking and missed action items",
+        "Need an 'invisible assistant' that captures everything without disrupting meeting flow",
+        "Market gap identified for zero-touch operation - no existing tool provides truly invisible assistance",
+        "Technical feasibility proven with 97% transcription accuracy and reliable action item extraction",
+        "WebRTC integration successful, enabling seamless meeting participation without user setup",
+        "Zero cognitive load principle validated through progressive disclosure and invisible-until-needed design",
+        "Strong validation with 4.8/5 rating and 90% daily adoption rate among beta users"
       ],
       "cumulative_insights": {
         "key_pain_points": [

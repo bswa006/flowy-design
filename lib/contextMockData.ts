@@ -32,6 +32,12 @@ export interface CumulativeInsights {
 export interface ExtractedMetadata {
   insight_sources?: string[];
   cumulative_insights?: CumulativeInsights;
+  insights?: string[];
+  progressive_insights?: Array<{
+    text: string;
+    source: string;
+    contextNumber: number;
+  }>;
   [key: string]: unknown;
 }
 
