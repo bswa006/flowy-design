@@ -166,6 +166,11 @@ export function PlaybookInsightsPanel({
   const isStepCard = card.type === "step";
   const panelTitle = isStepCard ? "Execution Stages" : "Insights";
   const contentCount = isStepCard ? executionStages.length : relatedInsights.length;
+  
+  // Calculate completed stages for step cards
+  const completedStagesCount = isStepCard 
+    ? executionStages.filter(stage => stage.status === "completed").length 
+    : 0;
 
   return (
     <motion.div
@@ -192,7 +197,10 @@ export function PlaybookInsightsPanel({
                 {panelTitle}
               </h3>
               <p className="text-xs text-gray-500">
-                {contentCount} {isStepCard ? 'stages' : 'insights'}
+                {isStepCard 
+                  ? `${completedStagesCount}/${contentCount} stages completed`
+                  : `${contentCount} insights`
+                }
               </p>
             </div>
           </div>
@@ -304,10 +312,22 @@ export function PlaybookInsightsPanel({
                     </div>
                   </div>
                   
-                  {/* Description */}
-                  <p className="text-sm text-gray-600 leading-relaxed mb-3">
-                    {stage.instructions}
-                  </p>
+                  {/* Description - Checklist Format */}
+                  <div className="mb-3">
+                    {stage.instructions.split(/[,;]|\band\b/).map((item, itemIndex) => {
+                      const trimmedItem = item.trim();
+                      if (!trimmedItem) return null;
+                      
+                      return (
+                        <div key={itemIndex} className="flex items-start space-x-3 mb-1.5 last:mb-0">
+                          <div className="flex-shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-gray-300"></div>
+                          <span className="text-sm text-gray-600 leading-relaxed">
+                            {trimmedItem.charAt(0).toUpperCase() + trimmedItem.slice(1)}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
                   
                   {/* Footer */}
                   <div className="flex items-center justify-between text-xs text-gray-500">

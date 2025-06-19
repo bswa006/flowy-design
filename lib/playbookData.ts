@@ -209,7 +209,7 @@ export const getProjectHeader = () => {
   return {
     project: playbookData.project,
     totalSteps: playbookData.playbook.steps.length,
-    completedSteps: 0, // This could be dynamic based on step status
+    completedSteps: playbookData.playbook.steps.filter(step => step.status === "completed").length,
     estimatedDuration: playbookData.playbook.steps.reduce((total, step) => total + step.estimated_minutes, 0),
     generatedFrom: playbookData.playbook.generated_from_contexts.length,
     createdAt: playbookData.playbook.created_at
