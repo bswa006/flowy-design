@@ -177,32 +177,32 @@ export function PlaybookInsightsPanel({
       transition={{ duration: MERCURY_DURATIONS.normal, ease: MERCURY_EASING }}
     >
       {/* Header */}
-      <div className="px-6 pt-6 pb-4">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-gray-900 rounded-xl flex items-center justify-center">
+      <div className="px-4 pt-4 pb-2">
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center space-x-2">
+            <div className="w-6 h-6 bg-gray-900 rounded-lg flex items-center justify-center">
               {isStepCard ? (
-                <BookOpen className="w-4 h-4 text-white" />
+                <BookOpen className="w-3 h-3 text-white" />
               ) : (
-                <Lightbulb className="w-4 h-4 text-white" />
+                <Lightbulb className="w-3 h-3 text-white" />
               )}
             </div>
             <div>
-              <h3 className="text-base font-semibold text-gray-900">
+              <h3 className="text-sm font-semibold text-gray-900">
                 {panelTitle}
               </h3>
               <p className="text-xs text-gray-500">
-                {contentCount} {isStepCard ? 'stages' : 'insights'} found
+                {contentCount} {isStepCard ? 'stages' : 'insights'}
               </p>
             </div>
           </div>
           
           {/* View Toggle - only show for insights */}
           {!isStepCard && (
-            <div className="flex items-center bg-gray-50 rounded-xl p-1">
+            <div className="flex items-center bg-gray-50 rounded-lg p-0.5">
               <button
                 onClick={() => setViewMode("summary")}
-                className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all ${
+                className={`px-2 py-1 text-xs font-medium rounded transition-all ${
                   viewMode === "summary" 
                     ? "bg-white text-gray-900 shadow-sm" 
                     : "text-gray-600 hover:text-gray-900"
@@ -212,7 +212,7 @@ export function PlaybookInsightsPanel({
               </button>
               <button
                 onClick={() => setViewMode("detailed")}
-                className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all ${
+                className={`px-2 py-1 text-xs font-medium rounded transition-all ${
                   viewMode === "detailed" 
                     ? "bg-white text-gray-900 shadow-sm" 
                     : "text-gray-600 hover:text-gray-900"
@@ -226,22 +226,20 @@ export function PlaybookInsightsPanel({
 
         {/* Filter - only show for insights */}
         {!isStepCard && (
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <Filter className="w-4 h-4 text-gray-400" />
-              <select
-                value={filterType}
-                onChange={(e) => setFilterType(e.target.value)}
-                className="text-xs bg-gray-50 border-0 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-gray-200"
-              >
-                <option value="all">All ({relatedInsights.length})</option>
-                {Object.keys(groupedInsights).map(type => (
-                  <option key={type} value={type}>
-                    {formatInsightType(type)} ({groupedInsights[type].length})
-                  </option>
-                ))}
-              </select>
-            </div>
+          <div className="flex items-center space-x-2">
+            <Filter className="w-3 h-3 text-gray-400" />
+            <select
+              value={filterType}
+              onChange={(e) => setFilterType(e.target.value)}
+              className="text-xs bg-gray-50 border-0 rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-gray-200"
+            >
+              <option value="all">All ({relatedInsights.length})</option>
+              {Object.keys(groupedInsights).map(type => (
+                <option key={type} value={type}>
+                  {formatInsightType(type)} ({groupedInsights[type].length})
+                </option>
+              ))}
+            </select>
           </div>
         )}
       </div>
@@ -259,20 +257,6 @@ export function PlaybookInsightsPanel({
                 transition={{ duration: 0.2, delay: index * 0.05 }}
                 className="relative bg-white border border-gray-200 rounded-xl overflow-hidden"
               >
-                {/* Status Bar */}
-                <div className={`h-1 w-full ${
-                  stage.status === "completed" ? "bg-green-400" :
-                  stage.status === "in_progress" ? "bg-blue-400" :
-                  "bg-gray-200"
-                }`}>
-                  {stage.status === "in_progress" && stage.completion_percentage > 0 && (
-                    <div 
-                      className="h-full bg-blue-600 transition-all duration-500"
-                      style={{ width: `${stage.completion_percentage}%` }}
-                    />
-                  )}
-                </div>
-                
                 <div className="p-4">
                   {/* Header */}
                   <div className="flex items-start justify-between mb-3">
