@@ -381,7 +381,7 @@ export default function WorkflowPageWithTimeline() {
           </motion.div> */}
         </div>
 
-        {/* Right Side - Enhanced Play Demo Controls */}
+        {/* Right Side Play Demo Controls - COMMENTED OUT
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -392,73 +392,9 @@ export default function WorkflowPageWithTimeline() {
           }}
           className="relative z-10 flex items-center gap-3"
         >
-          {!isPlaying ? (
-            <div className="flex items-center gap-3">
-              <motion.button
-                onClick={startPlayDemo}
-                disabled={editingId !== null}
-                className="group flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 text-white rounded-xl font-semibold text-sm transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02] disabled:scale-100 disabled:cursor-not-allowed"
-                whileHover={{ scale: editingId ? 1 : 1.02 }}
-                whileTap={{ scale: editingId ? 1 : 0.98 }}
-                transition={{ duration: 0.2 }}
-              >
-                <Play className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
-                <span>{currentPlayIndex === 0 ? "Play Demo" : "Resume"}</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
-              </motion.button>
-
-              {currentPlayIndex > 0 && (
-                <motion.button
-                  onClick={stopPlayDemo}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="flex items-center gap-2 px-4 py-2.5 bg-slate-600 hover:bg-slate-700 text-white rounded-xl font-medium text-sm transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-[1.02]"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Square className="w-4 h-4" />
-                  <span>Reset</span>
-                </motion.button>
-              )}
-            </div>
-          ) : (
-            <div className="flex items-center gap-3">
-              <motion.button
-                onClick={pausePlayDemo}
-                className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-xl font-medium text-sm transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <Pause className="w-4 h-4" />
-                <span>Pause</span>
-              </motion.button>
-
-              <motion.button
-                onClick={stopPlayDemo}
-                className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white rounded-xl font-medium text-sm transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <Square className="w-4 h-4" />
-                <span>Stop</span>
-              </motion.button>
-
-              {/* Enhanced Progress Indicator */}
-              <motion.div
-                initial={{ opacity: 0, x: 10 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="flex items-center ml-3 px-4 py-2 backdrop-blur-sm border border-slate-200 rounded-xl shadow-sm"
-              >
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
-                  <span className="text-sm font-medium text-slate-700">
-                    Card {currentPlayIndex + 1} of {contexts.length}
-                  </span>
-                </div>
-              </motion.div>
-            </div>
-          )}
+          Play demo controls removed for cleaner UI
         </motion.div>
+        */}
       </header>
 
       <div ref={scrollContainerRef} className="flex-1 overflow-y-auto">
