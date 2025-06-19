@@ -15,7 +15,11 @@ import {
   Filter,
   Search,
   ExternalLink,
-  Settings
+  Settings,
+  Hand,
+  Brain,
+  Zap,
+  Workflow
 } from "lucide-react";
 
 import {
@@ -26,7 +30,10 @@ import {
   playbookData,
   getInsightTypeColor,
   getExecutionTypeColor,
-  formatDuration
+  formatDuration,
+  getStatusColor,
+  getStatusIcon,
+  getStatusLabel
 } from "@/lib/playbookData";
 import { MERCURY_DURATIONS, MERCURY_EASING } from "@/lib/mercury-utils";
 
@@ -129,6 +136,28 @@ export function PlaybookInsightsPanel({
     ).join(' ');
   };
 
+  const getExecutionTypeIcon = (type: string) => {
+    switch (type) {
+      case "manual": return <Hand className="w-3 h-3" />;
+      case "tool_guided": return <Settings className="w-3 h-3" />;
+      case "ai_review": return <Brain className="w-3 h-3" />;
+      case "llm_direct": return <Zap className="w-3 h-3" />;
+      case "hybrid": return <Workflow className="w-3 h-3" />;
+      default: return <Settings className="w-3 h-3" />;
+    }
+  };
+
+  const formatExecutionType = (type: string) => {
+    switch (type) {
+      case "manual": return "manual";
+      case "tool_guided": return "tool guided";
+      case "ai_review": return "ai review";
+      case "llm_direct": return "llm direct";
+      case "hybrid": return "hybrid";
+      default: return type;
+    }
+  };
+
   if (!isVisible || !hasContent) {
     return null;
   }
@@ -228,36 +257,86 @@ export function PlaybookInsightsPanel({
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.2, delay: index * 0.05 }}
-                className="p-3 bg-gray-50 rounded-lg border border-gray-100"
+                className="relative bg-white border border-gray-200 rounded-xl overflow-hidden"
               >
-                <div className="flex items-start space-x-3">
-                  <div className={`flex-shrink-0 p-1 rounded ${getExecutionTypeColor(stage.type)}`}>
-                    <CheckCircle className="w-4 h-4" />
+                {/* Status Bar */}
+                <div className={`h-1 w-full ${
+                  stage.status === "completed" ? "bg-green-400" :
+                  stage.status === "in_progress" ? "bg-blue-400" :
+                  "bg-gray-200"
+                }`}>
+                  {stage.status === "in_progress" && stage.completion_percentage > 0 && (
+                    <div 
+                      className="h-full bg-blue-600 transition-all duration-500"
+                      style={{ width: `${stage.completion_percentage}%` }}
+                    />
+                  )}
+                </div>
+                
+                <div className="p-4">
+                  {/* Header */}
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex items-center space-x-3">
+                      <div className={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center ${
+                        stage.status === "completed" ? "bg-green-100 text-green-600" :
+                        stage.status === "in_progress" ? "bg-blue-100 text-blue-600" :
+                        "bg-gray-100 text-gray-400"
+                      }`}>
+                        {stage.status === "completed" ? (
+                          <CheckCircle className="w-4 h-4" />
+                        ) : stage.status === "in_progress" ? (
+                          <Clock className="w-4 h-4" />
+                        ) : (
+                          <span className="text-xs font-medium">{stage.stage}</span>
+                        )}
+                      </div>
+                      <div>
+                        <h4 className="text-sm font-semibold text-gray-900 leading-tight">
+                          {stage.name}
+                        </h4>
+                        <div className="flex items-center space-x-2 mt-1">
+                          <div className={`flex items-center space-x-1 text-xs ${getExecutionTypeColor(stage.type).replace('bg-', 'text-').replace('-100', '-600')}`}>
+                            {getExecutionTypeIcon(stage.type)}
+                            <span>{formatExecutionType(stage.type)}</span>
+                          </div>
+                          {stage.status === "in_progress" && stage.completion_percentage > 0 && (
+                            <span className="text-xs text-blue-600 font-medium">
+                              {stage.completion_percentage}%
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Status Indicator */}
+                    <div className={`px-2 py-1 rounded-full text-xs font-medium ${
+                      stage.status === "completed" ? "bg-green-50 text-green-700" :
+                      stage.status === "in_progress" ? "bg-blue-50 text-blue-700" :
+                      "bg-gray-50 text-gray-600"
+                    }`}>
+                      {stage.status === "completed" ? "Complete" :
+                       stage.status === "in_progress" ? "In Progress" :
+                       "Pending"}
+                    </div>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center space-x-2 mb-1">
-                      <span className="text-xs font-medium text-gray-900">
-                        Stage {stage.stage}: {stage.name}
-                      </span>
-                      <span className={`px-2 py-0.5 text-xs rounded ${getExecutionTypeColor(stage.type)}`}>
-                        {stage.type.replace('_', ' ')}
-                      </span>
+                  
+                  {/* Description */}
+                  <p className="text-sm text-gray-600 leading-relaxed mb-3">
+                    {stage.instructions}
+                  </p>
+                  
+                  {/* Footer */}
+                  <div className="flex items-center justify-between text-xs text-gray-500">
+                    <div className="flex items-center space-x-1">
+                      <Clock className="w-3 h-3" />
+                      <span>{formatDuration(stage.estimated_minutes)}</span>
                     </div>
-                    <p className="text-sm text-gray-700 mb-2">
-                      {stage.instructions}
-                    </p>
-                    <div className="flex items-center space-x-4 text-xs text-gray-500">
-                      <span className="flex items-center space-x-1">
-                        <Clock className="w-3 h-3" />
-                        <span>{formatDuration(stage.estimated_minutes)}</span>
-                      </span>
-                      {stage.tool && (
-                        <span className="flex items-center space-x-1">
-                          <Settings className="w-3 h-3" />
-                          <span>{stage.tool}</span>
-                        </span>
-                      )}
-                    </div>
+                    {stage.tool && (
+                      <div className="flex items-center space-x-1">
+                        <Settings className="w-3 h-3" />
+                        <span>{stage.tool}</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </motion.div>

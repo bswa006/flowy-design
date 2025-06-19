@@ -36,7 +36,10 @@ import {
   PlaybookProject,
   getInsightTypeColor,
   getExecutionTypeColor,
-  formatDuration
+  formatDuration,
+  getStatusColor,
+  getStatusLabel,
+  getStatusIcon
 } from "@/lib/playbookData";
 import { MERCURY_DURATIONS, MERCURY_EASING } from "@/lib/mercury-utils";
 
@@ -456,7 +459,7 @@ function renderStepCard(
       <div className="relative px-6 pt-6 pb-4">
         <div className="flex items-start justify-between">
           <div className="flex-1">
-            <div className="flex items-center space-x-3 mb-3">
+            <div className="flex items-center justify-between mb-3">
               <div className="flex items-center space-x-2">
                 <div className="w-6 h-6 rounded-full bg-gray-900 flex items-center justify-center">
                   <span className="text-xs font-semibold text-white">{stepNumber}</span>
@@ -465,12 +468,22 @@ function renderStepCard(
                   Step {stepNumber}
                 </span>
               </div>
-              <div className="flex items-center space-x-1.5">
-                {getExecutionIcon(step.execution.type)}
-                <span className="text-xs text-gray-600 font-medium">
-                  {step.execution.type.replace('_', ' ')}
-                </span>
+              
+              {/* Status Badge */}
+              <div className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-full border ${getStatusColor(step.status)}`}>
+                <span className="text-xs">{getStatusIcon(step.status)}</span>
+                <span className="text-xs font-medium">{getStatusLabel(step.status)}</span>
+                {step.status === "in_progress" && step.completion_percentage > 0 && (
+                  <span className="text-xs">({step.completion_percentage}%)</span>
+                )}
               </div>
+            </div>
+            
+            <div className="flex items-center space-x-1.5 mb-3">
+              {getExecutionIcon(step.execution.type)}
+              <span className="text-xs text-gray-600 font-medium">
+                {step.execution.type.replace('_', ' ')}
+              </span>
             </div>
             
             <h3 className="text-lg font-semibold text-gray-900 mb-2 leading-tight">

@@ -68,6 +68,8 @@ export interface PlaybookStep {
   title: string;
   description: string;
   estimated_minutes: number;
+  status: "not_started" | "in_progress" | "completed";
+  completion_percentage: number;
   execution: {
     type: "hybrid" | "manual" | "tool_guided" | "ai_review" | "llm_direct";
     stages: Array<{
@@ -77,6 +79,8 @@ export interface PlaybookStep {
       tool?: string;
       instructions: string;
       estimated_minutes: number;
+      status: "not_started" | "in_progress" | "completed";
+      completion_percentage: number;
     }>;
   };
 }
@@ -124,7 +128,62 @@ export interface PlaybookCard {
 // Load data from playbook.json
 import playbookJsonData from '@/docs/playbook.json';
 
-export const playbookData: PlaybookData = playbookJsonData as PlaybookData;
+// Add mock status data to steps and stages for demonstration
+const addStageStatus = (stages: any[], stepIndex: number) => {
+  return stages.map((stage, stageIndex) => {
+    let status: "not_started" | "in_progress" | "completed";
+    let completion_percentage: number;
+    
+    if (stepIndex === 0) {
+      // Step 1: All stages completed
+      status = "completed";
+      completion_percentage = 100;
+    } else if (stepIndex === 1) {
+      // Step 2: Progressive completion (65% overall)
+      if (stageIndex === 0) {
+        status = "completed";
+        completion_percentage = 100;
+      } else if (stageIndex === 1) {
+        status = "completed";
+        completion_percentage = 100;
+      } else if (stageIndex === 2) {
+        status = "in_progress";
+        completion_percentage = 60;
+      } else {
+        status = "not_started";
+        completion_percentage = 0;
+      }
+    } else {
+      // Step 3+: All stages not started
+      status = "not_started";
+      completion_percentage = 0;
+    }
+    
+    return {
+      ...stage,
+      status,
+      completion_percentage
+    };
+  });
+};
+
+const enrichedPlaybookData = {
+  ...playbookJsonData,
+  playbook: {
+    ...playbookJsonData.playbook,
+    steps: playbookJsonData.playbook.steps.map((step, index) => ({
+      ...step,
+      status: index === 0 ? "completed" : index === 1 ? "in_progress" : "not_started",
+      completion_percentage: index === 0 ? 100 : index === 1 ? 65 : 0,
+      execution: {
+        ...step.execution,
+        stages: addStageStatus(step.execution.stages, index)
+      }
+    }))
+  }
+};
+
+export const playbookData: PlaybookData = enrichedPlaybookData as PlaybookData;
 
 // Create initial cards for canvas workflow - focus on steps as main cards
 export const createPlaybookCards = (): PlaybookCard[] => {
@@ -172,12 +231,12 @@ export const getInsightTypeColor = (type: string): string => {
 
 export const getExecutionTypeColor = (type: string): string => {
   switch (type) {
-    case "manual": return "bg-gray-50 text-gray-700";
-    case "tool_guided": return "bg-gray-50 text-gray-700";
-    case "ai_review": return "bg-gray-50 text-gray-700";
-    case "llm_direct": return "bg-gray-50 text-gray-700";
-    case "hybrid": return "bg-gray-50 text-gray-700";
-    default: return "bg-gray-50 text-gray-700";
+    case "manual": return "bg-orange-100 text-orange-700 border-orange-200";
+    case "tool_guided": return "bg-blue-100 text-blue-700 border-blue-200";
+    case "ai_review": return "bg-purple-100 text-purple-700 border-purple-200";
+    case "llm_direct": return "bg-yellow-100 text-yellow-700 border-yellow-200";
+    case "hybrid": return "bg-indigo-100 text-indigo-700 border-indigo-200";
+    default: return "bg-gray-100 text-gray-700 border-gray-200";
   }
 };
 
@@ -192,6 +251,33 @@ export const formatDuration = (minutes: number): string => {
     const days = Math.floor(minutes / 1440);
     const remainingHours = Math.floor((minutes % 1440) / 60);
     return remainingHours > 0 ? `${days}d ${remainingHours}h` : `${days}d`;
+  }
+};
+
+export const getStatusColor = (status: "not_started" | "in_progress" | "completed"): string => {
+  switch (status) {
+    case "completed": return "bg-green-100 text-green-700 border-green-200";
+    case "in_progress": return "bg-blue-100 text-blue-700 border-blue-200";
+    case "not_started": return "bg-gray-100 text-gray-600 border-gray-200";
+    default: return "bg-gray-100 text-gray-600 border-gray-200";
+  }
+};
+
+export const getStatusIcon = (status: "not_started" | "in_progress" | "completed"): string => {
+  switch (status) {
+    case "completed": return "✅";
+    case "in_progress": return "🔄";
+    case "not_started": return "⏳";
+    default: return "⏳";
+  }
+};
+
+export const getStatusLabel = (status: "not_started" | "in_progress" | "completed"): string => {
+  switch (status) {
+    case "completed": return "Completed";
+    case "in_progress": return "In Progress";
+    case "not_started": return "Not Started";
+    default: return "Unknown";
   }
 };
 
