@@ -524,45 +524,12 @@ function renderStepCard(
           </div>
         </div>
 
-        {/* Clean Stage Preview */}
-        <div className="space-y-3">
-          <div className="flex items-center justify-between">
-            <h4 className="text-sm font-medium text-gray-900">Key Stages</h4>
-            <span className="text-xs text-gray-500">{step.execution.stages.length} total</span>
-          </div>
-          
-          <div className="space-y-2">
-            {step.execution.stages.slice(0, 2).map((stage, index) => (
-              <div key={index} className="flex items-start space-x-3 p-3 bg-gray-50/50 rounded-xl border border-gray-100/50">
-                <div className="flex-shrink-0 w-5 h-5 bg-white rounded-full flex items-center justify-center text-xs font-medium border shadow-sm mt-0.5">
-                  {stage.stage}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-start justify-between">
-                    <span className="text-sm font-medium text-gray-900 leading-tight">{stage.name}</span>
-                    <span className="text-xs text-gray-500 ml-2 flex-shrink-0">{formatDuration(stage.estimated_minutes)}</span>
-                  </div>
-                  {stage.tool && (
-                    <div className="flex items-center space-x-1 mt-1">
-                      <Settings className="w-3 h-3 text-gray-400" />
-                      <span className="text-xs text-gray-500">{stage.tool}</span>
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
-            
-            {step.execution.stages.length > 2 && (
-              <div className="flex items-center justify-center py-2">
-                <button
-                  onClick={handleDetailsToggle}
-                  className="flex items-center space-x-1 text-xs text-gray-500 hover:text-gray-700 transition-colors"
-                >
-                  <span>+{step.execution.stages.length - 2} more stages</span>
-                  <ChevronRight className="w-3 h-3" />
-                </button>
-              </div>
-            )}
+        {/* Click for Details */}
+        <div className="pt-2">
+          <div className="flex items-center justify-center">
+            <span className="text-xs text-gray-500 px-3 py-2 bg-gray-50 rounded-lg">
+              Click card to view execution stages
+            </span>
           </div>
         </div>
       </div>
