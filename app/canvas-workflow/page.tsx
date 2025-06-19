@@ -7,11 +7,15 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { Play, Pause, Square } from "lucide-react";
 
-// import { MercuryFlowCanvas as FlowCanvas } from "@/components/mercury/mercury-flow-canvas";
-import { Context, initialContexts } from "@/lib/contextMockData";
-import { MainCard } from "../workflow/MainCard";
-import { EditableCard } from "../workflow/EditableCard";
-import { InsightsPanel } from "../workflow/components/InsightsPanel";
+// Playbook components and data
+import { PlaybookCard } from "@/components/playbook/PlaybookCard";
+import { PlaybookInsightsPanel } from "@/components/playbook/PlaybookInsightsPanel";
+import { ProjectHeader } from "@/components/playbook/ProjectHeader";
+import { 
+  PlaybookCard as PlaybookCardType, 
+  createPlaybookCards, 
+  playbookData 
+} from "@/lib/playbookData";
 import { MERCURY_DURATIONS, MERCURY_EASING } from "@/lib/mercury-utils";
 
 // Mercury OS Wu Wei Daoist Easing Functions
@@ -20,8 +24,8 @@ const wuWeiEasing = [0.25, 0.46, 0.45, 0.94] as const;
 export default function CanvasWorkflowPage() {
   // Mercury compliance properties
   const intent = "canvas-workflow-space";
-  // Mercury-compliant state management
-  const [contexts, setContexts] = useState<Context[]>(initialContexts.slice(0, 3)); // Use first 3 contexts
+  // Mercury-compliant state management - using playbook data
+  const [playbookCards, setPlaybookCards] = useState<PlaybookCardType[]>(createPlaybookCards());
   const [editingId, setEditingId] = useState<string | null>(null);
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
   
@@ -204,13 +208,13 @@ export default function CanvasWorkflowPage() {
   // Drag and drop state
   const [draggedCardId, setDraggedCardId] = useState<string | null>(null);
   const [cardOrder, setCardOrder] = useState<string[]>(() => 
-    initialContexts.slice(0, 3).map(context => context.id)
+    createPlaybookCards().map(card => card.id)
   );
   
-  // Reorder contexts based on card order (needed for zoom calculations)
-  const orderedContexts = cardOrder.map(id => 
-    contexts.find(context => context.id === id)
-  ).filter(Boolean) as Context[];
+  // Reorder playbook cards based on card order
+  const orderedPlaybookCards = cardOrder.map(id => 
+    playbookCards.find(card => card.id === id)
+  ).filter(Boolean) as PlaybookCardType[];
   
   // Zoom utilities
   const zoomAtPoint = useCallback((newZoom: number, clientX: number, clientY: number) => {
@@ -250,17 +254,17 @@ export default function CanvasWorkflowPage() {
   }, []);
   
   const handleZoomToFit = useCallback(() => {
-    if (!canvasRef.current || orderedContexts.length === 0) return;
+    if (!canvasRef.current || orderedPlaybookCards.length === 0) return;
     
     const rect = canvasRef.current.getBoundingClientRect();
     const padding = 100;
     
     // Calculate bounds of all cards
     const cardWidth = 400;
-    const cardHeight = 220;
+    const cardHeight = 280; // Updated for playbook cards
     const gap = 24; // 6 * 4px from gap-6
     
-    const totalWidth = orderedContexts.length * cardWidth + (orderedContexts.length - 1) * gap;
+    const totalWidth = orderedPlaybookCards.length * cardWidth + (orderedPlaybookCards.length - 1) * gap;
     const totalHeight = cardHeight;
     
     // Calculate zoom to fit with padding
@@ -279,7 +283,7 @@ export default function CanvasWorkflowPage() {
       x: viewportCenterX - contentCenterX * fitZoom,
       y: viewportCenterY - contentCenterY * fitZoom
     });
-  }, [orderedContexts]);
+  }, [orderedPlaybookCards]);
   
   // Canvas pan handlers
   const handleCanvasMouseDown = useCallback((e: React.MouseEvent) => {
@@ -505,14 +509,14 @@ export default function CanvasWorkflowPage() {
    */
 
   // Workflow integration handlers
-  const handleEdit = (contextId: string) => {
-    setEditingId(contextId);
+  const handleEdit = (cardId: string) => {
+    setEditingId(cardId);
     setExpandedIds(new Set()); // Close all insights when editing
   };
 
-  const handleSave = (updatedContext: Context) => {
-    setContexts((prev) =>
-      prev.map((ctx) => (ctx.id === updatedContext.id ? updatedContext : ctx))
+  const handleSave = (updatedCard: PlaybookCardType) => {
+    setPlaybookCards((prev) =>
+      prev.map((card) => (card.id === updatedCard.id ? updatedCard : card))
     );
     setEditingId(null);
   };
@@ -521,29 +525,34 @@ export default function CanvasWorkflowPage() {
     setEditingId(null);
   };
 
-  const handleToggleInsights = (contextId: string) => {
+  const handleToggleInsights = (cardId: string) => {
+    console.log('handleToggleInsights called:', cardId, 'editingId:', editingId);
     if (editingId) return; // Don't toggle insights while editing
     setExpandedIds((prev) => {
       const newSet = new Set(prev);
-      const wasExpanded = newSet.has(contextId);
+      const wasExpanded = newSet.has(cardId);
+      console.log('Card was expanded:', wasExpanded, 'Current expanded IDs:', Array.from(prev));
       if (wasExpanded) {
-        newSet.delete(contextId);
+        newSet.delete(cardId);
+        console.log('Removing card from expanded IDs');
       } else {
-        newSet.add(contextId);
+        newSet.add(cardId);
+        console.log('Adding card to expanded IDs');
         // No auto-scroll on manual clicks - keep it simple
       }
+      console.log('New expanded IDs:', Array.from(newSet));
       return newSet;
     });
   };
 
-  const getFocusLevel = (contextId: string): "focused" | "ambient" | "fog" => {
-    if (editingId === contextId) return "focused";
-    if (editingId && editingId !== contextId) return "fog";
+  const getFocusLevel = (cardId: string): "focused" | "ambient" | "fog" => {
+    if (editingId === cardId) return "focused";
+    if (editingId && editingId !== cardId) return "fog";
     
     // Highlight current card during demo playback
     if (isPlaying) {
-      const currentContext = orderedContexts[currentPlayIndex];
-      if (currentContext && currentContext.id === contextId) {
+      const currentCard = orderedPlaybookCards[currentPlayIndex];
+      if (currentCard && currentCard.id === cardId) {
         return "focused";
       } else {
         return "fog";
@@ -580,7 +589,7 @@ export default function CanvasWorkflowPage() {
   }, [isPlaying, currentPlayIndex]);
 
   const playNextCard = useCallback((index: number) => {
-    if (index >= orderedContexts.length) {
+    if (index >= orderedPlaybookCards.length) {
       // Demo finished
       setIsPlaying(false);
       setCurrentPlayIndex(0);
@@ -589,28 +598,45 @@ export default function CanvasWorkflowPage() {
 
     setCurrentPlayIndex(index);
     
-    // Simple scroll to position card with margin from left
+    // Calculate dynamic card dimensions from DOM or use reasonable defaults
     if (canvasRef.current) {
-      const cardWidth = 400;
-      const gap = 24;
-      const padding = 24;
+      // Try to get actual card width from DOM, fallback to 400px
+      const cardElements = canvasRef.current.querySelectorAll('[data-intent^="playbook-card-"]');
+      let actualCardWidth = 400; // Default fallback
       
-      // Calculate card position
-      const cardPosition = padding + index * (cardWidth + gap);
+      if (cardElements.length > 0) {
+        const firstCard = cardElements[0] as HTMLElement;
+        const cardRect = firstCard.getBoundingClientRect();
+        actualCardWidth = cardRect.width || 400;
+      }
       
-      // Simple positioning - just show the card with fixed margin
-      // Let the right padding (600px+) handle insight panel visibility
+      const gap = 24; // From gap-6 class
+      const padding = 24; // Container padding
+      
+      // Calculate card position based on actual dimensions
+      const cardPosition = padding + index * (actualCardWidth + gap);
+      
+      // Scroll to show the card with some margin from left
+      // Account for insights panel width (400px) by adding extra space
+      const insightsPanelWidth = 400;
+      const marginFromLeft = 100;
+      const targetScrollPosition = Math.max(0, cardPosition - marginFromLeft);
+      
       canvasRef.current.scrollTo({
-        left: Math.max(0, cardPosition - 100), // Fixed 100px margin from left
+        left: targetScrollPosition,
         behavior: 'smooth'
       });
     }
+      
+      
     
-    // Wait for scroll, then show insights (no additional scrolling)
+    // Wait for scroll animation, then open insights
     setTimeout(() => {
-      const contextId = orderedContexts[index].id;
-      // Open insights - no additional scroll needed
-      handleToggleInsights(contextId);
+      const cardId = orderedPlaybookCards[index].id;
+      // Ensure insights panel opens for this card
+      if (!expandedIds.has(cardId)) {
+        handleToggleInsights(cardId);
+      }
 
       // Schedule next card
       const timeoutId = setTimeout(() => {
@@ -618,8 +644,8 @@ export default function CanvasWorkflowPage() {
       }, 3000); // 3 seconds to view each card's insights
 
       setPlayTimeoutId(timeoutId);
-    }, 800); // 800ms for scroll animation
-  }, [orderedContexts]);
+    }, 800); // 800ms for scroll animation to complete
+  }, [orderedPlaybookCards, expandedIds, handleToggleInsights]);
 
   // Fix circular dependency by creating a ref for playNextCard
   const playNextCardRef = useRef(playNextCard);
@@ -643,26 +669,16 @@ export default function CanvasWorkflowPage() {
     }
   }, [playTimeoutId]);
 
-  // Update field for editable context
+  // Update field for editable playbook card
   const updateField = (field: string, value: string | number | boolean | string[], nested?: string) => {
-    setContexts((prev) => prev.map((ctx) => {
-      if (ctx.id === editingId) {
-        if (nested) {
-          const nestedObj = ctx[nested as keyof Context] as Record<string, unknown>;
-          return {
-            ...ctx,
-            [nested]: {
-              ...nestedObj,
-              [field]: value,
-            },
-          };
-        }
-        return {
-          ...ctx,
-          [field]: value,
-        };
+    setPlaybookCards((prev) => prev.map((card) => {
+      if (card.id === editingId) {
+        // For now, we'll handle basic updates - more complex editing can be added later
+        // This is a placeholder for future implementation
+        console.log('Field update requested:', { field, value, nested });
+        return card; // Return unchanged for now
       }
-      return ctx;
+      return card;
     }));
   };
 
@@ -695,11 +711,25 @@ export default function CanvasWorkflowPage() {
 
   return (
     <DndProvider backend={HTML5Backend}>
+      {/* Fixed Project Header - stays in place during pan/zoom */}
+      <div className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm">
+        <ProjectHeader 
+          className="w-full max-w-none"
+          isPlaying={isPlaying}
+          currentPlayIndex={currentPlayIndex}
+          totalCards={orderedPlaybookCards.length}
+          onStartDemo={startPlayDemo}
+          onPauseDemo={pausePlayDemo}
+          onStopDemo={stopPlayDemo}
+          editingId={editingId}
+        />
+      </div>
+      
       <div 
         ref={canvasRef}
         data-intent={intent}
         data-canvas-background="true"
-        className={`mercury-module mercury-space h-screen w-full bg-gradient-to-br from-slate-50 via-white to-slate-100 relative overflow-x-auto overflow-y-hidden select-none ${
+        className={`mercury-module mercury-space h-screen w-full bg-gradient-to-br from-gray-50/50 via-white to-gray-50/30 relative overflow-x-auto overflow-y-hidden select-none ${
           isSpacePressed ? 'cursor-grab' : isPanning ? 'cursor-grabbing' : ''
         }`}
         role="region"
@@ -805,90 +835,25 @@ export default function CanvasWorkflowPage() {
           </div>
         </div>
         
-        {/* Play Demo Controls */}
-        <div className="fixed top-4 right-4 z-50">
-          {/* Demo controls have priority in top-right corner */}
-          {!isPlaying ? (
-            <div className="flex items-center gap-3">
-              <motion.button
-                onClick={startPlayDemo}
-                disabled={editingId !== null}
-                className="group flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 text-white rounded-xl font-semibold text-sm transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02] disabled:scale-100 disabled:cursor-not-allowed"
-                whileHover={{ scale: editingId ? 1 : 1.02 }}
-                whileTap={{ scale: editingId ? 1 : 0.98 }}
-                transition={{ duration: 0.2 }}
-              >
-                <Play className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
-                <span>{currentPlayIndex === 0 ? "Play Demo" : "Resume"}</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
-              </motion.button>
-
-              {currentPlayIndex > 0 && (
-                <motion.button
-                  onClick={stopPlayDemo}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="flex items-center gap-2 px-4 py-2.5 bg-slate-600 hover:bg-slate-700 text-white rounded-xl font-medium text-sm transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-[1.02]"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Square className="w-4 h-4" />
-                  <span>Reset</span>
-                </motion.button>
-              )}
-            </div>
-          ) : (
-            <div className="flex items-center gap-3">
-              <motion.button
-                onClick={pausePlayDemo}
-                className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-xl font-medium text-sm transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <Pause className="w-4 h-4" />
-                <span>Pause</span>
-              </motion.button>
-
-              <motion.button
-                onClick={stopPlayDemo}
-                className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white rounded-xl font-medium text-sm transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <Square className="w-4 h-4" />
-                <span>Stop</span>
-              </motion.button>
-
-              {/* Progress Indicator */}
-              <motion.div
-                initial={{ opacity: 0, x: 10 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="flex items-center ml-3 px-4 py-2 bg-white/90 backdrop-blur-sm border border-gray-200 rounded-xl shadow-sm"
-              >
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
-                  <span className="text-sm font-medium text-slate-700">
-                    Card {currentPlayIndex + 1} of {orderedContexts.length}
-                  </span>
-                </div>
-              </motion.div>
-            </div>
-          )}
-        </div>
         
-        {/* Zoom level indicator - positioned below demo controls */}
+        {/* Zoom level indicator */}
         {canvasZoom !== 1 && (
-          <div className="fixed top-24 right-4 z-40 bg-black/60 text-white px-3 py-1 rounded-lg text-xs font-medium backdrop-blur-sm">
+          <div className="fixed top-20 right-4 z-40 bg-black/60 text-white px-3 py-1 rounded-lg text-xs font-medium backdrop-blur-sm">
             {Math.round(canvasZoom * 100)}% zoom
           </div>
         )}
         
+        
         {/* Scrolling content with conditional transforms */}
         <div 
-          className="flex items-center gap-6 p-6 min-h-screen"
+          className="flex flex-col gap-8 min-h-screen"
           style={{
             width: 'max-content',
+            minWidth: '100vw', // Ensure it spans at least full viewport width
+            paddingLeft: '32px',
             paddingRight: `${Math.max(600, expandedIds.size * 500 + 600)}px`,
+            paddingTop: '120px', // Proper spacing from header for breathing room
+            paddingBottom: '40px',
             ...(canvasZoom !== 1 || canvasPan.x !== 0 || canvasPan.y !== 0 ? {
               transform: `translate(${canvasPan.x}px, ${canvasPan.y}px) scale(${canvasZoom})`,
               transformOrigin: 'top left',
@@ -898,11 +863,13 @@ export default function CanvasWorkflowPage() {
           }}
           data-canvas-background="true"
         >
-            {/* Workflow Context Cards */}
-            {orderedContexts.map((context, index) => (
+          {/* Playbook Step Cards Container */}
+          <div className="flex items-center gap-6">
+            {/* Playbook Cards */}
+            {orderedPlaybookCards.map((playbookCard, index) => (
               <motion.div
-                key={context.id}
-                data-intent={`workflow-context-${context.id}`}
+                key={playbookCard.id}
+                data-intent={`playbook-card-${playbookCard.id}`}
                 className="mercury-module flex-shrink-0"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -912,68 +879,51 @@ export default function CanvasWorkflowPage() {
                   delay: index * 0.1
                 }}
                 role="region"
-                aria-label={`Context card ${index + 1}`}
+                aria-label={`${playbookCard.type} card ${index + 1}`}
                 style={{
-                  cursor: editingId !== context.id && !isSpacePressed && !isPanning ? 'grab' : 'default',
-                  opacity: draggedCardId === context.id ? 0.5 : 1,
+                  cursor: editingId !== playbookCard.id && !isSpacePressed && !isPanning ? 'grab' : 'default',
+                  opacity: draggedCardId === playbookCard.id ? 0.5 : 1,
                   pointerEvents: isPanning ? 'none' : 'auto'
                 }}
               >
                 <div
-                  draggable={editingId !== context.id && !isPanning && !isSpacePressed}
-                  onDragStart={(e: React.DragEvent) => handleDragStart(context.id, e)}
-                  onDragOver={(e: React.DragEvent) => handleDragOver(e, context.id)}
+                  draggable={editingId !== playbookCard.id && !isPanning && !isSpacePressed}
+                  onDragStart={(e: React.DragEvent) => handleDragStart(playbookCard.id, e)}
+                  onDragOver={(e: React.DragEvent) => handleDragOver(e, playbookCard.id)}
                   onDragEnd={handleDragEnd}
                   className="w-full h-full"
                 >
                   <div className="flex items-start gap-6">
-                    {/* Main card */}
+                    {/* Main Playbook Card */}
                     <motion.div
-                      className={`w-[400px] bg-white rounded-2xl shadow-md border border-gray-100 relative transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
-                        getFocusLevel(context.id) === 'focused' ? 'scale-[1.02] z-30 opacity-100' :
-                        getFocusLevel(context.id) === 'ambient' ? 'scale-100 z-10 opacity-90' :
+                      className={`w-[400px] min-h-[280px] transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
+                        getFocusLevel(playbookCard.id) === 'focused' ? 'scale-[1.02] z-30' :
+                        getFocusLevel(playbookCard.id) === 'ambient' ? 'scale-100 z-10' :
                         'scale-[0.98] z-0 opacity-40 pointer-events-none blur-[0.5px]'
-                      } ${
-                        !editingId && !isSpacePressed && !isPanning ? "cursor-pointer hover:shadow-lg" : ""
                       }`}
                       layout
-                      onClick={() => {
-                        if (editingId !== context.id) {
-                          handleToggleInsights(context.id);
-                        }
-                      }}
                       style={{
-                        height: editingId === context.id ? "80vh" : "auto",
-                        minHeight: editingId === context.id ? "auto" : "220px",
-                        overflow: editingId === context.id ? "hidden" : "visible",
+                        height: editingId === playbookCard.id ? "80vh" : "auto",
+                        overflow: editingId === playbookCard.id ? "hidden" : "visible",
                       }}
                       animate={{
-                        width: editingId === context.id ? 600 : 400,
+                        width: editingId === playbookCard.id ? 600 : 400,
                       }}
                       transition={{ duration: 0.7, ease: wuWeiEasing }}
                     >
-                      <div className={`${editingId === context.id ? "h-full flex flex-col p-4" : "p-4"}`}>
-                        {editingId !== context.id ? (
-                          <MainCard
-                            context={context}
-                            onToggleInsights={() => handleToggleInsights(context.id)}
-                            contextNumber={cardOrder.indexOf(context.id) + 1}
-                            handleEdit={() => handleEdit(context.id)}
-                          />
-                        ) : (
-                          <EditableCard
-                            editedContext={context}
-                            onSave={handleSave}
-                            onCancel={handleCancel}
-                            onFieldChange={updateField}
-                          />
-                        )}
-                      </div>
+                      <PlaybookCard
+                        card={playbookCard}
+                        onToggleInsights={() => handleToggleInsights(playbookCard.id)}
+                        onEdit={() => handleEdit(playbookCard.id)}
+                        isExpanded={expandedIds.has(playbookCard.id)}
+                        focusLevel={getFocusLevel(playbookCard.id)}
+                        className="h-full"
+                      />
                     </motion.div>
 
-                    {/* Insights Panel - flows naturally in flex layout */}
+                    {/* Playbook Insights Panel - flows naturally in flex layout */}
                     <AnimatePresence>
-                      {expandedIds.has(context.id) && editingId !== context.id && (
+                      {expandedIds.has(playbookCard.id) && editingId !== playbookCard.id && (
                         <motion.div
                           initial={{ opacity: 0, width: 0, x: -20 }}
                           animate={{ opacity: 1, width: 400, x: 0 }}
@@ -981,10 +931,11 @@ export default function CanvasWorkflowPage() {
                           transition={{ duration: 0.5, ease: wuWeiEasing }}
                           className="flex-shrink-0"
                         >
-                          <InsightsPanel
-                            intent="insights-panel"
-                            context={context}
+                          <PlaybookInsightsPanel
+                            card={playbookCard}
                             isVisible={true}
+                            intent="playbook-insights-panel"
+                            className="h-fit max-h-[600px]"
                           />
                         </motion.div>
                       )}
@@ -993,6 +944,7 @@ export default function CanvasWorkflowPage() {
                 </div>
               </motion.div>
             ))}
+          </div>
         </div>
         
         {/* Canvas background - extends beyond cards for panning */}
