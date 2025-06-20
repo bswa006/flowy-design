@@ -893,54 +893,58 @@ export default function CanvasWorkflowPage() {
                   onDragEnd={handleDragEnd}
                   className="w-full h-full"
                 >
-                  <div className="flex items-start gap-6">
-                    {/* Main Playbook Card */}
-                    <motion.div
-                      className={`w-[400px] min-h-[280px] transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
-                        getFocusLevel(playbookCard.id) === 'focused' ? 'scale-[1.02] z-30' :
-                        getFocusLevel(playbookCard.id) === 'ambient' ? 'scale-100 z-10' :
-                        'scale-[0.98] z-0 opacity-40 pointer-events-none blur-[0.5px]'
-                      }`}
-                      layout
-                      style={{
-                        height: editingId === playbookCard.id ? "80vh" : "auto",
-                        overflow: editingId === playbookCard.id ? "hidden" : "visible",
-                      }}
-                      animate={{
-                        width: editingId === playbookCard.id ? 600 : 400,
-                      }}
-                      transition={{ duration: 0.7, ease: wuWeiEasing }}
-                    >
-                      <PlaybookCard
-                        card={playbookCard}
-                        onToggleInsights={() => handleToggleInsights(playbookCard.id)}
-                        onEdit={() => handleEdit(playbookCard.id)}
-                        isExpanded={expandedIds.has(playbookCard.id)}
-                        focusLevel={getFocusLevel(playbookCard.id)}
-                        className="h-full"
-                      />
-                    </motion.div>
-
-                    {/* Playbook Insights Panel - flows naturally in flex layout */}
-                    <AnimatePresence>
-                      {expandedIds.has(playbookCard.id) && editingId !== playbookCard.id && (
-                        <motion.div
-                          initial={{ opacity: 0, width: 0, x: -20 }}
-                          animate={{ opacity: 1, width: 400, x: 0 }}
-                          exit={{ opacity: 0, width: 0, x: -20 }}
-                          transition={{ duration: 0.5, ease: wuWeiEasing }}
-                          className="flex-shrink-0"
-                        >
-                          <PlaybookInsightsPanel
-                            card={playbookCard}
-                            isVisible={true}
-                            intent="playbook-insights-panel"
-                            className="h-fit max-h-[600px]"
-                          />
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
+                  {/* Elegant integrated card that expands naturally */}
+                  <motion.div
+                    className={`bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
+                      getFocusLevel(playbookCard.id) === 'focused' ? 'scale-[1.02] z-30' :
+                      getFocusLevel(playbookCard.id) === 'ambient' ? 'scale-100 z-10' :
+                      'scale-[0.98] z-0 opacity-40 pointer-events-none blur-[0.5px]'
+                    }`}
+                    layout
+                    animate={{
+                      width: expandedIds.has(playbookCard.id) && editingId !== playbookCard.id ? 'auto' : 320,
+                      height: editingId === playbookCard.id ? "80vh" : 'auto'
+                    }}
+                    transition={{ duration: 0.7, ease: wuWeiEasing }}
+                    style={{
+                      overflow: "visible",
+                      minHeight: '280px'
+                    }}
+                  >
+                    <div className={`flex ${expandedIds.has(playbookCard.id) ? 'items-start' : 'items-center'}`}>
+                      {/* Step Card Section */}
+                      <div className="w-80 flex-shrink-0 p-6">
+                        <PlaybookCard
+                          card={playbookCard}
+                          onToggleInsights={() => handleToggleInsights(playbookCard.id)}
+                          onEdit={() => handleEdit(playbookCard.id)}
+                          isExpanded={expandedIds.has(playbookCard.id)}
+                          focusLevel={getFocusLevel(playbookCard.id)}
+                          className="border-0 rounded-none bg-transparent shadow-none"
+                        />
+                      </div>
+                      
+                      {/* Insights Panel Section - expands naturally */}
+                      <AnimatePresence>
+                        {expandedIds.has(playbookCard.id) && editingId !== playbookCard.id && (
+                          <motion.div
+                            initial={{ opacity: 0, width: 0 }}
+                            animate={{ opacity: 1, width: 'auto' }}
+                            exit={{ opacity: 0, width: 0 }}
+                            transition={{ duration: 0.5, ease: wuWeiEasing }}
+                            className="border-l border-gray-100 flex-1 min-w-0 p-6"
+                          >
+                            <PlaybookInsightsPanel
+                              card={playbookCard}
+                              isVisible={true}
+                              intent="playbook-insights-panel"
+                              className="border-0 rounded-none bg-transparent"
+                            />
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  </motion.div>
                 </div>
               </motion.div>
             ))}

@@ -91,16 +91,17 @@ export function PlaybookCard({
   };
 
   if (card.type === "step") {
-    return renderStepCard(card as PlaybookCardType & { data: PlaybookStep }, handleCardClick, handleEditClick, showDetails, handleDetailsToggle, focusLevel, className);
+    return renderStepCard(card as PlaybookCardType & { data: PlaybookStep }, handleCardClick, handleEditClick, showDetails, handleDetailsToggle, focusLevel, className, isExpanded);
   }
 
   return (
     <motion.div
-      className={`bg-white rounded-xl border border-gray-200 overflow-hidden transition-all duration-500 cursor-pointer ${getFocusStyles()} ${className}`}
+      className={`bg-white rounded-lg border border-gray-200 overflow-hidden cursor-pointer ${getFocusStyles()} ${className}`}
       layout
       onClick={handleCardClick}
-      whileHover={focusLevel !== "fog" ? { y: -2 } : {}}
+      whileHover={focusLevel !== "fog" ? { y: -1 } : {}}
       transition={{ duration: MERCURY_DURATIONS.normal, ease: MERCURY_EASING }}
+      style={{ width: '320px' }}
     >
       {/* Card Header */}
       <div className="p-4 border-b border-gray-100">
@@ -407,7 +408,7 @@ function renderCardSpecificContent(card: PlaybookCardType) {
   }
 }
 
-// Specialized renderer for step cards with Mercury OS elegance
+// Step card renderer matching exact workflow design
 function renderStepCard(
   card: PlaybookCardType & { data: PlaybookStep }, 
   handleCardClick: () => void, 
@@ -415,13 +416,12 @@ function renderStepCard(
   showDetails: boolean,
   handleDetailsToggle: (e: React.MouseEvent) => void,
   focusLevel: "focused" | "ambient" | "fog",
-  className: string
+  className: string,
+  isExpanded: boolean = false
 ) {
   const step = card.data;
-  // Extract step number from card ID (step-step1 -> step1 -> 1)
-  const stepId = card.id.split('-')[1]; // Gets "step1", "step2", etc.
+  const stepId = card.id.split('-')[1];
   const stepNumber = parseInt(stepId.replace('step', '')) || 1;
-  const completionPercentage = 0; // This could be dynamic based on actual completion
   
   const getExecutionIcon = (type: string) => {
     switch (type) {
@@ -437,174 +437,103 @@ function renderStepCard(
   const getFocusStyles = () => {
     switch (focusLevel) {
       case "focused":
-        return "ring-1 ring-gray-200 scale-[1.01]";
+        return "shadow-lg ring-1 ring-gray-200 scale-[1.02]";
       case "ambient":
-        return "hover:ring-1 hover:ring-gray-100 hover:scale-[1.005] transition-all duration-300";
+        return "shadow-md hover:shadow-lg transition-all duration-300";
       case "fog":
         return "opacity-50 scale-[0.98]";
       default:
-        return "";
+        return "shadow-md";
     }
   };
   
   return (
-    <motion.div
-      className={`bg-white rounded-2xl border border-gray-200 overflow-hidden cursor-pointer ${getFocusStyles()} ${className}`}
-      layout
+    <div
+      className={`cursor-pointer transition-all duration-300 ${className} focus:outline-none`}
       onClick={handleCardClick}
-      whileHover={focusLevel !== "fog" ? { y: -1 } : {}}
-      transition={{ duration: MERCURY_DURATIONS.normal, ease: MERCURY_EASING }}
+      role="button"
+      aria-label={`Step ${stepNumber}: ${step.title}. Click to view execution stages`}
+      tabIndex={-1}
     >
-      {/* Minimal Header */}
-      <div className="relative px-6 pt-6 pb-4">
-        <div className="flex items-start justify-between">
-          <div className="flex-1">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center space-x-2">
-                <div className="w-6 h-6 rounded-full bg-gray-900 flex items-center justify-center">
-                  <span className="text-xs font-semibold text-white">{stepNumber}</span>
-                </div>
-                <span className="text-sm font-medium text-gray-900 tracking-wide">
-                  Step {stepNumber}
-                </span>
-              </div>
-              
-              {/* Status Badge */}
-              <div className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-full border ${getStatusColor(step.status)}`}>
-                <span className="text-xs">{getStatusIcon(step.status)}</span>
-                <span className="text-xs font-medium">{getStatusLabel(step.status)}</span>
-                {step.status === "in_progress" && step.completion_percentage > 0 && (
-                  <span className="text-xs">({step.completion_percentage}%)</span>
-                )}
-              </div>
+      {/* Header */}
+      <div className="p-4 pb-3">
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center space-x-2">
+            <div className="w-6 h-6 rounded-full bg-black text-white flex items-center justify-center text-sm font-medium">
+              {stepNumber}
             </div>
-            
-            <div className="flex items-center space-x-1.5 mb-3">
-              {getExecutionIcon(step.execution.type)}
-              <span className="text-xs text-gray-600 font-medium">
-                {step.execution.type.replace('_', ' ')}
-              </span>
-            </div>
-            
-            <h3 className="text-lg font-semibold text-gray-900 mb-2 leading-tight">
-              {step.title}
-            </h3>
-            
-            <p className="text-sm text-gray-600 leading-relaxed line-clamp-2">
-              {step.description}
-            </p>
-          </div>
-
-          {/* Minimal Action */}
-          <div className="flex items-center ml-4">
-            <button
-              onClick={handleEditClick}
-              className="p-1.5 text-gray-400 hover:text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
-              title="Edit step"
-            >
-              <Edit3 className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Clean Content */}
-      <div className="px-6 pb-6">
-        {/* Essential Metrics */}
-        <div className="grid grid-cols-3 gap-4 mb-5">
-          <div className="text-center">
-            <div className="flex items-center justify-center w-10 h-10 bg-gray-50 rounded-xl mx-auto mb-2">
-              <Clock className="w-4 h-4 text-gray-700" />
-            </div>
-            <div className="text-xs text-gray-500 mb-1">Duration</div>
-            <div className="text-sm font-semibold text-gray-900">{formatDuration(step.estimated_minutes)}</div>
-          </div>
-          
-          <div className="text-center">
-            <div className="flex items-center justify-center w-10 h-10 bg-gray-50 rounded-xl mx-auto mb-2">
-              <Layers className="w-4 h-4 text-gray-700" />
-            </div>
-            <div className="text-xs text-gray-500 mb-1">Stages</div>
-            <div className="text-sm font-semibold text-gray-900">{step.execution.stages.length}</div>
-          </div>
-          
-          <div className="text-center">
-            <div className="flex items-center justify-center w-10 h-10 bg-gray-50 rounded-xl mx-auto mb-2">
-              <Target className="w-4 h-4 text-gray-700" />
-            </div>
-            <div className="text-xs text-gray-500 mb-1">Type</div>
-            <div className="text-xs font-medium text-gray-900 capitalize">{step.execution.type.replace('_', ' ')}</div>
-          </div>
-        </div>
-
-        {/* Click for Details */}
-        <div className="pt-2">
-          <div className="flex items-center justify-center">
-            <span className="text-xs text-gray-500 px-3 py-2 bg-gray-50 rounded-lg">
-              Click card to view execution stages
+            <span className="text-sm font-medium text-gray-900">
+              Step {stepNumber}
             </span>
           </div>
+          
+          {/* Status Badge */}
+          <div className={`px-2 py-1 rounded-md text-xs font-medium ${
+            step.status === "completed" ? "bg-green-100 text-green-700" :
+            step.status === "in_progress" ? "bg-blue-100 text-blue-700" :
+            "bg-gray-100 text-gray-600"
+          }`}>
+            {step.status === "completed" ? "✅ Completed" :
+             step.status === "in_progress" ? `🔄 In Progress${step.completion_percentage > 0 ? ` (${step.completion_percentage}%)` : ''}` :
+             "Pending"}
+          </div>
         </div>
+        
+        {/* Execution Type */}
+        <div className="flex items-center space-x-2 mb-3">
+          {getExecutionIcon(step.execution.type)}
+          <span className="text-sm text-gray-600 capitalize">
+            {step.execution.type}
+          </span>
+        </div>
+        
+        {/* Title */}
+        <h3 className="text-lg font-semibold text-gray-900 mb-2 leading-tight">
+          {step.title}
+        </h3>
+        
+        {/* Description */}
+        <p className="text-sm text-gray-600 leading-relaxed mb-4 line-clamp-2">
+          {step.description}
+        </p>
       </div>
 
-      {/* Expanded Details */}
-      <AnimatePresence>
-        {showDetails && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: MERCURY_EASING }}
-            className="border-t border-gray-100 bg-gray-50"
-          >
-            <div className="p-4">
-              <div className="space-y-3">
-                <div>
-                  <h4 className="text-sm font-medium text-gray-900 mb-2">All Execution Stages</h4>
-                  <div className="space-y-2">
-                    {step.execution.stages.map((stage, index) => (
-                      <div key={index} className="flex items-start space-x-3 p-3 bg-white rounded-lg border">
-                        <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center text-sm font-medium">
-                          {stage.stage}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center justify-between mb-1">
-                            <h5 className="text-sm font-medium text-gray-900">{stage.name}</h5>
-                            <span className={`px-2 py-0.5 text-xs rounded-full ${getExecutionTypeColor(stage.type)}`}>
-                              {stage.type.replace('_', ' ')}
-                            </span>
-                          </div>
-                          <p className="text-xs text-gray-600 mb-2">{stage.instructions}</p>
-                          <div className="flex items-center space-x-3 text-xs text-gray-500">
-                            <div className="flex items-center space-x-1">
-                              <Clock className="w-3 h-3" />
-                              <span>{formatDuration(stage.estimated_minutes)}</span>
-                            </div>
-                            {stage.tool && (
-                              <div className="flex items-center space-x-1">
-                                <Settings className="w-3 h-3" />
-                                <span>{stage.tool}</span>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
+      {/* Metrics Grid */}
+      <div className="px-4 pb-4">
+        <div className="grid grid-cols-3 gap-4 text-center">
+          <div>
+            <div className="flex items-center justify-center w-8 h-8 mx-auto mb-1">
+              <Clock className="w-4 h-4 text-gray-500" />
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Connection Indicators */}
-      {card.connections.length > 0 && (
-        <div className="absolute -right-1 top-1/2 transform -translate-y-1/2">
-          <div className="w-2 h-2 bg-blue-500 rounded-full shadow-sm" />
+            <div className="text-xs text-gray-500 mb-1">Duration</div>
+            <div className="text-sm font-medium text-gray-900">{formatDuration(step.estimated_minutes)}</div>
+          </div>
+          
+          <div>
+            <div className="flex items-center justify-center w-8 h-8 mx-auto mb-1">
+              <Layers className="w-4 h-4 text-gray-500" />
+            </div>
+            <div className="text-xs text-gray-500 mb-1">Stages</div>
+            <div className="text-sm font-medium text-gray-900">{step.execution.stages.length}</div>
+          </div>
+          
+          <div>
+            <div className="flex items-center justify-center w-8 h-8 mx-auto mb-1">
+              <Target className="w-4 h-4 text-gray-500" />
+            </div>
+            <div className="text-xs text-gray-500 mb-1">Type</div>
+            <div className="text-sm font-medium text-gray-900 capitalize">{step.execution.type}</div>
+          </div>
         </div>
-      )}
-    </motion.div>
+        
+        {/* Click hint */}
+        <div className="text-center mt-4">
+          <span className="text-xs text-gray-500">
+            Click to view execution stages
+          </span>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -710,7 +639,7 @@ function renderExpandedContent(card: PlaybookCardType) {
                       {stage.tool && (
                         <>
                           <span>•</span>
-                          <span>Tool: {stage.tool}</span>
+                          <span>Tool: {typeof stage.tool === 'string' ? stage.tool : stage.tool.name}</span>
                         </>
                       )}
                     </div>

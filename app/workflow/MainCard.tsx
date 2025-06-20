@@ -108,7 +108,7 @@ export function MainCard({
         <div className="flex items-center gap-1 w-fit bg-gray-50 border border-gray-100 rounded-full px-2 py-1">
           <User className="w-4 h-4" />
           <span className="truncate max-w-[140px]">
-            {context.upload.participants?.[0] || "afsheenamroliwala@gmail.com"}
+            {context.upload.participants?.[0] || "john@doe.com"}
           </span>
         </div>
         {/* <div className="flex items-center gap-1 w-fit bg-gray-50 border border-gray-100 rounded-full px-2 py-1">
