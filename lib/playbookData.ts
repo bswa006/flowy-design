@@ -9,11 +9,22 @@ export interface PlaybookProject {
   created_at: string;
   status: string;
   metadata: {
-    feature_type: string;
-    integrations: string[];
-    tech_stack: string[];
-    target_users: string;
-    expected_impact: string;
+    migration_type?: string;
+    source_stack?: string[];
+    target_stack?: string[];
+    ai_tools_stack?: string[];
+    codebase_metrics?: {
+      total_components: number;
+      lines_of_code: number;
+      test_coverage: string;
+      technical_debt_hours: number;
+    };
+    expected_benefits?: string;
+    feature_type?: string;
+    integrations?: string[];
+    tech_stack?: string[];
+    target_users?: string;
+    expected_impact?: string;
   };
 }
 

@@ -306,7 +306,7 @@ function getCardDate(card: PlaybookCardType): string {
 function getCardTags(card: PlaybookCardType): string[] {
   switch (card.type) {
     case "project":
-      return (card.data as PlaybookProject).metadata.integrations.slice(0, 3);
+      return (card.data as PlaybookProject).metadata.integrations?.slice(0, 3) || [];
     case "context":
       return (card.data as PlaybookContext).tags || [];
     case "insight":
@@ -546,7 +546,7 @@ function renderExpandedContent(card: PlaybookCardType) {
           <div>
             <h4 className="text-sm font-medium text-gray-900 mb-2">Tech Stack</h4>
             <div className="flex flex-wrap gap-1">
-              {project.metadata.tech_stack.map((tech, index) => (
+              {project.metadata.tech_stack?.map((tech, index) => (
                 <span key={index} className="px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded">
                   {tech}
                 </span>
@@ -556,7 +556,7 @@ function renderExpandedContent(card: PlaybookCardType) {
           <div>
             <h4 className="text-sm font-medium text-gray-900 mb-2">Integrations</h4>
             <div className="flex flex-wrap gap-1">
-              {project.metadata.integrations.map((integration, index) => (
+              {project.metadata.integrations?.map((integration, index) => (
                 <span key={index} className="px-2 py-1 text-xs bg-green-100 text-green-700 rounded">
                   {integration}
                 </span>
