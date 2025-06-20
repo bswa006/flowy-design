@@ -4,12 +4,13 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Context } from "@/lib/contextMockData";
 import { MERCURY_DURATIONS, MERCURY_EASING } from "@/lib/mercury-utils";
-import { Lightbulb } from "lucide-react";
+import { Lightbulb, Edit2, Check, X } from "lucide-react";
 
 interface InsightsPanelProps {
   intent: "insights-panel" | "insights-panel-grid";
   context: Context;
   isVisible: boolean;
+  onInsightUpdate?: (contextId: string, updatedInsights: string[]) => void;
 }
 
 const INSIGHT_STYLES = {
@@ -138,8 +139,11 @@ export function InsightsPanel({
   intent,
   context,
   isVisible,
+  onInsightUpdate,
 }: InsightsPanelProps) {
-  // Move hooks to the top - simplified for focused insights only
+  // Edit state management
+  const [editingInsightId, setEditingInsightId] = React.useState<string | null>(null);
+  const [editText, setEditText] = React.useState<string>("");
 
   if (!isVisible) return null;
   const metadata = context.extracted_metadata;
@@ -200,6 +204,32 @@ export function InsightsPanel({
   
   const progressiveInsights = createProgressiveInsights(focusedInsights);
 
+  // Edit handlers
+  const startEdit = (insightId: string, currentText: string) => {
+    setEditingInsightId(insightId);
+    setEditText(currentText);
+  };
+
+  const saveEdit = () => {
+    if (!editingInsightId || !onInsightUpdate) return;
+    
+    const updatedInsights = [...focusedInsights];
+    const insightIndex = parseInt(editingInsightId.split('-')[1]);
+    
+    if (insightIndex >= 0 && insightIndex < updatedInsights.length) {
+      updatedInsights[insightIndex] = editText.trim();
+      onInsightUpdate(context.id, updatedInsights);
+    }
+    
+    setEditingInsightId(null);
+    setEditText("");
+  };
+
+  const cancelEdit = () => {
+    setEditingInsightId(null);
+    setEditText("");
+  };
+
   return (
     <motion.div
       data-intent={intent}
@@ -257,7 +287,7 @@ export function InsightsPanel({
         {/* Elegant Progressive Insights */}
         <div className="bg-white border border-gray-200 rounded-lg max-h-96 overflow-y-auto shadow-sm">
           <div className="divide-y divide-gray-100">
-            {Array.from(new Set(progressiveInsights.map(p => p.contextNumber))).map(contextNum => {
+            {Array.from(new Set(progressiveInsights.map(p => p.contextNumber))).reverse().map(contextNum => {
               const contextInsights = progressiveInsights.filter(p => p.contextNumber === contextNum);
               const contextSource = contextInsights[0]?.source || `Context ${contextNum}`;
               const isCurrentContext = contextNum === Math.max(...progressiveInsights.map(p => p.contextNumber));
@@ -297,22 +327,69 @@ export function InsightsPanel({
                   {/* Elegant Insights List */}
                   <div className="px-4 pb-4">
                     <div className="space-y-3">
-                      {contextInsights.map((insight, index) => (
-                        <div key={index} className="flex items-start gap-3 group">
-                          <div className={`flex items-center justify-center w-4 h-4 rounded-full flex-shrink-0 text-xs font-medium border ${
-                            isCurrentContext 
-                              ? 'bg-gray-700 text-white border-gray-700' 
-                              : 'bg-gray-100 text-gray-600 border-gray-300'
-                          }`}>
-                            {index + 1}
+                      {contextInsights.map((insight, index) => {
+                        const insightId = `${contextNum}-${progressiveInsights.findIndex(p => p.text === insight.text)}`;
+                        const isEditing = editingInsightId === insightId;
+                        
+                        return (
+                          <div key={index} className="flex items-start gap-3 group">
+                            <div className={`flex items-center justify-center w-4 h-4 rounded-full flex-shrink-0 text-xs font-medium border ${
+                              isCurrentContext 
+                                ? 'bg-gray-700 text-white border-gray-700' 
+                                : 'bg-gray-100 text-gray-600 border-gray-300'
+                            }`}>
+                              {index + 1}
+                            </div>
+                            
+                            <div className="flex-1 min-w-0">
+                              {isEditing ? (
+                                <div className="space-y-2">
+                                  <textarea
+                                    value={editText}
+                                    onChange={(e) => setEditText(e.target.value)}
+                                    className="w-full text-xs leading-relaxed p-2 border border-gray-300 rounded resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    rows={3}
+                                    autoFocus
+                                  />
+                                  <div className="flex items-center gap-2">
+                                    <button
+                                      onClick={saveEdit}
+                                      className="flex items-center gap-1 px-2 py-1 bg-green-600 text-white text-xs rounded hover:bg-green-700 transition-colors"
+                                    >
+                                      <Check className="w-3 h-3" />
+                                      Save
+                                    </button>
+                                    <button
+                                      onClick={cancelEdit}
+                                      className="flex items-center gap-1 px-2 py-1 bg-gray-500 text-white text-xs rounded hover:bg-gray-600 transition-colors"
+                                    >
+                                      <X className="w-3 h-3" />
+                                      Cancel
+                                    </button>
+                                  </div>
+                                </div>
+                              ) : (
+                                <div className="flex items-start justify-between group/insight-item">
+                                  <p className={`text-xs leading-relaxed transition-colors group-hover/insight-item:text-gray-900 ${
+                                    isCurrentContext ? 'text-gray-800' : 'text-gray-600'
+                                  }`}>
+                                    {insight.text}
+                                  </p>
+                                  {isCurrentContext && onInsightUpdate && (
+                                    <button
+                                      onClick={() => startEdit(insightId, insight.text)}
+                                      className="opacity-0 group-hover/insight-item:opacity-100 ml-2 p-1 text-gray-400 hover:text-gray-600 transition-all duration-200"
+                                      title="Edit insight"
+                                    >
+                                      <Edit2 className="w-3 h-3" />
+                                    </button>
+                                  )}
+                                </div>
+                              )}
+                            </div>
                           </div>
-                          <p className={`text-xs leading-relaxed transition-colors group-hover:text-gray-900 ${
-                            isCurrentContext ? 'text-gray-800' : 'text-gray-600'
-                          }`}>
-                            {insight.text}
-                          </p>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </div>
                 </div>

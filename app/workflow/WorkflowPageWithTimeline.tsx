@@ -26,6 +26,7 @@ interface MercuryTimelineCardProps {
   onSave: (updatedContext: Context) => void;
   onCancel: () => void;
   onToggleInsights: () => void;
+  onInsightUpdate: (contextId: string, updatedInsights: string[]) => void;
 }
 
 function MercuryTimelineCard({
@@ -38,6 +39,7 @@ function MercuryTimelineCard({
   onSave,
   onCancel,
   onToggleInsights,
+  onInsightUpdate,
 }: MercuryTimelineCardProps) {
   const [editedContext, setEditedContext] = useState<Context>(context);
 
@@ -145,6 +147,7 @@ function MercuryTimelineCard({
             intent="insights-panel"
             context={context}
             isVisible={true}
+            onInsightUpdate={onInsightUpdate}
           />
         </motion.div>
       )}
@@ -216,6 +219,23 @@ export default function WorkflowPageWithTimeline() {
       }
       return newSet;
     });
+  };
+
+  // Handle insight updates
+  const handleInsightUpdate = (contextId: string, updatedInsights: string[]) => {
+    setContexts((prevContexts) => 
+      prevContexts.map(context => 
+        context.id === contextId 
+          ? {
+              ...context,
+              extracted_metadata: {
+                ...context.extracted_metadata,
+                insights: updatedInsights
+              }
+            }
+          : context
+      )
+    );
   };
 
   const getFocusLevel = (contextId: string): "focused" | "ambient" | "fog" => {
@@ -331,6 +351,7 @@ export default function WorkflowPageWithTimeline() {
           onSave={handleSave}
           onCancel={handleCancel}
           onToggleInsights={() => handleToggleInsights(context.id)}
+          onInsightUpdate={handleInsightUpdate}
         />
       ),
     };
