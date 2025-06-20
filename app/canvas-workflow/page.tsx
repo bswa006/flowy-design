@@ -36,7 +36,7 @@ function StageDetailsPanel({ card, stageId, onClose }: { card: PlaybookCardType,
   }
 
   return (
-    <div className="h-full flex flex-col max-h-full">
+    <div className="h-full flex flex-col">
       {/* Fixed Header */}
       <div className="flex-shrink-0 flex items-center justify-between mb-4 pb-2 border-b border-gray-200">
         <h3 className="text-lg font-semibold text-gray-900">Stage {stage.stage} Details</h3>
@@ -56,6 +56,7 @@ function StageDetailsPanel({ card, stageId, onClose }: { card: PlaybookCardType,
         style={{ 
           scrollbarWidth: 'thin',
           scrollbarColor: '#cbd5e1 #f1f5f9'
+          // Remove fixed height - let it take remaining space
         }}
       >
         <div>
@@ -183,6 +184,17 @@ export default function CanvasWorkflowPage() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentPlayIndex, setCurrentPlayIndex] = useState(0);
   const [playTimeoutId, setPlayTimeoutId] = useState<NodeJS.Timeout | null>(null);
+  
+  // Simple CSS-based width system
+  const getCardClasses = (cardId: string) => {
+    if (expandedStageDetails?.cardId === cardId && expandedIds.has(cardId)) {
+      return "w-[95vw] max-w-7xl"; // Three panels: 95% of viewport (increased to use more space)
+    } else if (expandedIds.has(cardId)) {
+      return "w-[75vw] max-w-5xl"; // Two panels: 75% of viewport (increased)
+    } else {
+      return "w-[30vw] max-w-md"; // Single card: 30% of viewport
+    }
+  };
   
   // Horizontal scroll should always be available when content overflows
   
@@ -867,7 +879,7 @@ export default function CanvasWorkflowPage() {
         ref={canvasRef}
         data-intent={intent}
         data-canvas-background="true"
-        className={`mercury-module mercury-space h-screen w-full bg-gradient-to-br from-gray-50/50 via-white to-gray-50/30 relative overflow-x-auto overflow-y-hidden select-none ${
+        className={`mercury-module mercury-space min-h-screen w-full bg-gradient-to-br from-gray-50/50 via-white to-gray-50/30 relative overflow-y-auto overflow-x-auto select-none ${
           isSpacePressed ? 'cursor-grab' : isPanning ? 'cursor-grabbing' : ''
         }`}
         role="region"
@@ -982,16 +994,14 @@ export default function CanvasWorkflowPage() {
         )}
         
         
-        {/* Scrolling content with conditional transforms */}
+        {/* Vertical scrolling content */}
         <div 
-          className="flex flex-col gap-8 min-h-screen"
+          className="flex flex-col w-full"
           style={{
-            width: 'max-content',
-            minWidth: '100vw', // Ensure it spans at least full viewport width
-            paddingLeft: '32px',
-            paddingRight: `${Math.max(600, expandedIds.size * 500 + (expandedStageDetails ? 400 : 0) + 600)}px`,
-            paddingTop: '120px', // Proper spacing from header for breathing room
-            paddingBottom: '40px',
+            paddingLeft: '24px',
+            paddingRight: '24px',
+            paddingTop: '0px', // No top padding - each card container handles spacing
+            paddingBottom: '0px', // No bottom padding for full height
             ...(canvasZoom !== 1 || canvasPan.x !== 0 || canvasPan.y !== 0 ? {
               transform: `translate(${canvasPan.x}px, ${canvasPan.y}px) scale(${canvasZoom})`,
               transformOrigin: 'top left',
@@ -1002,28 +1012,36 @@ export default function CanvasWorkflowPage() {
           data-canvas-background="true"
         >
           {/* Playbook Step Cards Container */}
-          <div className="flex items-center gap-6">
+          <div className="flex flex-col items-center w-full">
             {/* Playbook Cards */}
             {orderedPlaybookCards.map((playbookCard, index) => (
-              <motion.div
+              <div 
                 key={playbookCard.id}
-                data-intent={`playbook-card-${playbookCard.id}`}
-                className="mercury-module flex-shrink-0"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{
-                  duration: MERCURY_DURATIONS.normal,
-                  ease: MERCURY_EASING,
-                  delay: index * 0.1
-                }}
-                role="region"
-                aria-label={`${playbookCard.type} card ${index + 1}`}
+                className="w-full flex items-center justify-center px-4"
                 style={{
-                  cursor: editingId !== playbookCard.id && !isSpacePressed && !isPanning ? 'grab' : 'default',
-                  opacity: draggedCardId === playbookCard.id ? 0.5 : 1,
-                  pointerEvents: isPanning ? 'none' : 'auto'
+                  height: '100vh', // Each card gets its own viewport section
+                  paddingTop: index === 0 ? '120px' : '80px', // More space for first card (header), less for others
+                  paddingBottom: '80px' // Bottom spacing within viewport
                 }}
               >
+                <motion.div
+                  data-intent={`playbook-card-${playbookCard.id}`}
+                  className="mercury-module w-full max-w-none"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{
+                    duration: MERCURY_DURATIONS.normal,
+                    ease: MERCURY_EASING,
+                    delay: index * 0.1
+                  }}
+                  role="region"
+                  aria-label={`${playbookCard.type} card ${index + 1}`}
+                  style={{
+                    cursor: editingId !== playbookCard.id && !isSpacePressed && !isPanning ? 'grab' : 'default',
+                    opacity: draggedCardId === playbookCard.id ? 0.5 : 1,
+                    pointerEvents: isPanning ? 'none' : 'auto'
+                  }}
+                >
                 <div
                   draggable={editingId !== playbookCard.id && !isPanning && !isSpacePressed}
                   onDragStart={(e: React.DragEvent) => handleDragStart(playbookCard.id, e)}
@@ -1031,28 +1049,34 @@ export default function CanvasWorkflowPage() {
                   onDragEnd={handleDragEnd}
                   className="w-full h-full"
                 >
-                  {/* Elegant integrated card that expands naturally */}
+                  {/* Progressive width expansion card with unified border */}
                   <motion.div
-                    className={`bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
+                    className={`bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md mx-auto ${getCardClasses(playbookCard.id)} ${
                       getFocusLevel(playbookCard.id) === 'focused' ? 'scale-[1.02] z-30' :
                       getFocusLevel(playbookCard.id) === 'ambient' ? 'scale-100 z-10' :
                       'scale-[0.98] z-0 opacity-40 pointer-events-none blur-[0.5px]'
                     }`}
                     layout
                     animate={{
-                      width: expandedIds.has(playbookCard.id) && editingId !== playbookCard.id ? 
-                        (expandedStageDetails?.cardId === playbookCard.id ? 'auto' : 'auto') : 320,
                       height: editingId === playbookCard.id ? "80vh" : 'auto'
                     }}
-                    transition={{ duration: 0.7, ease: wuWeiEasing }}
+                    transition={{ duration: 0.5, ease: wuWeiEasing }}
                     style={{
                       overflow: "visible",
-                      minHeight: '280px'
+                      height: 'auto',
+                      maxHeight: 'calc(100vh - 200px)',
+                      minHeight: '400px'
                     }}
                   >
-                    <div className={`flex ${expandedIds.has(playbookCard.id) ? 'items-start' : 'items-center'}`}>
+                    <div className="flex items-stretch w-full">
                       {/* Step Card Section */}
-                      <div className="w-80 flex-shrink-0 p-6">
+                      <div className={`p-6 ${
+                        expandedStageDetails?.cardId === playbookCard.id && expandedIds.has(playbookCard.id) 
+                          ? 'w-[30%] min-w-[30%]' // Three panels: 30% (reduced)
+                          : expandedIds.has(playbookCard.id) 
+                          ? 'w-[40%] min-w-[40%]' // Two panels: 40% (reduced)
+                          : 'w-full' // Single panel: 100%
+                      }`}>
                         <PlaybookCard
                           card={playbookCard}
                           onToggleInsights={() => handleToggleInsights(playbookCard.id)}
@@ -1063,7 +1087,7 @@ export default function CanvasWorkflowPage() {
                         />
                       </div>
                       
-                      {/* Insights Panel Section - expands naturally */}
+                      {/* Insights Panel Section */}
                       <AnimatePresence>
                         {expandedIds.has(playbookCard.id) && editingId !== playbookCard.id && (
                           <motion.div
@@ -1071,13 +1095,11 @@ export default function CanvasWorkflowPage() {
                             animate={{ opacity: 1, width: 'auto' }}
                             exit={{ opacity: 0, width: 0 }}
                             transition={{ duration: 0.5, ease: wuWeiEasing }}
-                            className="border-l border-gray-100 flex-1 min-w-0 p-6"
-                            style={{ 
-                              minWidth: '500px', 
-                              maxWidth: '500px',
-                              height: 'calc(100vh - 140px)',
-                              maxHeight: 'calc(100vh - 140px)'
-                            }}
+                            className={`border-l border-gray-100 p-6 ${
+                              expandedStageDetails?.cardId === playbookCard.id 
+                                ? 'w-[35%] min-w-[35%] max-h-[500px] overflow-y-auto' // Three panels: 35% with scroll
+                                : 'w-[60%] min-w-[60%] max-h-[500px] overflow-y-auto' // Two panels: 60% with scroll
+                            }`}
                           >
                             <PlaybookInsightsPanel
                               card={playbookCard}
@@ -1091,7 +1113,7 @@ export default function CanvasWorkflowPage() {
                         )}
                       </AnimatePresence>
                       
-                      {/* Stage Details Panel - expands further to the right */}
+                      {/* Stage Details Panel */}
                       <AnimatePresence>
                         {expandedStageDetails?.cardId === playbookCard.id && expandedIds.has(playbookCard.id) && editingId !== playbookCard.id && (
                           <motion.div
@@ -1099,15 +1121,9 @@ export default function CanvasWorkflowPage() {
                             animate={{ opacity: 1, width: 'auto' }}
                             exit={{ opacity: 0, width: 0 }}
                             transition={{ duration: 0.5, ease: wuWeiEasing }}
-                            className="border-l border-gray-100 flex-shrink-0 p-6 bg-gray-50"
-                            style={{ 
-                              minWidth: '400px', 
-                              maxWidth: '400px',
-                              height: 'calc(100vh - 140px)', // Account for header and padding
-                              maxHeight: 'calc(100vh - 140px)'
-                            }}
+                            className="border-l border-gray-100 bg-gray-50 rounded-r-2xl w-[35%] min-w-[35%] h-[500px] overflow-hidden"
                           >
-                            <div className="h-full">
+                            <div className="h-full flex flex-col p-6">
                               <StageDetailsPanel 
                                 card={playbookCard}
                                 stageId={expandedStageDetails.stageId}
@@ -1121,6 +1137,7 @@ export default function CanvasWorkflowPage() {
                   </motion.div>
                 </div>
               </motion.div>
+              </div>
             ))}
           </div>
         </div>

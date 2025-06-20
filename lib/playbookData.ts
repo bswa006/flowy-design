@@ -284,12 +284,23 @@ const addStageStatus = (stages: any[], stepIndex: number) => {
 // Helper functions for enhanced data
 const getEnhancedTool = (stage: any, stageIndex: number): ToolConfiguration | undefined => {
   if (stage.tool) {
-    return {
-      name: stage.tool,
-      url: getToolUrl(stage.tool),
-      clickable: true,
-      configuration: getToolConfiguration(stage.tool, stageIndex)
-    };
+    // Handle both string and object tool definitions
+    if (typeof stage.tool === 'string') {
+      return {
+        name: stage.tool,
+        url: getToolUrl(stage.tool),
+        clickable: true,
+        configuration: getToolConfiguration(stage.tool, stageIndex)
+      };
+    } else if (typeof stage.tool === 'object' && stage.tool.name) {
+      // Tool is already an object, return it with any missing defaults
+      return {
+        ...stage.tool,
+        url: stage.tool.url || getToolUrl(stage.tool.name),
+        clickable: stage.tool.clickable !== undefined ? stage.tool.clickable : true,
+        configuration: stage.tool.configuration || getToolConfiguration(stage.tool.name, stageIndex)
+      };
+    }
   }
   return undefined;
 };
@@ -300,9 +311,25 @@ const getToolUrl = (toolName: string): string => {
     "ShardCN": "https://ui.shadcn.com",
     "Cursor": "https://cursor.sh",
     "GitHub": "https://github.com",
-    "VS Code": "https://code.visualstudio.com"
+    "VS Code": "https://code.visualstudio.com",
+    "CodeQL + SonarQube": "https://github.com/github/codeql",
+    "npm audit + Snyk": "https://snyk.io",
+    "create-next-app": "https://nextjs.org/docs/app/api-reference/create-next-app",
+    "GitHub Actions": "https://github.com/features/actions",
+    "ESLint + Prettier": "https://eslint.org",
+    "Retool/Grafana": "https://grafana.com",
+    "Vercel Analytics + Sentry": "https://vercel.com/analytics",
+    "Prisma": "https://www.prisma.io",
+    "ast-grep + jscodeshift": "https://ast-grep.github.io",
+    "Cursor IDE + Copilot": "https://cursor.sh",
+    "i18next-parser": "https://github.com/i18next/i18next-parser",
+    "Crowdin": "https://crowdin.com",
+    "Vitest + Playwright": "https://vitest.dev",
+    "Lighthouse CI": "https://github.com/GoogleChrome/lighthouse-ci",
+    "Vercel": "https://vercel.com",
+    "LaunchDarkly": "https://launchdarkly.com"
   };
-  return toolUrls[toolName] || `https://tools.dev/${toolName.toLowerCase()}`;
+  return toolUrls[toolName] || `https://tools.dev/${toolName.toLowerCase().replace(/[^a-z0-9]/g, '-')}`;
 };
 
 const getToolConfiguration = (toolName: string, stageIndex: number): any => {
@@ -330,13 +357,22 @@ const getEnhancedPrompt = (stage: any, stageIndex: number): PromptTemplate | und
 const getRichContent = (stage: any, stageIndex: number): RichContent => {
   const elements: RichContentElement[] = [];
   
+  // Get tool name safely
+  const getToolName = (tool: any): string | null => {
+    if (typeof tool === 'string') return tool;
+    if (typeof tool === 'object' && tool.name) return tool.name;
+    return null;
+  };
+  
+  const toolName = getToolName(stage.tool);
+  
   // Add code examples for tool-guided stages
-  if (stage.type === "tool_guided" && stage.tool) {
+  if (stage.type === "tool_guided" && toolName) {
     elements.push({
       type: "code",
-      content: `npm install ${stage.tool.toLowerCase()}`,
+      content: `npm install ${toolName.toLowerCase()}`,
       language: "bash",
-      title: `Install ${stage.tool}`
+      title: `Install ${toolName}`
     });
   }
   
@@ -351,13 +387,13 @@ const getRichContent = (stage: any, stageIndex: number): RichContent => {
   }
   
   // Add documentation links
-  if (stage.tool) {
+  if (toolName) {
     elements.push({
       type: "link",
-      url: getToolUrl(stage.tool),
-      content: `${stage.tool} Documentation`,
+      url: getToolUrl(toolName),
+      content: `${toolName} Documentation`,
       clickable: true,
-      title: `Open ${stage.tool} docs`
+      title: `Open ${toolName} docs`
     });
   }
   
@@ -368,17 +404,174 @@ const getRichContent = (stage: any, stageIndex: number): RichContent => {
 };
 
 const getStageInputs = (stage: any, stageIndex: number) => {
+  // Return more specific inputs based on stage content
+  const stageSpecificInputs: Record<string, string[]> = {
+    "Automated codebase scanning": [
+      "Legacy React 14 source code repository",
+      "Package.json with all dependencies", 
+      "Existing build configuration files"
+    ],
+    "Dependency analysis and mapping": [
+      "Security scan results from previous stage",
+      "Complete dependency tree",
+      "Current package versions list"
+    ],
+    "Architecture documentation with AI": [
+      "Codebase structure analysis",
+      "Component hierarchy mapping",
+      "API endpoint documentation"
+    ],
+    "Initialize Next.js 15 with TypeScript": [
+      "Project requirements specification",
+      "Target architecture decisions",
+      "Team development preferences"
+    ],
+    "Configure AI-powered development tools": [
+      "Team IDE preferences",
+      "Existing development workflow",
+      "Code quality standards"
+    ],
+    "Migrate authentication to NextAuth.js": [
+      "Current authentication implementation",
+      "User database schema",
+      "Session management requirements"
+    ]
+  };
+
   return {
-    required: ["project_requirements", "target_framework"],
-    optional: stageIndex > 0 ? ["previous_stage_output"] : []
+    required: stageSpecificInputs[stage.name] || [
+      "Requirements from previous stage",
+      "Technical specifications",
+      "Team approval and sign-off"
+    ],
+    optional: stageIndex > 0 ? ["Previous stage deliverables", "Team feedback"] : []
   };
 };
 
 const getStageOutputs = (stage: any, stageIndex: number) => {
-  return {
-    generated: ["implementation_plan", "code_structure"],
-    artifacts: [`stage_${stageIndex + 1}_output.md`, "config.json"]
+  // Return comprehensive outputs based on stage content
+  const stageSpecificOutputs: Record<string, string[]> = {
+    "Automated codebase scanning": [
+      "Security vulnerability report (147 critical issues identified)",
+      "Technical debt assessment with severity levels", 
+      "Code quality metrics and complexity analysis",
+      "Dependency audit with upgrade recommendations"
+    ],
+    "Dependency analysis and mapping": [
+      "Complete migration roadmap for 89 outdated packages",
+      "Breaking changes documentation for major upgrades",
+      "Alternative package recommendations (Redux → Zustand)",
+      "Timeline and effort estimation for each dependency"
+    ],
+    "Architecture documentation with AI": [
+      "Comprehensive component hierarchy diagram",
+      "Data flow documentation with state management patterns",
+      "API integration points and authentication flows",
+      "Migration complexity matrix (450 components categorized)"
+    ],
+    "Create migration roadmap": [
+      "Detailed 26-week migration timeline",
+      "Component complexity categorization (Simple: 200, Medium: 180, Complex: 70)",
+      "Risk assessment with mitigation strategies",
+      "Resource allocation and team assignment plan"
+    ],
+    "Setup migration tracking dashboard": [
+      "Real-time progress dashboard with migration metrics",
+      "Automated reporting for component completion rates",
+      "Performance benchmarking tools integration",
+      "Team velocity tracking and bottleneck identification"
+    ],
+    "Initialize Next.js 15 with TypeScript": [
+      "Fully configured Next.js 15 project with App Router",
+      "TypeScript strict mode configuration",
+      "Tailwind CSS integration with custom design tokens",
+      "Project structure following best practices"
+    ],
+    "Configure AI-powered development tools": [
+      "GitHub Copilot integration with team settings",
+      "Cursor IDE configuration for React migration patterns",
+      "AI prompt templates for component conversion",
+      "Automated code review workflows"
+    ],
+    "Setup CI/CD with GitHub Actions": [
+      "Automated testing pipeline with quality gates",
+      "Build and deployment workflow for staging/production",
+      "Performance monitoring integration",
+      "Security scanning in CI/CD pipeline"
+    ],
+    "Migrate authentication to NextAuth.js": [
+      "NextAuth.js configuration with multiple providers",
+      "User session migration strategy preserving existing sessions",
+      "Security enhancements with JWT and OAuth integration",
+      "Backward compatibility layer for legacy auth"
+    ],
+    "Setup Prisma ORM with PostgreSQL": [
+      "Complete database schema migration from MongoDB",
+      "Data migration scripts with integrity validation",
+      "Prisma client configuration with type safety",
+      "Database connection pooling and optimization"
+    ],
+    "Extract hardcoded strings": [
+      "15,000+ strings extracted into organized translation files",
+      "Namespace structure for component-based translations",
+      "Context preservation for accurate AI translation",
+      "Duplicate detection and consolidation report"
+    ],
+    "AI-powered translation": [
+      "Professional translations for 12 languages",
+      "Context-aware translations maintaining UI tone",
+      "Cultural adaptation for target markets",
+      "Quality assurance report with confidence scores"
+    ]
   };
+
+  return {
+    generated: stageSpecificOutputs[stage.name] || [
+      "Stage completion report with quality metrics",
+      "Implementation documentation and best practices",
+      "Code artifacts ready for next development phase",
+      "Validation results and testing outcomes"
+    ],
+    artifacts: getStageArtifacts(stage.name, stageIndex)
+  };
+};
+
+const getStageArtifacts = (stageName: string, stageIndex: number): string[] => {
+  const stageArtifacts: Record<string, string[]> = {
+    "Automated codebase scanning": [
+      "security-vulnerability-report.json",
+      "technical-debt-analysis.pdf", 
+      "code-quality-metrics.xlsx"
+    ],
+    "Architecture documentation with AI": [
+      "component-hierarchy-diagram.svg",
+      "data-flow-documentation.md",
+      "migration-complexity-matrix.xlsx"
+    ],
+    "Initialize Next.js 15 with TypeScript": [
+      "next.config.js",
+      "tsconfig.json",
+      "tailwind.config.js",
+      "package.json"
+    ],
+    "Setup CI/CD with GitHub Actions": [
+      ".github/workflows/ci-cd.yml",
+      "deployment-scripts/",
+      "quality-gates-config.json"
+    ],
+    "AI-powered translation": [
+      "locales/en/common.json",
+      "locales/es/common.json", 
+      "locales/fr/common.json",
+      "translation-quality-report.pdf"
+    ]
+  };
+
+  return stageArtifacts[stageName] || [
+    `${stageName.toLowerCase().replace(/\s+/g, '-')}-output.md`,
+    "implementation-guide.pdf",
+    "validation-checklist.json"
+  ];
 };
 
 const getFlowPosition = (stageIndex: number, stepIndex: number): FlowPosition => {
@@ -472,17 +665,38 @@ const enrichedPlaybookData = {
 
 export const playbookData: PlaybookData = enrichedPlaybookData as PlaybookData;
 
+// Get card width based on expansion state - optimized for three-panel system
+export const getCardWidth = (cardId: string, expandedInsights?: string | null, expandedStageDetails?: string | null): number => {
+  const baseWidth = 480; // Step card section (optimized)
+  const insightsWidth = 520; // Execution Stages panel (optimized)
+  const stageDetailsWidth = 480; // Stage details panel (optimized)
+  
+  let totalWidth = baseWidth;
+  
+  // Add insights panel width if insights are expanded
+  if (expandedInsights === cardId) {
+    totalWidth += insightsWidth;
+  }
+  
+  // Add stage details panel width if stage details are expanded
+  if (expandedStageDetails) {
+    totalWidth += stageDetailsWidth;
+  }
+  
+  return totalWidth;
+};
+
 // Create initial cards for canvas workflow - focus on steps as main cards
 export const createPlaybookCards = (): PlaybookCard[] => {
   const cards: PlaybookCard[] = [];
   
-  // Add all playbook steps as the main cards
+  // Add all playbook steps as the main cards - positioned vertically
   playbookData.playbook.steps.forEach((step, index) => {
     cards.push({
       id: `step-${step.id}`,
       type: "step",
       data: step,
-      position: { x: 50 + (index * 450), y: 100 },
+      position: { x: 50, y: 100 + (index * 400) }, // Vertical positioning
       connections: [],
       focusLevel: "ambient"
     });

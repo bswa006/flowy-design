@@ -174,6 +174,12 @@ export function PlaybookInsightsPanel({
     }
   };
 
+  const formatText = (text: string) => {
+    return text
+      .replace(/_/g, ' ')
+      .replace(/\b\w/g, letter => letter.toUpperCase());
+  };
+
   // Rich content rendering functions
   const renderRichContentElement = (element: RichContentElement, index: number) => {
     switch (element.type) {
@@ -290,7 +296,7 @@ export function PlaybookInsightsPanel({
             </div>
             <div className="text-xs text-green-700 space-y-1">
               {stage.inputs.required.map((input, i) => (
-                <div key={i}>• {input}</div>
+                <div key={i}>• {formatText(input)}</div>
               ))}
             </div>
           </div>
@@ -304,7 +310,7 @@ export function PlaybookInsightsPanel({
             </div>
             <div className="text-xs text-orange-700 space-y-1">
               {stage.outputs.generated.map((output, i) => (
-                <div key={i}>• {output}</div>
+                <div key={i}>• {formatText(output)}</div>
               ))}
             </div>
           </div>
