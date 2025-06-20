@@ -13,6 +13,7 @@ import { PlaybookInsightsPanel } from "@/components/playbook/PlaybookInsightsPan
 import { ProjectHeader } from "@/components/playbook/ProjectHeader";
 import { 
   PlaybookCard as PlaybookCardType, 
+  PlaybookStep,
   createPlaybookCards, 
   playbookData 
 } from "@/lib/playbookData";
@@ -21,6 +22,131 @@ import { MERCURY_DURATIONS, MERCURY_EASING } from "@/lib/mercury-utils";
 // Mercury OS Wu Wei Daoist Easing Functions
 const wuWeiEasing = [0.25, 0.46, 0.45, 0.94] as const;
 
+// Simple Stage Details Panel Component
+function StageDetailsPanel({ card, stageId, onClose }: { card: PlaybookCardType, stageId: string, onClose: () => void }) {
+  const step = card.data as PlaybookStep;
+  const stage = step.execution.stages.find(s => s.stage.toString() === stageId);
+  
+  if (!stage) {
+    return (
+      <div className="h-full flex items-center justify-center text-gray-500">
+        Stage not found
+      </div>
+    );
+  }
+
+  return (
+    <div className="h-full flex flex-col max-h-full">
+      {/* Fixed Header */}
+      <div className="flex-shrink-0 flex items-center justify-between mb-4 pb-2 border-b border-gray-200">
+        <h3 className="text-lg font-semibold text-gray-900">Stage {stage.stage} Details</h3>
+        <button 
+          onClick={onClose}
+          className="p-1 text-gray-400 hover:text-gray-600 rounded"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      
+      {/* Scrollable Content */}
+      <div 
+        className="flex-1 overflow-y-auto space-y-4 pr-2" 
+        style={{ 
+          scrollbarWidth: 'thin',
+          scrollbarColor: '#cbd5e1 #f1f5f9'
+        }}
+      >
+        <div>
+          <h4 className="text-base font-semibold text-gray-900 mb-2">{stage.name}</h4>
+          <p className="text-sm text-gray-700 mb-4">{stage.instructions}</p>
+        </div>
+        
+        {/* Tool Configuration */}
+        {stage.tool && (
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+            <div className="flex items-center justify-between mb-2">
+              <h5 className="text-sm font-medium text-blue-900">Tool Configuration</h5>
+              {stage.tool.url && (
+                <a
+                  href={stage.tool.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:text-blue-800"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
+              )}
+            </div>
+            <p className="text-sm text-blue-800">{stage.tool.name}</p>
+          </div>
+        )}
+        
+        {/* AI Prompt */}
+        {stage.prompt && (
+          <div className="bg-purple-50 border border-purple-200 rounded-lg p-3">
+            <h5 className="text-sm font-medium text-purple-900 mb-2">AI Prompt</h5>
+            <p className="text-sm text-purple-800">{stage.prompt.content}</p>
+          </div>
+        )}
+        
+        {/* Rich Content */}
+        {stage.rich_content && stage.rich_content.elements.length > 0 && (
+          <div>
+            <h5 className="text-sm font-medium text-gray-900 mb-2">Resources</h5>
+            <div className="space-y-2">
+              {stage.rich_content.elements.map((element, i) => (
+                <div key={i} className="text-sm text-gray-700">
+                  {element.type === 'code' && (
+                    <div className="bg-gray-900 text-green-400 p-2 rounded text-xs font-mono">
+                      {element.content}
+                    </div>
+                  )}
+                  {element.type === 'link' && (
+                    <a href={element.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                      {element.content}
+                    </a>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        
+        {/* Inputs/Outputs */}
+        {(stage.inputs || stage.outputs) && (
+          <div className="grid grid-cols-1 gap-3">
+            {stage.inputs && (
+              <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+                <h5 className="text-sm font-medium text-green-900 mb-2">Inputs</h5>
+                <ul className="text-sm text-green-700 space-y-1">
+                  {stage.inputs.required.map((input, i) => (
+                    <li key={i}>• {input}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            
+            {stage.outputs && (
+              <div className="bg-orange-50 border border-orange-200 rounded-lg p-3">
+                <h5 className="text-sm font-medium text-orange-900 mb-2">Outputs</h5>
+                <ul className="text-sm text-orange-700 space-y-1">
+                  {stage.outputs.generated.map((output, i) => (
+                    <li key={i}>• {output}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function CanvasWorkflowPage() {
   // Mercury compliance properties
   const intent = "canvas-workflow-space";
@@ -28,6 +154,7 @@ export default function CanvasWorkflowPage() {
   const [playbookCards, setPlaybookCards] = useState<PlaybookCardType[]>(createPlaybookCards());
   const [editingId, setEditingId] = useState<string | null>(null);
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
+  const [expandedStageDetails, setExpandedStageDetails] = useState<{cardId: string, stageId: string} | null>(null);
   
   // Canvas-specific state
   const [actionFeedback, setActionFeedback] = useState<string | null>(null);
@@ -535,6 +662,8 @@ export default function CanvasWorkflowPage() {
       if (wasExpanded) {
         newSet.delete(cardId);
         console.log('Removing card from expanded IDs');
+        // Also close stage details when closing insights
+        setExpandedStageDetails(null);
       } else {
         newSet.add(cardId);
         console.log('Adding card to expanded IDs');
@@ -542,6 +671,15 @@ export default function CanvasWorkflowPage() {
       }
       console.log('New expanded IDs:', Array.from(newSet));
       return newSet;
+    });
+  };
+
+  const handleToggleStageDetails = (cardId: string, stageId: string) => {
+    setExpandedStageDetails(prev => {
+      if (prev?.cardId === cardId && prev?.stageId === stageId) {
+        return null; // Close if already open
+      }
+      return { cardId, stageId }; // Open new stage details
     });
   };
 
@@ -851,7 +989,7 @@ export default function CanvasWorkflowPage() {
             width: 'max-content',
             minWidth: '100vw', // Ensure it spans at least full viewport width
             paddingLeft: '32px',
-            paddingRight: `${Math.max(600, expandedIds.size * 500 + 600)}px`,
+            paddingRight: `${Math.max(600, expandedIds.size * 500 + (expandedStageDetails ? 400 : 0) + 600)}px`,
             paddingTop: '120px', // Proper spacing from header for breathing room
             paddingBottom: '40px',
             ...(canvasZoom !== 1 || canvasPan.x !== 0 || canvasPan.y !== 0 ? {
@@ -902,7 +1040,8 @@ export default function CanvasWorkflowPage() {
                     }`}
                     layout
                     animate={{
-                      width: expandedIds.has(playbookCard.id) && editingId !== playbookCard.id ? 'auto' : 320,
+                      width: expandedIds.has(playbookCard.id) && editingId !== playbookCard.id ? 
+                        (expandedStageDetails?.cardId === playbookCard.id ? 'auto' : 'auto') : 320,
                       height: editingId === playbookCard.id ? "80vh" : 'auto'
                     }}
                     transition={{ duration: 0.7, ease: wuWeiEasing }}
@@ -933,13 +1072,48 @@ export default function CanvasWorkflowPage() {
                             exit={{ opacity: 0, width: 0 }}
                             transition={{ duration: 0.5, ease: wuWeiEasing }}
                             className="border-l border-gray-100 flex-1 min-w-0 p-6"
+                            style={{ 
+                              minWidth: '500px', 
+                              maxWidth: '500px',
+                              height: 'calc(100vh - 140px)',
+                              maxHeight: 'calc(100vh - 140px)'
+                            }}
                           >
                             <PlaybookInsightsPanel
                               card={playbookCard}
                               isVisible={true}
                               intent="playbook-insights-panel"
                               className="border-0 rounded-none bg-transparent"
+                              onStageDetailToggle={(stageId: string) => handleToggleStageDetails(playbookCard.id, stageId)}
+                              expandedStageDetails={expandedStageDetails?.cardId === playbookCard.id ? expandedStageDetails.stageId : null}
                             />
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                      
+                      {/* Stage Details Panel - expands further to the right */}
+                      <AnimatePresence>
+                        {expandedStageDetails?.cardId === playbookCard.id && expandedIds.has(playbookCard.id) && editingId !== playbookCard.id && (
+                          <motion.div
+                            initial={{ opacity: 0, width: 0 }}
+                            animate={{ opacity: 1, width: 'auto' }}
+                            exit={{ opacity: 0, width: 0 }}
+                            transition={{ duration: 0.5, ease: wuWeiEasing }}
+                            className="border-l border-gray-100 flex-shrink-0 p-6 bg-gray-50"
+                            style={{ 
+                              minWidth: '400px', 
+                              maxWidth: '400px',
+                              height: 'calc(100vh - 140px)', // Account for header and padding
+                              maxHeight: 'calc(100vh - 140px)'
+                            }}
+                          >
+                            <div className="h-full">
+                              <StageDetailsPanel 
+                                card={playbookCard}
+                                stageId={expandedStageDetails.stageId}
+                                onClose={() => setExpandedStageDetails(null)}
+                              />
+                            </div>
                           </motion.div>
                         )}
                       </AnimatePresence>
