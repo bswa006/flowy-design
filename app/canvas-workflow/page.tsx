@@ -117,30 +117,105 @@ function StageDetailsPanel({ card, stageId, onClose }: { card: PlaybookCardType,
           </div>
         )}
         
-        {/* Inputs/Outputs */}
-        {(stage.inputs || stage.outputs) && (
+        {/* Context & Expected Outcomes */}
+        {(stage.context || stage.outcome_expected) && (
           <div className="grid grid-cols-1 gap-3">
-            {stage.inputs && (
-              <div className="bg-green-50 border border-green-200 rounded-lg p-3">
-                <h5 className="text-sm font-medium text-green-900 mb-2">Inputs</h5>
-                <ul className="text-sm text-green-700 space-y-1">
-                  {stage.inputs.required.map((input, i) => (
-                    <li key={i}>• {input}</li>
+            {stage.context && (
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                <h5 className="text-sm font-medium text-blue-900 mb-2">context to be utilised</h5>
+                <ul className="text-sm text-blue-700 space-y-1">
+                  {stage.context.required.map((context, i) => (
+                    <li key={i}>• {context}</li>
                   ))}
                 </ul>
+                {stage.context.assumptions && (
+                  <div className="mt-3 pt-2 border-t border-blue-200">
+                    <h6 className="text-xs font-medium text-blue-800 mb-1">Assumptions:</h6>
+                    <ul className="text-xs text-blue-600 space-y-1">
+                      {stage.context.assumptions.map((assumption, i) => (
+                        <li key={i}>✓ {assumption}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             )}
             
-            {stage.outputs && (
-              <div className="bg-orange-50 border border-orange-200 rounded-lg p-3">
-                <h5 className="text-sm font-medium text-orange-900 mb-2">Outputs</h5>
-                <ul className="text-sm text-orange-700 space-y-1">
-                  {stage.outputs.generated.map((output, i) => (
-                    <li key={i}>• {output}</li>
+            {stage.outcome_expected && (
+              <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+                <div className="flex items-center justify-between mb-2">
+                  <h5 className="text-sm font-medium text-green-900">Expected Outcomes</h5>
+                  {stage.ai_completion_badge && (
+                    <span className="inline-flex items-center space-x-1 px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium animate-pulse">
+                      <span>{stage.ai_completion_badge.icon}</span>
+                      <span>AI KUDOS</span>
+                    </span>
+                  )}
+                </div>
+                <ul className="text-sm text-green-700 space-y-1">
+                  {stage.outcome_expected.generated.map((outcome, i) => (
+                    <li key={i}>• {outcome}</li>
                   ))}
                 </ul>
+                {stage.outcome_expected.artifacts && (
+                  <div className="mt-3 pt-2 border-t border-green-200">
+                    <h6 className="text-xs font-medium text-green-800 mb-1">Generated Artifacts:</h6>
+                    <ul className="text-xs text-green-600 space-y-1">
+                      {stage.outcome_expected.artifacts.map((artifact, i) => (
+                        <li key={i}>📄 {artifact}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             )}
+          </div>
+        )}
+        
+        {/* AI Prompts - Only show for non-autonomous stages */}
+        {stage.ai_prompts && Object.keys(stage.ai_prompts).length > 0 && stage.type !== 'llm_direct' && (
+          <div className="bg-purple-50 border border-purple-200 rounded-lg p-3">
+            <div className="flex items-center space-x-2 mb-3">
+              <h5 className="text-sm font-medium text-purple-900">🤖 AI Prompts</h5>
+              <span className="px-2 py-0.5 bg-purple-100 text-purple-700 rounded-full text-xs">
+                {Object.keys(stage.ai_prompts).length} prompts
+              </span>
+            </div>
+            <div className="space-y-3 max-h-60 overflow-y-auto">
+              {Object.entries(stage.ai_prompts).map(([key, prompt], index) => (
+                <div key={key} className="bg-white border border-purple-200 rounded p-2 relative group">
+                  <div className="flex items-center justify-between mb-1">
+                    <h6 className="text-xs font-semibold text-purple-800 capitalize">
+                      {key.replace(/_/g, ' ').replace('prompt', '')}
+                    </h6>
+                    <button
+                      onClick={() => {
+                        const promptText = typeof prompt === 'string' ? prompt : JSON.stringify(prompt);
+                        navigator.clipboard.writeText(promptText);
+                        // Show temporary success message
+                        const button = document.activeElement as HTMLElement;
+                        const originalText = button.textContent;
+                        button.textContent = '✓ Copied!';
+                        button.style.color = '#059669';
+                        setTimeout(() => {
+                          button.textContent = originalText;
+                          button.style.color = '';
+                        }, 2000);
+                      }}
+                      className="opacity-0 group-hover:opacity-100 transition-opacity text-purple-600 hover:text-purple-800 text-xs px-2 py-1 rounded bg-purple-100 hover:bg-purple-200"
+                      title="Copy to clipboard"
+                    >
+                      📋 Copy
+                    </button>
+                  </div>
+                  <div className="text-xs text-purple-700 leading-relaxed max-h-32 overflow-y-auto">
+                    <pre className="whitespace-pre-wrap font-mono text-[10px] bg-purple-25 p-1 rounded">
+                      {typeof prompt === 'string' ? prompt : JSON.stringify(prompt, null, 2)}
+                    </pre>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </div>

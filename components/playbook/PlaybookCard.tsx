@@ -434,6 +434,17 @@ function renderStepCard(
     }
   };
   
+  const getExecutionLabel = (type: string) => {
+    switch (type) {
+      case "manual": return "manual";
+      case "tool_guided": return "tool guided";
+      case "ai_review": return "ai review";
+      case "llm_direct": return "AI powered";
+      case "hybrid": return "hybrid";
+      default: return type;
+    }
+  };
+  
   const getFocusStyles = () => {
     switch (focusLevel) {
       case "focused":
@@ -457,6 +468,38 @@ function renderStepCard(
     >
       {/* Header */}
       <div className="p-4 pb-3">
+        {/* AI Automation Banner */}
+        {(step as any).ai_automation && (
+          <div className={`mb-3 -mx-4 -mt-4 px-3 py-2 border-b ${
+            (step as any).ai_automation.level === 'fully_automated' 
+              ? 'bg-gray-50 border-gray-200'
+              : (step as any).ai_automation.level === 'ai_assisted'
+              ? 'bg-blue-50/30 border-blue-200/50'
+              : 'bg-amber-50/30 border-amber-200/50'
+          }`}>
+            <div className="flex items-center space-x-2">
+              <div className={`w-4 h-4 rounded-sm flex items-center justify-center text-xs ${
+                (step as any).ai_automation.level === 'fully_automated'
+                  ? 'bg-gray-600 text-white'
+                  : (step as any).ai_automation.level === 'ai_assisted'
+                  ? 'bg-blue-500 text-white'
+                  : 'bg-amber-500 text-white'
+              }`}>
+                AI
+              </div>
+              <span className={`text-xs font-medium ${
+                (step as any).ai_automation.level === 'fully_automated'
+                  ? 'text-gray-700'
+                  : (step as any).ai_automation.level === 'ai_assisted'
+                  ? 'text-blue-700'
+                  : 'text-amber-700'
+              }`}>
+                {(step as any).ai_automation.message}
+              </span>
+            </div>
+          </div>
+        )}
+        
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center space-x-2">
             <div className="w-6 h-6 rounded-full bg-black text-white flex items-center justify-center text-sm font-medium">
@@ -483,8 +526,14 @@ function renderStepCard(
         <div className="flex items-center space-x-2 mb-3">
           {getExecutionIcon(step.execution.type)}
           <span className="text-sm text-gray-600 capitalize">
-            {step.execution.type}
+            {getExecutionLabel(step.execution.type)}
           </span>
+          {step.execution.type === 'llm_direct' && step.ai_completion_indicator && (
+            <span className="inline-flex items-center space-x-1 px-2 py-0.5 bg-purple-50 text-purple-600 rounded-full text-xs font-medium border border-purple-200">
+              <span className="text-[10px]">🤖</span>
+              <span>AI KUDOS</span>
+            </span>
+          )}
         </div>
         
         {/* Title */}
@@ -522,7 +571,7 @@ function renderStepCard(
               <Target className="w-4 h-4 text-gray-500" />
             </div>
             <div className="text-xs text-gray-500 mb-1">Type</div>
-            <div className="text-sm font-medium text-gray-900 capitalize">{step.execution.type}</div>
+            <div className="text-sm font-medium text-gray-900 capitalize">{getExecutionLabel(step.execution.type)}</div>
           </div>
         </div>
         

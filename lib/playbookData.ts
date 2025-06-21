@@ -134,13 +134,25 @@ export interface PlaybookStage {
   estimated_minutes: number;
   status: "not_started" | "in_progress" | "completed";
   completion_percentage: number;
-  inputs?: {
+  context?: {
     required: string[];
     optional?: string[];
+    assumptions?: string[];
   };
-  outputs?: {
+  outcome_expected?: {
     generated: string[];
     artifacts?: string[];
+  };
+  ai_prompts?: {
+    analysis_prompt?: string;
+    scanning_prompt?: string;
+  };
+  ai_completion_badge?: {
+    type: string;
+    icon: string;
+    text: string;
+    color: string;
+    animation?: string;
   };
   flow_position?: FlowPosition;
 }
@@ -165,6 +177,18 @@ export interface PlaybookStep {
   status: "not_started" | "in_progress" | "completed";
   completion_percentage: number;
   execution_pattern: "hybrid" | "manual" | "tool_guided" | "ai_review" | "llm_direct";
+  ai_automation?: {
+    level: "fully_automated" | "ai_assisted" | "ai_enhanced";
+    human_interaction: "none" | "minimal" | "moderate" | "significant";
+    message: string;
+  };
+  ai_completion_indicator?: {
+    type: string;
+    visual_cue: string;
+    message: string;
+    confidence: number;
+    auto_proceed: boolean;
+  };
   flow?: ExecutionFlow;
   execution: {
     type: "hybrid" | "manual" | "tool_guided" | "ai_review" | "llm_direct";
@@ -283,9 +307,11 @@ const addStageStatus = (stages: any[], stepIndex: number) => {
       tool: getEnhancedTool(stage, stageIndex),
       prompt: getEnhancedPrompt(stage, stageIndex),
       rich_content: getRichContent(stage, stageIndex),
-      inputs: getStageInputs(stage, stageIndex),
-      outputs: getStageOutputs(stage, stageIndex),
-      flow_position: getFlowPosition(stageIndex, stepIndex)
+      context: getStageContext(stage, stageIndex),
+      outcome_expected: getStageOutcomeExpected(stage, stageIndex),
+      flow_position: getFlowPosition(stageIndex, stepIndex),
+      ai_prompts: getAIPrompts(stage, stageIndex),
+      ai_completion_badge: getAICompletionBadge(stage, stageIndex)
     };
     
     return enhancedStage;
@@ -414,7 +440,7 @@ const getRichContent = (stage: any, stageIndex: number): RichContent => {
   };
 };
 
-const getStageInputs = (stage: any, stageIndex: number) => {
+const getStageContext = (stage: any, stageIndex: number) => {
   // Return more specific inputs based on stage content
   const stageSpecificInputs: Record<string, string[]> = {
     "Automated codebase scanning": [
@@ -459,7 +485,7 @@ const getStageInputs = (stage: any, stageIndex: number) => {
   };
 };
 
-const getStageOutputs = (stage: any, stageIndex: number) => {
+const getStageOutcomeExpected = (stage: any, stageIndex: number) => {
   // Return comprehensive outputs based on stage content
   const stageSpecificOutputs: Record<string, string[]> = {
     "Automated codebase scanning": [
@@ -611,6 +637,35 @@ const getFlowPosition = (stageIndex: number, stepIndex: number): FlowPosition =>
     vertical_step: stepIndex + 1,
     sub_cards: subCards
   };
+};
+
+const getAIPrompts = (stage: any, stageIndex: number) => {
+  // Return existing ai_prompts if they exist (from the JSON file)
+  if (stage.ai_prompts && Object.keys(stage.ai_prompts).length > 0) {
+    return stage.ai_prompts;
+  }
+  
+  // Only generate fallback prompts if no ai_prompts exist and stage is AI-driven
+  if (stage.type === "ai_review" || stage.type === "llm_direct") {
+    return {
+      analysis_prompt: `Analyze and implement: ${stage.instructions}`,
+      scanning_prompt: `Execute comprehensive analysis for: ${stage.name}`
+    };
+  }
+  return undefined;
+};
+
+const getAICompletionBadge = (stage: any, stageIndex: number) => {
+  if (stage.type === "llm_direct") {
+    return {
+      type: "autonomous_success",
+      icon: "🤖",
+      text: "AI COMPLETED",
+      color: "success",
+      animation: "celebration"
+    };
+  }
+  return undefined;
 };
 
 const enrichedPlaybookData = {

@@ -283,35 +283,57 @@ export function PlaybookInsightsPanel({
     );
   };
 
-  const renderInputsOutputs = (stage: PlaybookStage) => {
-    if (!stage.inputs && !stage.outputs) return null;
+  const renderContextAndOutcome = (stage: PlaybookStage) => {
+    if (!stage.context && !stage.outcome_expected) return null;
     
     return (
-      <div className="mt-3 grid grid-cols-2 gap-3">
-        {stage.inputs && (
-          <div className="bg-green-50 border border-green-200 rounded-lg p-2">
-            <div className="flex items-center space-x-1 mb-1">
-              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-              <span className="text-xs font-medium text-green-800">Inputs</span>
+      <div className="mt-3 space-y-3">
+        {stage.context && (
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+            <div className="flex items-center space-x-1 mb-2">
+              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+              <span className="text-xs font-medium text-blue-800">Context Required</span>
             </div>
-            <div className="text-xs text-green-700 space-y-1">
-              {stage.inputs.required.map((input, i) => (
-                <div key={i}>• {formatText(input)}</div>
+            <div className="text-xs text-blue-700 space-y-1">
+              {stage.context.required.map((context, i) => (
+                <div key={i}>• {formatText(context)}</div>
               ))}
+              {stage.context.assumptions && (
+                <div className="mt-2 pt-2 border-t border-blue-200">
+                  <span className="text-xs font-medium text-blue-800 block mb-1">Assumptions:</span>
+                  {stage.context.assumptions.map((assumption, i) => (
+                    <div key={i} className="text-xs text-blue-600">✓ {formatText(assumption)}</div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         )}
         
-        {stage.outputs && (
-          <div className="bg-orange-50 border border-orange-200 rounded-lg p-2">
-            <div className="flex items-center space-x-1 mb-1">
-              <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-              <span className="text-xs font-medium text-orange-800">Outputs</span>
+        {stage.outcome_expected && (
+          <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+            <div className="flex items-center space-x-1 mb-2">
+              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+              <span className="text-xs font-medium text-green-800">Expected Outcome</span>
+              {stage.ai_completion_badge && (
+                <span className="ml-2 px-2 py-0.5 text-xs bg-green-100 text-green-700 rounded-full flex items-center space-x-1">
+                  <span>{stage.ai_completion_badge.icon}</span>
+                  <span>{stage.ai_completion_badge.text}</span>
+                </span>
+              )}
             </div>
-            <div className="text-xs text-orange-700 space-y-1">
-              {stage.outputs.generated.map((output, i) => (
-                <div key={i}>• {formatText(output)}</div>
+            <div className="text-xs text-green-700 space-y-1">
+              {stage.outcome_expected.generated.map((outcome, i) => (
+                <div key={i}>• {formatText(outcome)}</div>
               ))}
+              {stage.outcome_expected.artifacts && (
+                <div className="mt-2 pt-2 border-t border-green-200">
+                  <span className="text-xs font-medium text-green-800 block mb-1">Artifacts:</span>
+                  {stage.outcome_expected.artifacts.map((artifact, i) => (
+                    <div key={i} className="text-xs text-green-600">📄 {artifact}</div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -441,6 +463,29 @@ export function PlaybookInsightsPanel({
                                     className="bg-blue-500 h-1 rounded-full transition-all duration-500 ease-out" 
                                     style={{ width: `${stage.completion_percentage}%` }}
                                   ></div>
+                                </div>
+                              )}
+                              
+                              {/* AI Completion Badge */}
+                              {stage.ai_completion_badge && (
+                                <div className="mt-2">
+                                  <span className={`inline-flex items-center space-x-1 px-2 py-1 rounded text-xs font-medium ${
+                                    stage.type === 'llm_direct' 
+                                      ? 'bg-gray-100 text-gray-700'
+                                      : stage.type === 'ai_review'
+                                      ? 'bg-blue-100 text-blue-700'
+                                      : 'bg-amber-100 text-amber-700'
+                                  }`}>
+                                    <span className="w-3 h-3 flex items-center justify-center bg-current text-white rounded-sm text-xs">AI</span>
+                                    <span>
+                                      {stage.type === 'llm_direct' 
+                                        ? 'Fully automated'
+                                        : stage.type === 'ai_review'
+                                        ? 'AI assisted'
+                                        : 'AI enhanced'
+                                      }
+                                    </span>
+                                  </span>
                                 </div>
                               )}
                             </div>

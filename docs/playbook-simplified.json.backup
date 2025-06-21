@@ -1,0 +1,216 @@
+{
+  "id": "react-migration",
+  "title": "React 14 to Next.js 15 Migration Playbook",
+  "description": "Complete step-by-step guide for migrating from React 14 to Next.js 15 with AI-powered tools and automation",
+  "version": "1.0.0",
+  "created_date": "2024-01-15",
+  "last_updated": "2024-12-20",
+  "tags": [
+    "React",
+    "Next.js",
+    "Migration",
+    "TypeScript",
+    "AI Tools"
+  ],
+  "difficulty": "Advanced",
+  "estimated_total_time": "160 hours",
+  "prerequisites": [
+    "React 14 application running in production",
+    "Node.js >= 18.18.0 installed",
+    "Git repository with proper branching strategy",
+    "CI/CD pipeline for testing migrations"
+  ],
+  "tools_required": [
+    "Cursor IDE with AI capabilities",
+    "CodeQL for security analysis",
+    "ESLint for code quality",
+    "Synthesia for training videos",
+    "ClickUp for project management"
+  ],
+  "steps": [
+    {
+      "id": "step1",
+      "stage": 1,
+      "name": "Initial Assessment & Planning",
+      "description": "Comprehensive analysis of current React 14 codebase to determine migration complexity and create detailed project plan",
+      "estimated_time": "40 hours",
+      "difficulty": "Medium",
+      "dependencies": [],
+      "tags": [
+        "assessment",
+        "planning",
+        "analysis"
+      ],
+      "workflow": {
+        "tasks": [
+          {
+            "stage": 1,
+            "name": "Codebase analysis",
+            "type": "ai_assisted",
+            "tool": {
+              "name": "Cursor IDE",
+              "url": "https://cursor.sh",
+              "configuration": {
+                "ai_model": "gpt-4",
+                "analysis_depth": "comprehensive"
+              }
+            },
+            "instructions": "Use Cursor AI to analyze the React 14 codebase structure, identify components, and assess migration complexity",
+            "ai_prompts": {
+              "cursor_codeql_prompt": "Analyze React 14 codebase for security vulnerabilities using CodeQL patterns and provide specific fixes.",
+              "cursor_eslint_prompt": "Set up ESLint for React 14 to Next.js 15 migration analysis with comprehensive linting rules.",
+              "cursor_dependency_audit": "Run dependency audit and create prioritized upgrade roadmap for Next.js 15 compatibility.",
+              "cursor_migration_analysis": "Analyze package.json and component structure for migration complexity assessment."
+            },
+            "estimated_minutes": 480,
+            "status": "completed",
+            "completion_percentage": 100
+          }
+        ]
+      }
+    },
+    {
+      "id": "step2",
+      "stage": 2,
+      "name": "Environment Setup",
+      "description": "Set up Next.js 15 development environment and configure necessary tools",
+      "estimated_time": "20 hours",
+      "difficulty": "Medium",
+      "dependencies": [
+        "step1"
+      ],
+      "tags": [
+        "setup",
+        "environment",
+        "tools"
+      ],
+      "workflow": {
+        "tasks": [
+          {
+            "stage": 2,
+            "name": "Next.js 15 setup",
+            "type": "manual",
+            "instructions": "Install Next.js 15, configure TypeScript, and set up project structure",
+            "estimated_minutes": 240,
+            "status": "pending",
+            "completion_percentage": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "step3",
+      "stage": 3,
+      "name": "Component Migration",
+      "description": "Systematic migration of React 14 components to Next.js 15 patterns",
+      "estimated_time": "80 hours",
+      "difficulty": "Hard",
+      "dependencies": [
+        "step2"
+      ],
+      "tags": [
+        "migration",
+        "components",
+        "react"
+      ],
+      "workflow": {
+        "tasks": [
+          {
+            "stage": 3,
+            "name": "Component analysis and categorization",
+            "type": "ai_assisted",
+            "tool": {
+              "name": "Cursor AI + Vercel v0",
+              "url": "https://v0.dev",
+              "configuration": {
+                "component_analysis": true,
+                "pattern_detection": true
+              }
+            },
+            "instructions": "Use AI tools to analyze component patterns and create migration strategy",
+            "ai_prompts": {
+              "cursor_v0_architecture": "Generate architecture documentation using Vercel v0 for React 14 to Next.js 15 migration with component hierarchy diagram.",
+              "cursor_gpt4_analysis": "Analyze codebase architecture with GPT-4 for comprehensive migration documentation.",
+              "cursor_component_mapping": "Create component migration mapping for React 14 to Next.js 15 patterns with complexity categorization.",
+              "cursor_data_flow_analysis": "Analyze data flow patterns for migration from React 14 to Next.js 15 with state management transition."
+            },
+            "estimated_minutes": 480,
+            "status": "completed",
+            "completion_percentage": 100
+          }
+        ]
+      }
+    },
+    {
+      "id": "step4",
+      "stage": 4,
+      "name": "Migration Roadmap",
+      "description": "Create detailed migration roadmap with AI-assisted project planning",
+      "estimated_time": "20 hours",
+      "difficulty": "Medium",
+      "dependencies": [
+        "step3"
+      ],
+      "tags": [
+        "roadmap",
+        "planning",
+        "project-management"
+      ],
+      "workflow": {
+        "tasks": [
+          {
+            "stage": 4,
+            "name": "Create migration roadmap",
+            "type": "hybrid",
+            "tool": {
+              "name": "Synthesia + ClickUp AI",
+              "url": "https://synthesia.io",
+              "configuration": {
+                "project_planning": true,
+                "timeline_generation": true
+              }
+            },
+            "instructions": "Generate detailed migration roadmap with AI-assisted project planning, timeline estimation, and resource allocation",
+            "ai_prompts": {
+              "synthesia_training_prompt": "Create professional training videos for React migration using Synthesia AI with technical code examples.",
+              "clickup_roadmap_prompt": "Create comprehensive React migration roadmap in ClickUp AI with project structure and timeline estimation.",
+              "risk_assessment_prompt": "Create comprehensive risk assessment matrix for React migration with mitigation strategies.",
+              "resource_optimization_prompt": "Optimize team resource allocation with data-driven assignments and skill matrix analysis."
+            },
+            "estimated_minutes": 240,
+            "status": "completed",
+            "completion_percentage": 100
+          }
+        ]
+      }
+    }
+  ],
+  "success_metrics": {
+    "technical": [
+      "100% component migration completion",
+      "Zero breaking changes in production",
+      "Performance improvement of 40%+",
+      "Bundle size reduction of 30%+"
+    ],
+    "business": [
+      "Zero downtime deployment",
+      "Developer velocity increase of 50%+",
+      "Reduced maintenance overhead",
+      "Improved development experience"
+    ]
+  },
+  "resources": {
+    "documentation": [
+      "React 14 to Next.js 15 migration guide",
+      "Component mapping documentation",
+      "API integration patterns",
+      "Performance optimization guide"
+    ],
+    "tools": [
+      "Cursor IDE setup guide",
+      "CodeQL security analysis",
+      "ESLint configuration",
+      "Deployment automation"
+    ]
+  }
+}

@@ -1,1143 +1,498 @@
 {
-    "project": {
-      "id": "550e8400-e29b-41d4-a716-446655440001",
-      "name": "Legacy React 14 to Modern Stack Migration",
-      "description": "Comprehensive migration of a 7-year-old React 14 application to modern Next.js 15, TypeScript, Tailwind CSS, and contemporary development practices using AI-powered tools",
-      "organization_id": "123e4567-e89b-12d3-a456-426614174001",
-      "team_id": "789e4567-e89b-12d3-a456-426614174001",
-      "created_at": "2024-12-01T09:00:00Z",
-      "status": "active",
-      "metadata": {
-        "migration_type": "Full Stack Modernization with AI Acceleration",
-        "source_stack": [
-          "React 14",
-          "Node.js 14",
-          "Webpack 3",
-          "Redux",
-          "CSS Modules",
-          "Express.js",
-          "MongoDB"
-        ],
-        "target_stack": [
-          "Next.js 15",
-          "Node.js 20",
-          "TypeScript 5.3",
-          "Tailwind CSS 3.4",
-          "Zustand/TanStack Query",
-          "Prisma ORM",
-          "PostgreSQL",
-          "i18next",
-          "Playwright"
-        ],
-        "ai_tools_stack": [
-          "Cursor IDE",
-          "GitHub Copilot",
-          "Claude 3.5 Sonnet",
-          "GPT-4",
-          "Lovable (formerly GPT Engineer)",
-          "Vercel v0",
-          "Replit Agent",
-          "Codeium",
-          "Tabnine",
-          "CodeWhisperer"
-        ],
-        "codebase_metrics": {
-          "total_components": 450,
-          "lines_of_code": 125000,
-          "test_coverage": "35%",
-          "technical_debt_hours": 2400
-        },
-        "expected_benefits": "70% AI-accelerated development, 80% reduction in bundle size, improved DX, type safety, modern tooling"
-      }
-    },
-    "contexts": [
-      {
-        "id": "c1111111-1111-1111-1111-111111111111",
-        "processing_request_id": "pr111111-1111-1111-1111-111111111111",
-        "upload": {
-          "id": "u1111111-1111-1111-1111-111111111111",
-          "file_name": "ai_tools_evaluation.md",
-          "original_name": "AI Tools Evaluation for React Migration - 2024.md",
-          "content_type": "text/markdown",
-          "upload_type": "document",
-          "description": "Comprehensive evaluation of AI-powered development tools for accelerating React migration including performance benchmarks and ROI analysis",
-          "status": "completed",
-          "priority": "critical",
-          "is_checkpoint": true,
-          "recorded_on": "2024-12-01T14:00:00Z",
-          "summary": "AI tools evaluation shows 70% development acceleration with Cursor IDE + GitHub Copilot combination, reducing migration timeline from 8 months to 3 months.",
-          "participants": [
-            "Alex Chen - Lead Architect",
-            "Sarah Kim - Senior Developer", 
-            "Marcus Lee - DevOps Lead",
-            "Priya Patel - Frontend Expert"
-          ]
-        },
-        "text_content": "AI Tools Evaluation for React Migration Report\n\n1. TOP-TIER AI DEVELOPMENT TOOLS\n\n   Cursor IDE (Recommended Primary)\n   - Capabilities: Real-time code generation, codebase chat, intelligent refactoring\n   - React Migration Strength: 95% - Understands React patterns excellently\n   - Context Window: Entire codebase awareness\n   - Migration Speed: 3x faster than manual\n   - Cost: $20/month per developer\n   - ROI: 500% in first month\n   - Best For: Component refactoring, hook conversions, TypeScript migration\n\n   GitHub Copilot (Essential Companion)\n   - Capabilities: Real-time code completion, chat interface, CLI assistance\n   - React Migration Strength: 88% - Strong React/Next.js knowledge\n   - Integration: Works within any IDE\n   - Migration Speed: 2.5x faster completion\n   - Cost: $10/month per developer\n   - ROI: 300% in first month\n   - Best For: Boilerplate generation, test writing, API migration\n\n   Claude 3.5 Sonnet (Architecture Review)\n   - Capabilities: Large context, complex reasoning, architecture planning\n   - React Migration Strength: 92% - Excellent architectural understanding\n   - Context Window: 200k tokens (entire components)\n   - Migration Speed: 4x faster architectural decisions\n   - Cost: $20/month per developer\n   - ROI: 400% for complex refactoring\n   - Best For: Legacy code analysis, migration strategy, complex state logic\n\n2. SPECIALIZED AI TOOLS FOR REACT\n\n   Vercel v0 (UI Generation)\n   - Capabilities: Generate React components from prompts\n   - React Migration Strength: 85% - Great for new component creation\n   - Generates: Clean React + Tailwind components\n   - Migration Use: Replacing legacy UI components\n   - Cost: $20/month\n   - Best For: Rapid prototyping, component modernization\n\n   Lovable (Full-Stack Development)\n   - Capabilities: End-to-end React app generation and modification\n   - React Migration Strength: 80% - Good for feature migration\n   - Generates: Complete features with backend\n   - Migration Use: Feature-by-feature migration\n   - Cost: $49/month\n   - Best For: Complex feature migration, API + UI together\n\n   Replit Agent (Code Assistant)\n   - Capabilities: Multi-file editing, package management, deployment\n   - React Migration Strength: 75% - Decent React knowledge\n   - Cloud-based: No local setup required\n   - Migration Use: Quick prototypes, dependency updates\n   - Cost: $20/month\n   - Best For: Dependency migration, config file updates\n\n3. CODE COMPLETION & PRODUCTIVITY TOOLS\n\n   Codeium (Free Alternative)\n   - Capabilities: AI autocomplete, chat, search\n   - React Migration Strength: 70% - Good React patterns\n   - Cost: Free (Pro $12/month)\n   - Migration Speed: 2x improvement\n   - Best For: Budget-conscious teams, basic completion\n\n   Tabnine (Enterprise Focus)\n   - Capabilities: Private models, team training\n   - React Migration Strength: 72% - Customizable\n   - Enterprise Features: Private deployment, compliance\n   - Cost: $12/month (Enterprise $39/month)\n   - Best For: Large enterprise migrations with security needs\n\n   Amazon CodeWhisperer (AWS Integration)\n   - Capabilities: AWS-optimized suggestions, security scanning\n   - React Migration Strength: 65% - Basic React support\n   - Cost: Free (Professional $19/month)\n   - Best For: AWS-heavy deployments, security-focused migrations\n\n4. MIGRATION-SPECIFIC AI TOOLS\n\n   React-Codemod AI\n   - Capabilities: AST-based transformations with AI guidance\n   - React Migration Strength: 90% - Purpose-built for React\n   - Automated: Class components → Function components\n   - Success Rate: 85% automated conversion\n   - Cost: Open source + paid tiers\n   - Best For: Bulk component transformations\n\n   TypeScript Migration Assistant (AI-Enhanced)\n   - Capabilities: JS to TS conversion with intelligent typing\n   - React Migration Strength: 88% - Excellent type inference\n   - Features: PropTypes → TypeScript interfaces\n   - Success Rate: 92% type coverage\n   - Cost: $15/month\n   - Best For: JavaScript → TypeScript migration\n\n   State Management Migrator\n   - Capabilities: Redux → Zustand/Context migration\n   - React Migration Strength: 82% - Good state pattern understanding\n   - Features: Action creators → hooks, selectors → derived state\n   - Success Rate: 78% automated migration\n   - Cost: $25/month\n   - Best For: State management modernization\n\n5. AI-POWERED TESTING TOOLS\n\n   Test-Generation AI\n   - Capabilities: Generate React Testing Library tests from components\n   - Coverage: Unit + Integration + E2E\n   - Success Rate: 80% test coverage automatically\n   - Cost: $18/month\n   - Best For: Test migration from Enzyme → RTL\n\n   Visual Regression AI\n   - Capabilities: AI-powered screenshot comparison\n   - Integration: Works with Playwright/Cypress\n   - False Positive Rate: 5% (vs 30% traditional)\n   - Cost: $30/month\n   - Best For: UI consistency during migration\n\n6. RECOMMENDED AI TOOLCHAIN FOR MIGRATION\n\n   Essential Stack (Total: $70/month/developer):\n   - Cursor IDE ($20/month) - Primary development\n   - GitHub Copilot ($10/month) - Code completion\n   - Claude 3.5 Sonnet ($20/month) - Architecture & complex logic\n   - Vercel v0 ($20/month) - UI component generation\n\n   Advanced Stack (Total: $140/month/developer):\n   - Essential Stack ($70/month)\n   - Lovable ($49/month) - Full-stack feature migration\n   - TypeScript Migration Assistant ($15/month)\n   - React Testing AI ($18/month)\n\n   Enterprise Stack (Total: $200/month/developer):\n   - Advanced Stack ($140/month)\n   - Tabnine Enterprise ($39/month) - Team-trained models\n   - Custom AI Migration Pipeline ($21/month) - Bespoke automation\n\n7. MIGRATION ACCELERATION METRICS\n\n   Tool Combination Performance:\n   - Manual Migration: 8 months, $320,000 developer cost\n   - Basic AI (Copilot only): 5 months, $200,000 cost\n   - Recommended Stack: 3 months, $120,000 cost + $21,000 tools\n   - Advanced Stack: 2.5 months, $100,000 cost + $35,000 tools\n   - Enterprise Stack: 2 months, $80,000 cost + $50,000 tools\n\n   ROI Analysis:\n   - Recommended Stack ROI: 420% in first year\n   - Time to Payback: 1.2 months\n   - Risk Reduction: 60% fewer bugs due to AI review\n   - Code Quality: 85% improvement in consistency\n\n8. IMPLEMENTATION STRATEGY\n\n   Phase 1: Tool Setup (Week 1)\n   - Install Cursor IDE, configure with codebase\n   - Setup GitHub Copilot for all developers\n   - Claude 3.5 Sonnet accounts for senior developers\n   - Create AI prompting guidelines\n\n   Phase 2: Team Training (Week 2)\n   - AI-assisted development workshops\n   - Prompt engineering for React migration\n   - Best practices for AI code review\n   - Establish AI + human review process\n\n   Phase 3: Pilot Migration (Week 3-4)\n   - Migrate 10 components with full AI assistance\n   - Measure speed improvements\n   - Refine workflows and prompts\n   - Document successful patterns\n\n   Phase 4: Scaled Migration (Week 5+)\n   - Full team AI-assisted migration\n   - Continuous measurement and optimization\n   - Weekly tool performance reviews\n   - Iterative improvement of AI workflows\n\n9. SUCCESS METRICS\n\n   Development Velocity:\n   - Lines of code per hour: 3x improvement\n   - Component migration rate: 5x faster\n   - Bug introduction rate: 60% reduction\n   - Code review time: 50% reduction\n\n   Quality Metrics:\n   - Type coverage: 98% (vs 0% legacy)\n   - Test coverage: 85% (vs 35% legacy)\n   - Performance improvements: 70% average\n   - Accessibility compliance: 95% (vs 60% legacy)\n\n10. CONCLUSION\n\nAI tools have fundamentally changed React migration feasibility. The combination of Cursor IDE + GitHub Copilot + Claude 3.5 Sonnet provides unprecedented acceleration while maintaining code quality. Teams using this stack complete migrations 4x faster with 60% fewer defects.",
-        "summary": "AI tools evaluation identifies optimal toolchain: Cursor IDE + GitHub Copilot + Claude 3.5 Sonnet. Provides 4x migration acceleration with 60% fewer defects. ROI: 420% first year.",
-        "priority_score": 100,
-        "is_checkpoint": true,
-        "is_invalidated": false,
-        "extracted_metadata": {
-          "recommended_ai_stack": {
-            "primary_ide": "Cursor IDE",
-            "code_completion": "GitHub Copilot", 
-            "architecture_assistant": "Claude 3.5 Sonnet",
-            "ui_generation": "Vercel v0",
-            "cost_per_developer_monthly": 70
-          },
-          "performance_metrics": {
-            "migration_acceleration": "4x faster",
-            "defect_reduction_percent": 60,
-            "roi_first_year_percent": 420,
-            "payback_months": 1.2
-          }
-        },
-        "tags": [
-          "ai-tools",
-          "development-acceleration",
-          "migration-automation",
-          "cursor-ide",
-          "github-copilot",
-          "claude-ai"
-        ],
-        "created_at": "2024-12-01T18:00:00Z"
-      }
-    ],
-    "insights": [],
-    "insight_evolution": {
-      "summary": "Migration strategy evolved to leverage cutting-edge AI tools for 70% development acceleration",
-      "phases": [
-        {
-          "phase": "AI Tools Evaluation",
-          "date_range": "2024-12-01 to 2024-12-03",
-          "insights_added": 5,
-          "key_themes": ["AI acceleration", "Tool selection", "ROI analysis"]
-        }
-      ],
-      "insight_relationships": []
-    },
-    "playbook": {
-      "id": "playbook-react-migration-ai",
-      "project_id": "550e8400-e29b-41d4-a716-446655440001",
-      "name": "AI-Powered React 14 to Next.js 15 Migration",
-      "description": "Comprehensive migration playbook leveraging cutting-edge AI tools for maximum acceleration",
-      "created_at": "2024-12-01T09:00:00Z",
-      "generated_from_contexts": ["c1111111-1111-1111-1111-111111111111"],
-      "steps": [
-        {
-          "id": "step1",
-          "title": "Analyze & Document Legacy Codebase with AI",
-          "description": "Comprehensive analysis of existing React 14 codebase using AI tools to understand architecture, dependencies, patterns, and migration challenges",
-          "estimated_minutes": 1920,
-          "execution": {
-            "type": "hybrid",
-            "stages": [
-              {
-                "stage": 1,
-                "name": "Automated codebase scanning",
-                "type": "tool_guided",
-                "tool": {
-                  "name": "Cursor IDE + GitHub Copilot",
-                  "url": "https://cursor.sh",
-                  "configuration": {
-                    "scan_mode": "comprehensive",
-                    "include_dependencies": true,
-                    "generate_reports": true
-                  }
-                },
-                "instructions": "Run comprehensive security scans, generate dependency reports, analyze code complexity using AI-powered tools for technical debt assessment",
-                "estimated_minutes": 480,
-                "inputs": {
-                  "required": ["Legacy React 14 source code repository", "Package.json with all dependencies", "Existing build configuration files"]
-                },
-                "outputs": {
-                  "generated": [
-                    "Security vulnerability report (147 critical issues identified)",
-                    "Technical debt assessment with severity levels", 
-                    "Code quality metrics and complexity analysis",
-                    "Dependency audit with upgrade recommendations"
-                  ]
-                },
-                "rich_content": {
-                  "type": "mixed",
-                  "elements": [
-                    {
-                      "type": "code",
-                      "content": "npx @microsoft/rush audit --verbose\nnpx audit-ci --config ./audit-ci.json",
-                      "language": "bash",
-                      "title": "Security Audit Commands"
-                    },
-                    {
-                      "type": "link",
-                      "url": "https://cursor.sh/features",
-                      "content": "Cursor IDE Features Documentation",
-                      "clickable": true
-                    }
-                  ]
-                },
-                "status": "completed",
-                "completion_percentage": 100
-              },
-              {
-                "stage": 2,
-                "name": "Dependency analysis and mapping",
-                "type": "ai_review",
-                "tool": {
-                  "name": "Claude 3.5 Sonnet",
-                  "url": "https://claude.ai",
-                  "configuration": {
-                    "analysis_depth": "comprehensive",
-                    "migration_recommendations": true
-                  }
-                },
-                "instructions": "Use Claude AI to analyze dependencies, identify breaking changes, and generate migration recommendations with detailed impact assessment",
-                "estimated_minutes": 720,
-                "inputs": {
-                  "required": ["Security scan results from previous stage", "Complete dependency tree", "Current package versions list"]
-                },
-                "outputs": {
-                  "generated": [
-                    "Complete migration roadmap for 89 outdated packages",
-                    "Breaking changes documentation for major upgrades",
-                    "Alternative package recommendations (Redux → Zustand)",
-                    "Timeline and effort estimation for each dependency"
-                  ]
-                },
-                "prompt": {
-                  "content": "Analyze this React 14 codebase dependencies and create a comprehensive migration plan. Focus on security vulnerabilities, breaking changes, and modern alternatives.",
-                  "template": "dependency_analysis",
-                  "variables": ["dependency_tree", "package_versions", "security_report"]
-                },
-                "status": "completed",
-                "completion_percentage": 100
-              },
-              {
-                "stage": 3,
-                "name": "Architecture documentation with AI",
-                "type": "llm_direct",
-                "tool": {
-                  "name": "GPT-4 + Vercel v0",
-                  "url": "https://v0.dev",
-                  "configuration": {
-                    "diagram_generation": true,
-                    "component_analysis": true
-                  }
-                },
-                "instructions": "Generate comprehensive architecture documentation, component hierarchy diagrams, and data flow analysis using AI visualization tools",
-                "estimated_minutes": 480,
-                "inputs": {
-                  "required": ["Codebase structure analysis", "Component hierarchy mapping", "API endpoint documentation"]
-                },
-                "outputs": {
-                  "generated": [
-                    "Comprehensive component hierarchy diagram",
-                    "Data flow documentation with state management patterns", 
-                    "API integration points and authentication flows",
-                    "Migration complexity matrix (450 components categorized)"
-                  ]
-                },
-                "rich_content": {
-                  "type": "mixed",
-                  "elements": [
-                    {
-                      "type": "code",
-                      "content": "// AI-generated component analysis\nexport interface ComponentComplexity {\n  simple: Component[], // 200 components\n  medium: Component[], // 180 components  \n  complex: Component[] // 70 components\n}",
-                      "language": "typescript",
-                      "title": "Component Complexity Analysis"
-                    }
-                  ]
-                },
-                "status": "completed", 
-                "completion_percentage": 100
-              },
-              {
-                "stage": 4,
-                "name": "Create migration roadmap",
-                "type": "hybrid",
-                "tool": {
-                  "name": "Lovable + Linear",
-                  "url": "https://lovable.dev",
-                  "configuration": {
-                    "project_planning": true,
-                    "timeline_generation": true
-                  }
-                },
-                "instructions": "Generate detailed migration roadmap with AI-assisted project planning, timeline estimation, and resource allocation",
-                "estimated_minutes": 240,
-                "outputs": {
-                  "generated": [
-                    "Detailed 26-week migration timeline",
-                    "Component complexity categorization (Simple: 200, Medium: 180, Complex: 70)",
-                    "Risk assessment with mitigation strategies", 
-                    "Resource allocation and team assignment plan"
-                  ]
-                },
-                "status": "completed",
-                "completion_percentage": 100
-              }
-            ]
-          }
-        },
-        {
-          "id": "step2", 
-          "title": "Setup Modern Development Environment with AI Tools",
-          "description": "Establish Next.js 15 project foundation with comprehensive AI development toolchain, build systems, and automation",
-          "estimated_minutes": 2880,
-          "execution": {
-            "type": "hybrid",
-            "stages": [
-              {
-                "stage": 1,
-                "name": "Initialize Next.js 15 with TypeScript",
-                "type": "tool_guided",
-                "tool": {
-                  "name": "create-next-app + Cursor IDE",
-                  "url": "https://nextjs.org/docs/app/api-reference/create-next-app",
-                  "configuration": {
-                    "template": "typescript",
-                    "app_router": true,
-                    "tailwind": true,
-                    "eslint": true
-                  }
-                },
-                "instructions": "Create Next.js 15 project with App Router, TypeScript, Tailwind CSS, and modern development tooling using AI-assisted setup",
-                "estimated_minutes": 480,
-                "inputs": {
-                  "required": ["Project requirements specification", "Target architecture decisions", "Team development preferences"]
-                },
-                "outputs": {
-                  "generated": [
-                    "Fully configured Next.js 15 project with App Router",
-                    "TypeScript strict mode configuration",
-                    "Tailwind CSS integration with custom design tokens",
-                    "Project structure following best practices"
-                  ]
-                },
-                "rich_content": {
-                  "type": "mixed",
-                  "elements": [
-                    {
-                      "type": "code",
-                      "content": "npx create-next-app@latest my-app --typescript --tailwind --eslint --app --use-npm",
-                      "language": "bash",
-                      "title": "Next.js 15 Initialization"
-                    }
-                  ]
-                },
-                "status": "in_progress",
-                "completion_percentage": 60
-              },
-              {
-                "stage": 2,
-                "name": "Configure AI-powered development tools",
-                "type": "tool_guided", 
-                "tool": {
-                  "name": "Cursor IDE + GitHub Copilot + Claude",
-                  "url": "https://cursor.sh",
-                  "configuration": {
-                    "copilot_integration": true,
-                    "claude_api": true,
-                    "codebase_indexing": true
-                  }
-                },
-                "instructions": "Setup comprehensive AI development environment with Cursor IDE, GitHub Copilot, Claude integration, and custom migration prompts",
-                "estimated_minutes": 960,
-                "inputs": {
-                  "required": ["Team IDE preferences", "Existing development workflow", "Code quality standards"]
-                },
-                "outputs": {
-                  "generated": [
-                    "Cursor IDE configuration with codebase chat",
-                    "GitHub Copilot integration with React migration context",
-                    "Claude API setup for architecture decisions",
-                    "Custom AI prompts for component migration patterns"
-                  ]
-                },
-                "rich_content": {
-                  "type": "mixed",
-                  "elements": [
-                    {
-                      "type": "code",
-                      "content": "// .cursorrules for React migration\n// AI instructions for component conversion\n// Focus on React 14 → Next.js 15 patterns\n// Use functional components and hooks\n// Implement TypeScript best practices",
-                      "language": "text",
-                      "title": "Cursor AI Configuration"
-                    },
-                    {
-                      "type": "link",
-                      "url": "https://github.com/features/copilot",
-                      "content": "GitHub Copilot Setup Guide",
-                      "clickable": true
-                    }
-                  ]
-                },
-                "status": "not_started",
-                "completion_percentage": 0
-              },
-              {
-                "stage": 3,
-                "name": "Setup CI/CD with GitHub Actions",
-                "type": "tool_guided",
-                "tool": {
-                  "name": "GitHub Actions + Vercel",
-                  "url": "https://github.com/features/actions",
-                  "configuration": {
-                    "auto_deploy": true,
-                    "preview_builds": true,
-                    "quality_gates": true
-                  }
-                },
-                "instructions": "Configure automated CI/CD pipeline with quality gates, automated testing, and deployment to Vercel with preview environments",
-                "estimated_minutes": 720,
-                "outputs": {
-                  "generated": [
-                    "Automated testing pipeline with quality gates",
-                    "Build and deployment workflow for staging/production",
-                    "Performance monitoring integration",
-                    "Security scanning in CI/CD pipeline"
-                  ]
-                },
-                "rich_content": {
-                  "type": "mixed",
-                  "elements": [
-                    {
-                      "type": "code",
-                      "content": "name: Migration CI/CD\non: [push, pull_request]\njobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - name: Setup Node.js\n        uses: actions/setup-node@v4\n        with:\n          node-version: '20'\n      - run: npm ci\n      - run: npm run test\n      - run: npm run build",
-                      "language": "yaml",
-                      "title": "GitHub Actions Workflow"
-                    }
-                  ]
-                },
-                "status": "not_started",
-                "completion_percentage": 0
-              },
-              {
-                "stage": 4,
-                "name": "Setup migration tracking dashboard",
-                "type": "tool_guided",
-                "tool": {
-                  "name": "Retool + Vercel Analytics",
-                  "url": "https://retool.com",
-                  "configuration": {
-                    "migration_metrics": true,
-                    "component_tracking": true,
-                    "performance_monitoring": true
-                  }
-                },
-                "instructions": "Create comprehensive migration dashboard to track component conversion progress, performance metrics, and team velocity",
-                "estimated_minutes": 720,
-                "outputs": {
-                  "generated": [
-                    "Real-time migration progress dashboard",
-                    "Component conversion rate tracking",
-                    "Performance benchmarking comparison",
-                    "Team velocity and bottleneck identification"
-                  ]
-                },
-                "status": "not_started",
-                "completion_percentage": 0
-              }
-            ]
-          }
-        },
-        {
-          "id": "step3",
-          "title": "Migrate Core Infrastructure with AI Assistance",
-          "description": "Migrate authentication system, database layer, state management, and core utilities using AI-powered transformation tools",
-          "estimated_minutes": 5760,
-          "execution": {
-            "type": "hybrid",
-            "stages": [
-              {
-                "stage": 1,
-                "name": "Migrate authentication to NextAuth.js",
-                "type": "ai_review",
-                "tool": {
-                  "name": "Claude 3.5 Sonnet + Cursor IDE",
-                  "url": "https://next-auth.js.org",
-                  "configuration": {
-                    "auth_migration": true,
-                    "session_preservation": true
-                  }
-                },
-                "instructions": "Use AI to analyze current auth system and generate NextAuth.js migration plan with session preservation and backward compatibility",
-                "estimated_minutes": 1440,
-                "inputs": {
-                  "required": ["Current authentication implementation", "User database schema", "Session management requirements"]
-                },
-                "outputs": {
-                  "generated": [
-                    "NextAuth.js configuration with multiple providers",
-                    "User session migration strategy preserving existing sessions",
-                    "Security enhancements with JWT and OAuth integration",
-                    "Backward compatibility layer for legacy auth"
-                  ]
-                },
-                "prompt": {
-                  "content": "Analyze this legacy authentication system and create a NextAuth.js migration plan that preserves existing user sessions: {{auth_code}}",
-                  "variables": ["auth_code", "user_schema", "session_config"]
-                },
-                "status": "not_started",
-                "completion_percentage": 0
-              },
-              {
-                "stage": 2,
-                "name": "Setup Prisma ORM with PostgreSQL",
-                "type": "tool_guided",
-                "tool": {
-                  "name": "Prisma + AI Schema Generator",
-                  "url": "https://www.prisma.io",
-                  "configuration": {
-                    "database": "postgresql",
-                    "migration_wizard": true,
-                    "ai_schema_conversion": true
-                  }
-                },
-                "instructions": "Migrate from MongoDB to PostgreSQL using Prisma with AI-assisted schema conversion and data migration scripts",
-                "estimated_minutes": 1920,
-                "outputs": {
-                  "generated": [
-                    "Complete database schema migration from MongoDB",
-                    "Data migration scripts with integrity validation",
-                    "Prisma client configuration with type safety",
-                    "Database connection pooling and optimization"
-                  ]
-                },
-                "rich_content": {
-                  "type": "mixed",
-                  "elements": [
-                    {
-                      "type": "code",
-                      "content": "// AI-generated Prisma schema\nmodel User {\n  id        String   @id @default(cuid())\n  email     String   @unique\n  profile   Profile?\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}",
-                      "language": "prisma",
-                      "title": "Prisma Schema Example"
-                    }
-                  ]
-                },
-                "status": "not_started",
-                "completion_percentage": 0
-              },
-              {
-                "stage": 3,
-                "name": "Implement modern state management",
-                "type": "hybrid",
-                "tool": {
-                  "name": "Zustand + TanStack Query + AI Migration",
-                  "url": "https://zustand-demo.pmnd.rs",
-                  "configuration": {
-                    "redux_converter": true,
-                    "state_analysis": true
-                  }
-                },
-                "instructions": "Convert Redux stores to Zustand using AI-powered migration tools, implement TanStack Query for server state, create modern hooks pattern",
-                "estimated_minutes": 1440,
-                "outputs": {
-                  "generated": [
-                    "Zustand stores replacing Redux with 90% code reduction",
-                    "TanStack Query setup for server state management",
-                    "Custom hooks for component state patterns",
-                    "State migration guide and testing strategy"
-                  ]
-                },
-                "prompt": {
-                  "content": "Convert this Redux store to Zustand maintaining the same functionality: {{redux_store}}. Use modern patterns and hooks.",
-                  "variables": ["redux_store", "actions", "selectors"]
-                },
-                "status": "not_started",
-                "completion_percentage": 0
-              },
-              {
-                "stage": 4,
-                "name": "Create API route migration",
-                "type": "llm_direct",
-                "tool": {
-                  "name": "GPT-4 + OpenAPI Generator",
-                  "url": "https://openapi-generator.tech",
-                  "configuration": {
-                    "api_conversion": true,
-                    "type_generation": true
-                  }
-                },
-                "instructions": "Migrate Express.js endpoints to Next.js 15 App Router API routes with full TypeScript typing and OpenAPI documentation",
-                "estimated_minutes": 960,
-                "outputs": {
-                  "generated": [
-                    "Next.js API routes with proper TypeScript types",
-                    "OpenAPI specification and documentation",
-                    "Middleware migration for authentication/CORS",
-                    "API testing suite with automated validation"
-                  ]
-                },
-                "rich_content": {
-                  "type": "mixed",
-                  "elements": [
-                    {
-                      "type": "code",
-                      "content": "// app/api/users/route.ts - AI migrated\nimport { NextRequest, NextResponse } from 'next/server'\nimport { prisma } from '@/lib/prisma'\n\nexport async function GET(request: NextRequest) {\n  const users = await prisma.user.findMany()\n  return NextResponse.json(users)\n}",
-                      "language": "typescript",
-                      "title": "Next.js API Route Migration"
-                    }
-                  ]
-                },
-                "status": "not_started",
-                "completion_percentage": 0
-              }
-            ]
-          }
-        },
-        {
-          "id": "step4",
-          "title": "AI-Accelerated Component Migration",
-          "description": "Systematically migrate all 450 components using advanced AI tools, automated pipelines, and intelligent code transformation",
-          "estimated_minutes": 7680,
-          "execution": {
-            "type": "hybrid",
-            "stages": [
-              {
-                "stage": 1,
-                "name": "Create AI-powered migration codemods",
-                "type": "tool_guided",
-                "tool": {
-                  "name": "ast-grep + jscodeshift + AI Enhancement",
-                  "url": "https://ast-grep.github.io",
-                  "configuration": {
-                    "ai_pattern_detection": true,
-                    "react_transformers": true,
-                    "typescript_conversion": true
-                  }
-                },
-                "instructions": "Develop intelligent codemods enhanced with AI for automated React component transformation, lifecycle method conversion, and TypeScript integration",
-                "estimated_minutes": 1920,
-                "outputs": {
-                  "generated": [
-                    "AI-enhanced codemods for class → function conversion",
-                    "Lifecycle method → hooks transformation rules",
-                    "PropTypes → TypeScript interface generator", 
-                    "Component testing migration automation"
-                  ]
-                },
-                "rich_content": {
-                  "type": "mixed",
-                  "elements": [
-                    {
-                      "type": "code",
-                      "content": "// AI-enhanced codemod example\nmodule.exports = function transformer(file, api) {\n  const j = api.jscodeshift;\n  // AI-generated transformation logic\n  return j(file.source)\n    .find(j.ClassDeclaration)\n    .filter(path => isReactComponent(path))\n    .replaceWith(convertToFunctionComponent)\n    .toSource();\n};",
-                      "language": "javascript",
-                      "title": "AI-Enhanced Codemod"
-                    }
-                  ]
-                },
-                "status": "not_started",
-                "completion_percentage": 0
-              },
-              {
-                "stage": 2,
-                "name": "Migrate simple components with AI automation",
-                "type": "llm_direct",
-                "tool": {
-                  "name": "Cursor IDE + Copilot + Batch Processing",
-                  "url": "https://cursor.sh",
-                  "configuration": {
-                    "batch_mode": true,
-                    "auto_testing": true,
-                    "quality_validation": true
-                  }
-                },
-                "instructions": "Use advanced AI tools to automatically migrate 200 simple components with full automation, testing, and quality validation",
-                "estimated_minutes": 1920,
-                "outputs": {
-                  "generated": [
-                    "200 migrated function components with hooks",
-                    "Automated test suite for all migrated components",
-                    "TypeScript interfaces and prop validation",
-                    "Performance optimization recommendations"
-                  ]
-                },
-                "prompt": {
-                  "content": "Migrate this React 14 class component to Next.js 15 with TypeScript, hooks, and modern patterns: {{component_code}}. Include proper error boundaries and testing.",
-                  "variables": ["component_code", "prop_types", "lifecycle_methods"]
-                },
-                "status": "not_started",
-                "completion_percentage": 0
-              },
-              {
-                "stage": 3,
-                "name": "Migrate medium complexity components with AI assistance",
-                "type": "hybrid",
-                "tool": {
-                  "name": "Lovable + Cursor IDE + Claude",
-                  "url": "https://lovable.dev",
-                  "configuration": {
-                    "assisted_migration": true,
-                    "human_review": true,
-                    "complex_state_handling": true
-                  }
-                },
-                "instructions": "Semi-automated migration of 180 medium complexity components using AI assistance with human review for business logic and complex state management",
-                "estimated_minutes": 2880,
-                "outputs": {
-                  "generated": [
-                    "180 migrated components with complex state handling",
-                    "Custom hooks for shared business logic",
-                    "Performance optimizations with React.memo",
-                    "Comprehensive testing with React Testing Library"
-                  ]
-                },
-                "rich_content": {
-                  "type": "mixed",
-                  "elements": [
-                    {
-                      "type": "code",
-                      "content": "// AI-assisted complex component migration\nconst UserProfile = ({ userId }: UserProfileProps) => {\n  const { data: user, isLoading } = useUser(userId);\n  const { preferences, updatePreferences } = useUserPreferences();\n  \n  // AI-generated hooks and logic\n  return (\n    <Suspense fallback={<UserProfileSkeleton />}>\n      {/* Migrated component JSX */}\n    </Suspense>\n  );\n};",
-                      "language": "typescript",
-                      "title": "AI-Assisted Complex Migration"
-                    }
-                  ]
-                },
-                "status": "not_started",
-                "completion_percentage": 0
-              },
-              {
-                "stage": 4,
-                "name": "Migrate complex components with AI guidance",
-                "type": "ai_review",
-                "tool": {
-                  "name": "Claude 3.5 Sonnet + Human Expert Review",
-                  "url": "https://claude.ai",
-                  "configuration": {
-                    "architectural_review": true,
-                    "business_logic_analysis": true,
-                    "performance_optimization": true
-                  }
-                },
-                "instructions": "AI-guided migration of 70 complex components with architectural review, business logic preservation, and advanced optimization patterns",
-                "estimated_minutes": 2880,
-                "outputs": {
-                  "generated": [
-                    "70 expertly migrated complex components",
-                    "Advanced performance optimization patterns",
-                    "Business logic preservation documentation",
-                    "Architecture decision records (ADRs)"
-                  ]
-                },
-                "prompt": {
-                  "content": "Analyze this complex React component and provide migration strategy preserving business logic while modernizing architecture: {{complex_component}}",
-                  "variables": ["complex_component", "business_requirements", "performance_targets"]
-                },
-                "status": "not_started", 
-                "completion_percentage": 0
-              }
-            ]
-          }
-        },
-        {
-          "id": "step5",
-          "title": "AI-Powered Internationalization Implementation",
-          "description": "Implement comprehensive i18n support for 12 languages using AI-powered extraction, translation, and RTL optimization",
-          "estimated_minutes": 3840,
-          "execution": {
-            "type": "hybrid",
-            "stages": [
-              {
-                "stage": 1,
-                "name": "Extract hardcoded strings with AI",
-                "type": "tool_guided",
-                "tool": {
-                  "name": "i18next-parser + GPT-4 Enhancement",
-                  "url": "https://github.com/i18next/i18next-parser",
-                  "configuration": {
-                    "ai_context_preservation": true,
-                    "semantic_grouping": true,
-                    "duplicate_detection": true
-                  }
-                },
-                "instructions": "Use AI-enhanced string extraction to identify, categorize, and organize 15,000+ hardcoded strings with proper context and semantic grouping",
-                "estimated_minutes": 960,
-                "outputs": {
-                  "generated": [
-                    "15,000+ strings extracted into organized translation files",
-                    "Namespace structure for component-based translations",
-                    "Context preservation for accurate AI translation",
-                    "Duplicate detection and consolidation report"
-                  ]
-                },
-                "rich_content": {
-                  "type": "mixed",
-                  "elements": [
-                    {
-                      "type": "code",
-                      "content": "// AI-enhanced extraction configuration\nmodule.exports = {\n  input: ['src/**/*.{ts,tsx}'],\n  output: 'public/locales/$LOCALE/$NAMESPACE.json',\n  locales: ['en'],\n  keySeparator: '.',\n  ai: {\n    contextPreservation: true,\n    semanticGrouping: true,\n    duplicateDetection: true\n  }\n};",
-                      "language": "javascript",
-                      "title": "AI-Enhanced i18n Config"
-                    }
-                  ]
-                },
-                "status": "not_started",
-                "completion_percentage": 0
-              },
-              {
-                "stage": 2,
-                "name": "AI-powered translation generation",
-                "type": "llm_direct",
-                "tool": {
-                  "name": "GPT-4 + DeepL + Claude Translation",
-                  "url": "https://openai.com/gpt-4",
-                  "configuration": {
-                    "multi_model_validation": true,
-                    "context_awareness": true,
-                    "cultural_adaptation": true
-                  }
-                },
-                "instructions": "Generate high-quality translations for 12 languages using multiple AI models with context awareness, cultural adaptation, and quality validation",
-                "estimated_minutes": 1440,
-                "outputs": {
-                  "generated": [
-                    "Professional translations for 12 languages",
-                    "Context-aware translations maintaining UI tone", 
-                    "Cultural adaptation for target markets",
-                    "Quality assurance report with confidence scores"
-                  ]
-                },
-                "prompt": {
-                  "content": "Translate these UI strings to {{target_language}} maintaining context, tone, and cultural appropriateness: {{strings_with_context}}. Consider UI space constraints and user experience.",
-                  "variables": ["target_language", "strings_with_context", "ui_constraints"]
-                },
-                "status": "not_started",
-                "completion_percentage": 0
-              },
-              {
-                "stage": 3,
-                "name": "Implement RTL support with AI optimization",
-                "type": "hybrid",
-                "tool": {
-                  "name": "Tailwind RTL + AI Layout Optimizer",
-                  "url": "https://tailwindcss.com/docs/hover-focus-and-other-states#rtl-support",
-                  "configuration": {
-                    "auto_rtl_detection": true,
-                    "layout_optimization": true,
-                    "visual_validation": true
-                  }
-                },
-                "instructions": "Implement comprehensive RTL support for Arabic and Hebrew with AI-powered layout optimization and visual validation",
-                "estimated_minutes": 960,
-                "outputs": {
-                  "generated": [
-                    "Complete RTL support for Arabic and Hebrew",
-                    "AI-optimized layout adjustments for RTL",
-                    "Visual regression testing for all layouts",
-                    "Performance optimization for bidirectional text"
-                  ]
-                },
-                "rich_content": {
-                  "type": "mixed",
-                  "elements": [
-                    {
-                      "type": "code",
-                      "content": "// AI-optimized RTL component\nconst NavigationBar = () => {\n  const { dir } = useDirection();\n  return (\n    <nav className={`flex items-center ${\n      dir === 'rtl' ? 'flex-row-reverse' : 'flex-row'\n    }`}>\n      <Logo className=\"mr-4 rtl:mr-0 rtl:ml-4\" />\n      <Menu className=\"space-x-4 rtl:space-x-reverse\" />\n    </nav>\n  );\n};",
-                      "language": "typescript",
-                      "title": "AI-Optimized RTL Component"
-                    }
-                  ]
-                },
-                "status": "not_started",
-                "completion_percentage": 0
-              },
-              {
-                "stage": 4,
-                "name": "AI-powered localization testing",
-                "type": "ai_review",
-                "tool": {
-                  "name": "Playwright + Visual AI + Translation QA",
-                  "url": "https://playwright.dev",
-                  "configuration": {
-                    "visual_regression": true,
-                    "translation_validation": true,
-                    "cultural_testing": true
-                  }
-                },
-                "instructions": "Comprehensive AI-powered testing for all languages including visual regression, translation quality, and cultural appropriateness validation",
-                "estimated_minutes": 960,
-                "outputs": {
-                  "generated": [
-                    "Automated visual regression testing for all 12 languages",
-                    "Translation quality validation with AI review",
-                    "Cultural appropriateness assessment",
-                    "Performance testing for international users"
-                  ]
-                },
-                "status": "not_started",
-                "completion_percentage": 0
-              }
-            ]
-          }
-        },
-        {
-          "id": "step6",
-          "title": "AI-Enhanced Performance Optimization & Testing",
-          "description": "Optimize application performance using AI tools and implement comprehensive testing with automated quality assurance",
-          "estimated_minutes": 3840,
-          "execution": {
-            "type": "hybrid",
-            "stages": [
-              {
-                "stage": 1,
-                "name": "AI-powered performance optimization",
-                "type": "ai_review",
-                "tool": {
-                  "name": "Lighthouse CI + AI Optimization",
-                  "url": "https://github.com/GoogleChrome/lighthouse-ci",
-                  "configuration": {
-                    "ai_recommendations": true,
-                    "automated_optimization": true,
-                    "performance_budgets": true
-                  }
-                },
-                "instructions": "Use AI to analyze performance bottlenecks, implement React Server Components, optimize bundle splitting, and enhance Core Web Vitals",
-                "estimated_minutes": 1200,
-                "outputs": {
-                  "generated": [
-                    "AI-optimized React Server Components implementation",
-                    "Intelligent bundle splitting and code optimization",
-                    "Core Web Vitals improvements (95+ score target)",
-                    "Performance monitoring dashboard with AI insights"
-                  ]
-                },
-                "rich_content": {
-                  "type": "mixed",
-                  "elements": [
-                    {
-                      "type": "code",
-                      "content": "// AI-optimized Server Component\nexport default async function ProductList() {\n  const products = await getProducts(); // Server-side\n  \n  return (\n    <div className=\"grid grid-cols-1 md:grid-cols-3 gap-6\">\n      {products.map(product => (\n        <ProductCard key={product.id} product={product} />\n      ))}\n    </div>\n  );\n}",
-                      "language": "typescript",
-                      "title": "AI-Optimized Server Component"
-                    }
-                  ]
-                },
-                "status": "not_started",
-                "completion_percentage": 0
-              },
-              {
-                "stage": 2,
-                "name": "Migrate test suites with AI assistance",
-                "type": "tool_guided",
-                "tool": {
-                  "name": "Vitest + Playwright + AI Test Generator",
-                  "url": "https://vitest.dev",
-                  "configuration": {
-                    "ai_test_generation": true,
-                    "coverage_optimization": true,
-                    "e2e_automation": true
-                  }
-                },
-                "instructions": "Migrate and enhance test suites using AI-powered test generation, achieving 95+ coverage with intelligent E2E automation",
-                "estimated_minutes": 1440,
-                "outputs": {
-                  "generated": [
-                    "Complete Vitest + React Testing Library migration",
-                    "AI-generated comprehensive test coverage (95%+)",
-                    "Intelligent E2E test automation with Playwright",
-                    "Performance testing and visual regression suites"
-                  ]
-                },
-                "rich_content": {
-                  "type": "mixed",
-                  "elements": [
-                    {
-                      "type": "code",
-                      "content": "// AI-generated test example\nimport { render, screen, userEvent } from '@testing-library/react';\nimport { UserProfile } from './UserProfile';\n\ntest('UserProfile displays user information correctly', async () => {\n  const mockUser = { id: '1', name: 'John Doe', email: 'john@example.com' };\n  render(<UserProfile user={mockUser} />);\n  \n  expect(screen.getByText('John Doe')).toBeInTheDocument();\n  expect(screen.getByText('john@example.com')).toBeInTheDocument();\n});",
-                      "language": "typescript",
-                      "title": "AI-Generated Test"
-                    }
-                  ]
-                },
-                "status": "not_started",
-                "completion_percentage": 0
-              },
-              {
-                "stage": 3,
-                "name": "AI security audit and hardening",
-                "type": "ai_review",
-                "tool": {
-                  "name": "Snyk + CodeQL + AI Security Scanner",
-                  "url": "https://snyk.io",
-                  "configuration": {
-                    "ai_vulnerability_detection": true,
-                    "automated_fixes": true,
-                    "security_best_practices": true
-                  }
-                },
-                "instructions": "Comprehensive AI-powered security audit with automated vulnerability detection, fixes, and implementation of security best practices",
-                "estimated_minutes": 720,
-                "outputs": {
-                  "generated": [
-                    "Complete security vulnerability assessment and fixes",
-                    "AI-implemented security headers and CSP policies",
-                    "Automated dependency security monitoring",
-                    "Security best practices documentation"
-                  ]
-                },
-                "status": "not_started",
-                "completion_percentage": 0
-              },
-              {
-                "stage": 4,
-                "name": "AI-driven performance benchmarking",
-                "type": "hybrid",
-                "tool": {
-                  "name": "WebPageTest + AI Analytics",
-                  "url": "https://www.webpagetest.org",
-                  "configuration": {
-                    "ai_analysis": true,
-                    "comparative_benchmarking": true,
-                    "optimization_recommendations": true
-                  }
-                },
-                "instructions": "Comprehensive AI-driven performance benchmarking comparing legacy vs migrated application with intelligent optimization recommendations",
-                "estimated_minutes": 480,
-                "outputs": {
-                  "generated": [
-                    "Comprehensive performance comparison report",
-                    "AI-generated optimization recommendations",
-                    "Real User Monitoring (RUM) implementation",
-                    "Performance regression testing automation"
-                  ]
-                },
-                "status": "not_started",
-                "completion_percentage": 0
-              }
-            ]
-          }
-        },
-        {
-          "id": "step7",
-          "title": "AI-Orchestrated Deployment & Migration Completion",
-          "description": "Deploy migrated application using AI-optimized deployment strategies, implement intelligent monitoring, and complete migration validation",
-          "estimated_minutes": 2880,
-          "execution": {
-            "type": "hybrid",
-            "stages": [
-              {
-                "stage": 1,
-                "name": "Setup AI-optimized deployment",
-                "type": "tool_guided",
-                "tool": {
-                  "name": "Vercel + Edge Runtime + AI Optimization",
-                  "url": "https://vercel.com",
-                  "configuration": {
-                    "edge_functions": true,
-                    "ai_routing": true,
-                    "intelligent_caching": true
-                  }
-                },
-                "instructions": "Configure intelligent deployment with AI-optimized edge functions, smart caching strategies, and progressive rollout automation",
-                "estimated_minutes": 720,
-                "outputs": {
-                  "generated": [
-                    "AI-optimized Vercel deployment with Edge Runtime",
-                    "Intelligent caching and CDN configuration",
-                    "Progressive rollout automation with AI monitoring",
-                    "Advanced analytics and performance tracking"
-                  ]
-                },
-                "rich_content": {
-                  "type": "mixed",
-                  "elements": [
-                    {
-                      "type": "code",
-                      "content": "// AI-optimized Edge Function\nexport const config = {\n  runtime: 'edge',\n  regions: ['iad1', 'fra1', 'sin1'] // AI-selected optimal regions\n};\n\nexport default async function handler(request) {\n  const country = request.geo?.country;\n  // AI-powered regional optimization\n  return aiOptimizedResponse(request, country);\n}",
-                      "language": "typescript",
-                      "title": "AI-Optimized Edge Function"
-                    }
-                  ]
-                },
-                "status": "not_started",
-                "completion_percentage": 0
-              },
-              {
-                "stage": 2,
-                "name": "Implement AI-powered feature flags",
-                "type": "tool_guided",
-                "tool": {
-                  "name": "LaunchDarkly + AI Decision Engine",
-                  "url": "https://launchdarkly.com",
-                  "configuration": {
-                    "ai_traffic_routing": true,
-                    "intelligent_rollout": true,
-                    "automated_rollback": true
-                  }
-                },
-                "instructions": "Setup intelligent feature flags with AI-powered traffic routing, automated A/B testing, and smart rollback capabilities",
-                "estimated_minutes": 960,
-                "outputs": {
-                  "generated": [
-                    "AI-powered progressive feature rollout system",
-                    "Intelligent A/B testing with automated optimization",
-                    "Smart rollback triggers based on performance metrics",
-                    "Real-time decision engine for traffic routing"
-                  ]
-                },
-                "status": "not_started",
-                "completion_percentage": 0
-              },
-              {
-                "stage": 3,
-                "name": "AI-validated data migration",
-                "type": "ai_review",
-                "tool": {
-                  "name": "Prisma + AI Data Validator",
-                  "url": "https://www.prisma.io",
-                  "configuration": {
-                    "ai_validation": true,
-                    "integrity_checking": true,
-                    "rollback_automation": true
-                  }
-                },
-                "instructions": "Execute production data migration with AI-powered validation, integrity checking, and automated rollback procedures",
-                "estimated_minutes": 960,
-                "outputs": {
-                  "generated": [
-                    "Validated production data migration (MongoDB → PostgreSQL)",
-                    "AI-powered data integrity verification",
-                    "Automated rollback procedures with zero-downtime",
-                    "Migration success validation and reporting"
-                  ]
-                },
-                "status": "not_started",
-                "completion_percentage": 0
-              },
-              {
-                "stage": 4,
-                "name": "Legacy code decommission with AI audit",
-                "type": "ai_review",
-                "tool": {
-                  "name": "Claude 3.5 Sonnet + Dependency Analyzer",
-                  "url": "https://claude.ai",
-                  "configuration": {
-                    "dependency_analysis": true,
-                    "risk_assessment": true,
-                    "cleanup_automation": true
-                  }
-                },
-                "instructions": "AI-guided legacy code decommission with comprehensive dependency analysis, risk assessment, and automated cleanup procedures",
-                "estimated_minutes": 240,
-                "outputs": {
-                  "generated": [
-                    "Complete legacy React 14 codebase decommission",
-                    "AI-verified dependency cleanup and security audit",
-                    "Migration success metrics and ROI analysis",
-                    "Knowledge transfer documentation for future maintenance"
-                  ]
-                },
-                "prompt": {
-                  "content": "Analyze legacy codebase dependencies and create safe decommission plan ensuring no critical functionality is lost: {{legacy_codebase}}",
-                  "variables": ["legacy_codebase", "dependency_tree", "critical_functions"]
-                },
-                "status": "not_started",
-                "completion_percentage": 0
-              }
-            ]
-          }
-        }
-      ]
+  "project": {
+    "id": "550e8400-e29b-41d4-a716-446655440001",
+    "name": "Legacy React 14 to Modern Stack Migration",
+    "description": "Comprehensive migration of a 7-year-old React 14 application to modern Next.js 15, TypeScript, Tailwind CSS, and contemporary development practices using AI-powered tools",
+    "organization_id": "123e4567-e89b-12d3-a456-426614174001",
+    "team_id": "789e4567-e89b-12d3-a456-426614174001",
+    "created_at": "2024-12-01T09:00:00Z",
+    "status": "active",
+    "metadata": {
+      "migration_type": "Full Stack Modernization with AI Acceleration",
+      "source_stack": ["React 14", "Node.js 14", "Webpack 3", "Redux", "CSS Modules", "Express.js", "MongoDB"],
+      "target_stack": ["Next.js 15", "Node.js 20", "TypeScript 5.3", "Tailwind CSS 3.4", "Zustand/TanStack Query", "Prisma ORM", "PostgreSQL"],
+      "ai_tools_stack": ["Cursor IDE with MCP support", "Context7 MCP Server", "Claude 3.5 Sonnet with MCP", "GPT-4 with Operators", "ChatGPT Pro ($200/month)", "Vercel v0"],
+      "expected_benefits": "70% AI-accelerated development, 80% reduction in bundle size, improved DX, type safety, modern tooling"
     }
+  },
+  "contexts": [],
+  "insights": [],
+  "insight_evolution": {
+    "summary": "Migration planning and execution with AI-powered tools",
+    "phases": [],
+    "insight_relationships": []
+  },
+  "playbook": {
+    "id": "react-migration-2024",
+    "project_id": "550e8400-e29b-41d4-a716-446655440001",
+    "name": "React 14 to Next.js 15 Migration Playbook",
+    "description": "Complete step-by-step guide for migrating from React 14 to Next.js 15 with AI-powered tools and automation",
+    "created_at": "2024-12-01T09:00:00Z",
+    "generated_from_contexts": ["migration-analysis-2024"],
+    "steps": [
+      {
+        "id": "step1",
+        "title": "Automated Codebase Analysis & Security Audit",
+        "description": "AI-powered comprehensive analysis of the legacy React 14 codebase to identify security vulnerabilities, technical debt, and migration complexity using automated scanning tools and AI assistants",
+        "estimated_minutes": 720,
+        "status": "completed",
+        "completion_percentage": 100,
+        "ai_automation": {
+          "level": "fully_automated",
+          "human_interaction": "none",
+          "message": "Fully completed by AI - no human interaction needed"
+        },
+        "execution": {
+          "type": "llm_direct",
+          "stages": [
+            {
+              "stage": 1,
+              "name": "Codebase Discovery & Initial Analysis",
+              "type": "llm_direct",
+              "tool": {
+                "name": "Code Structure Analyzer + Git History",
+                "url": "https://github.com/nodejs/node-core-utils",
+                "configuration": {
+                  "codebase_mapping": true,
+                  "architecture_analysis": true,
+                  "git_history_review": true
+                }
+              },
+              "instructions": "Perform comprehensive codebase discovery to understand project structure, identify all React components, analyze architecture patterns, and review Git history for development patterns",
+              "estimated_minutes": 180,
+              "context": {
+                "required": ["Git repository access", "Source code structure", "Build configuration files", "Package.json dependencies"]
+              },
+              "outcome_expected": {
+                "generated": ["Codebase architecture map", "Component inventory", "Technical debt hotspots", "Migration priority matrix"],
+                "artifacts": ["architecture-overview.md", "component-inventory.json", "migration-priorities.csv"]
+              },
+              "status": "completed",
+              "completion_percentage": 100,
+              "ai_completion_badge": {
+                "icon": "🔍",
+                "message": "Codebase mapped and analyzed"
+              }
+            },
+            {
+              "stage": 2,
+              "name": "Security & Vulnerability Assessment",
+              "type": "llm_direct",
+              "tool": {
+                "name": "CodeQL + ESLint + OWASP Dependency Check",
+                "url": "https://github.com/github/codeql",
+                "configuration": {
+                  "security_analysis": true,
+                  "dependency_audit": true,
+                  "code_quality": true,
+                  "owasp_check": true
+                }
+              },
+              "instructions": "Execute comprehensive security scanning using CodeQL for vulnerability detection, ESLint for code quality analysis, OWASP dependency check, and npm audit for security assessment",
+              "estimated_minutes": 300,
+              "context": {
+                "required": ["Codebase architecture map", "Package.json with dependencies", "Node modules", "Build configuration"]
+              },
+              "outcome_expected": {
+                "generated": ["Security vulnerability report", "Dependency audit results", "OWASP compliance assessment", "Security remediation plan"],
+                "artifacts": ["security-report.json", "vulnerability-matrix.xlsx", "remediation-checklist.md"]
+              },
+              "status": "completed",
+              "completion_percentage": 100,
+              "ai_completion_badge": {
+                "icon": "🛡️",
+                "message": "Security assessment completed"
+              }
+            },
+            {
+              "stage": 3,
+              "name": "Migration Complexity Analysis & Planning",
+              "type": "llm_direct",
+              "tool": {
+                "name": "Migration Complexity Analyzer + AI Planning",
+                "url": "https://github.com/reactjs/react-codemod",
+                "configuration": {
+                  "complexity_analysis": true,
+                  "migration_planning": true,
+                  "effort_estimation": true
+                }
+              },
+              "instructions": "Analyze migration complexity using AI-powered tools to assess component conversion difficulty, identify breaking changes, estimate effort, and create detailed migration plan with risk assessment",
+              "estimated_minutes": 240,
+              "context": {
+                "required": ["Security assessment results", "Component inventory", "Architecture analysis", "Team capacity and timeline"]
+              },
+              "outcome_expected": {
+                "generated": ["Migration complexity matrix", "Effort estimation report", "Risk assessment document", "Phase-wise migration plan"],
+                "artifacts": ["migration-plan.json", "complexity-analysis.xlsx", "risk-mitigation.md", "timeline-estimate.pdf"]
+              },
+              "status": "completed",
+              "completion_percentage": 100,
+              "ai_completion_badge": {
+                "icon": "📋",
+                "message": "Migration plan finalized"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "step2", 
+        "title": "Modern Development Environment Setup",
+        "description": "Set up Next.js 15 project with TypeScript, configure AI-powered development tools including Cursor IDE with Context7 MCP integration for enhanced developer experience",
+        "estimated_minutes": 480,
+        "status": "in_progress",
+        "completion_percentage": 65,
+        "ai_automation": {
+          "level": "ai_assisted",
+          "human_interaction": "minimal",
+          "message": "AI-assisted setup - minimal human verification needed"
+        },
+        "execution": {
+          "type": "hybrid",
+          "stages": [
+            {
+              "stage": 1,
+              "name": "Initialize Next.js 15 Foundation",
+              "type": "tool_guided",
+              "tool": {
+                "name": "create-next-app + Node.js 20",
+                "url": "https://nextjs.org",
+                "configuration": {
+                  "app_router": true,
+                  "typescript": true,
+                  "tailwind": true,
+                  "eslint": true
+                }
+              },
+              "instructions": "Create new Next.js 15 project with App Router, TypeScript, Tailwind CSS, and essential modern tooling setup",
+              "estimated_minutes": 120,
+              "ai_prompts": {
+                "cursor_nextjs_setup": "Create Next.js 15 project with optimal configuration:\\n\\n```bash\\n# Verify Node.js version\\nnode --version  # Should be 20+\\n\\n# Create Next.js 15 project\\nnpx create-next-app@latest react-migration-nextjs15 \\\\\\n  --typescript \\\\\\n  --tailwind \\\\\\n  --eslint \\\\\\n  --app \\\\\\n  --src-dir \\\\\\n  --import-alias '@/*' \\\\\\n  --use-npm\\n\\ncd react-migration-nextjs15\\n\\n# Verify Next.js 15 installation\\nnpm list next\\n```\\n\\nValidate project structure:\\n- src/app directory (App Router)\\n- tailwind.config.ts configuration\\n- tsconfig.json with path mapping\\n- package.json with Next.js 15",
+                "cursor_typescript_config": "Configure TypeScript with strict settings:\\n\\n```json\\n// tsconfig.json\\n{\\n  \"compilerOptions\": {\\n    \"target\": \"ES2022\",\\n    \"lib\": [\"dom\", \"dom.iterable\", \"es2022\"],\\n    \"allowJs\": true,\\n    \"skipLibCheck\": true,\\n    \"strict\": true,\\n    \"noEmit\": true,\\n    \"esModuleInterop\": true,\\n    \"module\": \"esnext\",\\n    \"moduleResolution\": \"bundler\",\\n    \"resolveJsonModule\": true,\\n    \"isolatedModules\": true,\\n    \"jsx\": \"preserve\",\\n    \"incremental\": true,\\n    \"plugins\": [{ \"name\": \"next\" }],\\n    \"baseUrl\": \".\",\\n    \"paths\": {\\n      \"@/*\": [\"./src/*\"]\\n    }\\n  }\\n}\\n```"
+              },
+              "context": {
+                "required": ["Node.js 20+", "npm 9+", "Git repository", "Migration plan from Step 1"]
+              },
+              "outcome_expected": {
+                "generated": ["Next.js 15 project structure", "TypeScript configuration", "App Router setup", "Tailwind CSS integration"],
+                "artifacts": ["package.json", "tsconfig.json", "tailwind.config.ts", "next.config.js"]
+              },
+              "status": "completed",
+              "completion_percentage": 100,
+              "ai_completion_badge": {
+                "icon": "⚡",
+                "message": "Next.js 15 foundation ready",
+                "confidence": 99
+              }
+            },
+            {
+              "stage": 2,
+              "name": "Development Toolchain & Quality Setup",
+              "type": "tool_guided",
+              "tool": {
+                "name": "ESLint + Prettier + Husky + TypeScript",
+                "url": "https://eslint.org",
+                "configuration": {
+                  "code_quality": true,
+                  "pre_commit_hooks": true,
+                  "typescript_integration": true
+                }
+              },
+              "instructions": "Configure comprehensive development toolchain with ESLint, Prettier, Husky pre-commit hooks, and TypeScript strict mode for code quality enforcement",
+              "estimated_minutes": 150,
+              "ai_prompts": {
+                "cursor_eslint_setup": "Configure ESLint for Next.js 15 with TypeScript:\\n\\n```bash\\n# Install ESLint dependencies\\nnpm install --save-dev \\\\\\n  @typescript-eslint/parser \\\\\\n  @typescript-eslint/eslint-plugin \\\\\\n  eslint-config-next \\\\\\n  eslint-plugin-react-hooks \\\\\\n  eslint-plugin-jsx-a11y\\n\\n# Create .eslintrc.json\\ncat > .eslintrc.json << 'EOF'\\n{\\n  \"extends\": [\\n    \"next/core-web-vitals\",\\n    \"@typescript-eslint/recommended\",\\n    \"plugin:jsx-a11y/recommended\"\\n  ],\\n  \"rules\": {\\n    \"@typescript-eslint/no-unused-vars\": \"error\",\\n    \"@typescript-eslint/explicit-function-return-type\": \"warn\"\\n  }\\n}\\nEOF\\n```",
+                "cursor_prettier_husky": "Set up Prettier and Husky for code formatting:\\n\\n```bash\\n# Install Prettier and Husky\\nnpm install --save-dev prettier husky lint-staged\\n\\n# Create .prettierrc\\necho '{\\n  \"semi\": true,\\n  \"trailingComma\": \"es5\",\\n  \"singleQuote\": true,\\n  \"printWidth\": 100\\n}' > .prettierrc\\n\\n# Initialize Husky\\nnpx husky install\\nnpx husky add .husky/pre-commit \"npx lint-staged\"\\n\\n# Configure lint-staged in package.json\\nnpm pkg set lint-staged.\\\"*.{js,jsx,ts,tsx}\\\"=\"[\\\"eslint --fix\\\", \\\"prettier --write\\\"]\"\\n```"
+              },
+              "context": {
+                "required": ["Next.js 15 project", "TypeScript configuration", "Git repository"]
+              },
+              "outcome_expected": {
+                "generated": ["ESLint configuration", "Prettier setup", "Pre-commit hooks", "Code quality enforcement"],
+                "artifacts": [".eslintrc.json", ".prettierrc", ".husky/pre-commit", "lint-staged config"]
+              },
+              "status": "completed", 
+              "completion_percentage": 100,
+              "ai_completion_badge": {
+                "icon": "✨",
+                "message": "Code quality tools configured",
+                "confidence": 97
+              }
+            },
+            {
+              "stage": 3,
+              "name": "AI-Powered Development Environment",
+              "type": "tool_guided",
+              "tool": {
+                "name": "Cursor IDE + Context7 MCP + Claude Integration",
+                "url": "https://cursor.com",
+                "configuration": {
+                  "mcp_integration": true,
+                  "ai_assistance": true,
+                  "context7_server": true,
+                  "claude_api": true
+                }
+              },
+              "instructions": "Set up advanced AI development environment with Cursor IDE, Context7 MCP server integration, and Claude API for enhanced migration assistance",
+              "estimated_minutes": 210,
+              "ai_prompts": {
+                "cursor_ide_setup": "Configure Cursor IDE for React migration project:\\n\\n```bash\\n# Install Cursor IDE (if not installed)\\n# Download from https://cursor.com\\n\\n# Create .cursor directory\\nmkdir -p .cursor\\n\\n# Configure workspace settings\\ncat > .cursor/settings.json << 'EOF'\\n{\\n  \"typescript.preferences.preferTypeOnlyAutoImports\": true,\\n  \"editor.codeActionsOnSave\": {\\n    \"source.organizeImports\": true,\\n    \"source.fixAll.eslint\": true\\n  },\\n  \"editor.formatOnSave\": true,\\n  \"editor.defaultFormatter\": \"esbenp.prettier-vscode\",\\n  \"typescript.updateImportsOnFileMove.enabled\": \"always\"\\n}\\nEOF\\n```",
+                "cursor_context7_mcp": "Set up Context7 MCP server integration:\\n\\n```bash\\n# Install Context7 MCP server\\nnpm install -g @context7/mcp-server@latest\\n\\n# Create MCP configuration\\ncat > .cursor/mcp-config.json << 'EOF'\\n{\\n  \"mcpServers\": {\\n    \"context7\": {\\n      \"command\": \"npx\",\\n      \"args\": [\"@context7/mcp-server\"],\\n      \"env\": {\\n        \"CONTEXT7_PROJECT_PATH\": \".\",\\n        \"CONTEXT7_AI_PROVIDER\": \"claude\"\\n      }\\n    }\\n  }\\n}\\nEOF\\n\\n# Start MCP server (test)\\nnpx @context7/mcp-server --test\\n```",
+                "cursor_migration_rules": "Create comprehensive .cursorrules for React migration:\\n\\n```\\n# React 14 → Next.js 15 Migration Assistant\\n\\n## Core Migration Principles\\n- Convert class components to function components with hooks\\n- Use Next.js App Router patterns (app/ directory)\\n- Implement Server Components for data fetching\\n- Use TypeScript strict mode with proper typing\\n- Replace Redux with Zustand for state management\\n- Migrate React Router to Next.js routing\\n\\n## Component Migration Rules\\n1. Class Component → Function Component:\\n   - componentDidMount → useEffect\\n   - componentDidUpdate → useEffect with dependencies\\n   - componentWillUnmount → useEffect cleanup\\n   - setState → useState\\n\\n2. Next.js 15 Patterns:\\n   - Use 'use client' directive for client components\\n   - Implement async Server Components for data fetching\\n   - Use proper metadata API for SEO\\n\\n3. TypeScript Best Practices:\\n   - Define proper interface types for props\\n   - Use generic types for reusable components\\n   - Implement proper error boundaries\\n\\n## AI Commands\\n- /migrate-component: Convert React 14 component to Next.js 15\\n- /add-types: Add TypeScript types to JavaScript code\\n- /optimize-bundle: Suggest bundle optimization strategies\\n```"
+              },
+              "context": {
+                "required": ["Code quality toolchain", "Next.js 15 project", "Claude API access", "Migration complexity analysis"]
+              },
+              "outcome_expected": {
+                "generated": ["AI-enhanced IDE setup", "Context7 MCP integration", "Migration-specific AI rules", "Development workflow optimization"],
+                "artifacts": [".cursor/settings.json", ".cursor/mcp-config.json", ".cursorrules", "ai-workflow-guide.md"]
+              },
+              "status": "in_progress",
+              "completion_percentage": 60,
+              "ai_completion_badge": {
+                "icon": "🤖",
+                "message": "AI development environment active",
+                "confidence": 92
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "step3",
+        "title": "Component Migration & State Management",
+        "description": "Migrate React 14 components to Next.js 15 patterns, convert Redux to Zustand, and implement modern state management with AI assistance",
+        "estimated_minutes": 1440,
+        "status": "not_started", 
+        "completion_percentage": 0,
+        "ai_automation": {
+          "level": "fully_automated",
+          "human_interaction": "none",
+          "message": "Fully automated component migration using AI agents"
+        },
+        "execution": {
+          "type": "llm_direct",
+          "ai_completion_indicator": {
+            "type": "fully_autonomous",
+            "visual_cue": "AI_POWERED",
+            "message": "Fully automated component migration using AI agents",
+            "confidence": 95,
+            "auto_proceed": true
+          },
+          "stages": [
+            {
+              "stage": 1,
+              "name": "Component Analysis & Migration Planning",
+              "type": "llm_direct",
+              "tool": {
+                "name": "AST Analysis + React Component Scanner",
+                "url": "https://ast-grep.github.io",
+                "configuration": {
+                  "component_discovery": true,
+                  "pattern_analysis": true,
+                  "migration_planning": true
+                }
+              },
+              "instructions": "Analyze all React 14 components to create detailed migration plan, categorize components by complexity, and identify patterns for automated transformation",
+              "estimated_minutes": 360,
+              "context": {
+                "required": ["Migration complexity analysis", "React 14 codebase", "Component inventory", "AI development environment"]
+              },
+              "outcome_expected": {
+                "generated": ["Component migration matrix", "Pattern analysis report", "Automation strategy", "Manual migration checklist"],
+                "artifacts": ["component-analysis.json", "migration-strategy.md", "automation-targets.csv"]
+              },
+              "status": "not_started",
+              "completion_percentage": 0,
+              "ai_completion_badge": {
+                "icon": "🔍",
+                "message": "Components analyzed and categorized"
+              }
+            },
+            {
+              "stage": 2,
+              "name": "Automated Component Transformation",
+              "type": "llm_direct",
+              "tool": {
+                "name": "jscodeshift + AST-grep + Custom Codemods",
+                "url": "https://github.com/facebook/jscodeshift",
+                "configuration": {
+                  "ast_transformation": true,
+                  "custom_codemods": true,
+                  "batch_processing": true
+                }
+              },
+              "instructions": "Execute automated transformation of React 14 components to Next.js 15 patterns using AI-enhanced AST transformations and custom codemods",
+              "estimated_minutes": 540,
+              "context": {
+                "required": ["Component analysis results", "jscodeshift setup", "Migration strategy", "Backup of original code"]
+              },
+              "outcome_expected": {
+                "generated": ["Transformed function components", "TypeScript interfaces", "Server/Client component separation", "Migration report"],
+                "artifacts": ["migrated-components/", "transformation-log.json", "type-definitions.ts"]
+              },
+              "status": "not_started",
+              "completion_percentage": 0,
+              "ai_completion_badge": {
+                "icon": "⚡",
+                "message": "Components automatically transformed"
+              }
+            },
+            {
+              "stage": 3,
+              "name": "State Management Migration & Optimization",
+              "type": "llm_direct",
+              "tool": {
+                "name": "Redux to Zustand Migration + TanStack Query",
+                "url": "https://zustand-demo.pmnd.rs",
+                "configuration": {
+                  "state_migration": true,
+                  "query_optimization": true,
+                  "performance_analysis": true
+                }
+              },
+              "instructions": "Migrate Redux state management to Zustand, implement TanStack Query for server state, and optimize component performance with React 19 features",
+              "estimated_minutes": 540,
+              "context": {
+                "required": ["Transformed components", "Redux store analysis", "Performance requirements", "Next.js 15 setup"]
+              },
+              "outcome_expected": {
+                "generated": ["Zustand store implementations", "TanStack Query setup", "Optimized component performance", "State migration guide"],
+                "artifacts": ["src/stores/", "query-setup.ts", "performance-report.md", "migration-comparison.xlsx"]
+              },
+              "status": "not_started",
+              "completion_percentage": 0,
+              "ai_completion_badge": {
+                "icon": "🔄",
+                "message": "State management modernized"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "step4",
+        "title": "Performance Optimization & Deployment",
+        "description": "Optimize bundle size, implement performance monitoring, and deploy to production with AI-powered optimization strategies",
+        "estimated_minutes": 960,
+        "status": "not_started",
+        "completion_percentage": 0,
+        "ai_automation": {
+          "level": "ai_assisted",
+          "human_interaction": "moderate",
+          "message": "AI-powered optimization with human oversight for deployment"
+        },
+        "execution": {
+          "type": "hybrid",
+          "stages": [
+            {
+              "stage": 1,
+              "name": "Performance Analysis & Baseline",
+              "type": "ai_review",
+              "tool": {
+                "name": "Lighthouse + Web Vitals + Bundle Analyzer",
+                "url": "https://github.com/GoogleChrome/lighthouse-ci",
+                "configuration": {
+                  "performance_baseline": true,
+                  "core_web_vitals": true,
+                  "bundle_analysis": true
+                }
+              },
+              "instructions": "Establish performance baseline, analyze Core Web Vitals, bundle size, and identify optimization opportunities using AI-powered analysis tools",
+              "estimated_minutes": 240,
+              "ai_prompts": {
+                "cursor_performance_baseline": "Establish comprehensive performance baseline:\\n\\n```bash\\n# Install performance analysis tools\\nnpm install -g @lhci/cli\\nnpm install @next/bundle-analyzer web-vitals\\nnpm install --save-dev webpack-bundle-analyzer\\n\\n# Build application for analysis\\nnpm run build\\n\\n# Run Lighthouse CI analysis\\nlhci autorun --config=.lighthouserc.json\\n\\n# Analyze bundle size\\nANALYZE=true npm run build\\n```\\n\\nCreate Lighthouse configuration:\\n```json\\n// .lighthouserc.json\\n{\\n  \"ci\": {\\n    \"collect\": {\\n      \"url\": [\"http://localhost:3000\"],\\n      \"numberOfRuns\": 3\\n    },\\n    \"assert\": {\\n      \"assertions\": {\\n        \"categories:performance\": [\"error\", {\"minScore\": 0.8}],\\n        \"categories:accessibility\": [\"error\", {\"minScore\": 0.9}]\\n      }\\n    }\\n  }\\n}\\n```",
+                "cursor_vitals_monitoring": "Set up Core Web Vitals monitoring:\\n\\n```typescript\\n// lib/web-vitals.ts\\nimport { getCLS, getFCP, getFID, getLCP, getTTFB } from 'web-vitals';\\n\\ntype Metric = {\\n  name: string;\\n  value: number;\\n  rating: 'good' | 'needs-improvement' | 'poor';\\n};\\n\\nexport function measureWebVitals() {\\n  const metrics: Metric[] = [];\\n\\n  getCLS((metric) => metrics.push(metric));\\n  getFCP((metric) => metrics.push(metric));\\n  getFID((metric) => metrics.push(metric));\\n  getLCP((metric) => metrics.push(metric));\\n  getTTFB((metric) => metrics.push(metric));\\n\\n  return metrics;\\n}\\n```"
+              },
+              "context": {
+                "required": ["Migrated Next.js 15 application", "Build configuration", "Performance tools"]
+              },
+              "outcome_expected": {
+                "generated": ["Performance baseline report", "Core Web Vitals analysis", "Bundle size breakdown", "Optimization roadmap"],
+                "artifacts": ["lighthouse-report.html", "bundle-analysis.json", "performance-baseline.pdf"]
+              },
+              "status": "not_started",
+              "completion_percentage": 0,
+              "ai_completion_badge": {
+                "icon": "📊",
+                "message": "Performance baseline established",
+                "confidence": 98
+              }
+            },
+            {
+              "stage": 2,
+              "name": "Bundle Optimization & Code Splitting",
+              "type": "tool_guided",
+              "tool": {
+                "name": "Next.js Optimization + Webpack Analysis",
+                "url": "https://nextjs.org/docs/advanced-features/analyzing-bundles",
+                "configuration": {
+                  "code_splitting": true,
+                  "tree_shaking": true,
+                  "dynamic_imports": true
+                }
+              },
+              "instructions": "Implement comprehensive bundle optimization strategies including code splitting, tree shaking, dynamic imports, and Next.js 15 optimization features",
+              "estimated_minutes": 360,
+              "ai_prompts": {
+                "cursor_bundle_optimization": "Implement comprehensive bundle optimization:\\n\\n```javascript\\n// next.config.js\\nconst withBundleAnalyzer = require('@next/bundle-analyzer')({\\n  enabled: process.env.ANALYZE === 'true'\\n});\\n\\nmodule.exports = withBundleAnalyzer({\\n  experimental: {\\n    optimizePackageImports: [\\n      'lodash-es',\\n      'date-fns',\\n      'lucide-react',\\n      '@radix-ui/react-icons'\\n    ]\\n  },\\n  webpack: (config, { dev, isServer }) => {\\n    if (!dev && !isServer) {\\n      config.optimization.splitChunks.chunks = 'all';\\n      config.optimization.splitChunks.cacheGroups = {\\n        vendor: {\\n          test: /[\\\\\\/]node_modules[\\\\\\/]/,\\n          chunks: 'all',\\n          priority: 1\\n        }\\n      };\\n    }\\n    return config;\\n  }\\n});\\n```",
+                "cursor_dynamic_imports": "Implement strategic dynamic imports:\\n\\n```typescript\\n// Dynamic component loading\\nconst DynamicChart = dynamic(\\n  () => import('../components/Chart'),\\n  { ssr: false, loading: () => <ChartSkeleton /> }\\n);\\n\\n// Route-based code splitting\\nconst AdminPanel = dynamic(\\n  () => import('../components/AdminPanel'),\\n  { loading: () => <AdminSkeleton /> }\\n);\\n\\n// Library code splitting\\nconst loadHeavyLibrary = async () => {\\n  const { heavyFunction } = await import('heavy-library');\\n  return heavyFunction;\\n};\\n\\n// Conditional loading\\nconst ConditionalComponent = dynamic(\\n  () => import('../components/ConditionalFeature'),\\n  { ssr: false }\\n);\\n```",
+                "cursor_tree_shaking": "Optimize tree shaking and imports:\\n\\n```typescript\\n// Optimize library imports\\n// Before: import _ from 'lodash';\\n// After: import { debounce, throttle } from 'lodash-es';\\n\\n// Before: import * as Icons from 'lucide-react';\\n// After: import { Search, User, Settings } from 'lucide-react';\\n\\n// Create barrel exports strategically\\n// utils/index.ts\\nexport { formatDate } from './date';\\nexport { validateEmail } from './validation';\\n// Don't export everything to maintain tree shaking\\n```"
+              },
+              "context": {
+                "required": ["Performance baseline", "Bundle analysis", "Component migration completed"]
+              },
+              "outcome_expected": {
+                "generated": ["Optimized bundle configuration", "Dynamic import strategy", "Code splitting implementation", "Bundle size reduction"],
+                "artifacts": ["optimized-next.config.js", "dynamic-imports.md", "bundle-comparison.json"]
+              },
+              "status": "not_started",
+              "completion_percentage": 0,
+              "ai_completion_badge": {
+                "icon": "📦",
+                "message": "Bundle optimized and split",
+                "confidence": 95
+              }
+            },
+            {
+              "stage": 3,
+              "name": "Production Deployment & Monitoring",
+              "type": "hybrid",
+              "tool": {
+                "name": "Vercel + Monitoring + CI/CD",
+                "url": "https://vercel.com",
+                "configuration": {
+                  "production_deployment": true,
+                  "performance_monitoring": true,
+                  "error_tracking": true
+                }
+              },
+              "instructions": "Deploy to production with comprehensive monitoring, implement CI/CD pipeline, and establish ongoing performance tracking with alerting",
+              "estimated_minutes": 360,
+              "ai_prompts": {
+                "cursor_vercel_deployment": "Set up production deployment with Vercel:\\n\\n```bash\\n# Install Vercel CLI\\nnpm install -g vercel\\n\\n# Configure deployment\\nvercel login\\nvercel --prod\\n\\n# Create vercel.json configuration\\ncat > vercel.json << 'EOF'\\n{\\n  \"framework\": \"nextjs\",\\n  \"buildCommand\": \"npm run build\",\\n  \"outputDirectory\": \".next\",\\n  \"installCommand\": \"npm install\",\\n  \"env\": {\\n    \"NODE_ENV\": \"production\"\\n  },\\n  \"headers\": [\\n    {\\n      \"source\": \"/(.*)\",\\n      \"headers\": [\\n        {\\n          \"key\": \"X-Content-Type-Options\",\\n          \"value\": \"nosniff\"\\n        },\\n        {\\n          \"key\": \"X-Frame-Options\",\\n          \"value\": \"DENY\"\\n        }\\n      ]\\n    }\\n  ]\\n}\\nEOF\\n```",
+                "cursor_monitoring_setup": "Implement comprehensive monitoring:\\n\\n```typescript\\n// lib/monitoring.ts\\nimport { getCLS, getFID, getLCP, getTTFB } from 'web-vitals';\\n\\nexport function setupMonitoring() {\\n  // Web Vitals tracking\\n  getCLS(sendToAnalytics);\\n  getFID(sendToAnalytics);\\n  getLCP(sendToAnalytics);\\n  getTTFB(sendToAnalytics);\\n\\n  // Error boundary tracking\\n  window.addEventListener('error', (event) => {\\n    sendErrorToAnalytics({\\n      message: event.error.message,\\n      stack: event.error.stack,\\n      url: window.location.href\\n    });\\n  });\\n}\\n\\nfunction sendToAnalytics(metric: any) {\\n  // Send to your analytics service (e.g., Google Analytics, Mixpanel)\\n  if (typeof window !== 'undefined' && window.gtag) {\\n    window.gtag('event', 'web_vitals', {\\n      event_category: 'performance',\\n      event_label: metric.name,\\n      value: metric.value\\n    });\\n  }\\n}\\n```",
+                "cursor_cicd_pipeline": "Set up CI/CD pipeline:\\n\\n```yaml\\n# .github/workflows/deploy.yml\\nname: Deploy to Production\\n\\non:\\n  push:\\n    branches: [main]\\n\\njobs:\\n  test:\\n    runs-on: ubuntu-latest\\n    steps:\\n      - uses: actions/checkout@v3\\n      - uses: actions/setup-node@v3\\n        with:\\n          node-version: '20'\\n          cache: 'npm'\\n      - run: npm ci\\n      - run: npm run lint\\n      - run: npm run test\\n      - run: npm run build\\n\\n  lighthouse:\\n    runs-on: ubuntu-latest\\n    needs: test\\n    steps:\\n      - uses: actions/checkout@v3\\n      - uses: actions/setup-node@v3\\n      - run: npm ci\\n      - run: npm run build\\n      - run: npx lhci autorun\\n\\n  deploy:\\n    runs-on: ubuntu-latest\\n    needs: [test, lighthouse]\\n    steps:\\n      - uses: actions/checkout@v3\\n      - uses: amondnet/vercel-action@v20\\n        with:\\n          vercel-token: ${{ secrets.VERCEL_TOKEN }}\\n          vercel-org-id: ${{ secrets.ORG_ID }}\\n          vercel-project-id: ${{ secrets.PROJECT_ID }}\\n          vercel-args: '--prod'\\n```"
+              },
+              "context": {
+                "required": ["Optimized application", "Bundle optimization", "Performance monitoring setup"]
+              },
+              "outcome_expected": {
+                "generated": ["Production deployment", "Monitoring dashboard", "CI/CD pipeline", "Performance tracking"],
+                "artifacts": ["vercel.json", "monitoring-setup.ts", "deploy-workflow.yml", "performance-dashboard.md"]
+              },
+              "status": "not_started",
+              "completion_percentage": 0,
+              "ai_completion_badge": {
+                "icon": "🚀",
+                "message": "Production deployment complete",
+                "confidence": 97
+              }
+            }
+          ]
+        }
+      }
+    ]
   }
+}
