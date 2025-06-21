@@ -17,6 +17,8 @@ import {
   createPlaybookCards, 
   playbookData 
 } from "@/lib/playbookData";
+import { usePlaybookData } from "@/hooks/usePlaybookData";
+import { getUrlParameter } from "@/utils/urlParams";
 import { MERCURY_DURATIONS, MERCURY_EASING } from "@/lib/mercury-utils";
 
 // Mercury OS Wu Wei Daoist Easing Functions
@@ -226,8 +228,15 @@ function StageDetailsPanel({ card, stageId, onClose }: { card: PlaybookCardType,
 export default function CanvasWorkflowPage() {
   // Mercury compliance properties
   const intent = "canvas-workflow-space";
+  
+  // Get ID from URL parameter
+  const [playbookId, setPlaybookId] = useState<string | null>(null);
+  
+  // Fetch playbook data from API
+  const { data: apiData, loading: apiLoading, error: apiError } = usePlaybookData(playbookId);
+  
   // Mercury-compliant state management - using playbook data
-  const [playbookCards, setPlaybookCards] = useState<PlaybookCardType[]>(createPlaybookCards());
+  const [playbookCards, setPlaybookCards] = useState<PlaybookCardType[]>([]);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
   const [expandedStageDetails, setExpandedStageDetails] = useState<{cardId: string, stageId: string} | null>(null);
@@ -244,6 +253,49 @@ export default function CanvasWorkflowPage() {
   // Canvas pan state
   const [canvasPan, setCanvasPan] = useState({ x: 0, y: 0 });
   const [isPanning, setIsPanning] = useState(false);
+  
+  // Extract ID from URL parameter on component mount
+  useEffect(() => {
+    console.log('Page mounted, checking URL parameters...');
+    console.log('Current URL:', window.location.href);
+    console.log('Current search params:', window.location.search);
+    
+    const id = getUrlParameter('ID') || getUrlParameter('id'); // Try both uppercase and lowercase
+    console.log('Extracted ID from URL:', id); // Debug log
+    
+    if (id) {
+      console.log('Setting playbook ID to:', id);
+      setPlaybookId(id);
+    } else {
+      console.log('No ID found, using static data');
+      // If no ID provided, use default static data
+      setPlaybookCards(createPlaybookCards());
+    }
+  }, []);
+  
+  // Update playbook cards when API data is loaded
+  useEffect(() => {
+    console.log('API data effect triggered, apiData:', apiData); // Debug log
+    if (apiData) {
+      console.log('Processing API data, steps count:', apiData.playbook.steps.length); // Debug log
+      // Create cards from API data
+      const cards: PlaybookCardType[] = [];
+      
+      // Add all playbook steps as the main cards
+      apiData.playbook.steps.forEach((step, index) => {
+        cards.push({
+          id: `step-${step.id}`,
+          type: "step",
+          data: step,
+          position: { x: 50, y: 100 + (index * 400) }, // Vertical positioning
+          connections: [],
+        });
+      });
+      
+      console.log('Created cards from API data:', cards.length); // Debug log
+      setPlaybookCards(cards);
+    }
+  }, [apiData]);
   const [panStart, setPanStart] = useState({ x: 0, y: 0, panX: 0, panY: 0 });
   const canvasRef = useRef<HTMLDivElement>(null);
   const [isSpacePressed, setIsSpacePressed] = useState(false);
@@ -934,11 +986,48 @@ export default function CanvasWorkflowPage() {
     },
   };
 
+  // Loading state
+  if (playbookId && apiLoading) {
+    return (
+      <div className="min-h-screen w-full bg-gradient-to-br from-gray-50/50 via-white to-gray-50/30 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading playbook data...</p>
+          <p className="text-sm text-gray-500 mt-2">ID: {playbookId}</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (playbookId && apiError) {
+    return (
+      <div className="min-h-screen w-full bg-gradient-to-br from-gray-50/50 via-white to-gray-50/30 flex items-center justify-center">
+        <div className="text-center max-w-md mx-auto p-6">
+          <div className="text-red-600 text-4xl mb-4">⚠️</div>
+          <h2 className="text-xl font-semibold text-gray-900 mb-2">Failed to Load Playbook</h2>
+          <p className="text-gray-600 mb-4">{apiError}</p>
+          <p className="text-sm text-gray-500">ID: {playbookId}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Use API data if available, otherwise fall back to static data
+  const currentPlaybookData = apiData || playbookData;
+
   return (
     <DndProvider backend={HTML5Backend}>
       {/* Fixed Project Header - stays in place during pan/zoom */}
       <div className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm">
         <ProjectHeader 
+          project={currentPlaybookData.project}
           className="w-full max-w-none"
           isPlaying={isPlaying}
           currentPlayIndex={currentPlayIndex}
