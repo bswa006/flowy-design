@@ -289,6 +289,7 @@ export default function CanvasWorkflowPage() {
           data: step,
           position: { x: 50, y: 100 + (index * 400) }, // Vertical positioning
           connections: [],
+          focusLevel: "ambient" as const, // Default focus level
         });
       });
       
@@ -307,10 +308,7 @@ export default function CanvasWorkflowPage() {
   const ZOOM_STEP = 0.05; // Reduced sensitivity from 0.1 to 0.05
   const [isZoomControlsVisible, setIsZoomControlsVisible] = useState(false);
   
-  // Play demo state
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentPlayIndex, setCurrentPlayIndex] = useState(0);
-  const [playTimeoutId, setPlayTimeoutId] = useState<NodeJS.Timeout | null>(null);
+  // Demo state removed - play demo functionality has been removed
   
   // Simple CSS-based width system
   const getCardClasses = (cardId: string) => {
@@ -826,15 +824,7 @@ export default function CanvasWorkflowPage() {
     if (editingId === cardId) return "focused";
     if (editingId && editingId !== cardId) return "fog";
     
-    // Highlight current card during demo playback
-    if (isPlaying) {
-      const currentCard = orderedPlaybookCards[currentPlayIndex];
-      if (currentCard && currentCard.id === cardId) {
-        return "focused";
-      } else {
-        return "fog";
-      }
-    }
+    // Demo playback removed
     
     return "ambient";
   };
@@ -857,94 +847,7 @@ export default function CanvasWorkflowPage() {
     });
   }, []);
 
-  // Play demo functionality
-  const startPlayDemo = useCallback(() => {
-    if (isPlaying) return;
-    
-    setIsPlaying(true);
-    playNextCardRef.current(currentPlayIndex);
-  }, [isPlaying, currentPlayIndex]);
-
-  const playNextCard = useCallback((index: number) => {
-    if (index >= orderedPlaybookCards.length) {
-      // Demo finished
-      setIsPlaying(false);
-      setCurrentPlayIndex(0);
-      return;
-    }
-
-    setCurrentPlayIndex(index);
-    
-    // Calculate dynamic card dimensions from DOM or use reasonable defaults
-    if (canvasRef.current) {
-      // Try to get actual card width from DOM, fallback to 400px
-      const cardElements = canvasRef.current.querySelectorAll('[data-intent^="playbook-card-"]');
-      let actualCardWidth = 400; // Default fallback
-      
-      if (cardElements.length > 0) {
-        const firstCard = cardElements[0] as HTMLElement;
-        const cardRect = firstCard.getBoundingClientRect();
-        actualCardWidth = cardRect.width || 400;
-      }
-      
-      const gap = 24; // From gap-6 class
-      const padding = 24; // Container padding
-      
-      // Calculate card position based on actual dimensions
-      const cardPosition = padding + index * (actualCardWidth + gap);
-      
-      // Scroll to show the card with some margin from left
-      // Account for insights panel width (400px) by adding extra space
-      const insightsPanelWidth = 400;
-      const marginFromLeft = 100;
-      const targetScrollPosition = Math.max(0, cardPosition - marginFromLeft);
-      
-      canvasRef.current.scrollTo({
-        left: targetScrollPosition,
-        behavior: 'smooth'
-      });
-    }
-      
-      
-    
-    // Wait for scroll animation, then open insights
-    setTimeout(() => {
-      const cardId = orderedPlaybookCards[index].id;
-      // Ensure insights panel opens for this card
-      if (!expandedIds.has(cardId)) {
-        handleToggleInsights(cardId);
-      }
-
-      // Schedule next card
-      const timeoutId = setTimeout(() => {
-        playNextCard(index + 1);
-      }, 3000); // 3 seconds to view each card's insights
-
-      setPlayTimeoutId(timeoutId);
-    }, 800); // 800ms for scroll animation to complete
-  }, [orderedPlaybookCards, expandedIds, handleToggleInsights]);
-
-  // Fix circular dependency by creating a ref for playNextCard
-  const playNextCardRef = useRef(playNextCard);
-  playNextCardRef.current = playNextCard;
-
-  const pausePlayDemo = useCallback(() => {
-    setIsPlaying(false);
-    if (playTimeoutId) {
-      clearTimeout(playTimeoutId);
-      setPlayTimeoutId(null);
-    }
-  }, [playTimeoutId]);
-
-  const stopPlayDemo = useCallback(() => {
-    setIsPlaying(false);
-    setCurrentPlayIndex(0);
-    setExpandedIds(new Set()); // Close all insights
-    if (playTimeoutId) {
-      clearTimeout(playTimeoutId);
-      setPlayTimeoutId(null);
-    }
-  }, [playTimeoutId]);
+  // Play demo functionality removed
 
   // Update field for editable playbook card
   const updateField = (field: string, value: string | number | boolean | string[], nested?: string) => {
@@ -1029,13 +932,6 @@ export default function CanvasWorkflowPage() {
         <ProjectHeader 
           project={currentPlaybookData.project}
           className="w-full max-w-none"
-          isPlaying={isPlaying}
-          currentPlayIndex={currentPlayIndex}
-          totalCards={orderedPlaybookCards.length}
-          onStartDemo={startPlayDemo}
-          onPauseDemo={pausePlayDemo}
-          onStopDemo={stopPlayDemo}
-          editingId={editingId}
         />
       </div>
       
