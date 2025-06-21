@@ -51,7 +51,7 @@ export const usePlaybookData = (id: string | null): UsePlaybookDataReturn => {
       try {
         // Using the provided API endpoint
         console.log('Making fetch request to API...'); // Debug log
-        const response = await fetch('https://mocki.io/v1/1ade581b-5c73-48d8-ab67-77babf83dce3');
+        const response = await fetch(`https://mocki.io/v1/${id}`);
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
