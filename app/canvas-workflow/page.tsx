@@ -11,6 +11,7 @@ import { Play, Pause, Square } from "lucide-react";
 import { PlaybookCard } from "@/components/playbook/PlaybookCard";
 import { PlaybookInsightsPanel } from "@/components/playbook/PlaybookInsightsPanel";
 import { ProjectHeader } from "@/components/playbook/ProjectHeader";
+import { EnhancedStageDetailsPanel } from "@/components/playbook/EnhancedStageDetailsPanel";
 import { 
   PlaybookCard as PlaybookCardType, 
   PlaybookStep,
@@ -24,206 +25,7 @@ import { MERCURY_DURATIONS, MERCURY_EASING } from "@/lib/mercury-utils";
 // Mercury OS Wu Wei Daoist Easing Functions
 const wuWeiEasing = [0.25, 0.46, 0.45, 0.94] as const;
 
-// Simple Stage Details Panel Component
-function StageDetailsPanel({ card, stageId, onClose }: { card: PlaybookCardType, stageId: string, onClose: () => void }) {
-  const step = card.data as PlaybookStep;
-  const stage = step.execution.stages.find(s => s.stage.toString() === stageId);
-  
-  if (!stage) {
-    return (
-      <div className="h-full flex items-center justify-center text-gray-500">
-        Stage not found
-      </div>
-    );
-  }
-
-  return (
-    <div className="h-full flex flex-col">
-      {/* Fixed Header */}
-      <div className="flex-shrink-0 flex items-center justify-between mb-4 pb-2 border-b border-gray-200">
-        <h3 className="text-lg font-semibold text-gray-900">Stage {stage.stage} Details</h3>
-        <button 
-          onClick={onClose}
-          className="p-1 text-gray-400 hover:text-gray-600 rounded"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
-      
-      {/* Scrollable Content */}
-      <div 
-        className="flex-1 overflow-y-auto space-y-4 pr-2" 
-        style={{ 
-          scrollbarWidth: 'thin',
-          scrollbarColor: '#cbd5e1 #f1f5f9'
-          // Remove fixed height - let it take remaining space
-        }}
-      >
-        <div>
-          <h4 className="text-base font-semibold text-gray-900 mb-2">{stage.name}</h4>
-          <p className="text-sm text-gray-700 mb-4">{stage.instructions}</p>
-        </div>
-        
-        {/* Tool Configuration */}
-        {stage.tool && (
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-            <div className="flex items-center justify-between mb-2">
-              <h5 className="text-sm font-medium text-blue-900">Tool Configuration</h5>
-              {stage.tool.url && (
-                <a
-                  href={stage.tool.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 hover:text-blue-800"
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                  </svg>
-                </a>
-              )}
-            </div>
-            <p className="text-sm text-blue-800">{stage.tool.name}</p>
-          </div>
-        )}
-        
-        {/* AI Prompt */}
-        {stage.prompt && (
-          <div className="bg-purple-50 border border-purple-200 rounded-lg p-3">
-            <h5 className="text-sm font-medium text-purple-900 mb-2">AI Prompt</h5>
-            <p className="text-sm text-purple-800">{stage.prompt.content}</p>
-          </div>
-        )}
-        
-        {/* Rich Content */}
-        {stage.rich_content && stage.rich_content.elements.length > 0 && (
-          <div>
-            <h5 className="text-sm font-medium text-gray-900 mb-2">Resources</h5>
-            <div className="space-y-2">
-              {stage.rich_content.elements.map((element, i) => (
-                <div key={i} className="text-sm text-gray-700">
-                  {element.type === 'code' && (
-                    <div className="bg-gray-900 text-green-400 p-2 rounded text-xs font-mono">
-                      {element.content}
-                    </div>
-                  )}
-                  {element.type === 'link' && (
-                    <a href={element.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-                      {element.content}
-                    </a>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-        
-        {/* Context & Expected Outcomes */}
-        {(stage.context || stage.outcome_expected) && (
-          <div className="grid grid-cols-1 gap-3">
-            {stage.context && (
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                <h5 className="text-sm font-medium text-blue-900 mb-2">context to be utilised</h5>
-                <ul className="text-sm text-blue-700 space-y-1">
-                  {stage.context.required.map((context, i) => (
-                    <li key={i}>• {context}</li>
-                  ))}
-                </ul>
-                {stage.context.assumptions && (
-                  <div className="mt-3 pt-2 border-t border-blue-200">
-                    <h6 className="text-xs font-medium text-blue-800 mb-1">Assumptions:</h6>
-                    <ul className="text-xs text-blue-600 space-y-1">
-                      {stage.context.assumptions.map((assumption, i) => (
-                        <li key={i}>✓ {assumption}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-            )}
-            
-            {stage.outcome_expected && (
-              <div className="bg-green-50 border border-green-200 rounded-lg p-3">
-                <div className="flex items-center justify-between mb-2">
-                  <h5 className="text-sm font-medium text-green-900">Expected Outcomes</h5>
-                  {stage.ai_completion_badge && (
-                    <span className="inline-flex items-center space-x-1 px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium animate-pulse">
-                      <span>{stage.ai_completion_badge.icon}</span>
-                      <span>AI KUDOS</span>
-                    </span>
-                  )}
-                </div>
-                <ul className="text-sm text-green-700 space-y-1">
-                  {stage.outcome_expected.generated.map((outcome, i) => (
-                    <li key={i}>• {outcome}</li>
-                  ))}
-                </ul>
-                {stage.outcome_expected.artifacts && (
-                  <div className="mt-3 pt-2 border-t border-green-200">
-                    <h6 className="text-xs font-medium text-green-800 mb-1">Generated Artifacts:</h6>
-                    <ul className="text-xs text-green-600 space-y-1">
-                      {stage.outcome_expected.artifacts.map((artifact, i) => (
-                        <li key={i}>📄 {artifact}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        )}
-        
-        {/* AI Prompts - Only show for non-autonomous stages */}
-        {stage.ai_prompts && Object.keys(stage.ai_prompts).length > 0 && stage.type !== 'llm_direct' && (
-          <div className="bg-purple-50 border border-purple-200 rounded-lg p-3">
-            <div className="flex items-center space-x-2 mb-3">
-              <h5 className="text-sm font-medium text-purple-900">🤖 AI Prompts</h5>
-              <span className="px-2 py-0.5 bg-purple-100 text-purple-700 rounded-full text-xs">
-                {Object.keys(stage.ai_prompts).length} prompts
-              </span>
-            </div>
-            <div className="space-y-3 max-h-60 overflow-y-auto">
-              {Object.entries(stage.ai_prompts).map(([key, prompt], index) => (
-                <div key={key} className="bg-white border border-purple-200 rounded p-2 relative group">
-                  <div className="flex items-center justify-between mb-1">
-                    <h6 className="text-xs font-semibold text-purple-800 capitalize">
-                      {key.replace(/_/g, ' ').replace('prompt', '')}
-                    </h6>
-                    <button
-                      onClick={() => {
-                        const promptText = typeof prompt === 'string' ? prompt : JSON.stringify(prompt);
-                        navigator.clipboard.writeText(promptText);
-                        // Show temporary success message
-                        const button = document.activeElement as HTMLElement;
-                        const originalText = button.textContent;
-                        button.textContent = '✓ Copied!';
-                        button.style.color = '#059669';
-                        setTimeout(() => {
-                          button.textContent = originalText;
-                          button.style.color = '';
-                        }, 2000);
-                      }}
-                      className="opacity-0 group-hover:opacity-100 transition-opacity text-purple-600 hover:text-purple-800 text-xs px-2 py-1 rounded bg-purple-100 hover:bg-purple-200"
-                      title="Copy to clipboard"
-                    >
-                      📋 Copy
-                    </button>
-                  </div>
-                  <div className="text-xs text-purple-700 leading-relaxed max-h-32 overflow-y-auto">
-                    <pre className="whitespace-pre-wrap font-mono text-[10px] bg-purple-25 p-1 rounded">
-                      {typeof prompt === 'string' ? prompt : JSON.stringify(prompt, null, 2)}
-                    </pre>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
+// Enhanced Stage Details Panel is now imported from external component
 
 export default function CanvasWorkflowPage() {
   // Mercury compliance properties
@@ -267,11 +69,48 @@ export default function CanvasWorkflowPage() {
       console.log('Setting playbook ID to:', id);
       setPlaybookId(id);
     } else {
-      console.log('No ID found, using static data');
-      // If no ID provided, use default static data
-      setPlaybookCards(createPlaybookCards());
+      console.log('No ID found, using enhanced static data');
+      // Load enhanced static data as fallback
+      loadEnhancedStaticData();
     }
   }, []);
+
+  // Function to load enhanced static data
+  const loadEnhancedStaticData = async () => {
+    try {
+      const enhancedData = await import('@/docs/enhanced-playbook.json');
+      console.log('Loaded enhanced static data:', enhancedData.default);
+      
+      // Create cards from enhanced static data
+      const cards: PlaybookCardType[] = [];
+      enhancedData.default.playbook.steps.forEach((step: any, index: number) => {
+        cards.push({
+          id: `step-${step.id}`,
+          type: "step",
+          data: step,
+          position: { x: 50, y: 100 + (index * 400) },
+          connections: [],
+          focusLevel: "ambient" as const,
+        });
+      });
+      
+      console.log('Created cards from enhanced static data:', cards.length);
+      setPlaybookCards(cards);
+      setCardOrder(cards.map(card => card.id));
+      
+      // Set the enhanced data as current playbook data for the header
+      // This will be used by the fallback logic below
+      if (typeof window !== 'undefined') {
+        window.__enhancedPlaybookData = enhancedData.default;
+      }
+    } catch (error) {
+      console.error('Failed to load enhanced static data, falling back to basic static data:', error);
+      // Fallback to basic static data
+      const staticCards = createPlaybookCards();
+      setPlaybookCards(staticCards);
+      setCardOrder(staticCards.map(card => card.id));
+    }
+  };
   
   // Update playbook cards when API data is loaded
   useEffect(() => {
@@ -295,8 +134,21 @@ export default function CanvasWorkflowPage() {
       
       console.log('Created cards from API data:', cards.length); // Debug log
       setPlaybookCards(cards);
+      
+      // Update card order to match API data
+      const newCardOrder = cards.map(card => card.id);
+      console.log('Updating card order to:', newCardOrder); // Debug log
+      setCardOrder(newCardOrder);
     }
   }, [apiData]);
+
+  // Handle API errors by falling back to enhanced data
+  useEffect(() => {
+    if (playbookId && apiError) {
+      console.log('API failed, falling back to enhanced static data');
+      loadEnhancedStaticData();
+    }
+  }, [apiError, playbookId]);
   const [panStart, setPanStart] = useState({ x: 0, y: 0, panX: 0, panY: 0 });
   const canvasRef = useRef<HTMLDivElement>(null);
   const [isSpacePressed, setIsSpacePressed] = useState(false);
@@ -922,8 +774,10 @@ export default function CanvasWorkflowPage() {
     );
   }
 
-  // Use API data if available, otherwise fall back to static data
-  const currentPlaybookData = apiData || playbookData;
+  // Use API data if available, otherwise fall back to enhanced static data, then basic static data
+  const currentPlaybookData = apiData || 
+    (typeof window !== 'undefined' ? window.__enhancedPlaybookData : null) || 
+    playbookData;
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -931,6 +785,7 @@ export default function CanvasWorkflowPage() {
       <div className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm">
         <ProjectHeader 
           project={currentPlaybookData.project}
+          steps={currentPlaybookData.playbook.steps}
           className="w-full max-w-none"
         />
       </div>
@@ -1132,9 +987,9 @@ export default function CanvasWorkflowPage() {
                       {/* Step Card Section */}
                       <div className={`p-6 ${
                         expandedStageDetails?.cardId === playbookCard.id && expandedIds.has(playbookCard.id) 
-                          ? 'w-[30%] min-w-[30%]' // Three panels: 30% (reduced)
+                          ? 'w-[30%] min-w-[30%]' // Three panels: 30%
                           : expandedIds.has(playbookCard.id) 
-                          ? 'w-[40%] min-w-[40%]' // Two panels: 40% (reduced)
+                          ? 'w-[50%] min-w-[50%]' // Two panels: 50%
                           : 'w-full' // Single panel: 100%
                       }`}>
                         <PlaybookCard
@@ -1157,8 +1012,8 @@ export default function CanvasWorkflowPage() {
                             transition={{ duration: 0.5, ease: wuWeiEasing }}
                             className={`border-l border-gray-100 p-6 ${
                               expandedStageDetails?.cardId === playbookCard.id 
-                                ? 'w-[35%] min-w-[35%] max-h-[500px] overflow-y-auto' // Three panels: 35% with scroll
-                                : 'w-[60%] min-w-[60%] max-h-[500px] overflow-y-auto' // Two panels: 60% with scroll
+                                ? 'w-[30%] min-w-[30%] max-h-[500px] overflow-y-auto' // Three panels: 30%
+                                : 'w-[50%] min-w-[50%] max-h-[500px] overflow-y-auto' // Two panels: 50%
                             }`}
                           >
                             <PlaybookInsightsPanel
@@ -1181,10 +1036,10 @@ export default function CanvasWorkflowPage() {
                             animate={{ opacity: 1, width: 'auto' }}
                             exit={{ opacity: 0, width: 0 }}
                             transition={{ duration: 0.5, ease: wuWeiEasing }}
-                            className="border-l border-gray-100 bg-gray-50 rounded-r-2xl w-[35%] min-w-[35%] h-[500px] overflow-hidden"
+                            className="border-l border-gray-100 bg-gray-50 rounded-r-2xl w-[40%] min-w-[40%] h-[500px] overflow-hidden"
                           >
                             <div className="h-full flex flex-col p-6">
-                              <StageDetailsPanel 
+                              <EnhancedStageDetailsPanel 
                                 card={playbookCard}
                                 stageId={expandedStageDetails.stageId}
                                 onClose={() => setExpandedStageDetails(null)}

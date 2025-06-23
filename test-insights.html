@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Workflow Insights Test</title>
+</head>
+<body>
+    <script>
+        // Wait for page to load then open all insights
+        window.onload = function() {
+            setTimeout(() => {
+                // Navigate to the workflow page
+                window.location.href = 'http://localhost:3000/workflow';
+                
+                // Wait for the page to load, then click all cards
+                setTimeout(() => {
+                    // Find all the context cards and click them to open insights
+                    const cards = document.querySelectorAll('.cursor-pointer');
+                    console.log('Found', cards.length, 'clickable cards');
+                    
+                    cards.forEach((card, index) => {
+                        setTimeout(() => {
+                            console.log('Clicking card', index + 1);
+                            card.click();
+                        }, index * 500); // Stagger clicks by 500ms
+                    });
+                    
+                    // Take a screenshot after all cards are clicked
+                    setTimeout(() => {
+                        console.log('All insights panels should now be open!');
+                        // The browser automation would take a screenshot here
+                    }, cards.length * 500 + 1000);
+                }, 2000);
+            }, 1000);
+        };
+    </script>
+</body>
+</html>
+

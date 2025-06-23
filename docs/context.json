@@ -4,1563 +4,1490 @@
     "processing_request_id": "pr111111-1111-1111-1111-111111111111",
     "upload": {
       "id": "u1111111-1111-1111-1111-111111111111",
-      "file_name": "User Research Sales Teams",
-      "original_name": "Sales Team User Research - Meeting Pain Points - 2024-01-10.mp4",
+      "file_name": "Parent Market Research Children's Books",
+      "original_name": "Parent Focus Group - Personalized Children's Books Market Research - 2024-01-15.mp4",
       "content_type": "video/mp4",
       "upload_type": "video",
-      "description": "User research session with 5 sales managers discussing meeting inefficiencies and note-taking challenges",
+      "description": "Focus group session with 8 parents discussing children's book preferences, personalization desires, and educational priorities",
       "status": "completed",
       "priority": "high",
       "is_checkpoint": true,
-      "recorded_on": "2024-01-10T14:00:00Z",
-      "summary": "Sales teams lose 40% of meeting value due to poor note-taking, missed action items, and lack of CRM updates. Key insight: they need an 'invisible assistant' that captures everything without disrupting flow.",
+      "recorded_on": "2024-01-15T14:00:00Z",
+      "summary": "Parents desperately want personalized children's books that make their kids the hero while teaching life lessons. Current market lacks true personalization and educational depth.",
       "participants": [
-        "Tom Bradley",
-        "Lisa Chen",
-        "Marcus Johnson",
-        "Sarah Ahmed",
-        "David Kim"
+        "Priya Sharma",
+        "Rajesh Kumar",
+        "Anita Patel",
+        "Vikram Singh",
+        "Meera Joshi",
+        "Arjun Reddy",
+        "Kavya Nair",
+        "Deepak Gupta"
       ],
-      "number_of_participants": 5
+      "number_of_participants": 8
     },
-    "text_content": "Tom Bradley (Sales Director, TechCorp): I'll be brutally honest - I'm in 6-8 customer calls daily, and I retain maybe 30% of what's discussed. By the time I update Salesforce, half the nuances are gone.\n\nMarcus Johnson (Account Executive): Exactly! Yesterday I had a call where the client mentioned their Q2 budget constraints in passing. I was screen-sharing, couldn't take notes, and completely forgot to log it. Lost a $200K deal because I didn't follow up appropriately.\n\nLisa Chen (Researcher): What would the ideal solution look like?\n\nTom: Something that just... listens. Like having a brilliant intern who never misses anything. No buttons to push, no apps to switch between. It just captures everything and knows what's important.\n\nSarah Ahmed (Sales Manager): And it needs to understand context! When a client says 'we'll revisit this after the board meeting,' that should automatically create a follow-up task for the right date.\n\nDavid Kim (VP Sales): The CRM integration is critical. I spend 2 hours every evening updating Salesforce. If an AI could draft those updates and just let me review... game changer.\n\nMarcus: What about compliance? We discuss sensitive pricing.\n\nTom: Good point. It needs enterprise-grade security. SOC 2, HIPAA compliant. And the ability to redact sensitive information automatically.\n\nLisa: How do you handle action items currently?\n\nSarah: Poorly! (laughs) I try to write them down, but when you're presenting and negotiating, something always slips. Last week I promised a client three deliverables and only remembered two.\n\nDavid: The worst is when multiple people are on the call. Who said they'd do what? By when? It's chaos.\n\nTom: You know what would be incredible? If it could detect commitment language. When someone says 'I'll send that by Friday,' boom - task created, assigned, due date set.\n\nMarcus: And meeting summaries! My manager always asks 'how did the call go?' I want to forward a perfect summary in 30 seconds, not spend 15 minutes writing one.\n\nSarah: Integration with our existing tools is non-negotiable. Zoom, obviously. But also Slack for quick summaries, Jira for technical discussions, Google Calendar for scheduling follow-ups.\n\nDavid: Price point?\n\nTom: For something that saves 5-8 hours per week? $50-100 per user per month is a no-brainer. That's less than an hour of a salesperson's time.",
-    "summary": "Sales teams desperately need an 'invisible' AI meeting assistant that captures everything, understands context, and automatically updates CRM/task systems without disrupting meeting flow.",
+    "text_content": "Priya Sharma (Mother of 2, Mumbai): My 5-year-old daughter loves stories, but she always asks 'Why can't I be the princess?' The generic books just don't connect with her the way I wish they would.\n\nRajesh Kumar (Father, Bangalore): Exactly! My son sees all these Western characters and asks why none of them look like him. Representation matters, even in children's books.\n\nMeera Joshi (Researcher): What would make the perfect children's book for you?\n\nPriya: Something where my child is actually IN the story. Not just a character that looks similar, but genuinely personalized with their name, their face, their interests.\n\nAnita Patel (Grandmother, Delhi): And it should teach something valuable! These days, children learn from screens more than books. If we're going to compete with tablets, books need to be special.\n\nVikram Singh (Tech Professional): I'd pay premium for that. My daughter gets so many generic books as gifts. Something truly personalized would stand out.\n\nKavya Nair (Teacher & Parent): The educational aspect is crucial. I see so many beautiful books that are just pretty pictures. What if each story taught patience, or courage, or kindness?\n\nArjun Reddy (Creative Director): The artwork matters too. Disney style is overplayed. Something more artistic, maybe like Studio Ghibli - that dreamy, magical quality.\n\nDeepak Gupta (Single Father): Convenience is key for busy parents. If I could upload a photo and get a personalized book delivered, that's gold. Especially for gifts to relatives.\n\nMeera: How much would you pay for such a product?\n\nPriya: For a digital version? Maybe ₹300-500. For a physical book that's truly personalized? ₹1000-2000 easily.\n\nRajesh: More for special occasions. For my daughter's birthday, I'd spend ₹3000-4000 on something this unique.\n\nAnita: Grandparents would love this! We always struggle to find meaningful gifts. A personalized storybook would be perfect.\n\nVikram: The key is quality. If it looks amateur or cheap, it defeats the purpose. It needs to look professional, like a real published book.\n\nKavya: And age-appropriate content. Parents need to trust that AI-generated content is safe and educational for their children.\n\nArjun: Multiple formats would be great - digital for instant gratification, physical for the full experience, maybe even framed art prints.\n\nDeepak: Speed matters too. If my niece's birthday is next week, I can't wait a month for delivery.\n\nMeera: Any concerns about AI-generated content?\n\nPriya: Safety is paramount. As long as the content is reviewed and appropriate, AI could create stories I could never imagine.\n\nRajesh: The personalization potential is incredible. Imagine if it could incorporate my child's actual interests - if he loves dinosaurs, the story could include that.\n\nAnita: Just ensure it's not replacing human creativity entirely. The warmth and love should still come through.",
+    "summary": "Parents are eager for truly personalized children's books featuring their kids as heroes, with educational value and premium artistic quality. Willingness to pay ₹1000-4000 for personalized physical books.",
     "priority_score": 100,
     "is_checkpoint": true,
     "is_invalidated": false,
     "extracted_metadata": {
-      "insight_sources": ["Card 1: Sales Team Research"],
+      "insight_sources": ["Card 1: Parent Market Research"],
       "insights": [
-        "Sales teams lose 40% of meeting value due to poor note-taking and missed action items",
-        "Need an 'invisible assistant' that captures everything without disrupting meeting flow"
+        "Parents want truly personalized children's books where their child is the main character",
+        "Educational content is crucial - books should teach valuable life lessons",
+        "Premium pricing acceptable for quality personalization (₹1000-4000 for physical books)"
       ],
       "cumulative_insights": {
         "key_pain_points": [
           {
-            "text": "Retain only 30% of meeting content",
-            "source": "Card 1: Sales Team Research",
+            "text": "Generic books don't connect with children personally",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Miss critical action items while presenting",
-            "source": "Card 1: Sales Team Research",
+            "text": "Lack of representation in children's literature",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Spend 2+ hours daily on CRM updates",
-            "source": "Card 1: Sales Team Research",
+            "text": "Beautiful books often lack educational value",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "No clarity on who owns what action items",
-            "source": "Card 1: Sales Team Research",
+            "text": "Limited meaningful gift options for children",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           }
         ],
         "desired_features": [
           {
-            "text": "Invisible/automatic operation",
-            "source": "Card 1: Sales Team Research",
+            "text": "Child's face and name integrated into story",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Context-aware action item detection",
-            "source": "Card 1: Sales Team Research",
+            "text": "Educational themes teaching life lessons",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Automatic CRM updates",
-            "source": "Card 1: Sales Team Research",
+            "text": "Studio Ghibli-style artistic quality",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Commitment language recognition",
-            "source": "Card 1: Sales Team Research",
+            "text": "Multiple format options (digital, physical, framed art)",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Multi-party action item tracking",
-            "source": "Card 1: Sales Team Research",
+            "text": "Easy photo upload and quick delivery",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "One-click meeting summaries",
-            "source": "Card 1: Sales Team Research",
+            "text": "Professional publishing quality",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Enterprise security compliance",
-            "source": "Card 1: Sales Team Research",
+            "text": "Child's interests incorporated into story",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           }
         ],
         "integrations_required": [
           {
-            "text": "Zoom",
-            "source": "Card 1: Sales Team Research",
+            "text": "Razorpay payment processing",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Salesforce",
-            "source": "Card 1: Sales Team Research",
+            "text": "Print-on-demand services",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Slack",
-            "source": "Card 1: Sales Team Research",
-            "source_id": "c1111111-1111-1111-1111-111111111111"
-          },
-          {
-            "text": "Jira",
-            "source": "Card 1: Sales Team Research",
-            "source_id": "c1111111-1111-1111-1111-111111111111"
-          },
-          {
-            "text": "Google Calendar",
-            "source": "Card 1: Sales Team Research",
+            "text": "Delivery partners for physical books",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           }
         ],
-        "beta_insights": [
+        "market_insights": [
           {
-            "text": "Invisible/automatic operation",
-            "source": "Card 1: Sales Team Research",
+            "text": "Grandparents are key market segment for gifting",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           }
         ]
       },
-      "pricing_expectation": "$50-100 per user/month",
-      "expected_time_savings": "5-8 hours per week"
+      "pricing_expectation": "₹300-500 digital, ₹1000-4000 physical books",
+      "target_age_group": "3-10 years",
+      "key_markets": ["Mumbai", "Bangalore", "Delhi"]
     },
     "tags": [
       "user-research",
-      "sales-teams",
-      "requirements",
+      "parents",
+      "children-books",
+      "personalization",
       "checkpoint",
-      "high-value"
+      "market-validation"
     ],
-    "created_at": "2024-01-10T18:00:00Z"
+    "created_at": "2024-01-15T18:00:00Z"
   },
   {
     "id": "c2222222-2222-2222-2222-222222222222",
     "processing_request_id": "pr222222-2222-2222-2222-222222222222",
     "upload": {
       "id": "u2222222-2222-2222-2222-222222222222",
-      "file_name": "Competitor Analysis Meeting Tools",
-      "original_name": "AI Meeting Assistant Competitive Landscape Analysis 2024.pdf",
+      "file_name": "Children's Book Market Analysis",
+      "original_name": "Personalized Children's Book Market Competitive Analysis 2024.pdf",
       "content_type": "application/pdf",
       "upload_type": "document",
-      "description": "Detailed analysis of existing meeting assistant tools and market opportunities",
+      "description": "Comprehensive analysis of children's book market, personalization trends, and competitive landscape",
       "status": "completed",
       "priority": "high",
       "is_checkpoint": false,
-      "recorded_on": "2024-01-12T10:00:00Z",
-      "summary": "Market analysis reveals fragmented landscape with no true AI-native solution. Opportunity for seamless, context-aware assistant that requires zero user interaction."
+      "recorded_on": "2024-01-18T10:00:00Z",
+      "summary": "Global children's book market worth $4.3B with personalization segment growing rapidly. Limited AI-powered personalization creates massive opportunity for 'If I Were an Animal' concept."
     },
-    "text_content": "AI Meeting Assistant Market Analysis 2024\n\n1. Otter.ai - $17-30/user/month\n   Strengths:\n   - Good transcription accuracy (90-95%)\n   - Real-time collaborative notes\n   - Speaker identification\n   \n   Weaknesses:\n   - Requires manual highlighting for action items\n   - No automatic CRM integration\n   - Limited context understanding\n   - Participants must join Otter room separately\n\n2. Fireflies.ai - $10-19/user/month\n   Strengths:\n   - Automatic Zoom/Meet joining\n   - Basic action item detection\n   - Search functionality\n   \n   Weaknesses:\n   - Poor context understanding\n   - Generic summaries\n   - No task management integration\n   - Treats all meetings the same\n\n3. Gong.io - $12,000+/year (enterprise)\n   Strengths:\n   - Excellent sales-specific features\n   - Deal intelligence\n   - Coaching capabilities\n   \n   Weaknesses:\n   - Extremely expensive\n   - Sales-only focus\n   - Complex setup\n   - Overkill for most teams\n\n4. Fellow.app - $7-10/user/month\n   Strengths:\n   - Good meeting agenda features\n   - Action item tracking\n   \n   Weaknesses:\n   - Manual note-taking required\n   - No AI transcription\n   - Limited intelligence\n\n5. Tactiq - $8-16/user/month\n   Strengths:\n   - Chrome extension simplicity\n   - GPT-powered summaries\n   \n   Weaknesses:\n   - Browser-only\n   - No deep integrations\n   - Unreliable for long meetings\n\nMARKET GAPS IDENTIFIED:\n\n1. Zero-Touch Operation\n   - Current tools require setup, buttons, manual highlighting\n   - Opportunity: Truly invisible assistant\n\n2. Context Intelligence\n   - No tool understands meeting types, participants, or history\n   - Opportunity: AI that adapts based on meeting context\n\n3. Commitment Detection\n   - No automatic parsing of 'I'll do X by Y' statements\n   - Opportunity: Natural language commitment understanding\n\n4. Deep Integration\n   - Most tools are siloed, require manual exports\n   - Opportunity: Native integration with entire work stack\n\n5. Team Intelligence\n   - No tool learns team patterns, terminology, processes\n   - Opportunity: AI that becomes smarter about your specific team\n\nPRICING OPPORTUNITY:\n- Premium positioning at $75/user/month\n- 10x value vs. transcription tools\n- Undercut enterprise solutions by 90%\n\nUNIQUE POSITIONING:\n'The AI team member that never misses a meeting'",
-    "summary": "Competitive analysis reveals market gap for truly intelligent, zero-touch meeting assistant with deep integrations and context awareness.",
-    "priority_score": 85,
+    "text_content": "Personalized Children's Book Market Analysis 2024\n\n1. MARKET SIZE & TRENDS\n   Global Children's Book Market: $4.3 billion (2024)\n   Annual Growth Rate: 4.8%\n   Personalized Segment: $300 million (7% of total)\n   Digital vs Physical: 65% physical, 35% digital\n\n2. COMPETITIVE LANDSCAPE\n\n   A. Wonderbly (I See Me) - $25-45 USD\n   Strengths:\n   - Established brand with 2M+ books sold\n   - High-quality illustrations\n   - Multiple personalization options\n   \n   Weaknesses:\n   - Limited to name/basic customization\n   - No AI-generated content\n   - Western-centric characters\n   - Expensive for Indian market\n\n   B. Hooray Heroes - $35-60 USD\n   Strengths:\n   - Beautiful custom illustrations\n   - Adventure-themed stories\n   - Good review ratings (4.5/5)\n   \n   Weaknesses:\n   - Manual illustration process\n   - Limited story variety\n   - 2-3 week delivery time\n   - No Indian market presence\n\n   C. LostMy.Name (Wonderbly owned) - $30-50 USD\n   Strengths:\n   - Unique personalization concept\n   - Strong brand recognition\n   - Quality production\n   \n   Weaknesses:\n   - Single story concept\n   - No educational focus\n   - Limited character diversity\n\n   D. Local Indian Players:\n   - Mostly generic customization (name insertion)\n   - Poor illustration quality\n   - Limited distribution\n   - Price range: ₹500-1500\n\n3. MARKET GAPS IDENTIFIED\n\n   Technology Gap:\n   - No AI-powered story generation\n   - Limited photo-to-character conversion\n   - No educational curriculum integration\n   - Static personalization (name/basic details only)\n\n   Content Gap:\n   - Lack of Indian cultural representation\n   - Missing educational life lessons integration\n   - No age-appropriate learning objectives\n   - Limited story variety and themes\n\n   Price Gap:\n   - International players too expensive for Indian market\n   - Local players lack quality and sophistication\n   - No premium-but-accessible positioning\n\n   Distribution Gap:\n   - Poor mobile experience\n   - Limited payment options for Indian market\n   - No social gifting features\n   - Slow delivery times\n\n4. OPPORTUNITY ANALYSIS\n\n   Indian Market Potential:\n   - 300M+ middle-class families\n   - Growing digital adoption\n   - Increasing spend on children's education\n   - Festival/birthday gifting culture\n   - Grandparent market segment underserved\n\n   Technology Advantage:\n   - AI story generation (GPT-4)\n   - Photo-to-character AI (DALL-E 3)\n   - Instant personalization\n   - Multiple format outputs\n\n   Pricing Opportunity:\n   - Premium positioning at ₹299-3999\n   - Undercut international players by 70%\n   - Higher quality than local competitors\n   - Sustainable margins with AI automation\n\n5. SUCCESS FACTORS\n\n   Quality Control:\n   - Consistent AI output quality\n   - Child-safe content generation\n   - Professional illustration standards\n   - Print quality matching expectations\n\n   Localization:\n   - Indian names, festivals, cultural elements\n   - Regional language support (future)\n   - Local payment methods (UPI, Razorpay)\n   - Fast delivery within India\n\n   Educational Value:\n   - Clear learning objectives per story\n   - Age-appropriate content\n   - Parent/teacher guides\n   - Alignment with child development stages\n\nRECOMMENDED POSITIONING:\n'India's first AI-powered personalized storybook platform that makes your child the hero while teaching valuable life lessons through beautiful Studio Ghibli-inspired art.'",
+    "summary": "Significant market opportunity exists for AI-powered personalized children's books in India. International competitors are expensive and lack cultural relevance, while local players lack quality and sophistication.",
+    "priority_score": 90,
     "is_checkpoint": false,
     "is_invalidated": false,
     "extracted_metadata": {
       "insight_sources": [
-        "Card 1: Sales Team Research",
-        "Card 2: Competitive Analysis"
+        "Card 1: Parent Market Research",
+        "Card 2: Market Analysis"
       ],
       "insights": [
-        "Sales teams lose 40% of meeting value due to poor note-taking and missed action items",
-        "Need an 'invisible assistant' that captures everything without disrupting meeting flow",
-        "Market gap identified for zero-touch operation - no existing tool provides truly invisible assistance"
+        "Parents want truly personalized children's books where their child is the main character",
+        "Educational content is crucial - books should teach valuable life lessons",
+        "Premium pricing acceptable for quality personalization (₹1000-4000 for physical books)",
+        "Global children's book market worth $4.3B with personalization segment rapidly growing",
+        "Significant technology and content gaps in current market create massive opportunity"
       ],
       "cumulative_insights": {
         "key_pain_points": [
           {
-            "text": "Retain only 30% of meeting content",
-            "source": "Card 1: Sales Team Research",
+            "text": "Generic books don't connect with children personally",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Miss critical action items while presenting",
-            "source": "Card 1: Sales Team Research",
+            "text": "Lack of representation in children's literature",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Spend 2+ hours daily on CRM updates",
-            "source": "Card 1: Sales Team Research",
-            "source_id": "c1111111-1111-1111-1111-111111111111"
-          },
-
-          {
-            "text": "No clarity on who owns what action items",
-            "source": "Card 1: Sales Team Research",
+            "text": "Beautiful books often lack educational value",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Manual setup required for all competitors",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Limited meaningful gift options for children",
+            "source": "Card 1: Parent Market Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "International competitors too expensive for Indian market",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "No context understanding across tools",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Local competitors lack quality and sophistication",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Limited integration capabilities",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Limited AI-powered personalization in market",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Generic one-size-fits-all approach",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Poor cultural representation in existing products",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "High enterprise costs vs limited SMB options",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Slow delivery times and poor mobile experience",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           }
         ],
         "desired_features": [
           {
-            "text": "Invisible/automatic operation",
-            "source": "Card 1: Sales Team Research",
+            "text": "Child's face and name integrated into story",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Context-aware action item detection",
-            "source": "Card 1: Sales Team Research",
+            "text": "Educational themes teaching life lessons",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Automatic CRM updates",
-            "source": "Card 1: Sales Team Research",
+            "text": "Studio Ghibli-style artistic quality",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Commitment language recognition",
-            "source": "Card 1: Sales Team Research",
+            "text": "Multiple format options (digital, physical, framed art)",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Multi-party action item tracking",
-            "source": "Card 1: Sales Team Research",
+            "text": "Easy photo upload and quick delivery",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "One-click meeting summaries",
-            "source": "Card 1: Sales Team Research",
+            "text": "Professional publishing quality",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Enterprise security compliance",
-            "source": "Card 1: Sales Team Research",
+            "text": "Child's interests incorporated into story",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Zero-touch operation",
-            "source": "Card 2: Competitive Analysis",
+            "text": "AI-powered story generation",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "AI that learns team patterns",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Photo-to-character AI conversion",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Deep native integrations",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Indian cultural representation",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Context-aware processing",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Instant personalization and delivery",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           }
         ],
         "integrations_required": [
           {
-            "text": "Zoom",
-            "source": "Card 1: Sales Team Research",
+            "text": "Razorpay payment processing",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Salesforce",
-            "source": "Card 1: Sales Team Research",
+            "text": "Print-on-demand services",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Slack",
-            "source": "Card 1: Sales Team Research",
+            "text": "Delivery partners for physical books",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Jira",
-            "source": "Card 1: Sales Team Research",
-            "source_id": "c1111111-1111-1111-1111-111111111111"
-          },
-          {
-            "text": "Google Calendar",
-            "source": "Card 1: Sales Team Research",
-            "source_id": "c1111111-1111-1111-1111-111111111111"
-          },
-          {
-            "text": "HubSpot",
-            "source": "Card 2: Competitive Analysis",
+            "text": "OpenAI GPT-4 and DALL-E 3",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Microsoft Teams",
-            "source": "Card 2: Competitive Analysis",
+            "text": "UPI payment integration",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           }
         ],
         "market_gaps": [
           {
-            "text": "Zero-touch operation",
-            "source": "Card 2: Competitive Analysis",
+            "text": "No AI-powered story generation in market",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Context intelligence",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Limited photo-to-character conversion",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Commitment detection",
-            "source": "Card 2: Competitive Analysis",
+            "text": "No educational curriculum integration",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Deep integration",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Poor cultural representation",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Team-specific learning",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Premium-but-accessible price gap",
+            "source": "Card 2: Market Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          }
+        ],
+        "market_insights": [
+          {
+            "text": "Grandparents are key market segment for gifting",
+            "source": "Card 1: Parent Market Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "300M+ middle-class families in India represent huge opportunity",
+            "source": "Card 2: Market Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Festival and birthday gifting culture supports market",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           }
         ]
       },
-      "competitors_analyzed": 5,
-      "price_range": "$7-30/user/month for SMB tools",
-      "positioning_opportunity": "Premium at $75/user/month",
-      "key_differentiators": [
-        "Truly invisible operation",
-        "Learns team patterns",
-        "Automatic commitment parsing",
-        "Native work stack integration"
-      ]
+      "market_size": "$4.3 billion global, $300M personalized segment",
+      "competitive_advantage": "AI-powered, culturally relevant, premium-but-accessible pricing",
+      "positioning": "India's first AI-powered personalized storybook platform"
     },
-    "tags": ["competitive-analysis", "market-research", "pricing-strategy"],
-    "created_at": "2024-01-12T14:00:00Z"
+    "tags": ["market-analysis", "competitive-research", "opportunity-assessment"],
+    "created_at": "2024-01-18T14:00:00Z"
   },
   {
     "id": "c3333333-3333-3333-3333-333333333333",
     "processing_request_id": "pr333333-3333-3333-3333-333333333333",
     "upload": {
       "id": "u3333333-3333-3333-3333-333333333333",
-      "file_name": "Technical POC Demo",
-      "original_name": "AI Meeting Assistant Technical POC Demo - 2024-01-15.mov",
-      "content_type": "video/quicktime",
-      "upload_type": "video",
-      "description": "Technical proof of concept demonstration showing real-time transcription, action item extraction, and Slack integration",
+      "file_name": "Technical MVP Development Log",
+      "original_name": "If I Were an Animal - Technical MVP Development Progress - 2024-01-22.md",
+      "content_type": "text/markdown",
+      "upload_type": "document",
+      "description": "Complete technical development log showing MVP implementation with AI integration, cost optimization, and multi-format output capabilities",
       "status": "completed",
       "priority": "high",
       "is_checkpoint": true,
-      "recorded_on": "2024-01-15T15:00:00Z",
-      "summary": "Successful POC demonstrates real-time transcription with 97% accuracy, intelligent action item extraction, and working Slack integration. WebRTC implementation enables seamless Zoom joining."
+      "recorded_on": "2024-01-22T15:00:00Z",
+      "summary": "MVP successfully completed with full AI pipeline, cost optimization (₹6.7 in testing mode vs ₹66 production), and multi-format output. Ready for market testing with sustainable unit economics."
     },
-    "text_content": "Technical POC Demo Transcript:\n\nAlex Chen (Lead Engineer): Alright team, let me demo what we've built in the last sprint. I'm going to start a Zoom meeting, and our AI assistant will join automatically.\n\n[Screen shows Zoom meeting starting]\n\nAlex: Notice how 'AI Meeting Assistant' joined within 3 seconds. No manual intervention. It's using our WebRTC bridge to appear as a regular participant.\n\nPriya Patel (CTO): How's the audio quality?\n\nAlex: We're capturing at 16kHz, which is perfect for speech. Let me show the real-time transcription...\n\n[Screen shows live transcription appearing with <2 second delay]\n\nAlex: We're using Whisper for the base transcription, then GPT-4 for speaker diarization and context enhancement. Accuracy is around 97% even with technical terms.\n\nJames Wu (Backend Engineer): Show them the action item detection!\n\nAlex: Right! So watch this - 'James, can you deploy the WebSocket service to staging by Thursday?' \n\n[UI highlights the sentence and creates an action item card]\n\nAlex: The AI detected: Assignee: James, Task: Deploy WebSocket service to staging, Due: Thursday. It understands context and relative dates.\n\nPriya: What about complex commitments?\n\nAlex: Great question. 'Priya, I'll review the security audit after Sarah sends it, probably early next week.'\n\n[System creates linked action items with dependency]\n\nAlex: See? It created two linked items - one waiting on Sarah, one for Priya conditional on the first.\n\nMaria Rodriguez (Product Manager): This is incredible! How does the Slack integration work?\n\nAlex: Let me end this meeting... Now watch our Slack channel.\n\n[Slack notification appears with formatted summary]\n\nAlex: Within 30 seconds, we get a summary with: key discussion points, all action items with owners and dates, and a link to the full transcript.\n\nJames: Show them the CRM integration mockup.\n\nAlex: We've simulated Salesforce integration. When it detects sales context - pricing, timeline, objections - it drafts opportunity updates.\n\n[Shows Salesforce update draft]\n\nPriya: Performance metrics?\n\nAlex: Running on a single GPU instance: \n- Handles 50 concurrent meetings\n- 2-second transcription delay\n- 5-second action item detection\n- 30-second post-meeting summary\n- Total cost: ~$0.10 per meeting hour\n\nMaria: What's left for MVP?\n\nAlex: Main gaps:\n1. Polish the UI/UX\n2. Implement user authentication  \n3. Add more integrations (Jira, Notion, Google Tasks)\n4. Build the learning system for team-specific patterns\n5. Security hardening for enterprise\n\nPriya: Timeline?\n\nAlex: 6 weeks for MVP. 2 for core features, 2 for integrations, 2 for testing and polish.\n\nJames: Don't forget about the manual override feature - users need to edit action items.\n\nAlex: Absolutely. Everything the AI generates is editable. Users maintain full control.\n\nPriya: This is exactly what we envisioned. Green light to continue. Fantastic work, team!",
-    "summary": "Technical POC successfully demonstrates core features: automatic meeting joining, 97% accurate transcription, intelligent action item extraction with dependencies, and working Slack integration.",
-    "priority_score": 95,
+    "text_content": "# If I Were an Animal - Technical MVP Development Log\n\n## Technical Architecture Completed ✅\n\n### Frontend Stack\n- **Next.js 14** with App Router and Server Actions\n- **React 19** with concurrent features\n- **TypeScript** for type safety\n- **Tailwind CSS 4** for styling\n- **Framer Motion 12** for animations\n- **Mobile-responsive** design\n\n### AI Integration Pipeline\n- **OpenAI GPT-4 Vision**: Child photo analysis and character description\n- **OpenAI DALL-E 3**: Studio Ghibli-style illustration generation\n- **Replicate**: Backup image generation service\n- **Custom prompting**: Optimized for children's book art style\n\n### Core Features Implemented\n\n1. **Photo Upload & Analysis**\n   - Secure image upload with validation\n   - AI-powered child feature extraction\n   - Character description generation\n   - Photo analysis caching (cost optimization)\n\n2. **Story Generation System**\n   - 8 animal-themed story templates\n   - Each teaching specific life lessons:\n     - 🕊️ Bird → Perspective & Imagination\n     - 🦁 Lion → Courage & Bravery\n     - 🐢 Turtle → Patience & Perseverance\n     - 🦋 Butterfly → Change & Self-Discovery\n     - 🐘 Elephant → Memory & Wisdom\n     - 🦊 Fox → Cleverness & Adaptability\n     - 🐻 Bear → Strength & Protection\n     - 🐰 Rabbit → Speed & Quick Thinking\n\n3. **AI Image Generation**\n   - 10 unique illustrations per storybook\n   - Studio Ghibli-inspired art style\n   - Child's face integrated into each scene\n   - Consistent character representation\n   - Standard vs HD quality options\n\n4. **Multi-Format Output**\n   - **Digital PDF**: Instant download\n   - **Individual Images**: High-resolution collection\n   - **Physical Books**: Print-ready files\n   - **Framed Art**: Selected illustrations\n\n### Cost Optimization Implementation\n\n**Testing Mode** (Current):\n- Limited to 3 images per story\n- Standard quality images\n- Cost per storybook: ₹6.7\n- 97% cost reduction for development\n\n**Production Mode**:\n- Full 10 images per story\n- HD quality available\n- Cost per storybook: ₹66\n- Still maintains 75%+ gross margins\n\n### Payment Integration\n- **Razorpay** fully integrated\n- Support for UPI, cards, wallets\n- Indian market optimized\n- Tiered pricing: ₹299 - ₹3,999\n\n### Technical Challenges Solved\n\n1. **AI Consistency**: Ensuring child's appearance remains consistent across all 10 illustrations\n   - Solution: Detailed character description caching\n   - Consistent prompting with character reference\n\n2. **Cost Management**: AI generation costs could be prohibitive\n   - Solution: Testing mode with reduced image count\n   - Smart caching to avoid duplicate API calls\n   - Quality vs cost optimization\n\n3. **Image Quality**: Balancing file size, quality, and generation speed\n   - Solution: Standard/HD options\n   - Optimized image compression\n   - Progressive loading\n\n4. **Child Safety**: Ensuring AI-generated content is always appropriate\n   - Solution: Curated story templates\n   - Content filtering prompts\n   - Manual review capability\n\n### Performance Metrics\n- **Page Load Time**: <2 seconds\n- **Image Generation**: 30-45 seconds per story\n- **Mobile Responsive**: 100% compatible\n- **Accessibility**: WCAG 2.1 AA compliant\n\n### Quality Assurance\n- **Story Templates**: All 8 animal stories tested and refined\n- **AI Prompts**: Optimized for consistent, high-quality output\n- **Error Handling**: Graceful fallbacks for API failures\n- **Content Safety**: Child-appropriate content validation\n\n### Development Metrics\n- **Total Development Time**: 6 weeks\n- **Lines of Code**: ~15,000\n- **Components Built**: 45+\n- **API Integrations**: 5 (OpenAI, Razorpay, Vercel, etc.)\n\n### Ready for Market Testing\n- ✅ Full user journey implemented\n- ✅ Payment processing working\n- ✅ AI pipeline stable and consistent\n- ✅ Cost optimization enabling sustainable pricing\n- ✅ Multi-format output system\n- ✅ Mobile-first responsive design\n- ✅ Error handling and fallbacks\n\n### Next Phase: Market Validation\n1. Switch from testing to production mode\n2. Customer acquisition and feedback\n3. Pricing optimization based on conversion data\n4. Physical product fulfillment setup\n5. Additional story template development\n\n**Technical Foundation**: Solid and scalable\n**Unit Economics**: Sustainable and profitable\n**Product Quality**: Premium and differentiated\n**Time to Market**: Ready for immediate launch",
+    "summary": "Technical MVP successfully completed with full AI pipeline, sustainable unit economics, and premium quality output. All core features implemented and tested, ready for market launch.",
+    "priority_score": 100,
     "is_checkpoint": true,
     "is_invalidated": false,
     "extracted_metadata": {
       "insight_sources": [
-        "Card 1: Sales Team Research",
-        "Card 2: Competitive Analysis",
-        "Card 3: Technical POC"
+        "Card 1: Parent Market Research",
+        "Card 2: Market Analysis",
+        "Card 3: Technical MVP"
       ],
       "insights": [
-        "Sales teams lose 40% of meeting value due to poor note-taking and missed action items",
-        "Need an 'invisible assistant' that captures everything without disrupting meeting flow",
-        "Market gap identified for zero-touch operation - no existing tool provides truly invisible assistance",
-        "Technical feasibility proven with 97% transcription accuracy and reliable action item extraction",
-        "WebRTC integration successful, enabling seamless meeting participation without user setup"
+        "Parents want truly personalized children's books where their child is the main character",
+        "Educational content is crucial - books should teach valuable life lessons",
+        "Premium pricing acceptable for quality personalization (₹1000-4000 for physical books)",
+        "Global children's book market worth $4.3B with personalization segment rapidly growing",
+        "Significant technology and content gaps in current market create massive opportunity",
+        "Technical feasibility proven with full AI pipeline and sustainable unit economics",
+        "Cost optimization enables competitive pricing while maintaining quality"
       ],
       "cumulative_insights": {
         "key_pain_points": [
           {
-            "text": "Retain only 30% of meeting content",
-            "source": "Card 1: Sales Team Research",
+            "text": "Generic books don't connect with children personally",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Miss critical action items while presenting",
-            "source": "Card 1: Sales Team Research",
+            "text": "Lack of representation in children's literature",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Spend 2+ hours daily on CRM updates",
-            "source": "Card 1: Sales Team Research",
-            "source_id": "c1111111-1111-1111-1111-111111111111"
-          },
-
-          {
-            "text": "No clarity on who owns what action items",
-            "source": "Card 1: Sales Team Research",
+            "text": "Beautiful books often lack educational value",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Manual setup required for all competitors",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Limited meaningful gift options for children",
+            "source": "Card 1: Parent Market Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "International competitors too expensive for Indian market",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "No context understanding across tools",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Local competitors lack quality and sophistication",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Limited integration capabilities",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Limited AI-powered personalization in market",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Generic one-size-fits-all approach",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Poor cultural representation in existing products",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "High enterprise costs vs limited SMB options",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Slow delivery times and poor mobile experience",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "WebRTC implementation complexity",
-            "source": "Card 3: Technical POC",
+            "text": "AI consistency across multiple illustrations challenging",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           },
           {
-            "text": "Real-time processing latency challenges",
-            "source": "Card 3: Technical POC",
+            "text": "AI generation costs potentially prohibitive for scaling",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           },
           {
-            "text": "Action item accuracy in technical discussions",
-            "source": "Card 3: Technical POC",
-            "source_id": "c3333333-3333-3333-3333-333333333333"
-          },
-          {
-            "text": "Scaling concurrent meeting handling",
-            "source": "Card 3: Technical POC",
-            "source_id": "c3333333-3333-3333-3333-333333333333"
-          },
-          {
-            "text": "Cost optimization for processing",
-            "source": "Card 3: Technical POC",
+            "text": "Balancing image quality, file size, and generation speed",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           }
         ],
         "desired_features": [
           {
-            "text": "Invisible/automatic operation",
-            "source": "Card 1: Sales Team Research",
+            "text": "Child's face and name integrated into story",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Context-aware action item detection",
-            "source": "Card 1: Sales Team Research",
+            "text": "Educational themes teaching life lessons",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Automatic CRM updates",
-            "source": "Card 1: Sales Team Research",
+            "text": "Studio Ghibli-style artistic quality",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Commitment language recognition",
-            "source": "Card 1: Sales Team Research",
+            "text": "Multiple format options (digital, physical, framed art)",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Multi-party action item tracking",
-            "source": "Card 1: Sales Team Research",
+            "text": "Easy photo upload and quick delivery",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "One-click meeting summaries",
-            "source": "Card 1: Sales Team Research",
+            "text": "Professional publishing quality",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Enterprise security compliance",
-            "source": "Card 1: Sales Team Research",
+            "text": "Child's interests incorporated into story",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Zero-touch operation",
-            "source": "Card 2: Competitive Analysis",
+            "text": "AI-powered story generation",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "AI that learns team patterns",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Photo-to-character AI conversion",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Deep native integrations",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Indian cultural representation",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Context-aware processing",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Instant personalization and delivery",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
-          },
-          {
-            "text": "Real-time transcription with 97% accuracy",
-            "source": "Card 3: Technical POC",
-            "source_id": "c3333333-3333-3333-3333-333333333333"
-          },
-          {
-            "text": "Intelligent action item extraction with dependencies",
-            "source": "Card 3: Technical POC",
-            "source_id": "c3333333-3333-3333-3333-333333333333"
-          },
-          {
-            "text": "Automatic meeting joining (WebRTC)",
-            "source": "Card 3: Technical POC",
-            "source_id": "c3333333-3333-3333-3333-333333333333"
-          },
-          {
-            "text": "30-second post-meeting summaries",
-            "source": "Card 3: Technical POC",
-            "source_id": "c3333333-3333-3333-3333-333333333333"
           }
         ],
         "integrations_required": [
           {
-            "text": "Zoom",
-            "source": "Card 1: Sales Team Research",
+            "text": "Razorpay payment processing",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Salesforce",
-            "source": "Card 1: Sales Team Research",
+            "text": "Print-on-demand services",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Slack",
-            "source": "Card 1: Sales Team Research",
+            "text": "Delivery partners for physical books",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Jira",
-            "source": "Card 1: Sales Team Research",
-            "source_id": "c1111111-1111-1111-1111-111111111111"
-          },
-          {
-            "text": "Google Calendar",
-            "source": "Card 1: Sales Team Research",
-            "source_id": "c1111111-1111-1111-1111-111111111111"
-          },
-          {
-            "text": "HubSpot",
-            "source": "Card 2: Competitive Analysis",
+            "text": "OpenAI GPT-4 and DALL-E 3",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Microsoft Teams",
-            "source": "Card 2: Competitive Analysis",
+            "text": "UPI payment integration",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Notion",
-            "source": "Card 3: Technical POC",
+            "text": "Vercel deployment platform",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           },
           {
-            "text": "Google Tasks",
-            "source": "Card 3: Technical POC",
+            "text": "Replicate backup AI service",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           }
         ],
         "market_gaps": [
           {
-            "text": "Zero-touch operation",
-            "source": "Card 2: Competitive Analysis",
+            "text": "No AI-powered story generation in market",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Context intelligence",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Limited photo-to-character conversion",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Commitment detection",
-            "source": "Card 2: Competitive Analysis",
+            "text": "No educational curriculum integration",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Deep integration",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Poor cultural representation",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Team-specific learning",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Premium-but-accessible price gap",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           }
         ],
         "technical_achievements": [
           {
-            "text": "WebRTC Zoom integration working",
-            "source": "Card 3: Technical POC",
+            "text": "Full AI pipeline with GPT-4 Vision and DALL-E 3",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           },
           {
-            "text": "97% transcription accuracy",
-            "source": "Card 3: Technical POC",
+            "text": "97% cost reduction in testing mode (₹6.7 vs ₹66)",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           },
           {
-            "text": "2-second transcription delay",
-            "source": "Card 3: Technical POC",
+            "text": "Consistent character representation across 10 illustrations",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           },
           {
-            "text": "Intelligent action item extraction",
-            "source": "Card 3: Technical POC",
+            "text": "Multi-format output system (PDF, images, print-ready)",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           },
           {
-            "text": "Dependency detection between tasks",
-            "source": "Card 3: Technical POC",
+            "text": "Mobile-responsive design with <2s load times",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           },
           {
-            "text": "30-second meeting summaries",
-            "source": "Card 3: Technical POC",
+            "text": "8 educational story templates with life lessons",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           },
           {
-            "text": "Slack integration complete",
-            "source": "Card 3: Technical POC",
+            "text": "Studio Ghibli-inspired art style AI prompting",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
+          }
+        ],
+        "market_insights": [
+          {
+            "text": "Grandparents are key market segment for gifting",
+            "source": "Card 1: Parent Market Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "300M+ middle-class families in India represent huge opportunity",
+            "source": "Card 2: Market Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Festival and birthday gifting culture supports market",
+            "source": "Card 2: Market Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
           }
         ]
       },
-      "performance_metrics": {
-        "concurrent_meetings": 50,
-        "transcription_delay": "2 seconds",
-        "action_item_detection": "5 seconds",
-        "summary_generation": "30 seconds",
-        "cost_per_meeting_hour": "$0.10"
+      "development_metrics": {
+        "development_time": "6 weeks",
+        "lines_of_code": "~15,000",
+        "components_built": "45+",
+        "api_integrations": 5
       },
-      "remaining_work": [
-        "UI/UX polish",
-        "User authentication",
-        "Additional integrations",
-        "Team pattern learning",
-        "Security hardening"
-      ],
-      "timeline_to_mvp": "6 weeks"
+      "cost_structure": {
+        "testing_mode": "₹6.7 per storybook",
+        "production_mode": "₹66 per storybook",
+        "cost_reduction": "97% in testing mode"
+      },
+      "technical_stack": [
+        "Next.js 14",
+        "React 19",
+        "TypeScript",
+        "Tailwind CSS 4",
+        "OpenAI GPT-4 Vision",
+        "OpenAI DALL-E 3",
+        "Razorpay",
+        "Vercel"
+      ]
     },
-    "tags": ["technical-poc", "demo", "checkpoint", "successful-validation"],
-    "created_at": "2024-01-15T17:00:00Z"
+    "tags": ["technical-development", "mvp", "ai-integration", "checkpoint", "ready-for-launch"],
+    "created_at": "2024-01-22T17:00:00Z"
   },
   {
     "id": "c4444444-4444-4444-4444-444444444444",
     "processing_request_id": "pr444444-4444-4444-4444-444444444444",
     "upload": {
       "id": "u4444444-4444-4444-4444-444444444444",
-      "file_name": "Design Review Mockups",
-      "original_name": "AI Meeting Assistant - UX Design Review v2.pdf",
-      "content_type": "application/pdf",
-      "upload_type": "document",
-      "description": "UX design review with mockups for dashboard, meeting view, and settings",
+      "file_name": "Alpha User Testing Results",
+      "original_name": "If I Were an Animal - Alpha Testing Results Week 1 - 2024-01-28.xlsx",
+      "content_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "upload_type": "spreadsheet",
+      "description": "First week of alpha testing with 15 families, including parents and children's reactions to personalized storybooks",
       "status": "completed",
-      "priority": "medium",
+      "priority": "high",
       "is_checkpoint": false,
-      "recorded_on": "2024-01-18T11:00:00Z",
-      "summary": "Design review establishes clean, minimal interface with focus on 'invisible until needed' principle. Three main views: Dashboard (today's meetings), Live Meeting (real-time insights), and Review (post-meeting summaries)."
+      "recorded_on": "2024-01-28T16:00:00Z",
+      "summary": "Alpha testing shows exceptional engagement: children's amazement at seeing themselves in stories, parents impressed by educational value and quality. Some technical refinements needed for consistent character representation."
     },
-    "text_content": "AI Meeting Assistant - Design Review Notes\n\n1. DESIGN PRINCIPLES\n   - Invisible until needed\n   - Zero cognitive load during meetings\n   - Delight with intelligence, not features\n   - Progressive disclosure of capabilities\n\n2. DASHBOARD VIEW\n   Today's Meetings:\n   - Calendar integration shows all meetings\n   - Status indicators: Upcoming, In Progress, Completed\n   - One-click summary access\n   - Action items bubble count\n   \n   Key Metrics Widget:\n   - Hours saved this week\n   - Action items completed\n   - Meeting efficiency score\n\n3. LIVE MEETING VIEW\n   Minimal Floating Widget:\n   - Transcription confidence indicator\n   - Action item counter (pulsing when detected)\n   - Participant list\n   - Hide/show toggle\n   \n   Expanded View (on demand):\n   - Real-time transcription\n   - Highlighted action items\n   - Key points extraction\n   - Quick note capability\n\n4. POST-MEETING REVIEW\n   Smart Summary:\n   - 3-5 key discussion points\n   - All commitments with owners\n   - Decisions made\n   - Next steps\n   \n   Interactive Transcript:\n   - Searchable\n   - Clickable timestamps\n   - Edit capability\n   - Export options\n\n5. SETTINGS\n   Integration Management:\n   - OAuth flows for each service\n   - Custom field mapping\n   - Notification preferences\n   \n   AI Preferences:\n   - Summary style (brief/detailed)\n   - Action item sensitivity\n   - Custom team terminology\n\n6. MOBILE EXPERIENCE\n   - Meeting summaries via app\n   - Push notifications for assigned tasks\n   - Quick transcript search\n   - Voice note additions\n\n7. UNIQUE INTERACTIONS\n   Magic Moments:\n   - Auto-joining meetings with subtle sound\n   - Action items appearing with gentle animation\n   - 'Aha' detection - highlighting key insights\n   - End-of-day digest with all commitments\n\nUSER FEEDBACK FROM MOCKUP TESTING:\n- 'Feels like having a really smart EA'\n- 'Love that I don't have to think about it'\n- 'The daily digest is gold'\n- 'Finally, something that gets out of my way'",
-    "summary": "UX design focuses on invisible operation with three key views: Dashboard, Live Meeting, and Review. Emphasis on zero cognitive load and delightful intelligence.",
-    "priority_score": 80,
+    "text_content": "Alpha Testing Results - Week 1 Summary\n\nTEST PARTICIPANTS:\n- 15 families across Mumbai, Bangalore, Delhi\n- Children aged 4-9 years\n- Mix of tech-savvy and traditional parents\n- 5 grandparents as gift-givers\n\nCHILD REACTIONS (Observed & Recorded):\n\n**Aarav (5, Mumbai)**: \"Mama, that's ME flying with the bird! How did I get inside the book?\" \n*Parent note: Spent 45 minutes going through each page, pointing at himself*\n\n**Diya (7, Bangalore)**: \"I look like a real princess! Can we make one where I'm friends with a unicorn too?\"\n*Engagement: Read the story 3 times in first day*\n\n**Karan (4, Delhi)**: Initial reaction was pointing and giggling, then serious attention to the story\n*Parent note: Usually has 5-minute attention span, was engaged for 20 minutes*\n\n**Anaya (8, Pune)**: \"The turtle is teaching me to be patient like Nani always says!\"\n*Educational impact: Connected life lesson to real-world advice*\n\n**Rohan (6, Hyderabad)**: \"I want to show this to everyone at school!\"\n*Pride factor: Strong emotional connection and desire to share*\n\nPARENT FEEDBACK:\n\n**Priya Sharma (Mumbai)**: \"I've never seen Aarav so engaged with a book. The educational aspect is brilliant - he's actually understanding patience through the turtle story.\"\nRating: 5/5\nWilling to pay: ₹2,500 for physical book\n\n**Rajesh Kumar (Bangalore)**: \"The artwork quality is incredible. Diya looks absolutely natural in the story. This is the future of children's books.\"\nRating: 5/5\nWilling to pay: ₹3,000 for premium package\n\n**Sneha Patel (Delhi)**: \"Finally, a book where Karan sees himself represented. The attention span improvement is remarkable.\"\nRating: 4/5 (noted some inconsistency in character appearance)\nWilling to pay: ₹2,000\n\n**Vikram Singh (Pune)**: \"The educational content is exactly what we need. Anaya is learning life lessons in a fun way.\"\nRating: 5/5\nWilling to pay: ₹2,800\n\n**Deepika Reddy (Hyderabad)**: \"Rohan's confidence has increased since seeing himself as the story's hero. Psychological impact is real.\"\nRating: 5/5\nWilling to pay: ₹3,500 for gift package\n\nGRANDPARENT REACTIONS:\n\n**Anita Patel (Grandmother, Delhi)**: \"This is the most meaningful gift I've ever given. My grandchild's joy was priceless.\"\nActual purchase: ₹2,999 premium package\n\n**Subhash Kumar (Grandfather, Mumbai)**: \"Technology creating such beautiful memories. I want to order for all 4 grandchildren.\"\nImmediate order: 4 books, ₹8,000 total\n\nTECHNICAL FEEDBACK:\n\nPositive:\n- Story flow and educational content: 100% approval\n- Art style and quality: 93% approval\n- Mobile experience: 90% approval\n- Payment process: 95% approval\n\nNeeds Improvement:\n- Character consistency: 3 parents noted slight variations\n- Loading time: 2 parents mentioned 30-45 second wait felt long\n- Animal selection: Requests for more animals (dolphin, peacock)\n\nCHILD ENGAGEMENT METRICS:\n- Average reading time: 18 minutes (vs 8 minutes for regular books)\n- Re-reading frequency: 2.8 times in first week\n- Retention of life lesson: 85% could explain the moral after 3 days\n- Emotional connection: 100% showed pride and excitement\n\nBUSINESS INSIGHTS:\n\n**Pricing Validation**:\n- Average willingness to pay: ₹2,640\n- Premium package interest: 60%\n- Repeat purchase intent: 90% (for different animals)\n- Gift purchase likelihood: 95%\n\n**Feature Requests**:\n1. More animal options (dolphin, peacock, panda)\n2. Sibling versions (two children in one story)\n3. Audio narration by parent's voice\n4. Seasonal/festival themed stories\n5. Hardcover option with dust jacket\n\n**Marketing Insights**:\n- Word-of-mouth potential: 100% would recommend\n- Social sharing: 80% posted on social media\n- Gift occasions: Birthdays (100%), festivals (70%), achievements (50%)\n- Target audience expansion: Teachers interested for classroom use\n\nCONVERSION FUNNEL:\n- Photo upload completion: 95%\n- Story generation completion: 90%\n- Payment attempt: 75%\n- Successful purchase: 70%\n- Satisfaction post-delivery: 95%\n\nKEY SUCCESS FACTORS IDENTIFIED:\n1. **Emotional Impact**: Children's reactions exceeded expectations\n2. **Educational Value**: Parents appreciate learning integration\n3. **Gift Market**: Grandparents are high-value segment\n4. **Quality Perception**: Art style validates premium pricing\n5. **Cultural Relevance**: Indian context resonates strongly\n\nREFINEMENTS NEEDED:\n1. Improve character consistency across illustrations\n2. Optimize generation speed (target <20 seconds)\n3. Add more animal options based on requests\n4. Enhance mobile loading experience\n5. Develop sibling story templates\n\nOVERALL ALPHA RESULTS:\n- Product-market fit: Strong evidence\n- Pricing strategy: Validated\n- Educational impact: Proven\n- Emotional engagement: Exceptional\n- Technical foundation: Solid with minor optimizations needed\n\n**Ready for Beta Launch**: Yes, with identified improvements",
+    "summary": "Alpha testing reveals exceptional product-market fit with strong emotional engagement from children and educational value appreciation from parents. Minor technical refinements needed before broader launch.",
+    "priority_score": 95,
     "is_checkpoint": false,
     "is_invalidated": false,
     "extracted_metadata": {
       "insight_sources": [
-        "Card 1: Sales Team Research",
-        "Card 2: Competitive Analysis",
-        "Card 3: Technical POC",
-        "Card 4: Design Review"
+        "Card 1: Parent Market Research",
+        "Card 2: Market Analysis", 
+        "Card 3: Technical MVP",
+        "Card 4: Alpha Testing"
       ],
       "insights": [
-        "Sales teams lose 40% of meeting value due to poor note-taking and missed action items",
-        "Need an 'invisible assistant' that captures everything without disrupting meeting flow",
-        "Market gap identified for zero-touch operation - no existing tool provides truly invisible assistance",
-        "Technical feasibility proven with 97% transcription accuracy and reliable action item extraction",
-        "WebRTC integration successful, enabling seamless meeting participation without user setup",
-        "Zero cognitive load principle validated through progressive disclosure and invisible-until-needed design"
+        "Parents want truly personalized children's books where their child is the main character",
+        "Educational content is crucial - books should teach valuable life lessons",
+        "Premium pricing acceptable for quality personalization (₹1000-4000 for physical books)",
+        "Global children's book market worth $4.3B with personalization segment rapidly growing",
+        "Significant technology and content gaps in current market create massive opportunity",
+        "Technical feasibility proven with full AI pipeline and sustainable unit economics",
+        "Cost optimization enables competitive pricing while maintaining quality",
+        "Strong validation with exceptional child engagement and parent satisfaction in alpha testing"
       ],
       "cumulative_insights": {
         "key_pain_points": [
           {
-            "text": "Retain only 30% of meeting content",
-            "source": "Card 1: Sales Team Research",
+            "text": "Generic books don't connect with children personally",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Miss critical action items while presenting",
-            "source": "Card 1: Sales Team Research",
+            "text": "Lack of representation in children's literature",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Spend 2+ hours daily on CRM updates",
-            "source": "Card 1: Sales Team Research",
-            "source_id": "c1111111-1111-1111-1111-111111111111"
-          },
-
-          {
-            "text": "No clarity on who owns what action items",
-            "source": "Card 1: Sales Team Research",
+            "text": "Beautiful books often lack educational value",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Manual setup required for all competitors",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Limited meaningful gift options for children",
+            "source": "Card 1: Parent Market Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "International competitors too expensive for Indian market",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "No context understanding across tools",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Local competitors lack quality and sophistication",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Limited integration capabilities",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Limited AI-powered personalization in market",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Generic one-size-fits-all approach",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Poor cultural representation in existing products",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "High enterprise costs vs limited SMB options",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Slow delivery times and poor mobile experience",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "WebRTC implementation complexity",
-            "source": "Card 3: Technical POC",
+            "text": "AI consistency across multiple illustrations challenging",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           },
           {
-            "text": "Real-time processing latency challenges",
-            "source": "Card 3: Technical POC",
+            "text": "AI generation costs potentially prohibitive for scaling",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           },
           {
-            "text": "Action item accuracy in technical discussions",
-            "source": "Card 3: Technical POC",
+            "text": "Balancing image quality, file size, and generation speed",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           },
           {
-            "text": "Scaling concurrent meeting handling",
-            "source": "Card 3: Technical POC",
-            "source_id": "c3333333-3333-3333-3333-333333333333"
-          },
-          {
-            "text": "Cost optimization for processing",
-            "source": "Card 3: Technical POC",
-            "source_id": "c3333333-3333-3333-3333-333333333333"
-          },
-          {
-            "text": "High cognitive load during meetings",
-            "source": "Card 4: Design Review",
+            "text": "Character consistency variations noted by some users",
+            "source": "Card 4: Alpha Testing",
             "source_id": "c4444444-4444-4444-4444-444444444444"
           },
           {
-            "text": "User interfaces that distract from meeting flow",
-            "source": "Card 4: Design Review",
+            "text": "30-45 second generation time perceived as long",
+            "source": "Card 4: Alpha Testing",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          },
+          {
+            "text": "Limited animal options compared to user requests",
+            "source": "Card 4: Alpha Testing",
             "source_id": "c4444444-4444-4444-4444-444444444444"
           }
         ],
         "desired_features": [
           {
-            "text": "Invisible/automatic operation",
-            "source": "Card 1: Sales Team Research",
+            "text": "Child's face and name integrated into story",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Context-aware action item detection",
-            "source": "Card 1: Sales Team Research",
+            "text": "Educational themes teaching life lessons",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Automatic CRM updates",
-            "source": "Card 1: Sales Team Research",
+            "text": "Studio Ghibli-style artistic quality",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Commitment language recognition",
-            "source": "Card 1: Sales Team Research",
+            "text": "Multiple format options (digital, physical, framed art)",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Multi-party action item tracking",
-            "source": "Card 1: Sales Team Research",
+            "text": "Easy photo upload and quick delivery",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "One-click meeting summaries",
-            "source": "Card 1: Sales Team Research",
+            "text": "Professional publishing quality",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Enterprise security compliance",
-            "source": "Card 1: Sales Team Research",
+            "text": "Child's interests incorporated into story",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Zero-touch operation",
-            "source": "Card 2: Competitive Analysis",
+            "text": "AI-powered story generation",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "AI that learns team patterns",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Photo-to-character AI conversion",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Deep native integrations",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Indian cultural representation",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Context-aware processing",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Instant personalization and delivery",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Real-time transcription with 97% accuracy",
-            "source": "Card 3: Technical POC",
-            "source_id": "c3333333-3333-3333-3333-333333333333"
-          },
-          {
-            "text": "Intelligent action item extraction with dependencies",
-            "source": "Card 3: Technical POC",
-            "source_id": "c3333333-3333-3333-3333-333333333333"
-          },
-          {
-            "text": "Automatic meeting joining (WebRTC)",
-            "source": "Card 3: Technical POC",
-            "source_id": "c3333333-3333-3333-3333-333333333333"
-          },
-          {
-            "text": "30-second post-meeting summaries",
-            "source": "Card 3: Technical POC",
-            "source_id": "c3333333-3333-3333-3333-333333333333"
-          },
-          {
-            "text": "Invisible until needed UI",
-            "source": "Card 4: Design Review",
+            "text": "More animal options (dolphin, peacock, panda)",
+            "source": "Card 4: Alpha Testing",
             "source_id": "c4444444-4444-4444-4444-444444444444"
           },
           {
-            "text": "Zero cognitive load interface",
-            "source": "Card 4: Design Review",
+            "text": "Sibling versions (multiple children in one story)",
+            "source": "Card 4: Alpha Testing",
             "source_id": "c4444444-4444-4444-4444-444444444444"
           },
           {
-            "text": "Progressive disclosure of capabilities",
-            "source": "Card 4: Design Review",
+            "text": "Audio narration by parent's voice",
+            "source": "Card 4: Alpha Testing",
             "source_id": "c4444444-4444-4444-4444-444444444444"
           },
           {
-            "text": "Real-time action item animation",
-            "source": "Card 4: Design Review",
+            "text": "Seasonal/festival themed stories",
+            "source": "Card 4: Alpha Testing",
             "source_id": "c4444444-4444-4444-4444-444444444444"
           },
           {
-            "text": "Aha moment detection",
-            "source": "Card 4: Design Review",
-            "source_id": "c4444444-4444-4444-4444-444444444444"
-          },
-          {
-            "text": "End-of-day commitment digest",
-            "source": "Card 4: Design Review",
+            "text": "Hardcover option with dust jacket",
+            "source": "Card 4: Alpha Testing",
             "source_id": "c4444444-4444-4444-4444-444444444444"
           }
         ],
         "integrations_required": [
           {
-            "text": "Zoom",
-            "source": "Card 1: Sales Team Research",
+            "text": "Razorpay payment processing",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Salesforce",
-            "source": "Card 1: Sales Team Research",
+            "text": "Print-on-demand services",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Slack",
-            "source": "Card 1: Sales Team Research",
+            "text": "Delivery partners for physical books",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Jira",
-            "source": "Card 1: Sales Team Research",
-            "source_id": "c1111111-1111-1111-1111-111111111111"
-          },
-          {
-            "text": "Google Calendar",
-            "source": "Card 1: Sales Team Research",
-            "source_id": "c1111111-1111-1111-1111-111111111111"
-          },
-          {
-            "text": "HubSpot",
-            "source": "Card 2: Competitive Analysis",
+            "text": "OpenAI GPT-4 and DALL-E 3",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Microsoft Teams",
-            "source": "Card 2: Competitive Analysis",
+            "text": "UPI payment integration",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Notion",
-            "source": "Card 3: Technical POC",
+            "text": "Vercel deployment platform",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           },
           {
-            "text": "Google Tasks",
-            "source": "Card 3: Technical POC",
+            "text": "Replicate backup AI service",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           }
         ],
         "market_gaps": [
           {
-            "text": "Zero-touch operation",
-            "source": "Card 2: Competitive Analysis",
+            "text": "No AI-powered story generation in market",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Context intelligence",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Limited photo-to-character conversion",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Commitment detection",
-            "source": "Card 2: Competitive Analysis",
+            "text": "No educational curriculum integration",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Deep integration",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Poor cultural representation",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Team-specific learning",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Premium-but-accessible price gap",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           }
         ],
         "technical_achievements": [
           {
-            "text": "WebRTC Zoom integration working",
-            "source": "Card 3: Technical POC",
+            "text": "Full AI pipeline with GPT-4 Vision and DALL-E 3",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           },
           {
-            "text": "97% transcription accuracy",
-            "source": "Card 3: Technical POC",
+            "text": "97% cost reduction in testing mode (₹6.7 vs ₹66)",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           },
           {
-            "text": "2-second transcription delay",
-            "source": "Card 3: Technical POC",
+            "text": "Consistent character representation across 10 illustrations",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           },
           {
-            "text": "Intelligent action item extraction",
-            "source": "Card 3: Technical POC",
+            "text": "Multi-format output system (PDF, images, print-ready)",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           },
           {
-            "text": "Dependency detection between tasks",
-            "source": "Card 3: Technical POC",
+            "text": "Mobile-responsive design with <2s load times",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           },
           {
-            "text": "30-second meeting summaries",
-            "source": "Card 3: Technical POC",
+            "text": "8 educational story templates with life lessons",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           },
           {
-            "text": "Slack integration complete",
-            "source": "Card 3: Technical POC",
+            "text": "Studio Ghibli-inspired art style AI prompting",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           }
         ],
-        "design_principles": [
+        "market_insights": [
           {
-            "text": "Invisible until needed",
-            "source": "Card 4: Design Review",
+            "text": "Grandparents are key market segment for gifting",
+            "source": "Card 1: Parent Market Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "300M+ middle-class families in India represent huge opportunity",
+            "source": "Card 2: Market Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Festival and birthday gifting culture supports market",
+            "source": "Card 2: Market Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Grandparents are high-value segment with immediate purchase behavior",
+            "source": "Card 4: Alpha Testing",
             "source_id": "c4444444-4444-4444-4444-444444444444"
           },
           {
-            "text": "Zero cognitive load",
-            "source": "Card 4: Design Review",
+            "text": "Teachers interested for classroom use - potential B2B expansion",
+            "source": "Card 4: Alpha Testing",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          }
+        ],
+        "alpha_metrics": [
+          {
+            "text": "Average willingness to pay: ₹2,640",
+            "source": "Card 4: Alpha Testing",
             "source_id": "c4444444-4444-4444-4444-444444444444"
           },
           {
-            "text": "Intelligence over features",
-            "source": "Card 4: Design Review",
+            "text": "18 minutes average reading time vs 8 for regular books",
+            "source": "Card 4: Alpha Testing",
             "source_id": "c4444444-4444-4444-4444-444444444444"
           },
           {
-            "text": "Progressive disclosure",
-            "source": "Card 4: Design Review",
+            "text": "2.8 times re-reading frequency in first week",
+            "source": "Card 4: Alpha Testing",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          },
+          {
+            "text": "85% retention of life lesson after 3 days",
+            "source": "Card 4: Alpha Testing",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          },
+          {
+            "text": "100% emotional connection and pride display",
+            "source": "Card 4: Alpha Testing",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          },
+          {
+            "text": "90% repeat purchase intent for different animals",
+            "source": "Card 4: Alpha Testing",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          },
+          {
+            "text": "100% would recommend to others",
+            "source": "Card 4: Alpha Testing",
             "source_id": "c4444444-4444-4444-4444-444444444444"
           }
         ]
       },
-      "key_views": [
-        "Dashboard - Today's meetings and metrics",
-        "Live Meeting - Minimal floating widget",
-        "Post-Meeting Review - Smart summary and transcript"
-      ],
-      "unique_features": [
-        "Auto-joining with subtle feedback",
-        "Real-time action item animation",
-        "Aha moment detection",
-        "End-of-day commitment digest"
-      ],
-      "user_feedback_themes": [
-        "Feels like smart EA",
-        "Appreciates invisibility",
-        "Values daily digest",
-        "Gets out of the way"
+      "alpha_results": {
+        "participants": "15 families across 5 cities",
+        "satisfaction_rating": "4.8/5 average",
+        "willingness_to_pay": "₹2,640 average",
+        "engagement_metrics": {
+          "reading_time": "18 minutes (vs 8 for regular books)",
+          "re_reading_frequency": "2.8 times in first week",
+          "lesson_retention": "85% after 3 days"
+        },
+        "conversion_funnel": {
+          "photo_upload": "95%",
+          "story_generation": "90%", 
+          "payment_attempt": "75%",
+          "successful_purchase": "70%"
+        }
+      },
+      "refinements_needed": [
+        "Improve character consistency",
+        "Optimize generation speed to <20 seconds",
+        "Add more animal options",
+        "Enhance mobile loading experience",
+        "Develop sibling story templates"
       ]
     },
-    "tags": ["design", "ux", "mockups", "user-feedback"],
-    "created_at": "2024-01-18T15:00:00Z"
+    "tags": ["alpha-testing", "user-validation", "product-market-fit", "engagement-metrics"],
+    "created_at": "2024-01-28T20:00:00Z"
   },
   {
     "id": "c5555555-5555-5555-5555-555555555555",
     "processing_request_id": "pr555555-5555-5555-5555-555555555555",
     "upload": {
       "id": "u5555555-5555-5555-5555-555555555555",
-      "file_name": "Beta User Feedback Week 1",
-      "original_name": "AI Meeting Assistant - Beta User Feedback Week 1.xlsx",
-      "content_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      "upload_type": "spreadsheet",
-      "description": "First week of beta testing feedback from 10 users across sales, product, and engineering teams",
+      "file_name": "Launch Strategy & Business Model",
+      "original_name": "If I Were an Animal - Go-to-Market Strategy & Business Model - 2024-02-01.pdf",
+      "content_type": "application/pdf",
+      "upload_type": "document",
+      "description": "Comprehensive launch strategy, pricing tiers, customer acquisition plan, and business model based on market research and alpha testing insights",
       "status": "completed",
       "priority": "high",
       "is_checkpoint": true,
-      "recorded_on": "2024-01-25T16:00:00Z",
-      "summary": "Beta feedback overwhelmingly positive: 4.8/5 rating, 90% daily active use, average 6.5 hours saved per week. Key requests: better handling of technical discussions and custom vocabulary support."
+      "recorded_on": "2024-02-01T14:00:00Z",
+      "summary": "Complete go-to-market strategy ready for execution: 4-tier pricing (₹299-₹3999), multi-channel acquisition focused on grandparents and gifting occasions, projected ₹2.5M ARR within 12 months."
     },
-    "text_content": "Beta User Feedback Summary - Week 1\n\nOVERALL METRICS:\n- Average Rating: 4.8/5\n- Daily Active Use: 9/10 users (90%)\n- Average Time Saved: 6.5 hours/week\n- Would Recommend: 10/10 (100%)\n- Renewal Intent: $85/month average willingness to pay\n\nUSER FEEDBACK BY ROLE:\n\n1. Tom Bradley (Sales Director):\n   Rating: 5/5\n   Time Saved: 8 hours/week\n   Quote: 'This is the first tool that actually delivers on the promise. My CRM is always up to date now.'\n   Favorite Feature: Automatic Salesforce updates\n   Request: Integration with HubSpot\n\n2. Sarah Kim (Product Manager):\n   Rating: 5/5\n   Time Saved: 7 hours/week\n   Quote: 'I've stopped taking notes entirely. The AI catches nuances I would miss.'\n   Favorite Feature: Commitment detection across multiple speakers\n   Request: Jira epic/story creation\n\n3. Marcus Lee (Engineering Manager):\n   Rating: 4/5\n   Time Saved: 5 hours/week\n   Quote: 'Great for standup summaries. Struggles a bit with technical architecture discussions.'\n   Favorite Feature: Daily digest of all commitments\n   Request: Better code/technical term recognition\n\n4. Jennifer Walsh (Customer Success):\n   Rating: 5/5\n   Time Saved: 9 hours/week\n   Quote: 'Game changer for customer calls. I'm fully present instead of scrambling to take notes.'\n   Favorite Feature: Sentiment analysis in summaries\n   Request: Integration with Zendesk\n\n5. David Chen (VP Engineering):\n   Rating: 4/5\n   Time Saved: 4 hours/week\n   Quote: 'Excellent for 1-1s and planning. Needs better handling of whiteboard sessions.'\n   Favorite Feature: Action items with automatic due dates\n   Request: Miro/Figma integration for visual meetings\n\nCOMMON THEMES:\n\nPositive:\n- 'Invisible' operation loved by all\n- Accuracy exceeds expectations\n- Time savings are real and measurable\n- Reduces meeting anxiety\n- Improves meeting attendance (can focus on discussion)\n\nNeeds Improvement:\n- Technical discussions need specialized vocabulary\n- Visual meeting components not captured\n- Some missed context in cross-talk situations\n- Want ability to train on company-specific terms\n- Mobile app highly requested\n\nBUGS REPORTED:\n- Zoom connection dropped 2x for one user\n- Delayed Slack notifications (>5 min) 3x\n- Duplicate action items when same task mentioned multiple times\n- Speaker identification confused similar voices\n\nFEATURE REQUESTS (by frequency):\n1. Custom vocabulary training (8 users)\n2. Mobile app (7 users)\n3. More integrations - HubSpot, Zendesk, Linear (6 users)\n4. Whiteboard/visual capture (5 users)\n5. Meeting templates for common types (4 users)\n6. Team analytics dashboard (3 users)\n7. Voice commands during meeting (2 users)\n\nRENEWAL INSIGHTS:\n- Current manual solution cost: ~$200-300/week in lost productivity\n- Willingness to pay: $60-120/month\n- Decision factors: ROI clear, integration depth matters\n- Enterprise needs: SSO, SOC2, admin controls",
-    "summary": "Beta week 1: 4.8/5 rating, 90% daily use, 6.5 hours saved weekly. Users love invisible operation but want custom vocabulary training and more integrations.",
+    "text_content": "# If I Were an Animal - Go-to-Market Strategy & Business Model\n\n## EXECUTIVE SUMMARY\n\nProduct: AI-powered personalized children's storybooks\nTarget: Indian middle-class families, grandparents, gift-givers\nProjected Revenue: ₹2.5M ARR within 12 months\nKey Differentiator: Child's face integrated into educational stories with Studio Ghibli-quality art\n\n## PRICING STRATEGY (Validated through Alpha Testing)\n\n### 4-Tier Pricing Model\n\n**Tier 1: Digital Starter** - ₹299\n- 1 personalized story (choice of 8 animals)\n- Digital PDF download\n- Individual high-resolution images\n- Perfect for testing/immediate gratification\n- Target: Price-conscious parents, trial users\n\n**Tier 2: Premium Digital** - ₹699\n- 3 personalized stories (any 3 animals)\n- Digital PDF downloads\n- Image collections + bonus mobile wallpapers\n- Educational parent guide included\n- Target: Engaged parents wanting variety\n\n**Tier 3: Physical Book** - ₹1,999\n- 1 personalized story in premium softcover\n- Professional printing with matte finish\n- Digital PDF included\n- Free shipping within India\n- Target: Gift-givers, special occasions\n\n**Tier 4: Deluxe Gift Package** - ₹3,999\n- 2 personalized stories in hardcover\n- Premium gift box packaging\n- 3 framed art prints (A4 size)\n- Digital collection + parent guide\n- Express shipping (2-3 days)\n- Target: Grandparents, premium gifts\n\n## CUSTOMER ACQUISITION STRATEGY\n\n### Phase 1: Organic Growth (Months 1-3)\n**Primary Channels:**\n1. **Social Media Marketing**\n   - Instagram/Facebook ads targeting parents 25-45\n   - Before/after reveal videos showing child's reaction\n   - User-generated content campaigns\n   - Influencer partnerships with parenting bloggers\n\n2. **Content Marketing**\n   - SEO-optimized blog content on child development\n   - \"How personalized stories boost confidence\" articles\n   - Educational content about life lessons through storytelling\n\n3. **Referral Program**\n   - 25% discount for referrer, 15% for referee\n   - Leverages 100% recommendation rate from alpha testing\n   - Viral coefficient target: 1.2\n\n### Phase 2: Paid Acquisition (Months 4-6)\n**Expanded Channels:**\n1. **Google Ads**\n   - Keywords: \"personalized children's books India\", \"custom storybooks\"\n   - Display ads on parenting websites\n   - YouTube ads targeting children's content viewers\n\n2. **Festival Marketing**\n   - Diwali, Raksha Bandhan, Children's Day campaigns\n   - Gift-focused messaging for grandparents\n   - Limited-time seasonal story themes\n\n3. **Partnership Channel**\n   - Toy stores, children's bookshops\n   - Photography studios (wedding/portrait photographers)\n   - Pediatric clinics waiting rooms\n\n### Phase 3: Scale & Diversification (Months 7-12)\n**Advanced Channels:**\n1. **B2B Expansion**\n   - Schools and preschools for classroom sets\n   - Corporate gifting for employees' children\n   - International shipping to NRI families\n\n2. **Platform Expansion**\n   - Amazon marketplace presence\n   - Flipkart integration\n   - Local gifting platforms\n\n## CUSTOMER SEGMENTS & TARGETING\n\n### Primary Segment: Grandparents (40% of revenue target)\n- **Demographics**: Ages 55-75, disposable income\n- **Behavior**: High-value purchases (avg ₹3,200), gift-focused\n- **Messaging**: \"Create magical memories with your grandchild\"\n- **Channels**: Facebook, WhatsApp, word-of-mouth\n\n### Secondary Segment: Parents (35% of revenue target)\n- **Demographics**: Ages 28-42, tech-savvy, education-focused\n- **Behavior**: Research-driven, value educational content\n- **Messaging**: \"Boost your child's confidence and learning\"\n- **Channels**: Instagram, Google, parenting blogs\n\n### Tertiary Segment: Gift-Givers (25% of revenue target)\n- **Demographics**: Extended family, friends\n- **Behavior**: Occasion-driven purchases, premium options\n- **Messaging**: \"The most unique gift they'll ever receive\"\n- **Channels**: Social media, festival campaigns\n\n## UNIT ECONOMICS & PROJECTIONS\n\n### Cost Structure (Per Unit)\n**Digital Products (₹299-₹699):**\n- AI Generation Cost: ₹66 (production mode)\n- Platform/Payment Processing: ₹18\n- Customer Acquisition Cost: ₹120\n- Total Cost: ₹204\n- Gross Margin: 65-85%\n\n**Physical Products (₹1,999-₹3,999):**\n- AI Generation Cost: ₹66\n- Printing & Packaging: ₹280\n- Shipping: ₹80\n- Platform/Payment Processing: ₹60\n- Customer Acquisition Cost: ₹200\n- Total Cost: ₹686\n- Gross Margin: 60-78%\n\n### Revenue Projections (12-Month)\n\n**Month 1-3 (MVP Launch):**\n- 150 customers/month\n- Avg order value: ₹1,200\n- Monthly revenue: ₹1.8L\n- Quarterly revenue: ₹5.4L\n\n**Month 4-6 (Growth Phase):**\n- 400 customers/month\n- Avg order value: ₹1,400\n- Monthly revenue: ₹5.6L\n- Quarterly revenue: ₹16.8L\n\n**Month 7-9 (Scale Phase):**\n- 800 customers/month\n- Avg order value: ₹1,600\n- Monthly revenue: ₹12.8L\n- Quarterly revenue: ₹38.4L\n\n**Month 10-12 (Maturity):**\n- 1,200 customers/month\n- Avg order value: ₹1,800\n- Monthly revenue: ₹21.6L\n- Quarterly revenue: ₹64.8L\n\n**Total Year 1 ARR: ₹2.5 Crores**\n\n## COMPETITIVE POSITIONING\n\n### Unique Value Proposition\n\"India's only AI-powered platform that transforms your child into the hero of educational storybooks with studio-quality art\"\n\n### Key Differentiators\n1. **True Personalization**: Child's actual face, not just name insertion\n2. **Educational Focus**: Each story teaches valuable life lessons\n3. **Cultural Relevance**: Indian context, festivals, values\n4. **Premium Quality**: Studio Ghibli-inspired art style\n5. **Instant Gratification**: 30-45 second generation time\n6. **Multiple Formats**: Digital to premium physical options\n\n## RISK MITIGATION\n\n### Technical Risks\n- **AI Cost Inflation**: Negotiate volume discounts with OpenAI\n- **Quality Consistency**: Implement automated quality checks\n- **Scaling Issues**: Cloud-native architecture with auto-scaling\n\n### Market Risks\n- **Competition**: Build strong brand moat with quality and education focus\n- **Seasonality**: Diversify beyond gifting occasions\n- **Economic Downturn**: Maintain budget-friendly digital options\n\n### Operational Risks\n- **Print Quality**: Partner with multiple print-on-demand providers\n- **Shipping Delays**: Maintain 2-3 day delivery promise with premium logistics\n- **Customer Support**: Build multilingual support team\n\n## SUCCESS METRICS & KPIs\n\n### Financial KPIs\n- Monthly Recurring Revenue (MRR)\n- Customer Acquisition Cost (CAC)\n- Lifetime Value (LTV)\n- Gross Margin per product tier\n- Cash flow positive by Month 8\n\n### Product KPIs\n- Generation success rate (target: 98%)\n- Customer satisfaction score (target: 4.5+/5)\n- Net Promoter Score (target: 70+)\n- Repeat purchase rate (target: 35%)\n\n### Growth KPIs\n- Monthly active users\n- Viral coefficient (target: 1.2)\n- Conversion rate by channel\n- Average order value growth\n\n## CONCLUSION\n\nStrong product-market fit validated through alpha testing, clear monetization strategy, and sustainable unit economics position \"If I Were an Animal\" for successful market entry. Focus on grandparents as primary segment, leverage educational positioning, and scale through multi-tier pricing creates path to ₹2.5M ARR within 12 months.\n\n**Ready for Launch**: All systems go for February 2024 market entry.",
+    "summary": "Comprehensive go-to-market strategy complete with 4-tier pricing, multi-channel acquisition plan, and projected ₹2.5M ARR. Strong product-market fit validated, ready for February 2024 launch.",
     "priority_score": 100,
     "is_checkpoint": true,
     "is_invalidated": false,
     "extracted_metadata": {
       "insight_sources": [
-        "Card 1: Sales Team Research",
-        "Card 2: Competitive Analysis",
-        "Card 3: Technical POC",
-        "Card 4: Design Review",
-        "Card 5: Beta Feedback"
+        "Card 1: Parent Market Research",
+        "Card 2: Market Analysis",
+        "Card 3: Technical MVP",
+        "Card 4: Alpha Testing",
+        "Card 5: Launch Strategy"
       ],
       "insights": [
-        "Sales teams lose 40% of meeting value due to poor note-taking and missed action items",
-        "Need an 'invisible assistant' that captures everything without disrupting meeting flow",
-        "Market gap identified for zero-touch operation - no existing tool provides truly invisible assistance",
-        "Technical feasibility proven with 97% transcription accuracy and reliable action item extraction",
-        "WebRTC integration successful, enabling seamless meeting participation without user setup",
-        "Zero cognitive load principle validated through progressive disclosure and invisible-until-needed design",
-        "Strong validation with 4.8/5 rating and 90% daily adoption rate among beta users"
+        "Parents want truly personalized children's books where their child is the main character",
+        "Educational content is crucial - books should teach valuable life lessons",
+        "Premium pricing acceptable for quality personalization (₹1000-4000 for physical books)",
+        "Global children's book market worth $4.3B with personalization segment rapidly growing",
+        "Significant technology and content gaps in current market create massive opportunity",
+        "Technical feasibility proven with full AI pipeline and sustainable unit economics",
+        "Cost optimization enables competitive pricing while maintaining quality",
+        "Strong validation with exceptional child engagement and parent satisfaction in alpha testing",
+        "Clear path to ₹2.5M ARR with multi-tier pricing and grandparent-focused acquisition strategy"
       ],
       "cumulative_insights": {
         "key_pain_points": [
           {
-            "text": "Retain only 30% of meeting content",
-            "source": "Card 1: Sales Team Research",
+            "text": "Generic books don't connect with children personally",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Miss critical action items while presenting",
-            "source": "Card 1: Sales Team Research",
+            "text": "Lack of representation in children's literature",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Spend 2+ hours daily on CRM updates",
-            "source": "Card 1: Sales Team Research",
-            "source_id": "c1111111-1111-1111-1111-111111111111"
-          },
-
-          {
-            "text": "No clarity on who owns what action items",
-            "source": "Card 1: Sales Team Research",
+            "text": "Beautiful books often lack educational value",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Manual setup required for all competitors",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Limited meaningful gift options for children",
+            "source": "Card 1: Parent Market Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "International competitors too expensive for Indian market",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "No context understanding across tools",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Local competitors lack quality and sophistication",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Limited integration capabilities",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Limited AI-powered personalization in market",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Generic one-size-fits-all approach",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Poor cultural representation in existing products",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "High enterprise costs vs limited SMB options",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Slow delivery times and poor mobile experience",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "WebRTC implementation complexity",
-            "source": "Card 3: Technical POC",
+            "text": "AI consistency across multiple illustrations challenging",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           },
           {
-            "text": "Real-time processing latency challenges",
-            "source": "Card 3: Technical POC",
+            "text": "AI generation costs potentially prohibitive for scaling",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           },
           {
-            "text": "Action item accuracy in technical discussions",
-            "source": "Card 3: Technical POC",
+            "text": "Balancing image quality, file size, and generation speed",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           },
           {
-            "text": "Scaling concurrent meeting handling",
-            "source": "Card 3: Technical POC",
-            "source_id": "c3333333-3333-3333-3333-333333333333"
-          },
-          {
-            "text": "Cost optimization for processing",
-            "source": "Card 3: Technical POC",
-            "source_id": "c3333333-3333-3333-3333-333333333333"
-          },
-          {
-            "text": "High cognitive load during meetings",
-            "source": "Card 4: Design Review",
+            "text": "Character consistency variations noted by some users",
+            "source": "Card 4: Alpha Testing",
             "source_id": "c4444444-4444-4444-4444-444444444444"
           },
           {
-            "text": "User interfaces that distract from meeting flow",
-            "source": "Card 4: Design Review",
+            "text": "30-45 second generation time perceived as long",
+            "source": "Card 4: Alpha Testing",
             "source_id": "c4444444-4444-4444-4444-444444444444"
           },
           {
-            "text": "Technical vocabulary handling needs improvement",
-            "source": "Card 5: Beta Feedback",
-            "source_id": "c5555555-5555-5555-5555-555555555555"
-          },
-          {
-            "text": "Visual meeting components not captured",
-            "source": "Card 5: Beta Feedback",
-            "source_id": "c5555555-5555-5555-5555-555555555555"
-          },
-          {
-            "text": "Cross-talk situations cause missed context",
-            "source": "Card 5: Beta Feedback",
-            "source_id": "c5555555-5555-5555-5555-555555555555"
-          },
-          {
-            "text": "Zoom connection stability issues",
-            "source": "Card 5: Beta Feedback",
-            "source_id": "c5555555-5555-5555-5555-555555555555"
-          },
-          {
-            "text": "Duplicate action items when mentioned multiple times",
-            "source": "Card 5: Beta Feedback",
-            "source_id": "c5555555-5555-5555-5555-555555555555"
+            "text": "Limited animal options compared to user requests",
+            "source": "Card 4: Alpha Testing",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
           }
         ],
         "desired_features": [
           {
-            "text": "Invisible/automatic operation",
-            "source": "Card 1: Sales Team Research",
+            "text": "Child's face and name integrated into story",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Context-aware action item detection",
-            "source": "Card 1: Sales Team Research",
+            "text": "Educational themes teaching life lessons",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Automatic CRM updates",
-            "source": "Card 1: Sales Team Research",
+            "text": "Studio Ghibli-style artistic quality",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Commitment language recognition",
-            "source": "Card 1: Sales Team Research",
+            "text": "Multiple format options (digital, physical, framed art)",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Multi-party action item tracking",
-            "source": "Card 1: Sales Team Research",
+            "text": "Easy photo upload and quick delivery",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "One-click meeting summaries",
-            "source": "Card 1: Sales Team Research",
+            "text": "Professional publishing quality",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Enterprise security compliance",
-            "source": "Card 1: Sales Team Research",
+            "text": "Child's interests incorporated into story",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Zero-touch operation",
-            "source": "Card 2: Competitive Analysis",
+            "text": "AI-powered story generation",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "AI that learns team patterns",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Photo-to-character AI conversion",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Deep native integrations",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Indian cultural representation",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Context-aware processing",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Instant personalization and delivery",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Real-time transcription with 97% accuracy",
-            "source": "Card 3: Technical POC",
-            "source_id": "c3333333-3333-3333-3333-333333333333"
-          },
-          {
-            "text": "Intelligent action item extraction with dependencies",
-            "source": "Card 3: Technical POC",
-            "source_id": "c3333333-3333-3333-3333-333333333333"
-          },
-          {
-            "text": "Automatic meeting joining (WebRTC)",
-            "source": "Card 3: Technical POC",
-            "source_id": "c3333333-3333-3333-3333-333333333333"
-          },
-          {
-            "text": "30-second post-meeting summaries",
-            "source": "Card 3: Technical POC",
-            "source_id": "c3333333-3333-3333-3333-333333333333"
-          },
-          {
-            "text": "Invisible until needed UI",
-            "source": "Card 4: Design Review",
+            "text": "More animal options (dolphin, peacock, panda)",
+            "source": "Card 4: Alpha Testing",
             "source_id": "c4444444-4444-4444-4444-444444444444"
           },
           {
-            "text": "Zero cognitive load interface",
-            "source": "Card 4: Design Review",
+            "text": "Sibling versions (multiple children in one story)",
+            "source": "Card 4: Alpha Testing",
             "source_id": "c4444444-4444-4444-4444-444444444444"
           },
           {
-            "text": "Progressive disclosure of capabilities",
-            "source": "Card 4: Design Review",
+            "text": "Audio narration by parent's voice",
+            "source": "Card 4: Alpha Testing",
             "source_id": "c4444444-4444-4444-4444-444444444444"
           },
           {
-            "text": "Real-time action item animation",
-            "source": "Card 4: Design Review",
+            "text": "Seasonal/festival themed stories",
+            "source": "Card 4: Alpha Testing",
             "source_id": "c4444444-4444-4444-4444-444444444444"
           },
           {
-            "text": "Aha moment detection",
-            "source": "Card 4: Design Review",
+            "text": "Hardcover option with dust jacket",
+            "source": "Card 4: Alpha Testing",
             "source_id": "c4444444-4444-4444-4444-444444444444"
-          },
-          {
-            "text": "End-of-day commitment digest",
-            "source": "Card 4: Design Review",
-            "source_id": "c4444444-4444-4444-4444-444444444444"
-          },
-          {
-            "text": "Custom vocabulary training",
-            "source": "Card 5: Beta Feedback",
-            "source_id": "c5555555-5555-5555-5555-555555555555"
-          },
-          {
-            "text": "Mobile app",
-            "source": "Card 5: Beta Feedback",
-            "source_id": "c5555555-5555-5555-5555-555555555555"
-          },
-          {
-            "text": "Whiteboard/visual capture",
-            "source": "Card 5: Beta Feedback",
-            "source_id": "c5555555-5555-5555-5555-555555555555"
-          },
-          {
-            "text": "Meeting templates for common types",
-            "source": "Card 5: Beta Feedback",
-            "source_id": "c5555555-5555-5555-5555-555555555555"
-          },
-          {
-            "text": "Team analytics dashboard",
-            "source": "Card 5: Beta Feedback",
-            "source_id": "c5555555-5555-5555-5555-555555555555"
-          },
-          {
-            "text": "Voice commands during meeting",
-            "source": "Card 5: Beta Feedback",
-            "source_id": "c5555555-5555-5555-5555-555555555555"
           }
         ],
         "integrations_required": [
           {
-            "text": "Zoom",
-            "source": "Card 1: Sales Team Research",
+            "text": "Razorpay payment processing",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Salesforce",
-            "source": "Card 1: Sales Team Research",
+            "text": "Print-on-demand services",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Slack",
-            "source": "Card 1: Sales Team Research",
+            "text": "Delivery partners for physical books",
+            "source": "Card 1: Parent Market Research",
             "source_id": "c1111111-1111-1111-1111-111111111111"
           },
           {
-            "text": "Jira",
-            "source": "Card 1: Sales Team Research",
-            "source_id": "c1111111-1111-1111-1111-111111111111"
-          },
-          {
-            "text": "Google Calendar",
-            "source": "Card 1: Sales Team Research",
-            "source_id": "c1111111-1111-1111-1111-111111111111"
-          },
-          {
-            "text": "HubSpot",
-            "source": "Card 2: Competitive Analysis",
+            "text": "OpenAI GPT-4 and DALL-E 3",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Microsoft Teams",
-            "source": "Card 2: Competitive Analysis",
+            "text": "UPI payment integration",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Notion",
-            "source": "Card 3: Technical POC",
+            "text": "Vercel deployment platform",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           },
           {
-            "text": "Google Tasks",
-            "source": "Card 3: Technical POC",
+            "text": "Replicate backup AI service",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           },
           {
-            "text": "Zendesk",
-            "source": "Card 5: Beta Feedback",
+            "text": "Social media advertising platforms",
+            "source": "Card 5: Launch Strategy",
             "source_id": "c5555555-5555-5555-5555-555555555555"
           },
           {
-            "text": "Linear",
-            "source": "Card 5: Beta Feedback",
+            "text": "Google Ads and YouTube advertising",
+            "source": "Card 5: Launch Strategy",
             "source_id": "c5555555-5555-5555-5555-555555555555"
           },
           {
-            "text": "Miro",
-            "source": "Card 5: Beta Feedback",
-            "source_id": "c5555555-5555-5555-5555-555555555555"
-          },
-          {
-            "text": "Figma",
-            "source": "Card 5: Beta Feedback",
+            "text": "Amazon and Flipkart marketplaces",
+            "source": "Card 5: Launch Strategy",
             "source_id": "c5555555-5555-5555-5555-555555555555"
           }
         ],
         "market_gaps": [
           {
-            "text": "Zero-touch operation",
-            "source": "Card 2: Competitive Analysis",
+            "text": "No AI-powered story generation in market",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Context intelligence",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Limited photo-to-character conversion",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Commitment detection",
-            "source": "Card 2: Competitive Analysis",
+            "text": "No educational curriculum integration",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Deep integration",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Poor cultural representation",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           },
           {
-            "text": "Team-specific learning",
-            "source": "Card 2: Competitive Analysis",
+            "text": "Premium-but-accessible price gap",
+            "source": "Card 2: Market Analysis",
             "source_id": "c2222222-2222-2222-2222-222222222222"
           }
         ],
         "technical_achievements": [
           {
-            "text": "WebRTC Zoom integration working",
-            "source": "Card 3: Technical POC",
+            "text": "Full AI pipeline with GPT-4 Vision and DALL-E 3",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           },
           {
-            "text": "97% transcription accuracy",
-            "source": "Card 3: Technical POC",
+            "text": "97% cost reduction in testing mode (₹6.7 vs ₹66)",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           },
           {
-            "text": "2-second transcription delay",
-            "source": "Card 3: Technical POC",
+            "text": "Consistent character representation across 10 illustrations",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           },
           {
-            "text": "Intelligent action item extraction",
-            "source": "Card 3: Technical POC",
+            "text": "Multi-format output system (PDF, images, print-ready)",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           },
           {
-            "text": "Dependency detection between tasks",
-            "source": "Card 3: Technical POC",
+            "text": "Mobile-responsive design with <2s load times",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           },
           {
-            "text": "30-second meeting summaries",
-            "source": "Card 3: Technical POC",
+            "text": "8 educational story templates with life lessons",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           },
           {
-            "text": "Slack integration complete",
-            "source": "Card 3: Technical POC",
+            "text": "Studio Ghibli-inspired art style AI prompting",
+            "source": "Card 3: Technical MVP",
             "source_id": "c3333333-3333-3333-3333-333333333333"
           }
         ],
-        "design_principles": [
+        "market_insights": [
           {
-            "text": "Invisible until needed",
-            "source": "Card 4: Design Review",
+            "text": "Grandparents are key market segment for gifting",
+            "source": "Card 1: Parent Market Research",
+            "source_id": "c1111111-1111-1111-1111-111111111111"
+          },
+          {
+            "text": "300M+ middle-class families in India represent huge opportunity",
+            "source": "Card 2: Market Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Festival and birthday gifting culture supports market",
+            "source": "Card 2: Market Analysis",
+            "source_id": "c2222222-2222-2222-2222-222222222222"
+          },
+          {
+            "text": "Grandparents are high-value segment with immediate purchase behavior",
+            "source": "Card 4: Alpha Testing",
             "source_id": "c4444444-4444-4444-4444-444444444444"
           },
           {
-            "text": "Zero cognitive load",
-            "source": "Card 4: Design Review",
+            "text": "Teachers interested for classroom use - potential B2B expansion",
+            "source": "Card 4: Alpha Testing",
             "source_id": "c4444444-4444-4444-4444-444444444444"
           },
           {
-            "text": "Intelligence over features",
-            "source": "Card 4: Design Review",
+            "text": "Grandparents represent 40% of revenue potential with avg ₹3,200 purchase",
+            "source": "Card 5: Launch Strategy",
+            "source_id": "c5555555-5555-5555-5555-555555555555"
+          },
+          {
+            "text": "Multi-tier pricing enables market expansion from budget to premium",
+            "source": "Card 5: Launch Strategy",
+            "source_id": "c5555555-5555-5555-5555-555555555555"
+          }
+        ],
+        "alpha_metrics": [
+          {
+            "text": "Average willingness to pay: ₹2,640",
+            "source": "Card 4: Alpha Testing",
             "source_id": "c4444444-4444-4444-4444-444444444444"
           },
           {
-            "text": "Progressive disclosure",
-            "source": "Card 4: Design Review",
+            "text": "18 minutes average reading time vs 8 for regular books",
+            "source": "Card 4: Alpha Testing",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          },
+          {
+            "text": "2.8 times re-reading frequency in first week",
+            "source": "Card 4: Alpha Testing",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          },
+          {
+            "text": "85% retention of life lesson after 3 days",
+            "source": "Card 4: Alpha Testing",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          },
+          {
+            "text": "100% emotional connection and pride display",
+            "source": "Card 4: Alpha Testing",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          },
+          {
+            "text": "90% repeat purchase intent for different animals",
+            "source": "Card 4: Alpha Testing",
+            "source_id": "c4444444-4444-4444-4444-444444444444"
+          },
+          {
+            "text": "100% would recommend to others",
+            "source": "Card 4: Alpha Testing",
             "source_id": "c4444444-4444-4444-4444-444444444444"
           }
         ],
-        "beta_metrics": [
+        "business_model": [
           {
-            "text": "4.8/5 average rating",
-            "source": "Card 5: Beta Feedback",
+            "text": "4-tier pricing strategy (₹299 - ₹3,999)",
+            "source": "Card 5: Launch Strategy",
             "source_id": "c5555555-5555-5555-5555-555555555555"
           },
           {
-            "text": "90% daily active use",
-            "source": "Card 5: Beta Feedback",
+            "text": "Sustainable unit economics with 60-85% gross margins",
+            "source": "Card 5: Launch Strategy",
             "source_id": "c5555555-5555-5555-5555-555555555555"
           },
           {
-            "text": "6.5 hours saved weekly average",
-            "source": "Card 5: Beta Feedback",
+            "text": "Multi-channel acquisition strategy targeting grandparents",
+            "source": "Card 5: Launch Strategy",
             "source_id": "c5555555-5555-5555-5555-555555555555"
           },
           {
-            "text": "100% would recommend",
-            "source": "Card 5: Beta Feedback",
+            "text": "Projected ₹2.5M ARR within 12 months",
+            "source": "Card 5: Launch Strategy",
             "source_id": "c5555555-5555-5555-5555-555555555555"
           },
           {
-            "text": "$85/month average willingness to pay",
-            "source": "Card 5: Beta Feedback",
+            "text": "B2B expansion opportunity with schools and corporates",
+            "source": "Card 5: Launch Strategy",
             "source_id": "c5555555-5555-5555-5555-555555555555"
           }
         ]
       },
-      "beta_metrics": {
-        "average_rating": 4.8,
-        "daily_active_use": "90%",
-        "time_saved_weekly": "6.5 hours",
-        "recommendation_rate": "100%",
-        "willingness_to_pay": "$85/month average"
+      "pricing_strategy": {
+        "tier_1": "₹299 - Digital Starter",
+        "tier_2": "₹699 - Premium Digital",
+        "tier_3": "₹1,999 - Physical Book",
+        "tier_4": "₹3,999 - Deluxe Gift Package"
       },
-      "top_positive_feedback": [
-        "Invisible operation",
-        "Exceeds accuracy expectations",
-        "Real time savings",
-        "Reduces meeting anxiety",
-        "Improves focus on discussion"
-      ],
-      "improvement_areas": [
-        "Technical vocabulary handling",
-        "Visual meeting components",
-        "Cross-talk situations",
-        "Company-specific terms",
-        "Mobile app needed"
-      ],
-      "top_feature_requests": [
-        "Custom vocabulary training",
-        "Mobile app",
-        "More integrations (HubSpot, Zendesk, Linear)",
-        "Whiteboard/visual capture",
-        "Meeting templates"
-      ],
-      "bugs_identified": [
-        "Zoom connection stability",
-        "Slack notification delays",
-        "Duplicate action items",
-        "Voice similarity confusion"
+      "revenue_projections": {
+        "year_1_arr": "₹2.5 Crores",
+        "month_12_mrr": "₹21.6 Lakhs",
+        "target_customers": "1,200/month by month 12"
+      },
+      "customer_segments": {
+        "grandparents": "40% of revenue, avg ₹3,200 purchase",
+        "parents": "35% of revenue, education-focused",
+        "gift_givers": "25% of revenue, occasion-driven"
+      },
+      "success_metrics": [
+        "Monthly Recurring Revenue (MRR)",
+        "Customer Acquisition Cost (CAC)",
+        "Lifetime Value (LTV)",
+        "Net Promoter Score (target: 70+)",
+        "Cash flow positive by Month 8"
       ]
     },
-    "tags": [
-      "beta-feedback",
-      "user-testing",
-      "checkpoint",
-      "validation",
-      "feature-requests"
-    ],
-    "created_at": "2024-01-25T18:00:00Z"
+    "tags": ["launch-strategy", "business-model", "pricing-strategy", "revenue-projections", "checkpoint", "go-to-market"],
+    "created_at": "2024-02-01T18:00:00Z"
   }
 ]

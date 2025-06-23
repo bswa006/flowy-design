@@ -729,7 +729,7 @@ const enrichedPlaybookData = {
   }
 };
 
-export const playbookData: PlaybookData = enrichedPlaybookData as PlaybookData;
+export const playbookData: any = enrichedPlaybookData;
 
 // Get card width based on expansion state - optimized for three-panel system
 export const getCardWidth = (cardId: string, expandedInsights?: string | null, expandedStageDetails?: string | null): number => {
@@ -757,7 +757,7 @@ export const createPlaybookCards = (): PlaybookCard[] => {
   const cards: PlaybookCard[] = [];
   
   // Add all playbook steps as the main cards - positioned vertically
-  playbookData.playbook.steps.forEach((step, index) => {
+  playbookData.playbook.steps.forEach((step: any, index: number) => {
     cards.push({
       id: `step-${step.id}`,
       type: "step",
@@ -776,8 +776,8 @@ export const getProjectHeader = () => {
   return {
     project: playbookData.project,
     totalSteps: playbookData.playbook.steps.length,
-    completedSteps: playbookData.playbook.steps.filter(step => step.status === "completed").length,
-    estimatedDuration: playbookData.playbook.steps.reduce((total, step) => total + step.estimated_minutes, 0),
+    completedSteps: playbookData.playbook.steps.filter((step: any) => step.status === "completed").length,
+    estimatedDuration: playbookData.playbook.steps.reduce((total: number, step: any) => total + step.estimated_minutes, 0),
     generatedFrom: playbookData.playbook.generated_from_contexts.length,
     createdAt: playbookData.playbook.created_at
   };

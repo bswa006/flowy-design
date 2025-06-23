@@ -18,17 +18,24 @@ import { MERCURY_DURATIONS, MERCURY_EASING } from "@/lib/mercury-utils";
 
 interface ProjectHeaderProps {
   project?: PlaybookProject;
+  steps?: any[];
   className?: string;
 }
 
 export function ProjectHeader({ 
   project: projectProp,
+  steps: stepsProp,
   className = ""
 }: ProjectHeaderProps) {
-  // Use provided project or fall back to static data
-  const headerData = getProjectHeader();
-  const project = projectProp || headerData.project;
-  const { totalSteps, completedSteps, estimatedDuration, generatedFrom, createdAt } = headerData;
+  // Use provided data or fall back to static data
+  const fallbackHeaderData = getProjectHeader();
+  const project = projectProp || fallbackHeaderData.project;
+  const steps = stepsProp || [];
+  
+  // Calculate metrics from provided steps or fallback
+  const totalSteps = steps.length > 0 ? steps.length : fallbackHeaderData.totalSteps;
+  const completedSteps = steps.length > 0 ? steps.filter(step => step.status === "completed").length : fallbackHeaderData.completedSteps;
+  const estimatedDuration = steps.length > 0 ? steps.reduce((total, step) => total + step.estimated_minutes, 0) : fallbackHeaderData.estimatedDuration;
 
   const progressPercentage = totalSteps > 0 ? (completedSteps / totalSteps) * 100 : 0;
 

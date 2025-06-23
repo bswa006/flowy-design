@@ -73,18 +73,18 @@ export function PlaybookInsightsPanel({
       return [];
     } else if (card.type === "context") {
       const context = card.data as PlaybookContext;
-      return playbookData.insights.filter(insight => 
+      return playbookData.insights.filter((insight: any) => 
         insight.source_context_id === context.id ||
         insight.upload_id === context.upload.id
       );
     } else if (card.type === "insight") {
       const insight = card.data as PlaybookInsight;
-      return playbookData.insights.filter(i => 
+      return playbookData.insights.filter((i: any) => 
         i.source_context_id === insight.source_context_id ||
         i.id === insight.id
       );
     } else if (card.type === "project") {
-      return playbookData.insights.filter(insight => 
+      return playbookData.insights.filter((insight: any) => 
         insight.project_id === playbookData.project.id
       );
     }
