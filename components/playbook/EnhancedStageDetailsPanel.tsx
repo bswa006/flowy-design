@@ -232,9 +232,9 @@ export function EnhancedStageDetailsPanel({
   return (
     <div className="h-full flex flex-col bg-white">
       {/* Header */}
-      <div className="flex-shrink-0 flex items-center justify-between p-6 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50">
+      <div className="flex-shrink-0 flex items-center justify-between p-6 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-gray-100">
         <div className="flex items-center space-x-3">
-          <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold text-sm">
+          <div className="w-8 h-8 bg-gray-900 rounded-full flex items-center justify-center text-white font-semibold text-sm">
             {stage.stage}
           </div>
           <div>
@@ -454,39 +454,71 @@ export function EnhancedStageDetailsPanel({
                               {/* AI Tool Information */}
                               {item.ai_assisted && item.prompt_template && (
                                 <div className="mt-3 p-3 bg-purple-50 border border-purple-200 rounded-md">
-                                  <div className="flex items-center space-x-2 mb-2">
+                                  <div className="flex items-center space-x-2 mb-3">
                                     <Brain className="w-4 h-4 text-purple-600" />
-                                    <span className="text-xs font-semibold text-purple-900">AI Tool Required</span>
+                                    <span className="text-xs font-semibold text-purple-900">AI Tools & MCP Servers Required</span>
                                   </div>
                                   
-                                  {/* AI Tool Name */}
-                                  <div className="mb-2">
-                                    <span className="text-xs text-purple-700 font-medium">Tool: </span>
-                                    <span className="text-xs text-purple-600">
-                                      {item.prompt_template === 'competitor_research' ? 'GPT-4 + Research Browser' :
-                                       item.prompt_template === 'insight_extraction' ? 'GPT-4 Text Analysis' :
-                                       item.prompt_template === 'persona_generation' ? 'GPT-4 Persona Generator' :
-                                       item.prompt_template === 'story_template_creation' ? 'GPT-4 Creative Writing' :
-                                       item.prompt_template === 'educational_validation' ? 'GPT-4 Content Review' :
-                                       'GPT-4 General'}
-                                    </span>
-                                  </div>
+                                  {/* AI Tools Grid */}
+                                  {(item as any).ai_tools && (item as any).ai_tools.length > 0 ? (
+                                    <div className="grid grid-cols-1 gap-2 mb-3">
+                                      {(item as any).ai_tools.map((tool: any, toolIndex: number) => (
+                                        <div key={toolIndex} className={`p-2 rounded border ${
+                                          tool.type === 'MCP Server' 
+                                            ? 'bg-blue-50 border-blue-200' 
+                                            : 'bg-green-50 border-green-200'
+                                        }`}>
+                                          <div className="flex items-center justify-between mb-1">
+                                            <div className="flex items-center space-x-2">
+                                              <div className={`w-2 h-2 rounded-full ${
+                                                tool.type === 'MCP Server' ? 'bg-blue-500' : 'bg-green-500'
+                                              }`}></div>
+                                              <span className="text-xs font-medium text-gray-900">{tool.name}</span>
+                                              <span className={`text-xs px-1.5 py-0.5 rounded ${
+                                                tool.type === 'MCP Server' 
+                                                  ? 'bg-blue-100 text-blue-700' 
+                                                  : 'bg-green-100 text-green-700'
+                                              }`}>
+                                                {tool.type}
+                                              </span>
+                                            </div>
+                                            <a
+                                              href={tool.url}
+                                              target="_blank"
+                                              rel="noopener noreferrer"
+                                              className="text-gray-400 hover:text-gray-600"
+                                            >
+                                              <ExternalLink className="w-3 h-3" />
+                                            </a>
+                                          </div>
+                                          <p className="text-xs text-gray-600">{tool.description}</p>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  ) : (
+                                    <div className="mb-2">
+                                      <span className="text-xs text-purple-700 font-medium">Tool: </span>
+                                      <span className="text-xs text-purple-600">
+                                        {(item as any).ai_tool || 'GPT-4 General'}
+                                      </span>
+                                    </div>
+                                  )}
                                   
                                   {/* AI Prompt */}
-                                  {item.prompt_template && stage.rich_content?.ai_prompts?.[item.prompt_template] && (
-                                    <div className="mb-2">
+                                  {item.prompt_template && (
+                                    <div className="mb-3">
                                       <span className="text-xs text-purple-700 font-medium">Prompt: </span>
                                       <p className="text-xs text-purple-600 mt-1 italic">
-                                        "{stage.rich_content.ai_prompts[item.prompt_template].substring(0, 120)}..."
+                                        "{(stage.rich_content?.ai_prompts?.[item.prompt_template] || item.prompt_template).substring(0, 120)}..."
                                       </p>
                                     </div>
                                   )}
                                   
                                   {/* Action Buttons */}
-                                  <div className="flex items-center space-x-2 mt-2">
+                                  <div className="flex items-center space-x-2">
                                     <button
                                       onClick={() => copyToClipboard(
-                                        (item.prompt_template && stage.rich_content?.ai_prompts?.[item.prompt_template]) || 'Prompt not available', 
+                                        (item.prompt_template && (stage.rich_content?.ai_prompts?.[item.prompt_template] || item.prompt_template)) || 'Prompt not available', 
                                         `checklist-${i}`
                                       )}
                                       className="text-xs bg-purple-100 hover:bg-purple-200 text-purple-700 px-2 py-1 rounded flex items-center space-x-1 transition-colors"
@@ -494,15 +526,22 @@ export function EnhancedStageDetailsPanel({
                                       <Copy className="w-3 h-3" />
                                       <span>{copiedPrompt === `checklist-${i}` ? "Copied!" : "Copy Prompt"}</span>
                                     </button>
-                                    <a
-                                      href="https://chat.openai.com/"
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="text-xs bg-green-100 hover:bg-green-200 text-green-700 px-2 py-1 rounded flex items-center space-x-1 transition-colors"
-                                    >
-                                      <ExternalLink className="w-3 h-3" />
-                                      <span>Open ChatGPT</span>
-                                    </a>
+                                    {(item as any).ai_tools && (item as any).ai_tools.length > 0 && (
+                                      <div className="flex items-center space-x-1">
+                                        {(item as any).ai_tools.filter((tool: any) => tool.type !== 'MCP Server').slice(0, 2).map((tool: any, toolIndex: number) => (
+                                          <a
+                                            key={toolIndex}
+                                            href={tool.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-xs bg-green-100 hover:bg-green-200 text-green-700 px-2 py-1 rounded flex items-center space-x-1 transition-colors"
+                                          >
+                                            <ExternalLink className="w-3 h-3" />
+                                            <span>Open {tool.name.split(' ')[0]}</span>
+                                          </a>
+                                        ))}
+                                      </div>
+                                    )}
                                   </div>
                                 </div>
                               )}
